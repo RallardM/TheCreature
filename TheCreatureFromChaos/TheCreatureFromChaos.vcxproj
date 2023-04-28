@@ -127,7 +127,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameText.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="resouce_files\Utils.cpp" />
+    <ClCompile Include="user_inputs\InputManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameText.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resouce_files\GameArtEnding.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resouce_files\GameAsciiArt.txt" />
+    <Text Include="resouce_files\GameText.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
