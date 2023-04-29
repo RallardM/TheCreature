@@ -3,14 +3,14 @@
                  You don't know where you are or how you got here, 
          but you feel a sense of unease, as if something is not quite right. 
 
-You try to move, 
-but your body feels unfamiliar, 
-as if it's not your own.
-You can't remember your name, or anything about your past. 
+       You try to move, but your body feels unfamiliar, as if it's not your own.
+              You can't remember your name, or anything about your past. 
 
-As you try to piece together what might have happened to you, 
-a small, scrappy creature scurries up to you and begins spitting at you. 
-Its beady eyes reflect the dim light, and you can tell that it's some sort of kobold.
+
+
+           As you try to piece together what might have happened to you, 
+       a small, scrappy creature scurries up to you and begins spitting at you. 
+ Its beady eyes reflect the dim light, and you can tell that it's some sort of kobold.
 
 You are unsure how to react to this sudden intrusion.
 You can try to communicate with the creature or fight it off.

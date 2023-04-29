@@ -70,6 +70,18 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(ProjectDir)\header_files;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(ProjectDir)\header_files;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(ProjectDir)\header_files;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(ProjectDir)\header_files;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -127,22 +139,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GameText.cpp" />
+    <ClCompile Include="game_texts\GameTextManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="game_texts\GameChoicesMenu.cpp" />
     <ClCompile Include="resouce_files\Utils.cpp" />
-    <ClCompile Include="user_inputs\InputManager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GameText.h" />
-    <ClInclude Include="InputManager.h" />
-    <ClInclude Include="Utils.h" />
+    <ClCompile Include="user_managers\UserInputManager.cpp" />
+    <ClCompile Include="user_managers\UserScenesManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resouce_files\GameArtEnding.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resouce_files\GameAsciiArt.txt" />
+    <Text Include="resouce_files\GameChoicesMenu.txt" />
     <Text Include="resouce_files\GameText.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="header_files\GameTextManager.h" />
+    <ClInclude Include="header_files\UserScenesManager.h" />
+    <ClInclude Include="header_files\UserInputManager.h" />
+    <ClInclude Include="header_files\GameChoicesMenu.h" />
+    <ClInclude Include="header_files\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

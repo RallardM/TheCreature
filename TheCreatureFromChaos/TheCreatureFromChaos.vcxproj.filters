@@ -16,31 +16,29 @@
     <Filter Include="User Inputs">
       <UniqueIdentifier>{9fbe3864-9fae-4af5-aef6-9a471a8057c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Texts">
+      <UniqueIdentifier>{c4a5462e-5c72-41d1-9269-975410708adb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameText.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="user_inputs\InputManager.cpp">
+    <ClCompile Include="user_managers\UserInputManager.cpp">
       <Filter>User Inputs</Filter>
     </ClCompile>
     <ClCompile Include="resouce_files\Utils.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameText.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="game_texts\GameTextManager.cpp">
+      <Filter>Game Texts</Filter>
+    </ClCompile>
+    <ClCompile Include="game_texts\GameChoicesMenu.cpp">
+      <Filter>Game Texts</Filter>
+    </ClCompile>
+    <ClCompile Include="user_managers\UserScenesManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resouce_files\GameArtEnding.jpg">
@@ -54,5 +52,25 @@
     <Text Include="resouce_files\GameText.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="resouce_files\GameChoicesMenu.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="header_files\GameTextManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header_files\UserInputManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header_files\Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header_files\GameChoicesMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header_files\UserScenesManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
