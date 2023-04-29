@@ -1,9 +1,9 @@
 #pragma once
 
-enum class E_SceneSequence { INTRO, MOVING };
-
 class UserScenesManager {
 public:
+	enum class E_SceneSequence { INTRO, MOVING };
+
 	UserScenesManager();
 	E_SceneSequence GetPlayerCurrentScene();
 	void SetPlayerCurrentScene(E_SceneSequence scene);

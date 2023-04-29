@@ -6,5 +6,7 @@ public:
 	void SetConsoleColour(int colour);
 	void SetConsolesize();
 	void SetCenterConsolePosition();
+	void ClearConsole();
+	void DisableConsoleCursor();
 	
 };

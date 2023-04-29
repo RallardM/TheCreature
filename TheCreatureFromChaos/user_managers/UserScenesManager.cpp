@@ -5,7 +5,7 @@ UserScenesManager::UserScenesManager() :
 {
 }
 
-E_SceneSequence UserScenesManager::GetPlayerCurrentScene()
+UserScenesManager::E_SceneSequence UserScenesManager::GetPlayerCurrentScene()
 {
 	return m_userCurrentScene;
 }

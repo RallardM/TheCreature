@@ -49,3 +49,30 @@ void Utils::SetCenterConsolePosition()
     // Set the position of the console window
     SetWindowPos(consoleWindow, NULL, left_margin, top_margin, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 }
+
+void Utils::ClearConsole()
+{
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO screenBufferInfo;
+    COORD topLeft = { 0, 0 };
+
+    // Get the size of the console buffer
+    GetConsoleScreenBufferInfo(console, &screenBufferInfo);
+    DWORD consoleSize = screenBufferInfo.dwSize.X * screenBufferInfo.dwSize.Y;
+
+    // Fill the console buffer with spaces
+    DWORD charsWritten;
+    FillConsoleOutputCharacter(console, ' ', consoleSize, topLeft, &charsWritten);
+
+    // Move the cursor to the top left corner of the console
+    SetConsoleCursorPosition(console, topLeft);
+}
+
+void Utils::DisableConsoleCursor()
+{
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO cursorInfo;
+    GetConsoleCursorInfo(hConsole, &cursorInfo);
+    cursorInfo.bVisible = FALSE; // Set the cursor visibility to false
+    SetConsoleCursorInfo(hConsole, &cursorInfo);
+}

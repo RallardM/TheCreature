@@ -139,9 +139,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="game_texts\GameChoicesMenu.cpp" />
     <ClCompile Include="game_texts\GameTextManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="game_texts\GameChoicesMenu.cpp" />
+    <ClCompile Include="resouce_files\DebugMessageSystem.cpp" />
     <ClCompile Include="resouce_files\Utils.cpp" />
     <ClCompile Include="user_managers\UserInputManager.cpp" />
     <ClCompile Include="user_managers\UserScenesManager.cpp" />
@@ -152,13 +153,16 @@
   <ItemGroup>
     <Text Include="resouce_files\GameAsciiArt.txt" />
     <Text Include="resouce_files\GameChoicesMenu.txt" />
+    <Text Include="resouce_files\GameMainMenu.txt" />
     <Text Include="resouce_files\GameText.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="header_files\DebugMessageSystem.h" />
+    <ClInclude Include="header_files\GameChoicesMenu.h" />
     <ClInclude Include="header_files\GameTextManager.h" />
+    <ClInclude Include="header_files\main.h" />
     <ClInclude Include="header_files\UserScenesManager.h" />
     <ClInclude Include="header_files\UserInputManager.h" />
-    <ClInclude Include="header_files\GameChoicesMenu.h" />
     <ClInclude Include="header_files\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -4,23 +4,36 @@
 
 #include "Utils.h"
 #include "UserScenesManager.h"
+#include "UserInputManager.h"
+#include "GameChoicesMenu.h"
+#include "main.h"
 
 class GameTextManager {
 public:
+	//GameTextManager(MainClass* mainClassAcces, UserScenesManager* sceneManager);
+	GameTextManager(UserScenesManager* sceneManager);
 	GameTextManager();
-	void PrintLinesFromScene(E_SceneSequence scene);
-	std::ifstream& GetTextFilePath();
-	std::ifstream& GetPictureFilePath();
+	void PrintLinesFromScene();
 
+	std::ifstream& GetPictureFilePath();
+	std::ifstream& GetTextFilePath();
+	std::ifstream& GetMenuFilePath();
+
+	unsigned short int GetSceneTextLines(unsigned short int fromLine);
+	std::string GetTextBetweenLines(std::ifstream& file, unsigned int firstLine, unsigned int lastLine);
+
+	UserScenesManager* GetSceneManager();
 
 private:
-	std::string GetTextBetweenLines(std::ifstream& file, unsigned int x, unsigned int y);
+	UserScenesManager* m_sceneManager;
+	//MainClass* m_mainClassAcces;
 	std::ifstream m_textFilePath;
 	std::ifstream m_pictureFilePath;
-	unsigned short int m_gameTextLines[2] = { 1, 6 };
-	unsigned short int m_gameImageLines[2] = { 1, 35 };
-	unsigned short int GetGameTextLines(unsigned short int fromLine);
-	unsigned short int GetGameImageLines(unsigned short int fromLine);
+	std::ifstream m_menuFilePath;
 
-	
+	unsigned short int m_sceneTextLines[2];
+	unsigned short int m_sceneImageLines[2];
+	unsigned short int m_sceneMenuLines[2];
+
+	unsigned short int GetSceneImageLines(unsigned short int fromLine);
 };

@@ -1,26 +1,55 @@
 #include <iostream>
 #include <string>
+#include <chrono>
+#include <thread>
 
 #include "Utils.h"
 #include "GameTextManager.h"
 #include "UserInputManager.h"
 #include "GameChoicesMenu.h"
 #include "UserScenesManager.h"
+#include "DebugMessageSystem.h"
+#include "main.h"
 
 int main()
 {
-	// Create a Utils object and set the console size.
+	//DEBUG_MSG("¢Bmain.cpp : main() : Enters main function.");
+
+	// Create a Utils object, set the console size and position.
+	//DEBUG_MSG("main.cpp : main() : Create a Utils object, set the console size and position.");
 	Utils* utils = nullptr;
 	utils->SetConsolesize();
 	utils->SetCenterConsolePosition();
+	utils->DisableConsoleCursor();
 
+	// Initialize the UserInputManager object.
+	//DEBUG_MSG("main.cpp : main() : Initialize the UserInputManager object.");
 	UserInputManager inputManager{};
-	E_UserInput userInput = inputManager.GetInput();
+	//DEBUG_MSG("main.cpp : main() : Get user input.");
+	UserInputManager::E_UserInput userInput = inputManager.GetInput();
+
+	// Initialize the MainClass object.
+	//DEBUG_MSG("main.cpp : main() : Initialize the MainClass object.");
+	MainClass* mainClassAcces  = new MainClass();
 
 	// Initialize the UserScenesManager object.
-	UserScenesManager sceneManager;
+	//DEBUG_MSG("main.cpp : main() : Initialize the UserScenesManager object.");
+	UserScenesManager* sceneManager = new UserScenesManager();
 
+	// Initialize the GameTextManager object.
+	//DEBUG_MSG("main.cpp : main() : Initialize the GameTextManager object.");
+	//GameTextManager* textManager = new GameTextManager(mainClassAcces, sceneManager);
+	GameTextManager* textManager = new GameTextManager(sceneManager);
+
+	// Initialize the GameChoicesMenu object.
+	//DEBUG_MSG("main.cpp : main() : Initialize the GameChoicesMenu object.");
+	GameChoicesMenu* menuManager = new GameChoicesMenu(mainClassAcces, sceneManager, textManager);
+
+	bool oneLoopOFTwo = false;
+	bool isSceneCleared = true;
+	//bool isMenuCleared = true;
 	bool gameRunning = true;
+	//DEBUG_MSG("main.cpp : main() : Enters main loop.");
 	while (gameRunning)
 	{
 		// Process user input
@@ -29,20 +58,86 @@ int main()
 			//std::cout << inputManager.GetInput();
 			//InputData inputData = inputManager.GetInput();
 			//ProcessInput(inputData);
+
+			// Clear the console.
+			//system("cls");
 			userInput = inputManager.GetInput();
+			utils->ClearConsole();
+			//mainClassAcces->SetIsSceneCleared(true);
+			isSceneCleared = true;
 		}
 
-		// Create a GameText object and call the Introduction of the game.
-		GameTextManager gameText;
-		gameText.PrintLinesFromScene(sceneManager.GetPlayerCurrentScene());
+		//if (mainClassAcces->GetIsSceneCleared())
+		if (isSceneCleared)
+		{
+			// Print the scene text.
+			textManager->PrintLinesFromScene();
+			//mainClassAcces->SetIsSceneCleared(false);
+			isSceneCleared = false;
+		}
 
-		GameChoicesMenu manageMenu;
-		manageMenu.Render(userInput);
+		if (oneLoopOFTwo)
+		{
+			if (mainClassAcces->GetIsMenuCleared())
+			{
+				// Print selected scene menu.
+				menuManager->PrintMenuFromScene(userInput, oneLoopOFTwo);
+				mainClassAcces->SetIsMenuCleared(false);
+			}
+			else
+			{
+				// Clear the previous line.
+				std::cout << "\033[1A\033[0K";
+				mainClassAcces->SetIsMenuCleared(true);
+			}
 
-		// Clear the console.
-		system("cls");
+			oneLoopOFTwo = false;
+		}
+		else
+		{
+			if (mainClassAcces->GetIsMenuCleared())
+			{
+				// Print plain scene menu.
+				menuManager->PrintMenuFromScene(userInput, oneLoopOFTwo);
+				mainClassAcces->SetIsMenuCleared(false);
+			}
+			else
+			{
+				// Clear the previous line.
+				std::cout << "\033[1A\033[0K";
+				mainClassAcces->SetIsMenuCleared(true);
+			}
+
+			oneLoopOFTwo = true;
+		}
+
+		//std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	}
+
+	// Clean up dynamically allocated memory.
+	delete menuManager;
+	delete textManager;
+	delete sceneManager;
 
 	return 0;
 }
 
+//void MainClass::SetIsSceneCleared(bool isSceneCleared)
+//{
+//	m_isSceneCleared = isSceneCleared;
+//}
+//
+//bool MainClass::GetIsSceneCleared()
+//{
+//	return m_isSceneCleared;
+//}
+
+void MainClass::SetIsMenuCleared(bool isMenuCleared)
+{
+	m_isMenuCleared = isMenuCleared;
+}
+
+bool MainClass::GetIsMenuCleared()
+{
+	return m_isMenuCleared;
+}

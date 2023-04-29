@@ -13,7 +13,7 @@ bool UserInputManager::HasInput()
 	}
 }
 
-E_UserInput UserInputManager::GetInput()
+UserInputManager::E_UserInput UserInputManager::GetInput()
 {
     while (true) 
     {
@@ -47,7 +47,14 @@ E_UserInput UserInputManager::GetInput()
 
                 case 27: // Escape key
                     return E_UserInput::ESC;
+
+                default: // Default case - returns an empty input
+                    return E_UserInput::EMPTY;
             }
+        }
+        else
+        {
+            return E_UserInput::EMPTY;
         }
      }
 }
