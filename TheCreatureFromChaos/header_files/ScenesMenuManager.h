@@ -10,11 +10,16 @@ class ScenesNarrationManager;
 
 const short int EMPTY_MENU_LINE = -1;
 const std::string EMPTY_MENU_TEXT = "";
+const unsigned short int NUMBER_OF_HIGHLIGHTED_MENU_LINES = 4;
+const unsigned short int UNHIGHLIGHTED_MENU_LINE = 1;
 
 class ScenesMenuManager {
 public:
 	ScenesMenuManager(MainClass* mainClassAccess, UserScenesManager* sceneManager, ScenesNarrationManager* textManager);
 	void PrintMenuFromScene(UserInputManager::E_UserInput userInput, bool oneLoopOFTwo);
+
+	void PrintSceneMenu(UserInputManager::E_UserInput userInput, UserScenesManager::E_SceneSequence scene);
+	unsigned short int* GetSceneMenuLines(UserScenesManager::E_SceneSequence scene);
 
 	std::string GetLastLineInConsole();
 
@@ -40,5 +45,5 @@ private:
 
 	MainClass* m_mainClassAccess;
 	UserScenesManager* m_sceneManager;
-	ScenesNarrationManager* m_textManager;
+	ScenesNarrationManager* m_narrationManager;
 };
