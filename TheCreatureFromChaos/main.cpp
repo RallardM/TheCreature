@@ -30,7 +30,7 @@ int main()
 
 	// Initialize the MainClass object.
 	//DEBUG_MSG("main.cpp : main() : Initialize the MainClass object.");
-	MainClass* mainClassAcces  = new MainClass();
+	MainClass* mainClassAccess  = new MainClass();
 
 	// Initialize the UserScenesManager object.
 	//DEBUG_MSG("main.cpp : main() : Initialize the UserScenesManager object.");
@@ -43,9 +43,13 @@ int main()
 
 	// Initialize the GameChoicesMenu object.
 	//DEBUG_MSG("main.cpp : main() : Initialize the GameChoicesMenu object.");
-	GameChoicesMenu* menuManager = new GameChoicesMenu(mainClassAcces, sceneManager, textManager);
+	GameChoicesMenu* menuManager = new GameChoicesMenu(mainClassAccess, sceneManager, textManager);
 
-	bool oneLoopOFTwo = false;
+	unsigned short int counter = 0;
+	unsigned short int numLoops = 5;
+
+	mainClassAccess->SetIsMenuCleared(true);
+	bool oneLoopOFTwo = true;
 	bool isSceneCleared = true;
 	//bool isMenuCleared = true;
 	bool gameRunning = true;
@@ -78,38 +82,79 @@ int main()
 
 		if (oneLoopOFTwo)
 		{
-			if (mainClassAcces->GetIsMenuCleared())
+			for (int i = 0; i < numLoops; i++) 
 			{
-				// Print selected scene menu.
-				menuManager->PrintMenuFromScene(userInput, oneLoopOFTwo);
-				mainClassAcces->SetIsMenuCleared(false);
-			}
-			else
-			{
-				// Clear the previous line.
-				std::cout << "\033[1A\033[0K";
-				mainClassAcces->SetIsMenuCleared(true);
+				if (mainClassAccess->GetIsMenuCleared())
+				{
+					menuManager->PrintMenuFromScene(userInput, oneLoopOFTwo);
+					mainClassAccess->SetIsMenuCleared(false);
+				}
 			}
 
+			if (!mainClassAccess->GetIsMenuCleared()) 
+			{
+				std::cout << "\033[1A\033[0K";
+				mainClassAccess->SetIsMenuCleared(true);
+				menuManager->PrintMenuFromScene(userInput, !oneLoopOFTwo);
+				mainClassAccess->SetIsMenuCleared(false);
+			}
 			oneLoopOFTwo = false;
 		}
-		else
+		else 
 		{
-			if (mainClassAcces->GetIsMenuCleared())
+			for (int i = 0; i < numLoops; i++) 
 			{
-				// Print plain scene menu.
-				menuManager->PrintMenuFromScene(userInput, oneLoopOFTwo);
-				mainClassAcces->SetIsMenuCleared(false);
-			}
-			else
-			{
-				// Clear the previous line.
-				std::cout << "\033[1A\033[0K";
-				mainClassAcces->SetIsMenuCleared(true);
+				if (mainClassAccess->GetIsMenuCleared())
+				{
+					menuManager->PrintMenuFromScene(userInput, oneLoopOFTwo);
+					mainClassAccess->SetIsMenuCleared(false);
+				}
 			}
 
+			if (!mainClassAccess->GetIsMenuCleared()) 
+			{
+				std::cout << "\033[1A\033[0K";
+				mainClassAccess->SetIsMenuCleared(true);
+				menuManager->PrintMenuFromScene(userInput, !oneLoopOFTwo);
+				mainClassAccess->SetIsMenuCleared(false);
+			}
 			oneLoopOFTwo = true;
 		}
+
+		//if (oneLoopOFTwo)
+		//{
+		//	if (mainClassAcces->GetIsMenuCleared())
+		//	{
+		//		// Print selected scene menu.
+		//		menuManager->PrintMenuFromScene(userInput, oneLoopOFTwo);
+		//		mainClassAcces->SetIsMenuCleared(false);
+		//	}
+		//	else
+		//	{
+		//		// Clear the previous line.
+		//		std::cout << "\033[1A\033[0K";
+		//		mainClassAcces->SetIsMenuCleared(true);
+		//	}
+
+		//	oneLoopOFTwo = false;
+		//}
+		//else
+		//{
+		//	if (mainClassAcces->GetIsMenuCleared())
+		//	{
+		//		// Print plain scene menu.
+		//		menuManager->PrintMenuFromScene(userInput, oneLoopOFTwo);
+		//		mainClassAcces->SetIsMenuCleared(false);
+		//	}
+		//	else
+		//	{
+		//		// Clear the previous line.
+		//		std::cout << "\033[1A\033[0K";
+		//		mainClassAcces->SetIsMenuCleared(true);
+		//	}
+
+		//	oneLoopOFTwo = true;
+		//}
 
 		//std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	}

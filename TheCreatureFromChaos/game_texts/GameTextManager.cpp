@@ -1,11 +1,14 @@
 
 #include <iostream>
+#include <fstream>
+#include <filesystem>
 #include <Windows.h>
 #include <sstream>
 #include <string>
 #include <array>
 
 #include "GameTextManager.h"
+
 
 
 //GameTextManager::GameTextManager(MainClass* mainClassAcces, UserScenesManager* sceneManager) :
@@ -21,9 +24,9 @@ GameTextManager::GameTextManager(UserScenesManager* sceneManager) :
 
 }
 
-GameTextManager::GameTextManager()
-{
-}
+//GameTextManager::GameTextManager()
+//{
+//}
 
 void GameTextManager::PrintLinesFromScene()
 {
@@ -40,20 +43,20 @@ void GameTextManager::PrintLinesFromScene()
 
     switch (GetSceneManager()->GetPlayerCurrentScene())
     {
-		case UserScenesManager::E_SceneSequence::INTRO:
-            gameImageFirstLine = GetSceneImageLines(0);
+		case UserScenesManager::E_SceneSequence::INTRO_SCENE:
+            gameImageFirstLine = GetSceneImageLines(UserScenesManager::E_SceneSequence::INTRO_SCENE);
             gameImageLastLine = gameImageFirstLine + ASCII_IMAGE_HEIGHT;
 
-            gameTextFirstLine = GetSceneTextLines(0);
+            gameTextFirstLine = GetSceneTextLines(UserScenesManager::E_SceneSequence::INTRO_SCENE);
             gameTextLastLine = gameTextFirstLine + STORY_TEXT_HEIGHT;
 
 			break;
 
-		case UserScenesManager::E_SceneSequence::MOVING:
-            gameImageFirstLine = GetSceneImageLines(1);
+		case UserScenesManager::E_SceneSequence::MOVING_SCENE:
+            gameImageFirstLine = GetSceneImageLines(UserScenesManager::E_SceneSequence::MOVING_SCENE);
             gameImageLastLine = gameImageFirstLine + ASCII_IMAGE_HEIGHT;
 
-            gameTextFirstLine = GetSceneTextLines(1);
+            gameTextFirstLine = GetSceneTextLines(UserScenesManager::E_SceneSequence::MOVING_SCENE);
             gameTextLastLine = gameTextFirstLine + STORY_TEXT_HEIGHT;
 
 			break;
@@ -67,16 +70,59 @@ void GameTextManager::PrintLinesFromScene()
 	
 
 	std::cout << scenePicture;
-	std::cout << sceneText << "\n";
+	std::cout << sceneText;
 	
 }
 
-// Go to a specific lines in a file and return the text between those lines.
+//// Go to a specific lines in a file and return the text between those lines.
+//std::string GameTextManager::GetTextBetweenLines(std::ifstream& filePath, unsigned int firstLine, unsigned int lastLine)
+//{
+//    std::string text;
+//    std::string line;
+//
+//    // If the firstLine and lastLine are the same, return just that line.
+//    if (firstLine == lastLine && firstLine > 0) 
+//    {
+//        // Move to the desired line
+//        for (unsigned int i = 1; i < firstLine; ++i) 
+//        {
+//            std::getline(filePath, line);
+//        }
+//        // Get the desired line
+//        std::getline(filePath, line);
+//        // Add the line to the output string
+//        text += line;
+//    }
+//    else if (lastLine > 0 && firstLine <= lastLine) 
+//    {
+//        // Move to the first desired line
+//        for (unsigned int i = 1; i < firstLine; ++i) 
+//        {
+//            std::getline(filePath, line);
+//        }
+//        // Read each line in the desired range and add it to the output string
+//        unsigned int currentLine = firstLine;
+//        while (std::getline(filePath, line) && currentLine <= lastLine) 
+//        {
+//            text += line;
+//            if (currentLine < lastLine) 
+//            {
+//                text += "\n"; // Only add a newline if it's not the last line
+//            }
+//            currentLine++;
+//        }
+//    }
+//
+//    // Return the output string.
+//    return text;
+//}
+
 std::string GameTextManager::GetTextBetweenLines(std::ifstream& filePath, unsigned int firstLine, unsigned int lastLine)
 {
     std::string text;
     std::string line;
-    unsigned int currentLine = 1;
+    //unsigned int currentLine = 1;
+    unsigned int currentLine = firstLine;
     
     // Read each line in the file until we reach the end or the desired line range.
     while (std::getline(filePath, line) && currentLine <= lastLine)
@@ -91,6 +137,18 @@ std::string GameTextManager::GetTextBetweenLines(std::ifstream& filePath, unsign
 
     // Return the output string.
     return text;
+}
+
+std::string GetFileContents(const std::string& filePath) {
+    std::ifstream inFile(filePath);
+    if (!inFile) {
+        throw std::runtime_error("Failed to open file: " + filePath);
+    }
+
+    std::stringstream buffer;
+    buffer << inFile.rdbuf();
+
+    return buffer.str();
 }
 
 std::ifstream& GameTextManager::GetPictureFilePath()
@@ -108,14 +166,14 @@ std::ifstream& GameTextManager::GetMenuFilePath()
     return m_menuFilePath;
 }
 
-unsigned short int GameTextManager::GetSceneImageLines(unsigned short int fromLine)
+unsigned short int GameTextManager::GetSceneImageLines(UserScenesManager::E_SceneSequence fromLine)
 {
-    return m_sceneImageLines[fromLine];
+    return m_sceneImageLines[static_cast<int>(fromLine)];
 }
 
-unsigned short int GameTextManager::GetSceneTextLines(unsigned short int fromLine)
+unsigned short int GameTextManager::GetSceneTextLines(UserScenesManager::E_SceneSequence fromLine)
 {
-    return m_sceneTextLines[fromLine];
+    return m_sceneTextLines[static_cast<int>(fromLine)];
 }
 
 UserScenesManager* GameTextManager::GetSceneManager()

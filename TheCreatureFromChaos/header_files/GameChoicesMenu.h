@@ -9,31 +9,31 @@ class GameTextManager;
 
 class GameChoicesMenu {
 public:
-	GameChoicesMenu(MainClass* mainClassAcces, UserScenesManager* sceneManager, GameTextManager* textManager);
+	GameChoicesMenu(MainClass* mainClassAccess, UserScenesManager* sceneManager, GameTextManager* textManager);
 	void PrintMenuFromScene(UserInputManager::E_UserInput userInput, bool oneLoopOFTwo);
 	//UserScenesManager* GetSceneManager();
 	//GameTextManager* GetGameTextManager();
 
 	std::string GetLastLineInConsole();
 
-	unsigned short int GetGameMenuLine(unsigned short int fromLine);
-
-	unsigned short int GetSelectedMenuLine();
-	void SetSelectedMenuLine(unsigned short int selectedMenuLine);
+	unsigned short int GetGameMenuLine(UserScenesManager::E_SceneSequence fromLine);
 
 	void SetCurrentPlainMenu(short int currentPlainMenu);
 	short int GetCurrentPlainMenu();
 
-	std::string GetCurrentSceneMenu();
-	void SetCurrentSceneMenu(std::string sceneMenu);
+	std::string GetCurrentSceneMenuText();
+	void SetCurrentSceneMenuText(std::string sceneMenu);
+
+	unsigned short int GetSelectedMenuLine();
+	void SetSelectedMenuLine(unsigned short int selectedMenuLine);
 
 private:
 	unsigned short int m_gameMenuLines[2];
-	unsigned short int m_selectedMenuLine;
+	short int m_selectedMenuLine;
 	short int m_currentPlainMenu;
 	std::string m_currenSceneMenuText;
 
-	MainClass* m_mainClassAcces;
+	MainClass* m_mainClassAccess;
 	UserScenesManager* m_sceneManager;
 	GameTextManager* m_textManager;
 };

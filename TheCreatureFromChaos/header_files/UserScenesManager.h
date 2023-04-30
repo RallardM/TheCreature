@@ -2,7 +2,7 @@
 
 class UserScenesManager {
 public:
-	enum class E_SceneSequence { INTRO, MOVING };
+	enum class E_SceneSequence { NO_SCENE, INTRO_SCENE, MOVING_SCENE };
 
 	UserScenesManager();
 	E_SceneSequence GetPlayerCurrentScene();
