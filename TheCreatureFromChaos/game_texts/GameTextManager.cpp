@@ -14,6 +14,7 @@
 GameTextManager::GameTextManager(UserScenesManager* sceneManager) :
     m_textFilePath("resouce_files/GameText.txt"), 
     m_pictureFilePath("resouce_files/GameAsciiArt.txt"),
+    m_menuFilePath("resouce_files/GameChoicesMenu.txt"),
     m_sceneTextLines{ 1, 6 },
     m_sceneImageLines{ 1, 35 },
     m_sceneMenuLines{ 1, 6 },
@@ -131,4 +132,9 @@ unsigned short int GameTextManager::GetSceneTextLines(UserScenesManager::E_Scene
 UserScenesManager* GameTextManager::GetSceneManager()
 {
 	return m_sceneManager;
+}
+
+std::ifstream& GameTextManager::GetMenuFilePath()
+{
+    return m_menuFilePath;
 }

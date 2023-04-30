@@ -6,9 +6,7 @@
 #include "GameTextManager.h"
 #include "DebugMessageSystem.h"
 
-
 GameChoicesMenu::GameChoicesMenu(MainClass* mainClassAcces, UserScenesManager* sceneManager, GameTextManager* textManager) :
-    m_menuFilePath("resouce_files/GameChoicesMenu.txt"),
     m_gameMenuLines{ 1, 6 },
     m_mainClassAccess(mainClassAcces),
     m_sceneManager(sceneManager),
@@ -21,36 +19,32 @@ GameChoicesMenu::GameChoicesMenu(MainClass* mainClassAcces, UserScenesManager* s
 
 void GameChoicesMenu::PrintMenuFromScene(UserInputManager::E_UserInput userInput, bool oneLoopOFTwo)
 {
+
     UserScenesManager::E_SceneSequence scene = m_sceneManager->GetPlayerCurrentScene();
-    short int gameMenuLine = 0;
-    short int selectedMenuLine = GetSelectedMenuLine();
-    short int startingMenuLine = GetGameMenuLine(UserScenesManager::E_SceneSequence::INTRO_SCENE);
-    short int currentPlainMenu = GetCurrentPlainMenu();
-    std::string currentSceneMenuText = GetCurrentSceneMenuText();
-    std::ifstream& menuFilePath = GetMenuFilePath();
+
+    unsigned short int gameMenuLine = 0;
 
     switch (scene)
     {
     case UserScenesManager::E_SceneSequence::INTRO_SCENE:
         if (oneLoopOFTwo)
         {
-            if (currentPlainMenu == EMPTY_MENU_LINE)
+            if (GetCurrentPlainMenu() == EMPTY_MENU_LINE)
             {
                 // Get no gizmo menu frame
-                gameMenuLine = startingMenuLine;
-                SetCurrentPlainMenu(startingMenuLine);
-                SetCurrentSceneMenuText(GetMenuAtLine(menuFilePath, gameMenuLine));
+                gameMenuLine = GetGameMenuLine(UserScenesManager::E_SceneSequence::INTRO_SCENE);
+                SetCurrentPlainMenu(GetGameMenuLine(UserScenesManager::E_SceneSequence::INTRO_SCENE));
+                SetCurrentSceneMenuText(m_textManager->GetTextBetweenLines(m_textManager->GetMenuFilePath(), gameMenuLine, gameMenuLine));
             }
         }
         else
         {
-            if (currentSceneMenuText == EMPTY_MENU_TEXT)
+            if (GetCurrentSceneMenuText() == EMPTY_MENU_TEXT)
             {
                 // Get menu frame with gizmo
-                selectedMenuLine = 1;
-                gameMenuLine = startingMenuLine + selectedMenuLine;
-                SetSelectedMenuLine(gameMenuLine);
-                SetCurrentSceneMenuText(GetMenuAtLine(menuFilePath, gameMenuLine));
+                gameMenuLine = GetGameMenuLine(UserScenesManager::E_SceneSequence::INTRO_SCENE) + GetSelectedMenuLine();
+                SetSelectedMenuLine(GetGameMenuLine(UserScenesManager::E_SceneSequence::INTRO_SCENE) + GetSelectedMenuLine());
+                SetCurrentSceneMenuText(m_textManager->GetTextBetweenLines(m_textManager->GetMenuFilePath(), gameMenuLine, gameMenuLine));
             }
         }
         break;
@@ -63,10 +57,54 @@ void GameChoicesMenu::PrintMenuFromScene(UserInputManager::E_UserInput userInput
         break;
     }
 
-    std::string newCurrentSceneMenuText = m_textManager->GetTextBetweenLines(GetMenuFilePath(), gameMenuLine, gameMenuLine);
-    //std::string newCurrentSceneMenuText = GetMenuAtLine(GetMenuFilePath(), gameMenuLine);
-    std::cout << newCurrentSceneMenuText << std::endl;
+    std::cout << GetCurrentSceneMenuText();
+    //m_mainClassAcces->SetIsMenuCleared(false);
 }
+
+//void GameChoicesMenu::PrintMenuFromScene(UserInputManager::E_UserInput userInput, bool oneLoopOFTwo)
+//{
+//
+//    UserScenesManager::E_SceneSequence scene = m_sceneManager->GetPlayerCurrentScene();
+//
+//    unsigned short int gameMenuLine = 0;
+//
+//    switch (scene)
+//    {
+//    case UserScenesManager::E_SceneSequence::INTRO_SCENE:
+//        if (oneLoopOFTwo)
+//        {
+//            if (GetCurrentPlainMenu() == EMPTY_MENU_LINE)
+//            {
+//                // Get no gizmo menu frame
+//                gameMenuLine = GetGameMenuLine(UserScenesManager::E_SceneSequence::INTRO_SCENE);
+//                SetCurrentPlainMenu(GetGameMenuLine(UserScenesManager::E_SceneSequence::INTRO_SCENE));
+//                SetCurrentSceneMenuText(m_textManager->GetTextBetweenLines(m_textManager->GetMenuFilePath(), gameMenuLine, gameMenuLine));
+//            }
+//        }
+//        else
+//        {
+//            if (GetCurrentSceneMenuText() == EMPTY_MENU_TEXT)
+//            {
+//                // Get menu frame with gizmo
+//                gameMenuLine = GetGameMenuLine(UserScenesManager::E_SceneSequence::INTRO_SCENE) + GetSelectedMenuLine();
+//                SetSelectedMenuLine(GetGameMenuLine(UserScenesManager::E_SceneSequence::INTRO_SCENE) + GetSelectedMenuLine());
+//                SetCurrentSceneMenuText(m_textManager->GetTextBetweenLines(m_textManager->GetMenuFilePath(), gameMenuLine, gameMenuLine));
+//            }
+//        }
+//        break;
+//
+//    case UserScenesManager::E_SceneSequence::MOVING_SCENE:
+//
+//        break;
+//
+//    default:
+//        break;
+//    }
+//
+//    std::cout << GetCurrentSceneMenuText();
+//    //m_mainClassAcces->SetIsMenuCleared(false);
+//}
+
 
 std::string GameChoicesMenu::GetLastLineInConsole()
 {
@@ -82,6 +120,9 @@ std::string GameChoicesMenu::GetLastLineInConsole()
     SetConsoleCursorPosition(consoleHandle, position);
 
     std::string lastLine;
+   // DEBUG_MSG("¢R Last line:");
+    //std::cout << "\n" << lastLine << std::endl;
+    //DEBUG_MSG("¢R :Last line");
 
     // Check if the last line is empty
     if (screenBufferInfo.dwCursorPosition.X == 0) 
@@ -94,79 +135,27 @@ std::string GameChoicesMenu::GetLastLineInConsole()
     return lastLine;
 }
 
-std::string GameChoicesMenu::GetMenuAtLine(std::ifstream& filePath, unsigned int atLine)
-{
-    //std::ifstream& fileInputStream = filePath;
-    std::string text;
-    std::string line;
-
-    // Check if file opens
-    if (!filePath.is_open())
-    {
-        // File could not be opened, so return an empty string
-        DEBUG_MSG("¢RERROR: Could not open the game text file.");
-        exit(EXIT_FAILURE);
-    }
-
-    //unsigned int currentLine = 1;
-    unsigned int currentLine = atLine;
-
-    // Read each line in the file until we reach the end or the desired line range.
-    while (std::getline(filePath, line) && currentLine <= atLine)
-    {
-        // If the current line is within the desired range, add it to the output string.
-        if (currentLine >= atLine)
-        {
-            text += line + "\n";
-        }
-        currentLine++;
-    }
-
-    // Close the file
-    filePath.close();
-
-    // Return the output string.
-    return text;
-}
-
-//std::string GameChoicesMenu::GetMenuAtLine(std::ifstream& filePath, unsigned int atLine)
+//std::string GameChoicesMenu::GetLastLineInConsole()
 //{
-//    //std::ifstream& fileInputStream;
-//    std::string text;
+//    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 //
+//    CONSOLE_SCREEN_BUFFER_INFO screenBufferInfo;
+//    GetConsoleScreenBufferInfo(consoleHandle, &screenBufferInfo);
 //
-//    // Check if file opens
-//    if (!filePath.is_open())
-//    {
-//        // File could not be opened, so return an empty string
-//        DEBUG_MSG("¢RERROR: Could not open the menu text file.");
-//        exit(EXIT_FAILURE);
-//    }
+//    COORD position;
+//    position.X = 0;
+//    position.Y = screenBufferInfo.dwCursorPosition.Y;
 //
-//    // Move to the beginning of the file
-//    filePath.seekg(0, std::ios::beg);
+//    SetConsoleCursorPosition(consoleHandle, position);
 //
-//    // Loop through each line in the file
-//    for (unsigned int i = 1; i <= atLine; i++)
-//    {
-//        // Read the line from the file
-//        std::getline(filePath, text);
+//    std::string lastLine;
+//    DEBUG_MSG("¢R Last line:");
+//    std::cout << "\n" << lastLine << std::endl;
+//    DEBUG_MSG("¢R :Last line");
+//    getline(std::cin, lastLine);
 //
-//        // Check if we have reached the desired line
-//        if (i == atLine)
-//        {
-//            // We have found the line, so break the loop
-//            break;
-//        }
-//    }
-//
-//    // Close the file
-//    filePath.close();
-//
-//    // Return the line at the specified index
-//    return text;
+//    return lastLine;
 //}
-
 
 std::string GameChoicesMenu::GetCurrentSceneMenuText()
 {
@@ -182,6 +171,16 @@ unsigned short int GameChoicesMenu::GetGameMenuLine(UserScenesManager::E_SceneSe
 {
 	return m_gameMenuLines[static_cast<int>(atLine)];
 }
+
+//UserScenesManager* GameChoicesMenu::GetSceneManager()
+//{
+//    return m_sceneManager;
+//}
+//
+//GameTextManager* GameChoicesMenu::GetGameTextManager()
+//{
+//	return m_textManager;
+//}
 
 unsigned short int GameChoicesMenu::GetSelectedMenuLine()
 {
@@ -202,9 +201,3 @@ short int GameChoicesMenu::GetCurrentPlainMenu()
 {
     return m_currentPlainMenu;
 }
-
-std::ifstream& GameChoicesMenu::GetMenuFilePath()
-{
-    return m_menuFilePath;
-}
-

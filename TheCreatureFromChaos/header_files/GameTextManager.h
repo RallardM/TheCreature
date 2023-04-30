@@ -15,6 +15,7 @@ public:
 
 	std::ifstream& GetPictureFilePath();
 	std::ifstream& GetTextFilePath();
+	std::ifstream& GetMenuFilePath();
 
 	unsigned short int GetSceneTextLines(UserScenesManager::E_SceneSequence fromLine);
 	std::string GetTextBetweenLines(std::ifstream& file, unsigned int firstLine, unsigned int lastLine);
@@ -25,6 +26,7 @@ private:
 	UserScenesManager* m_sceneManager;
 	std::ifstream m_textFilePath;
 	std::ifstream m_pictureFilePath;
+	std::ifstream m_menuFilePath;
 
 	unsigned short int m_sceneTextLines[2];
 	unsigned short int m_sceneImageLines[2];
