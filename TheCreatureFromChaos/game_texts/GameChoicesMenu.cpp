@@ -8,13 +8,13 @@
 
 
 GameChoicesMenu::GameChoicesMenu(MainClass* mainClassAcces, UserScenesManager* sceneManager, GameTextManager* textManager) :
+    m_menuFilePath("resouce_files/GameChoicesMenu.txt"),
     m_gameMenuLines{ 1, 6 },
     m_mainClassAccess(mainClassAcces),
     m_sceneManager(sceneManager),
     m_textManager(textManager),
     m_currentPlainMenu(EMPTY_MENU_LINE),
-    m_currenSceneMenuText(EMPTY_MENU_TEXT),
-    m_menuFilePath("resouce_files/GameChoicesMenu.txt")
+    m_currenSceneMenuText(EMPTY_MENU_TEXT)
 {
     m_selectedMenuLine = static_cast<int>(UserScenesManager::E_SceneSequence::NO_SCENE);
 }
@@ -63,7 +63,8 @@ void GameChoicesMenu::PrintMenuFromScene(UserInputManager::E_UserInput userInput
         break;
     }
 
-    std::string newCurrentSceneMenuText = GetMenuAtLine(GetMenuFilePath(), gameMenuLine);
+    std::string newCurrentSceneMenuText = m_textManager->GetTextBetweenLines(GetMenuFilePath(), gameMenuLine, gameMenuLine);
+    //std::string newCurrentSceneMenuText = GetMenuAtLine(GetMenuFilePath(), gameMenuLine);
     std::cout << newCurrentSceneMenuText << std::endl;
 }
 
@@ -95,41 +96,76 @@ std::string GameChoicesMenu::GetLastLineInConsole()
 
 std::string GameChoicesMenu::GetMenuAtLine(std::ifstream& filePath, unsigned int atLine)
 {
-    //std::ifstream& fileInputStream;
+    //std::ifstream& fileInputStream = filePath;
     std::string text;
-
+    std::string line;
 
     // Check if file opens
     if (!filePath.is_open())
     {
         // File could not be opened, so return an empty string
-        DEBUG_MSG("¢RERROR: Could not open the menu text file.");
+        DEBUG_MSG("¢RERROR: Could not open the game text file.");
         exit(EXIT_FAILURE);
     }
 
-    // Move to the beginning of the file
-    filePath.seekg(0, std::ios::beg);
+    //unsigned int currentLine = 1;
+    unsigned int currentLine = atLine;
 
-    // Loop through each line in the file
-    for (unsigned int i = 1; i <= atLine; i++)
+    // Read each line in the file until we reach the end or the desired line range.
+    while (std::getline(filePath, line) && currentLine <= atLine)
     {
-        // Read the line from the file
-        std::getline(filePath, text);
-
-        // Check if we have reached the desired line
-        if (i == atLine)
+        // If the current line is within the desired range, add it to the output string.
+        if (currentLine >= atLine)
         {
-            // We have found the line, so break the loop
-            break;
+            text += line + "\n";
         }
+        currentLine++;
     }
 
     // Close the file
     filePath.close();
 
-    // Return the line at the specified index
+    // Return the output string.
     return text;
 }
+
+//std::string GameChoicesMenu::GetMenuAtLine(std::ifstream& filePath, unsigned int atLine)
+//{
+//    //std::ifstream& fileInputStream;
+//    std::string text;
+//
+//
+//    // Check if file opens
+//    if (!filePath.is_open())
+//    {
+//        // File could not be opened, so return an empty string
+//        DEBUG_MSG("¢RERROR: Could not open the menu text file.");
+//        exit(EXIT_FAILURE);
+//    }
+//
+//    // Move to the beginning of the file
+//    filePath.seekg(0, std::ios::beg);
+//
+//    // Loop through each line in the file
+//    for (unsigned int i = 1; i <= atLine; i++)
+//    {
+//        // Read the line from the file
+//        std::getline(filePath, text);
+//
+//        // Check if we have reached the desired line
+//        if (i == atLine)
+//        {
+//            // We have found the line, so break the loop
+//            break;
+//        }
+//    }
+//
+//    // Close the file
+//    filePath.close();
+//
+//    // Return the line at the specified index
+//    return text;
+//}
 
 
 std::string GameChoicesMenu::GetCurrentSceneMenuText()

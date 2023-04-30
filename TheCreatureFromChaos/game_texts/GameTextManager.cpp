@@ -28,8 +28,7 @@ GameTextManager::GameTextManager(UserScenesManager* sceneManager) :
 
 void GameTextManager::PrintLinesFromScene()
 {
-    //GameChoicesMenu manageMenu;
-
+    UserScenesManager::E_SceneSequence scene = GetSceneManager()->GetPlayerCurrentScene();
     const unsigned short int ASCII_IMAGE_HEIGHT = 33;
     const unsigned short int STORY_TEXT_HEIGHT = 4;
     const unsigned short int MENU_TEXT_HEIGHT = 5;
@@ -39,7 +38,7 @@ void GameTextManager::PrintLinesFromScene()
     unsigned short int gameTextFirstLine = 0;
     unsigned short int gameTextLastLine = 0;
 
-    switch (GetSceneManager()->GetPlayerCurrentScene())
+    switch (scene)
     {
 		case UserScenesManager::E_SceneSequence::INTRO_SCENE:
             gameImageFirstLine = GetSceneImageLines(UserScenesManager::E_SceneSequence::INTRO_SCENE);
