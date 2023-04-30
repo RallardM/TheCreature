@@ -71,7 +71,6 @@ void GameTextManager::PrintLinesFromScene()
 	
 }
 
-
 std::string GameTextManager::GetTextBetweenLines(std::ifstream& filePath, unsigned int firstLine, unsigned int lastLine)
 {
     //std::ifstream& fileInputStream = filePath;
