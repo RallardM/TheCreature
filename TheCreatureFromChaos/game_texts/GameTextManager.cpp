@@ -74,48 +74,6 @@ void GameTextManager::PrintLinesFromScene()
 	
 }
 
-//// Go to a specific lines in a file and return the text between those lines.
-//std::string GameTextManager::GetTextBetweenLines(std::ifstream& filePath, unsigned int firstLine, unsigned int lastLine)
-//{
-//    std::string text;
-//    std::string line;
-//
-//    // If the firstLine and lastLine are the same, return just that line.
-//    if (firstLine == lastLine && firstLine > 0) 
-//    {
-//        // Move to the desired line
-//        for (unsigned int i = 1; i < firstLine; ++i) 
-//        {
-//            std::getline(filePath, line);
-//        }
-//        // Get the desired line
-//        std::getline(filePath, line);
-//        // Add the line to the output string
-//        text += line;
-//    }
-//    else if (lastLine > 0 && firstLine <= lastLine) 
-//    {
-//        // Move to the first desired line
-//        for (unsigned int i = 1; i < firstLine; ++i) 
-//        {
-//            std::getline(filePath, line);
-//        }
-//        // Read each line in the desired range and add it to the output string
-//        unsigned int currentLine = firstLine;
-//        while (std::getline(filePath, line) && currentLine <= lastLine) 
-//        {
-//            text += line;
-//            if (currentLine < lastLine) 
-//            {
-//                text += "\n"; // Only add a newline if it's not the last line
-//            }
-//            currentLine++;
-//        }
-//    }
-//
-//    // Return the output string.
-//    return text;
-//}
 
 std::string GameTextManager::GetTextBetweenLines(std::ifstream& filePath, unsigned int firstLine, unsigned int lastLine)
 {

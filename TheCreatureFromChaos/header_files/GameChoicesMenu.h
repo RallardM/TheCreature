@@ -6,6 +6,8 @@
 //#include "GameTextManager.h"
 class GameTextManager;
 
+const short int EMPTY_MENU_LINE = -1;
+const std::string EMPTY_MENU_TEXT = "";
 
 class GameChoicesMenu {
 public:
@@ -26,6 +28,8 @@ public:
 
 	unsigned short int GetSelectedMenuLine();
 	void SetSelectedMenuLine(unsigned short int selectedMenuLine);
+
+	std::string GetMenuAtLine(std::ifstream& filePath, unsigned int lastLine);
 
 private:
 	unsigned short int m_gameMenuLines[2];

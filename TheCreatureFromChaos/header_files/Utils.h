@@ -8,5 +8,6 @@ public:
 	void SetCenterConsolePosition();
 	void ClearConsole();
 	void DisableConsoleCursor();
+	void ActivateConsoleCursor();
 	
 };

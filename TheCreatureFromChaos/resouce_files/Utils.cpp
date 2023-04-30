@@ -76,3 +76,13 @@ void Utils::DisableConsoleCursor()
     cursorInfo.bVisible = FALSE; // Set the cursor visibility to false
     SetConsoleCursorInfo(hConsole, &cursorInfo);
 }
+
+void Utils::ActivateConsoleCursor()
+{
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO cursor_info;
+    GetConsoleCursorInfo(console, &cursor_info);
+    cursor_info.bVisible = TRUE; // Set cursor visibility to true
+    cursor_info.dwSize = 100; // Set cursor size to 100
+    SetConsoleCursorInfo(console, &cursor_info);
+}

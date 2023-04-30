@@ -36,4 +36,5 @@ private:
 	unsigned short int m_sceneMenuLines[2];
 
 	unsigned short int GetSceneImageLines(UserScenesManager::E_SceneSequence fromLine);
+	std::string GetMenuAtLine(std::ifstream& filePath, unsigned int lastLine);
 };

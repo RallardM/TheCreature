@@ -20,7 +20,8 @@ int main()
 	Utils* utils = nullptr;
 	utils->SetConsolesize();
 	utils->SetCenterConsolePosition();
-	utils->DisableConsoleCursor();
+	//utils->DisableConsoleCursor();
+	utils->ActivateConsoleCursor();
 
 	// Initialize the UserInputManager object.
 	//DEBUG_MSG("main.cpp : main() : Initialize the UserInputManager object.");
@@ -94,7 +95,9 @@ int main()
 			if (!mainClassAccess->GetIsMenuCleared()) 
 			{
 				std::cout << "\033[1A\033[0K";
+				menuManager->SetCurrentSceneMenuText(EMPTY_MENU_TEXT);
 				mainClassAccess->SetIsMenuCleared(true);
+
 				menuManager->PrintMenuFromScene(userInput, !oneLoopOFTwo);
 				mainClassAccess->SetIsMenuCleared(false);
 			}
@@ -114,8 +117,10 @@ int main()
 			if (!mainClassAccess->GetIsMenuCleared()) 
 			{
 				std::cout << "\033[1A\033[0K";
+				menuManager->SetCurrentSceneMenuText(EMPTY_MENU_TEXT);
 				mainClassAccess->SetIsMenuCleared(true);
-				menuManager->PrintMenuFromScene(userInput, !oneLoopOFTwo);
+
+				menuManager->PrintMenuFromScene(userInput, oneLoopOFTwo);
 				mainClassAccess->SetIsMenuCleared(false);
 			}
 			oneLoopOFTwo = true;
