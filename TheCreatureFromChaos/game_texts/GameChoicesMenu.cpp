@@ -206,4 +206,3 @@ short int GameChoicesMenu::GetCurrentPlainMenu()
 {
     return m_currentPlainMenu;
 }
-
