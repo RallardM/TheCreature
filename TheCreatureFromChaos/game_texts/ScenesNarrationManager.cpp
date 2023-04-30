@@ -7,14 +7,14 @@
 #include <string>
 #include <array>
 
-#include "GameTextManager.h"
+#include "ScenesNarrationManager.h"
 #include "DebugMessageSystem.h"
 
-//GameTextManager::GameTextManager(MainClass* mainClassAcces, UserScenesManager* sceneManager) :
-GameTextManager::GameTextManager(UserScenesManager* sceneManager) :
-    m_textFilePath("resouce_files/GameText.txt"), 
-    m_pictureFilePath("resouce_files/GameAsciiArt.txt"),
-    m_menuFilePath("resouce_files/GameChoicesMenu.txt"),
+//ScenesNarrationManager::ScenesNarrationManager(MainClass* mainClassAcces, UserScenesManager* sceneManager) :
+ScenesNarrationManager::ScenesNarrationManager(UserScenesManager* sceneManager) :
+    m_textFilePath("resouce_files/ScenesNarrationText.txt"), 
+    m_pictureFilePath("resouce_files/ScenesAsciiArt.txt"),
+    m_menuFilePath("resouce_files/ScenesMenuText.txt"),
     m_sceneTextLines{ 1, 6 },
     m_sceneImageLines{ 1, 35 },
     m_sceneMenuLines{ 1, 6 },
@@ -23,11 +23,11 @@ GameTextManager::GameTextManager(UserScenesManager* sceneManager) :
 
 }
 
-//GameTextManager::GameTextManager()
+//ScenesNarrationManager::ScenesNarrationManager()
 //{
 //}
 
-void GameTextManager::PrintLinesFromScene()
+void ScenesNarrationManager::PrintLinesFromScene()
 {
     UserScenesManager::E_SceneSequence scene = GetSceneManager()->GetPlayerCurrentScene();
     const unsigned short int ASCII_IMAGE_HEIGHT = 33;
@@ -72,10 +72,10 @@ void GameTextManager::PrintLinesFromScene()
 	
 }
 
-
-std::string GameTextManager::GetTextBetweenLines(std::ifstream& filePath, unsigned int firstLine, unsigned int lastLine)
+std::string ScenesNarrationManager::GetTextBetweenLines(std::string& filePathStr, unsigned int firstLine, unsigned int lastLine)
 {
-    //std::ifstream& fileInputStream = filePath;
+    //std::ifstream filePath("resouce_files/ScenesAsciiArt.txt");
+    std::ifstream filePath(filePathStr);
     std::string text;
     std::string line;
 
@@ -86,55 +86,56 @@ std::string GameTextManager::GetTextBetweenLines(std::ifstream& filePath, unsign
         DEBUG_MSG("¢RERROR: Could not open the game text file.");
         exit(EXIT_FAILURE);
     }
-
-    //unsigned int currentLine = 1;
-    unsigned int currentLine = firstLine;
-    
-    // Read each line in the file until we reach the end or the desired line range.
-    while (std::getline(filePath, line) && currentLine <= lastLine)
+    else
     {
-        // If the current line is within the desired range, add it to the output string.
-        if (currentLine >= firstLine)
-        {
-            text += line + "\n";
-        }
-        currentLine++;
-    }
+        //unsigned int currentLine = 1;
+        unsigned int currentLine = firstLine;
 
-    // Close the file
-    filePath.close();
+        // Read each line in the file until we reach the end or the desired line range.
+        while (std::getline(filePath, line) && currentLine <= lastLine)
+        {
+            // If the current line is within the desired range, add it to the output string.
+            if (currentLine >= firstLine)
+            {
+                text += line + "\n";
+            }
+            currentLine++;
+        }
+
+        // Close the file
+        filePath.close();
+    }
 
     // Return the output string.
     return text;
 }
 
-std::ifstream& GameTextManager::GetPictureFilePath()
+std::string& ScenesNarrationManager::GetPictureFilePath()
 {
     return m_pictureFilePath;
 }
 
-std::ifstream& GameTextManager::GetTextFilePath()
+std::string& ScenesNarrationManager::GetTextFilePath()
 { 
     return m_textFilePath;
 }
 
+std::string& ScenesNarrationManager::GetMenuFilePath()
+{
+    return m_menuFilePath;
+}
 
-unsigned short int GameTextManager::GetSceneImageLines(UserScenesManager::E_SceneSequence fromLine)
+unsigned short int ScenesNarrationManager::GetSceneImageLines(UserScenesManager::E_SceneSequence fromLine)
 {
     return m_sceneImageLines[static_cast<int>(fromLine)];
 }
 
-unsigned short int GameTextManager::GetSceneTextLines(UserScenesManager::E_SceneSequence fromLine)
+unsigned short int ScenesNarrationManager::GetSceneTextLines(UserScenesManager::E_SceneSequence fromLine)
 {
     return m_sceneTextLines[static_cast<int>(fromLine)];
 }
 
-UserScenesManager* GameTextManager::GetSceneManager()
+UserScenesManager* ScenesNarrationManager::GetSceneManager()
 {
 	return m_sceneManager;
-}
-
-std::ifstream& GameTextManager::GetMenuFilePath()
-{
-    return m_menuFilePath;
 }

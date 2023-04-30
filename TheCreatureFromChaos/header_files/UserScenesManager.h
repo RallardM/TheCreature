@@ -3,7 +3,7 @@
 class UserScenesManager {
 public:
 	enum class E_SceneSequence {
-		//  GameTextManager.cpp m_sceneMenuLines{ 1, 6 }
+		//  ScenesNarrationManager.cpp m_sceneMenuLines{ 1, 6 }
 		NO_SCENE = -1, 
 		INTRO_SCENE = 0, // line 1 
 		MOVING_SCENE = 2, // line 6

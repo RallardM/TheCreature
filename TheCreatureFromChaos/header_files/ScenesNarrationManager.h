@@ -5,28 +5,29 @@
 #include "Utils.h"
 #include "UserScenesManager.h"
 #include "UserInputManager.h"
-#include "GameChoicesMenu.h"
+#include "ScenesMenuManager.h"
 #include "main.h"
 
-class GameTextManager {
+class ScenesNarrationManager {
 public:
-	GameTextManager(UserScenesManager* sceneManager);
+	ScenesNarrationManager(UserScenesManager* sceneManager);
 	void PrintLinesFromScene();
 
-	std::ifstream& GetPictureFilePath();
-	std::ifstream& GetTextFilePath();
-	std::ifstream& GetMenuFilePath();
+	std::string& GetPictureFilePath();
+	std::string& GetTextFilePath();
+	std::string& GetMenuFilePath();
 
 	unsigned short int GetSceneTextLines(UserScenesManager::E_SceneSequence fromLine);
-	std::string GetTextBetweenLines(std::ifstream& file, unsigned int firstLine, unsigned int lastLine);
+	std::string GetTextBetweenLines(std::string& filePathStr, unsigned int firstLine, unsigned int lastLine);
 
 	UserScenesManager* GetSceneManager();
 
 private:
 	UserScenesManager* m_sceneManager;
-	std::ifstream m_textFilePath;
-	std::ifstream m_pictureFilePath;
-	std::ifstream m_menuFilePath;
+
+	std::string m_textFilePath;
+	std::string m_pictureFilePath;
+	std::string m_menuFilePath;
 
 	unsigned short int m_sceneTextLines[2];
 	unsigned short int m_sceneImageLines[2];

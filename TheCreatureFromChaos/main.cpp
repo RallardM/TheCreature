@@ -4,9 +4,9 @@
 #include <thread>
 
 #include "Utils.h"
-#include "GameTextManager.h"
+#include "ScenesNarrationManager.h"
 #include "UserInputManager.h"
-#include "GameChoicesMenu.h"
+#include "ScenesMenuManager.h"
 #include "UserScenesManager.h"
 #include "DebugMessageSystem.h"
 #include "main.h"
@@ -37,14 +37,14 @@ int main()
 	//DEBUG_MSG("main.cpp : main() : Initialize the UserScenesManager object.");
 	UserScenesManager* sceneManager = new UserScenesManager();
 
-	// Initialize the GameTextManager object.
-	//DEBUG_MSG("main.cpp : main() : Initialize the GameTextManager object.");
-	//GameTextManager* textManager = new GameTextManager(mainClassAcces, sceneManager);
-	GameTextManager* textManager = new GameTextManager(sceneManager);
+	// Initialize the ScenesNarrationManager object.
+	//DEBUG_MSG("main.cpp : main() : Initialize the ScenesNarrationManager object.");
+	//ScenesNarrationManager* textManager = new ScenesNarrationManager(mainClassAcces, sceneManager);
+	ScenesNarrationManager* textManager = new ScenesNarrationManager(sceneManager);
 
-	// Initialize the GameChoicesMenu object.
-	//DEBUG_MSG("main.cpp : main() : Initialize the GameChoicesMenu object.");
-	GameChoicesMenu* menuManager = new GameChoicesMenu(mainClassAccess, sceneManager, textManager);
+	// Initialize the ScenesMenuManager object.
+	//DEBUG_MSG("main.cpp : main() : Initialize the ScenesMenuManager object.");
+	ScenesMenuManager* menuManager = new ScenesMenuManager(mainClassAccess, sceneManager, textManager);
 
 	unsigned short int counter = 0;
 	unsigned short int numLoops = 5;
@@ -87,7 +87,7 @@ int main()
 			{
 				if (mainClassAccess->GetIsMenuCleared())
 				{
-					menuManager->PrintMenuFromScene(userInput, oneLoopOFTwo);
+					menuManager->PrintMenuFromScene(userInput, true);
 					mainClassAccess->SetIsMenuCleared(false);
 				}
 			}
@@ -98,7 +98,7 @@ int main()
 				menuManager->SetCurrentSceneMenuText(EMPTY_MENU_TEXT);
 				mainClassAccess->SetIsMenuCleared(true);
 
-				menuManager->PrintMenuFromScene(userInput, !oneLoopOFTwo);
+				menuManager->PrintMenuFromScene(userInput, false);
 				mainClassAccess->SetIsMenuCleared(false);
 			}
 			oneLoopOFTwo = false;
@@ -109,7 +109,7 @@ int main()
 			{
 				if (mainClassAccess->GetIsMenuCleared())
 				{
-					menuManager->PrintMenuFromScene(userInput, oneLoopOFTwo);
+					menuManager->PrintMenuFromScene(userInput, false);
 					mainClassAccess->SetIsMenuCleared(false);
 				}
 			}
@@ -120,7 +120,7 @@ int main()
 				menuManager->SetCurrentSceneMenuText(EMPTY_MENU_TEXT);
 				mainClassAccess->SetIsMenuCleared(true);
 
-				menuManager->PrintMenuFromScene(userInput, oneLoopOFTwo);
+				menuManager->PrintMenuFromScene(userInput, true);
 				mainClassAccess->SetIsMenuCleared(false);
 			}
 			oneLoopOFTwo = true;

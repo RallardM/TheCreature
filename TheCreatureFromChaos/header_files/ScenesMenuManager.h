@@ -5,15 +5,15 @@
 #include "UserScenesManager.h"
 #include "UserInputManager.h"
 #include "main.h"
-//#include "GameTextManager.h"
-class GameTextManager;
+
+class ScenesNarrationManager;
 
 const short int EMPTY_MENU_LINE = -1;
 const std::string EMPTY_MENU_TEXT = "";
 
-class GameChoicesMenu {
+class ScenesMenuManager {
 public:
-	GameChoicesMenu(MainClass* mainClassAccess, UserScenesManager* sceneManager, GameTextManager* textManager);
+	ScenesMenuManager(MainClass* mainClassAccess, UserScenesManager* sceneManager, ScenesNarrationManager* textManager);
 	void PrintMenuFromScene(UserInputManager::E_UserInput userInput, bool oneLoopOFTwo);
 
 	std::string GetLastLineInConsole();
@@ -28,9 +28,8 @@ public:
 
 	unsigned short int GetSelectedMenuLine();
 	void SetSelectedMenuLine(unsigned short int selectedMenuLine);
-
-	std::string GetMenuAtLine(std::ifstream& filePath, unsigned int lastLine);
-	std::ifstream& GetMenuFilePath();
+	std::string GetMenuAtLine(std::string& filePath, unsigned int atLine);
+	//std::ifstream& GetMenuFilePath();
 
 private:
 	unsigned short int m_gameMenuLines[2];
@@ -41,5 +40,5 @@ private:
 
 	MainClass* m_mainClassAccess;
 	UserScenesManager* m_sceneManager;
-	GameTextManager* m_textManager;
+	ScenesNarrationManager* m_textManager;
 };
