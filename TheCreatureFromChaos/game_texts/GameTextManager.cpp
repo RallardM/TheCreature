@@ -8,14 +8,12 @@
 #include <array>
 
 #include "GameTextManager.h"
-
-
+#include "DebugMessageSystem.h"
 
 //GameTextManager::GameTextManager(MainClass* mainClassAcces, UserScenesManager* sceneManager) :
 GameTextManager::GameTextManager(UserScenesManager* sceneManager) :
     m_textFilePath("resouce_files/GameText.txt"), 
     m_pictureFilePath("resouce_files/GameAsciiArt.txt"),
-    m_menuFilePath("resouce_files/GameChoicesMenu.txt"),
     m_sceneTextLines{ 1, 6 },
     m_sceneImageLines{ 1, 35 },
     m_sceneMenuLines{ 1, 6 },
@@ -77,8 +75,18 @@ void GameTextManager::PrintLinesFromScene()
 
 std::string GameTextManager::GetTextBetweenLines(std::ifstream& filePath, unsigned int firstLine, unsigned int lastLine)
 {
+    //std::ifstream& fileInputStream = filePath;
     std::string text;
     std::string line;
+
+    // Check if file opens
+    if (!filePath.is_open())
+    {
+        // File could not be opened, so return an empty string
+        DEBUG_MSG("¢RERROR: Could not open the game text file.");
+        exit(EXIT_FAILURE);
+    }
+
     //unsigned int currentLine = 1;
     unsigned int currentLine = firstLine;
     
@@ -93,20 +101,11 @@ std::string GameTextManager::GetTextBetweenLines(std::ifstream& filePath, unsign
         currentLine++;
     }
 
+    // Close the file
+    filePath.close();
+
     // Return the output string.
     return text;
-}
-
-std::string GetFileContents(const std::string& filePath) {
-    std::ifstream inFile(filePath);
-    if (!inFile) {
-        throw std::runtime_error("Failed to open file: " + filePath);
-    }
-
-    std::stringstream buffer;
-    buffer << inFile.rdbuf();
-
-    return buffer.str();
 }
 
 std::ifstream& GameTextManager::GetPictureFilePath()
@@ -119,10 +118,6 @@ std::ifstream& GameTextManager::GetTextFilePath()
     return m_textFilePath;
 }
 
-std::ifstream& GameTextManager::GetMenuFilePath()
-{
-    return m_menuFilePath;
-}
 
 unsigned short int GameTextManager::GetSceneImageLines(UserScenesManager::E_SceneSequence fromLine)
 {

@@ -13,7 +13,8 @@ GameChoicesMenu::GameChoicesMenu(MainClass* mainClassAcces, UserScenesManager* s
     m_sceneManager(sceneManager),
     m_textManager(textManager),
     m_currentPlainMenu(EMPTY_MENU_LINE),
-    m_currenSceneMenuText(EMPTY_MENU_TEXT)
+    m_currenSceneMenuText(EMPTY_MENU_TEXT),
+    m_menuFilePath("resouce_files/GameChoicesMenu.txt")
 {
     m_selectedMenuLine = static_cast<int>(UserScenesManager::E_SceneSequence::NO_SCENE);
 }
@@ -26,8 +27,7 @@ void GameChoicesMenu::PrintMenuFromScene(UserInputManager::E_UserInput userInput
     short int startingMenuLine = GetGameMenuLine(UserScenesManager::E_SceneSequence::INTRO_SCENE);
     short int currentPlainMenu = GetCurrentPlainMenu();
     std::string currentSceneMenuText = GetCurrentSceneMenuText();
-    std::string newSceneMenuText = EMPTY_MENU_TEXT;
-    std::ifstream& menuFilePath = m_textManager->GetMenuFilePath();
+    std::ifstream& menuFilePath = GetMenuFilePath();
 
     switch (scene)
     {
@@ -63,8 +63,8 @@ void GameChoicesMenu::PrintMenuFromScene(UserInputManager::E_UserInput userInput
         break;
     }
 
-    newSceneMenuText = GetCurrentSceneMenuText();
-    std::cout << newSceneMenuText << std::endl;
+    std::string newCurrentSceneMenuText = GetMenuAtLine(GetMenuFilePath(), gameMenuLine);
+    std::cout << newCurrentSceneMenuText << std::endl;
 }
 
 std::string GameChoicesMenu::GetLastLineInConsole()
@@ -95,14 +95,16 @@ std::string GameChoicesMenu::GetLastLineInConsole()
 
 std::string GameChoicesMenu::GetMenuAtLine(std::ifstream& filePath, unsigned int atLine)
 {
+    //std::ifstream& fileInputStream;
     std::string text;
+
 
     // Check if file opens
     if (!filePath.is_open())
     {
         // File could not be opened, so return an empty string
         DEBUG_MSG("¢RERROR: Could not open the menu text file.");
-        return "";
+        exit(EXIT_FAILURE);
     }
 
     // Move to the beginning of the file
@@ -163,5 +165,10 @@ void GameChoicesMenu::SetCurrentPlainMenu(short int currentPlainMenu)
 short int GameChoicesMenu::GetCurrentPlainMenu()
 {
     return m_currentPlainMenu;
+}
+
+std::ifstream& GameChoicesMenu::GetMenuFilePath()
+{
+    return m_menuFilePath;
 }
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <fstream>
+
 #include "UserScenesManager.h"
 #include "UserInputManager.h"
 #include "main.h"
@@ -13,8 +15,6 @@ class GameChoicesMenu {
 public:
 	GameChoicesMenu(MainClass* mainClassAccess, UserScenesManager* sceneManager, GameTextManager* textManager);
 	void PrintMenuFromScene(UserInputManager::E_UserInput userInput, bool oneLoopOFTwo);
-	//UserScenesManager* GetSceneManager();
-	//GameTextManager* GetGameTextManager();
 
 	std::string GetLastLineInConsole();
 
@@ -30,12 +30,14 @@ public:
 	void SetSelectedMenuLine(unsigned short int selectedMenuLine);
 
 	std::string GetMenuAtLine(std::ifstream& filePath, unsigned int lastLine);
+	std::ifstream& GetMenuFilePath();
 
 private:
 	unsigned short int m_gameMenuLines[2];
 	short int m_selectedMenuLine;
 	short int m_currentPlainMenu;
 	std::string m_currenSceneMenuText;
+	std::ifstream m_menuFilePath;
 
 	MainClass* m_mainClassAccess;
 	UserScenesManager* m_sceneManager;
