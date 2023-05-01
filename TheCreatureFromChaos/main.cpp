@@ -2,6 +2,7 @@
 #include <string>
 #include <chrono>
 #include <thread>
+#include <conio.h>
 
 #include "Utils.h"
 #include "ScenesNarrationManager.h"
@@ -10,6 +11,7 @@
 #include "UserScenesManager.h"
 #include "DebugMessageSystem.h"
 #include "main.h"
+
 
 int main()
 {
@@ -58,7 +60,7 @@ int main()
 	while (gameRunning)
 	{
 		// Process user input
-		if (inputManager.HasInput()) 
+		if (_kbhit())
 		{
 			userInput = inputManager.GetInput();
 			//std::cout << "Has input : " << static_cast<int>(userInput) << std::endl;
@@ -67,6 +69,7 @@ int main()
 				
 				menuManager->PrintMenuFromScene(userInput);
 				mainClassAccess->SetIsMenuCleared(false);
+				inputManager.SetHasInput(false);
 			}
 		}
 

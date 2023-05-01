@@ -6,9 +6,11 @@ public:
 
 	bool HasInput();
 
+	void SetHasInput(bool hasInput);
+
 	E_UserInput GetInput();
 
 private:
 	static bool prevInputDetected;
-	
+	bool m_hasInput;
 };
