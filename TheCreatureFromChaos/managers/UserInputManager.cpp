@@ -72,7 +72,7 @@ void UserInputManager::SetAction(UserInputManager::E_UserInput userInput)
 
     if (userInput == UserInputManager::E_UserInput::LEFT || userInput == UserInputManager::E_UserInput::RIGHT)
     {
-        g_menuManager->PrintMenuFromScene(userInput);
+        m_menuManager->PrintMenuFromScene(userInput);
         m_menuManager->SetIsMenuCleared(false);
         SetHasInput(false);
     }
@@ -84,7 +84,7 @@ void UserInputManager::SetAction(UserInputManager::E_UserInput userInput)
 	}
     if (userInput == UserInputManager::E_UserInput::ENTER)
     {
-        std::cout << g_menuManager->GetSelectedMenuLine() << std::endl;
+        std::cout << m_menuManager->GetSelectedMenuLine() << std::endl;
 	}
     if (userInput == UserInputManager::E_UserInput::ESC)
     {

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MENUMANAGER_HPP
+#define MENUMANAGER_HPP
 
 #include <fstream>
 
@@ -57,3 +58,4 @@ private:
 	ScenesManager* m_sceneManager;
 	NarrationManager* m_narrationManager;
 };
+#endif // MENUMANAGER_HPP

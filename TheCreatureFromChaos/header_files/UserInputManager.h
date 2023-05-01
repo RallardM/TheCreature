@@ -1,4 +1,6 @@
-#pragma once
+#ifndef USERINPUTMANAGER_HPP
+#define USERINPUTMANAGER_HPP
+
 //#include "main.h"
 
 #include "MenuManager.h"
@@ -21,3 +23,5 @@ private:
 	MenuManager* m_menuManager;
 	//MainClass* m_mainClassAccess;
 };
+
+#endif // USERINPUTMANAGER_HPP

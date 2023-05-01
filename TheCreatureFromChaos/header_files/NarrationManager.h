@@ -1,4 +1,5 @@
-#pragma once
+#ifndef NARRATIONMANAGER_HPP
+#define NARRATIONMANAGER_HPP
 
 #include <fstream>
 
@@ -38,3 +39,4 @@ private:
 	unsigned short int m_sceneMenuLines[2];
 
 };
+#endif // NARRATIONMANAGER_HPP
