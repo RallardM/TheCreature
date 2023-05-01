@@ -29,65 +29,26 @@ UserInputManager::E_UserInput UserInputManager::GetInput()
                 case 'w':
                 case 'W':
                 case 72: // Up arrow key
-                    //std::cout << "Up arrow key pressed" << std::endl;
                     return E_UserInput::UP;
 
                 case 's':
                 case 'S':
                 case 80: // Down arrow key
-                    //std::cout << "Down arrow key pressed" << std::endl;
                     return E_UserInput::DOWN;
 
                 case 13: // Enter key
-                    //std::cout << "Enter key pressed" << std::endl;
                     return E_UserInput::ENTER;
 
                 case 27: // Escape key
-                    //std::cout << "Escape key pressed" << std::endl;
-                    //SetHasInput(true);
                     return E_UserInput::ESC;
 
                 default: // Default case - returns an empty input
-                    //std::cout << "Default case - returns an empty input" << std::endl;
-                    //SetHasInput(false);
                     return E_UserInput::EMPTY;
             }
-            
-        //}
-        //else
-        //{
-        //    //std::cout << "No input detected" << std::endl;
-        //    SetHasInput(false);
-        //    return E_UserInput::EMPTY;
-        //}
      }
 }
 
-//bool UserInputManager::HasInput()
-//{
-//    if (_kbhit()) // check if a key is being pressed
-//    {
-//        //_getch(); // read the key from the buffer to clear it
-//        //return true;
-//        return _getch();
-//    }
-//    else
-//    {
-//        return false;
-//    }
-//}
 
-//bool UserInputManager::HasInput()
-//{
-//    if (GetInput() != E_UserInput::EMPTY)
-//    {
-//		return true;
-//	}
-//    else
-//    {
-//		return false;
-//	}
-//}
 
 bool UserInputManager::HasInput()
 {
