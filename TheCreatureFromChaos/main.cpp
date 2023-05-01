@@ -20,8 +20,8 @@ int main()
 	Utils* utils = nullptr;
 	utils->SetConsolesize();
 	utils->SetCenterConsolePosition();
-	//utils->DisableConsoleCursor();
-	utils->ActivateConsoleCursor();
+	utils->DisableConsoleCursor();
+	//utils->ActivateConsoleCursor();
 
 	// Initialize the UserInputManager object.
 	//DEBUG_MSG("main.cpp : main() : Initialize the UserInputManager object.");
