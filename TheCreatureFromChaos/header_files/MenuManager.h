@@ -2,31 +2,33 @@
 
 #include <fstream>
 
-#include "UserScenesManager.h"
+#include "ScenesManager.h"
 #include "UserInputManager.h"
-#include "ScenesNarrationManager.h"
-//#include "main.h"
+#include "NarrationManager.h"
+
 
 //class UserInputManager;
-//class UserScenesManager;
-//class ScenesNarrationManager;
+//class ScenesManager;
+//class NarrationManager;
 
 const short int EMPTY_MENU_LINE = -1;
 const std::string EMPTY_MENU_TEXT = "";
 const unsigned short int NUMBER_OF_HIGHLIGHTED_MENU_LINES = 4;
 const unsigned short int UNHIGHLIGHTED_MENU_LINE = 1;
 
-class ScenesMenuManager {
+class MenuManager : ScenesManager {
 public:
-	ScenesMenuManager(UserScenesManager* sceneManager, ScenesNarrationManager* textManager);
-	//ScenesMenuManager(MainClass* mainClassAccess, UserScenesManager* sceneManager, ScenesNarrationManager* textManager);
-	ScenesMenuManager();
+	unsigned short int g_introHighlightedMenu[NUMBER_OF_HIGHLIGHTED_MENU_LINES]{ 2, 3, 4, 5 };
+
+	MenuManager(ScenesManager* sceneManager, NarrationManager* textManager);
+	//MenuManager(MainClass* mainClassAccess, ScenesManager* sceneManager, NarrationManager* textManager);
+	//MenuManager();
 
 	void PrintMenuFromScene(UserInputManager::E_UserInput userInput);
 
 	std::string GetLastLineInConsole();
 
-	//unsigned short int GetGameMenuLine(UserScenesManager::E_SceneSequence fromLine);
+	//unsigned short int GetGameMenuLine(ScenesManager::E_SceneSequence fromLine);
 
 	//void SetCurrentPlainMenu(short int currentPlainMenu);
 	//short int GetCurrentPlainMenu();
@@ -40,15 +42,18 @@ public:
 
 	void ClearConsolePreviousLine();
 
+	bool GetIsMenuCleared();
+	void SetIsMenuCleared(bool isMenuCleared);
+
 private:
 	//unsigned short int m_gameMenuLines[2];
-	unsigned short int m_introHighlightedMenu[NUMBER_OF_HIGHLIGHTED_MENU_LINES];
+	//unsigned short int m_introHighlightedMenu[NUMBER_OF_HIGHLIGHTED_MENU_LINES];
 	short int m_selectedMenuLine;
 	//short int m_currentPlainMenu;
 	//std::string m_currenSceneMenuText;
 	std::ifstream m_menuFilePath;
-
+	bool m_isMenuCleared;
 	//MainClass* m_mainClassAccess;
-	UserScenesManager* m_sceneManager;
-	ScenesNarrationManager* m_narrationManager;
+	ScenesManager* m_sceneManager;
+	NarrationManager* m_narrationManager;
 };

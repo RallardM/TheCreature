@@ -143,13 +143,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="game_texts\ScenesMenuManager.cpp" />
-    <ClCompile Include="game_texts\ScenesNarrationManager.cpp" />
+    <ClCompile Include="managers\MenuManager.cpp" />
+    <ClCompile Include="managers\NarrationManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="resouce_files\DebugMessageSystem.cpp" />
     <ClCompile Include="resouce_files\Utils.cpp" />
-    <ClCompile Include="user_managers\UserInputManager.cpp" />
-    <ClCompile Include="user_managers\UserScenesManager.cpp" />
+    <ClCompile Include="managers\UserInputManager.cpp" />
+    <ClCompile Include="managers\ScenesManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resouce_files\GameArtEnding.jpg" />
@@ -162,10 +162,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_files\DebugMessageSystem.h" />
-    <ClInclude Include="header_files\ScenesMenuManager.h" />
-    <ClInclude Include="header_files\ScenesNarrationManager.h" />
-    <ClInclude Include="header_files\main.h" />
-    <ClInclude Include="header_files\UserScenesManager.h" />
+    <ClInclude Include="header_files\MenuManager.h" />
+    <ClInclude Include="header_files\NarrationManager.h" />
+    <ClInclude Include="header_files\ScenesManager.h" />
     <ClInclude Include="header_files\UserInputManager.h" />
     <ClInclude Include="header_files\Utils.h" />
   </ItemGroup>

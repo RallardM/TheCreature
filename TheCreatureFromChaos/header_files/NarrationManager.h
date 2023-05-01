@@ -3,16 +3,16 @@
 #include <fstream>
 
 #include "Utils.h"
-#include "UserScenesManager.h"
+#include "ScenesManager.h"
 //#include "UserInputManager.h"
-//#include "ScenesMenuManager.h"
-#include "main.h"
+//#include "MenuManager.h"
+//#include "main.h"
 
-//class ScenesMenuManager;
+//class MenuManager;
 
-class ScenesNarrationManager {
+class NarrationManager : ScenesManager {
 public:
-	ScenesNarrationManager(UserScenesManager* sceneManager);
+	NarrationManager(ScenesManager* sceneManager);
 	void PrintLinesFromScene();
 
 	std::string& GetPictureFilePath();
@@ -20,14 +20,14 @@ public:
 	std::string& GetMenuFilePath();
 	std::string GetTextBetweenLines(std::string& filePathStr, unsigned int firstLine, unsigned int lastLine);
 
-	UserScenesManager* GetSceneManager();
+	ScenesManager* GetSceneManager();
 
-	unsigned short int GetSceneMenuLine(UserScenesManager::E_SceneSequence fromLine);
+	unsigned short int GetSceneMenuLine(ScenesManager::E_SceneSequence fromLine);
 private:
-	unsigned short int GetSceneTextLines(UserScenesManager::E_SceneSequence fromLine);
-	unsigned short int GetSceneImageLines(UserScenesManager::E_SceneSequence fromLine);
+	unsigned short int GetSceneTextLines(ScenesManager::E_SceneSequence fromLine);
+	unsigned short int GetSceneImageLines(ScenesManager::E_SceneSequence fromLine);
 
-	UserScenesManager* m_sceneManager;
+	ScenesManager* m_sceneManager;
 
 	std::string m_textFilePath;
 	std::string m_pictureFilePath;

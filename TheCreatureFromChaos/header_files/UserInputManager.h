@@ -1,12 +1,13 @@
 #pragma once
-#include "main.h"
-//#include "ScenesMenuManager.h"
-//#include "ScenesMenuManager.h"
+//#include "main.h"
 
-//class ScenesMenuManager;
+#include "MenuManager.h"
+
+//class MenuManager;
 
 class UserInputManager {
 public:
+	UserInputManager(MenuManager* menuManager);
 	//UserInputManager(MainClass* mainClassAccess);
 	enum class E_UserInput { LEFT, RIGHT, UP, DOWN, ENTER, ESC, EMPTY };
 	bool HasInput();
@@ -15,7 +16,8 @@ public:
 	void SetAction(UserInputManager::E_UserInput userInput);
 
 private:
-	static bool prevInputDetected;
+	//static bool prevInputDetected;
 	bool m_hasInput;
+	MenuManager* m_menuManager;
 	//MainClass* m_mainClassAccess;
 };

@@ -1,36 +1,35 @@
-#pragma once
+//#pragma once
+//
+//class UserInputManager;
+//class MenuManager;
+//class NarrationManager;
+//class MenuManager;
+//
+//#include "ScenesManager.h"
 
-class UserInputManager;
-class ScenesMenuManager;
-class ScenesNarrationManager;
-class ScenesMenuManager;
-
-#include "UserScenesManager.h"
-
-class MainClass {
-public:
+//class MainClass {
+//public:
 	//void SetIsSceneCleared(bool isSceneCleared);
 	//bool GetIsSceneCleared();
-	void SetIsMenuCleared(bool isMenuCleared);
-	bool GetIsMenuCleared();
+	//void SetIsMenuCleared(bool isMenuCleared);
+	//bool GetIsMenuCleared();
 
+	//UserInputManager* GetMainInputManager();
+	//ScenesManager* GetMainSceneManager();
+	//NarrationManager* GetMainNarrationManager();
+	//MenuManager* GetMainMenuManager();
 
-	UserInputManager* GetMainInputManager();
-	UserScenesManager* GetMainSceneManager();
-	ScenesNarrationManager* GetMainNarrationManager();
-	ScenesMenuManager* GetMainMenuManager();
+	//void SetMainInputManager(UserInputManager* inputManager);
+	//void SetMainSceneManager(ScenesManager* sceneManager);
+	//void SetMainNarrationManager(NarrationManager* textManager);
+	//void SetMainMenuManager(MenuManager* menuManager);
 
-	void SetMainInputManager(UserInputManager* inputManager);
-	void SetMainSceneManager(UserScenesManager* sceneManager);
-	void SetMainNarrationManager(ScenesNarrationManager* textManager);
-	void SetMainMenuManager(ScenesMenuManager* menuManager);
-
-private:
+//private:
 	//bool m_isSceneCleared;
-	bool m_isMenuCleared;
+	//
 
-	UserInputManager* m_inputManager;
-	UserScenesManager* m_sceneManager;
-	ScenesNarrationManager* m_narrationManager;
-	ScenesMenuManager* m_menuManager;
-};
+	//UserInputManager* m_inputManager;
+	//ScenesManager* m_sceneManager;
+	//NarrationManager* m_narrationManager;
+	//MenuManager* m_menuManager;
+//};

@@ -7,11 +7,11 @@
 #include <string>
 #include <array>
 
-#include "ScenesNarrationManager.h"
+#include "NarrationManager.h"
 #include "DebugMessageSystem.h"
 
-//ScenesNarrationManager::ScenesNarrationManager(MainClass* mainClassAcces, UserScenesManager* sceneManager) :
-ScenesNarrationManager::ScenesNarrationManager(UserScenesManager* sceneManager) :
+//NarrationManager::NarrationManager(MainClass* mainClassAcces, ScenesManager* sceneManager) :
+NarrationManager::NarrationManager(ScenesManager* sceneManager) :
     m_textFilePath("resouce_files/ScenesNarrationText.txt"), 
     m_pictureFilePath("resouce_files/ScenesAsciiArt.txt"),
     m_menuFilePath("resouce_files/ScenesMenuText.txt"),
@@ -23,13 +23,13 @@ ScenesNarrationManager::ScenesNarrationManager(UserScenesManager* sceneManager) 
 
 }
 
-//ScenesNarrationManager::ScenesNarrationManager()
+//NarrationManager::NarrationManager()
 //{
 //}
 
-void ScenesNarrationManager::PrintLinesFromScene()
+void NarrationManager::PrintLinesFromScene()
 {
-    UserScenesManager::E_SceneSequence scene = GetSceneManager()->GetPlayerCurrentScene();
+    ScenesManager::E_SceneSequence scene = GetSceneManager()->GetPlayerCurrentScene();
     const unsigned short int ASCII_IMAGE_HEIGHT = 33;
     const unsigned short int STORY_TEXT_HEIGHT = 4;
     const unsigned short int MENU_TEXT_HEIGHT = 5;
@@ -41,20 +41,20 @@ void ScenesNarrationManager::PrintLinesFromScene()
 
     switch (scene)
     {
-		case UserScenesManager::E_SceneSequence::INTRO_SCENE:
-            gameImageFirstLine = GetSceneImageLines(UserScenesManager::E_SceneSequence::INTRO_SCENE);
+		case ScenesManager::E_SceneSequence::INTRO_SCENE:
+            gameImageFirstLine = GetSceneImageLines(ScenesManager::E_SceneSequence::INTRO_SCENE);
             gameImageLastLine = gameImageFirstLine + ASCII_IMAGE_HEIGHT;
 
-            gameTextFirstLine = GetSceneTextLines(UserScenesManager::E_SceneSequence::INTRO_SCENE);
+            gameTextFirstLine = GetSceneTextLines(ScenesManager::E_SceneSequence::INTRO_SCENE);
             gameTextLastLine = gameTextFirstLine + STORY_TEXT_HEIGHT;
 
 			break;
 
-		case UserScenesManager::E_SceneSequence::MOVING_SCENE:
-            gameImageFirstLine = GetSceneImageLines(UserScenesManager::E_SceneSequence::MOVING_SCENE);
+		case ScenesManager::E_SceneSequence::MOVING_SCENE:
+            gameImageFirstLine = GetSceneImageLines(ScenesManager::E_SceneSequence::MOVING_SCENE);
             gameImageLastLine = gameImageFirstLine + ASCII_IMAGE_HEIGHT;
 
-            gameTextFirstLine = GetSceneTextLines(UserScenesManager::E_SceneSequence::MOVING_SCENE);
+            gameTextFirstLine = GetSceneTextLines(ScenesManager::E_SceneSequence::MOVING_SCENE);
             gameTextLastLine = gameTextFirstLine + STORY_TEXT_HEIGHT;
 
 			break;
@@ -72,7 +72,7 @@ void ScenesNarrationManager::PrintLinesFromScene()
 	
 }
 
-std::string ScenesNarrationManager::GetTextBetweenLines(std::string& filePathStr, unsigned int firstLine, unsigned int lastLine)
+std::string NarrationManager::GetTextBetweenLines(std::string& filePathStr, unsigned int firstLine, unsigned int lastLine)
 {
     //std::ifstream filePath("resouce_files/ScenesAsciiArt.txt");
     std::ifstream filePath(filePathStr);
@@ -110,37 +110,37 @@ std::string ScenesNarrationManager::GetTextBetweenLines(std::string& filePathStr
     return text;
 }
 
-std::string& ScenesNarrationManager::GetPictureFilePath()
+std::string& NarrationManager::GetPictureFilePath()
 {
     return m_pictureFilePath;
 }
 
-std::string& ScenesNarrationManager::GetTextFilePath()
+std::string& NarrationManager::GetTextFilePath()
 { 
     return m_textFilePath;
 }
 
-std::string& ScenesNarrationManager::GetMenuFilePath()
+std::string& NarrationManager::GetMenuFilePath()
 {
     return m_menuFilePath;
 }
 
-unsigned short int ScenesNarrationManager::GetSceneImageLines(UserScenesManager::E_SceneSequence fromLine)
+unsigned short int NarrationManager::GetSceneImageLines(ScenesManager::E_SceneSequence fromLine)
 {
     return m_sceneImageLines[static_cast<int>(fromLine)];
 }
 
-unsigned short int ScenesNarrationManager::GetSceneTextLines(UserScenesManager::E_SceneSequence fromLine)
+unsigned short int NarrationManager::GetSceneTextLines(ScenesManager::E_SceneSequence fromLine)
 {
     return m_sceneTextLines[static_cast<int>(fromLine)];
 }
 
-unsigned short int ScenesNarrationManager::GetSceneMenuLine(UserScenesManager::E_SceneSequence fromLine)
+unsigned short int NarrationManager::GetSceneMenuLine(ScenesManager::E_SceneSequence fromLine)
 {
     return m_sceneMenuLines[static_cast<int>(fromLine)];
 }
 
-UserScenesManager* ScenesNarrationManager::GetSceneManager()
+ScenesManager* NarrationManager::GetSceneManager()
 {
 	return m_sceneManager;
 }

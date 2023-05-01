@@ -1,15 +1,15 @@
 #pragma once
 
-class UserScenesManager {
+class ScenesManager {
 public:
 	enum class E_SceneSequence {
-		//  ScenesNarrationManager.cpp m_sceneMenuLines{ 1, 6 }
+		//  NarrationManager.cpp m_sceneMenuLines{ 1, 6 }
 		NO_SCENE = -1, 
 		INTRO_SCENE = 0, // line 1 
 		MOVING_SCENE = 2, // line 6
 	};
 
-	UserScenesManager();
+	ScenesManager();
 	E_SceneSequence GetPlayerCurrentScene();
 	void SetPlayerCurrentScene(E_SceneSequence scene);
 

@@ -13,10 +13,7 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="User Inputs">
-      <UniqueIdentifier>{9fbe3864-9fae-4af5-aef6-9a471a8057c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Texts">
+    <Filter Include="Managers">
       <UniqueIdentifier>{c4a5462e-5c72-41d1-9269-975410708adb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -24,23 +21,23 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="user_managers\UserInputManager.cpp">
-      <Filter>User Inputs</Filter>
-    </ClCompile>
     <ClCompile Include="resouce_files\Utils.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="game_texts\GameTextManager.cpp">
-      <Filter>Game Texts</Filter>
+    <ClCompile Include="managers\MenuManager.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="user_managers\UserScenesManager.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="managers\NarrationManager.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="game_texts\GameChoicesMenu.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="managers\ScenesManager.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="resouce_files\DebugMessageSystem.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="managers\UserInputManager.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -49,16 +46,16 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="resouce_files\GameAsciiArt.txt">
+    <Text Include="resouce_files\ScenesNarrationText.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="resouce_files\GameText.txt">
+    <Text Include="resouce_files\MainMenuAscii.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="resouce_files\GameChoicesMenu.txt">
+    <Text Include="resouce_files\ScenesAsciiArt.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="resouce_files\GameMainMenu.txt">
+    <Text Include="resouce_files\ScenesMenuText.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
@@ -69,19 +66,16 @@
     <ClInclude Include="header_files\Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\UserScenesManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="header_files\GameChoicesMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="header_files\GameTextManager.h">
+    <ClInclude Include="header_files\ScenesManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header_files\DebugMessageSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\main.h">
+    <ClInclude Include="header_files\MenuManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header_files\NarrationManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

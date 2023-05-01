@@ -3,15 +3,21 @@
 #include <iostream>
 
 #include "UserInputManager.h"
-#include "ScenesMenuManager.h"
+//#include "MenuManager.h"
 
-ScenesMenuManager* g_menuManager;
-MainClass* g_mainClass{};
+//MenuManager* g_menuManager;
+//MainClass* g_mainClass{};
 
 //UserInputManager::UserInputManager(MainClass* mainClassAccess) :
 //	m_hasInput(false)
 //{
 //}
+
+UserInputManager::UserInputManager(MenuManager* menuManager) :
+    m_hasInput(false),
+    m_menuManager(menuManager)
+{
+}
 
 UserInputManager::E_UserInput UserInputManager::GetInput()
 {
@@ -67,7 +73,7 @@ void UserInputManager::SetAction(UserInputManager::E_UserInput userInput)
     if (userInput == UserInputManager::E_UserInput::LEFT || userInput == UserInputManager::E_UserInput::RIGHT)
     {
         g_menuManager->PrintMenuFromScene(userInput);
-        g_mainClass->SetIsMenuCleared(false);
+        m_menuManager->SetIsMenuCleared(false);
         SetHasInput(false);
     }
     if (userInput == UserInputManager::E_UserInput::UP)
