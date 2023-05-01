@@ -4,9 +4,12 @@
 
 #include "UserScenesManager.h"
 #include "UserInputManager.h"
+#include "ScenesNarrationManager.h"
 #include "main.h"
 
-class ScenesNarrationManager;
+//class UserInputManager;
+//class UserScenesManager;
+//class ScenesNarrationManager;
 
 const short int EMPTY_MENU_LINE = -1;
 const std::string EMPTY_MENU_TEXT = "";
@@ -16,11 +19,9 @@ const unsigned short int UNHIGHLIGHTED_MENU_LINE = 1;
 class ScenesMenuManager {
 public:
 	ScenesMenuManager(MainClass* mainClassAccess, UserScenesManager* sceneManager, ScenesNarrationManager* textManager);
-	void PrintMenuFromScene(UserInputManager::E_UserInput userInput);
-	//void PrintMenuFromScene(UserInputManager::E_UserInput userInput, bool oneLoopOFTwo);
+	ScenesMenuManager();
 
-	//void PrintSceneMenu(UserInputManager::E_UserInput userInput, UserScenesManager::E_SceneSequence scene);
-	unsigned short int* GetSceneMenuLines(UserScenesManager::E_SceneSequence scene);
+	void PrintMenuFromScene(UserInputManager::E_UserInput userInput);
 
 	std::string GetLastLineInConsole();
 
@@ -37,7 +38,6 @@ public:
 	std::string GetMenuAtLine(std::string& filePath, unsigned short int atLine);
 
 	void ClearConsolePreviousLine();
-	//std::ifstream& GetMenuFilePath();
 
 private:
 	unsigned short int m_gameMenuLines[2];

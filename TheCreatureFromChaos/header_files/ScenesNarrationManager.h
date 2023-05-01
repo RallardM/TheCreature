@@ -4,9 +4,11 @@
 
 #include "Utils.h"
 #include "UserScenesManager.h"
-#include "UserInputManager.h"
-#include "ScenesMenuManager.h"
+//#include "UserInputManager.h"
+//#include "ScenesMenuManager.h"
 #include "main.h"
+
+//class ScenesMenuManager;
 
 class ScenesNarrationManager {
 public:

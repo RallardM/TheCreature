@@ -1,6 +1,15 @@
-#include "UserInputManager.h"
+
 #include <conio.h>
 #include <iostream>
+
+#include "UserInputManager.h"
+#include "ScenesMenuManager.h"
+
+//UserInputManager::UserInputManager(MainClass* mainClassAccess) :
+//    m_mainClassAccess(mainClassAccess),
+//	m_hasInput(false)
+//{
+//}
 
 UserInputManager::E_UserInput UserInputManager::GetInput()
 {
@@ -48,7 +57,19 @@ UserInputManager::E_UserInput UserInputManager::GetInput()
      }
 }
 
+void UserInputManager::SetAction(UserInputManager::E_UserInput userInput)
+{
+    userInput = GetInput();
+    ScenesMenuManager menuManager;
+    MainClass mainClass{};
 
+    if (userInput == UserInputManager::E_UserInput::LEFT || userInput == UserInputManager::E_UserInput::RIGHT)
+    {
+        menuManager.PrintMenuFromScene(userInput);
+        mainClass.SetIsMenuCleared(false);
+        SetHasInput(false);
+    }
+}
 
 bool UserInputManager::HasInput()
 {
