@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <string>
 #include <algorithm>
+#include <array>
 
 #include "ScenesMenuManager.h"
 #include "ScenesNarrationManager.h"
@@ -9,6 +10,7 @@
 
 ScenesMenuManager::ScenesMenuManager(MainClass* mainClassAcces, UserScenesManager* sceneManager, ScenesNarrationManager* narrationManager) :
     m_gameMenuLines{ 1, 6 },
+    m_introHighlightedMenu{ 2, 3 },
     m_mainClassAccess(mainClassAcces),
     m_narrationManager(narrationManager),
     m_sceneManager(sceneManager),
@@ -18,25 +20,40 @@ ScenesMenuManager::ScenesMenuManager(MainClass* mainClassAcces, UserScenesManage
     m_selectedMenuLine = static_cast<int>(UserScenesManager::E_SceneSequence::NO_SCENE);
 }
 
-void ScenesMenuManager::PrintMenuFromScene(UserInputManager::E_UserInput userInput, bool oneLoopOFTwo)
+void ScenesMenuManager::PrintMenuFromScene(UserInputManager::E_UserInput userInput)
 {
-
     UserScenesManager::E_SceneSequence scene = m_sceneManager->GetPlayerCurrentScene();
-    short int gameMenuLine = 0;
-    short int selectedMenuLine = GetSelectedMenuLine();
-    short int startingMenuLine = GetGameMenuLine(UserScenesManager::E_SceneSequence::INTRO_SCENE);
-    short int currentPlainMenu = GetCurrentPlainMenu();
-    std::string currentSceneMenuText = GetCurrentSceneMenuText();
+    //short int gameMenuLine = 0;
+    //short int selectedMenuLine = GetSelectedMenuLine();
+    //short int startingMenuLine = GetGameMenuLine(UserScenesManager::E_SceneSequence::INTRO_SCENE);
+    //short int currentPlainMenu = GetCurrentPlainMenu();
+    //std::string currentSceneMenuText = GetCurrentSceneMenuText();
     //std::ifstream& menuFilePath = GetMenuFilePath();
 
     switch (scene)
     {
     case UserScenesManager::E_SceneSequence::INTRO_SCENE:
-        PrintSceneMenu(userInput, UserScenesManager::E_SceneSequence::INTRO_SCENE);
+        if (userInput != UserInputManager::E_UserInput::EMPTY)
+        {
+            ClearConsolePreviousLine();
+            if (userInput == UserInputManager::E_UserInput::LEFT)
+            {
+                std::cout << GetMenuAtLine(m_narrationManager->GetMenuFilePath(), m_introHighlightedMenu[0]) << std::endl;
+            }
+            else if (userInput == UserInputManager::E_UserInput::RIGHT)
+            {
+                std::cout << GetMenuAtLine(m_narrationManager->GetMenuFilePath(), m_introHighlightedMenu[1]) << std::endl;
+            }
+        }
+        else
+        {
+            std::cout << GetMenuAtLine(m_narrationManager->GetMenuFilePath(), m_introHighlightedMenu[0]) << std::endl;
+        }
         break;
 
     case UserScenesManager::E_SceneSequence::MOVING_SCENE:
-        PrintSceneMenu(userInput, UserScenesManager::E_SceneSequence::MOVING_SCENE);
+        //std::cout << GetMenuAtLine(m_narrationManager->GetMenuFilePath(), 7) << std::endl;
+
         break;
 
     default:
@@ -47,89 +64,170 @@ void ScenesMenuManager::PrintMenuFromScene(UserInputManager::E_UserInput userInp
     //std::cout << GetCurrentSceneMenuText();
 }
 
-void ScenesMenuManager::PrintSceneMenu(UserInputManager::E_UserInput userInput, UserScenesManager::E_SceneSequence scene)
-{
-    unsigned short int gameMenuLine = 0;
-    unsigned short int selectedChoiceIndex = 0;
-    unsigned short int* sceneMenuChoicesArray = GetSceneMenuLines(scene);
+//void ScenesMenuManager::PrintMenuFromScene(UserInputManager::E_UserInput userInput, bool oneLoopOFTwo)
+//{
+//
+//    UserScenesManager::E_SceneSequence scene = m_sceneManager->GetPlayerCurrentScene();
+//    short int gameMenuLine = 0;
+//    short int selectedMenuLine = GetSelectedMenuLine();
+//    short int startingMenuLine = GetGameMenuLine(UserScenesManager::E_SceneSequence::INTRO_SCENE);
+//    short int currentPlainMenu = GetCurrentPlainMenu();
+//    std::string currentSceneMenuText = GetCurrentSceneMenuText();
+//    //std::ifstream& menuFilePath = GetMenuFilePath();
+//
+//    switch (scene)
+//    {
+//    case UserScenesManager::E_SceneSequence::INTRO_SCENE:
+//        PrintSceneMenu(userInput, UserScenesManager::E_SceneSequence::INTRO_SCENE);
+//        break;
+//
+//    case UserScenesManager::E_SceneSequence::MOVING_SCENE:
+//        PrintSceneMenu(userInput, UserScenesManager::E_SceneSequence::MOVING_SCENE);
+//        break;
+//
+//    default:
+//        break;
+//    }
+//    //std::string newCurrentSceneMenuText = GetMenuAtLine(m_narrationManager->GetMenuFilePath(), gameMenuLine);
+//    //std::cout << newCurrentSceneMenuText << std::endl;
+//    //std::cout << GetCurrentSceneMenuText();
+//}
 
-    switch (userInput)
-    {
-    case UserInputManager::E_UserInput::LEFT:
-        if (selectedChoiceIndex > 0) 
-        {
-            selectedChoiceIndex--;
-        }
-        break;
+//void ScenesMenuManager::PrintSceneMenu(UserInputManager::E_UserInput userInput, UserScenesManager::E_SceneSequence scene)
+//{
+//    unsigned short int gameMenuLine = 0;
+//    unsigned short int selectedChoiceIndex = 0;
+//    unsigned short int* sceneMenuChoicesArray = GetSceneMenuLines(scene);
+//
+//    switch (userInput)
+//    {
+//    case UserInputManager::E_UserInput::LEFT:
+//        if (selectedChoiceIndex > 0)
+//        {
+//            selectedChoiceIndex--;
+//        }
+//        break;
+//
+//    case UserInputManager::E_UserInput::RIGHT:
+//        if (selectedChoiceIndex < (NUMBER_OF_HIGHLIGHTED_MENU_LINES - 1))
+//        {
+//            selectedChoiceIndex++;
+//        }
+//        break;
+//
+//    default:
+//        break;
+//    }
+//
+//    std::cout << GetMenuAtLine(m_narrationManager->GetMenuFilePath(), sceneMenuChoicesArray[selectedChoiceIndex]);
+//    std::cout << std::endl;
+//
+//    //if (oneLoopOFTwo)
+//    //{
+//    //    if (GetCurrentPlainMenu() == EMPTY_MENU_LINE)
+//    //    {
+//    //        // Get no gizmo menu frame
+//    //        gameMenuLine = startingMenuLine;
+//    //        SetCurrentPlainMenu(startingMenuLine);
+//    //        SetCurrentSceneMenuText(m_narrationManager->GetTextBetweenLines(m_narrationManager->GetMenuFilePath(), gameMenuLine, gameMenuLine));
+//    //    }
+//    //}
+//    //else
+//    //{
+//    //    if (GetCurrentSceneMenuText() == EMPTY_MENU_TEXT)
+//    //    {
+//    //        // Get menu frame with gizmo
+//    //        selectedMenuLine = 1;
+//    //        gameMenuLine = startingMenuLine + selectedMenuLine;
+//    //        SetSelectedMenuLine(gameMenuLine);
+//    //        SetCurrentSceneMenuText(GetMenuAtLine(m_narrationManager->GetMenuFilePath(), gameMenuLine));
+//    //    }
+//    //}
+//}
 
-    case UserInputManager::E_UserInput::RIGHT:
-        if (selectedChoiceIndex < (NUMBER_OF_HIGHLIGHTED_MENU_LINES - 1))
-        {
-            selectedChoiceIndex++;
-        }
-        break;
+//void ScenesMenuManager::PrintSceneMenu(UserInputManager::E_UserInput userInput, UserScenesManager::E_SceneSequence scene)
+//{
+//    unsigned short int gameMenuLine = 0;
+//    unsigned short int selectedChoiceIndex = 0;
+//    unsigned short int* sceneMenuChoicesArray = GetSceneMenuLines(scene);
+//
+//    switch (userInput)
+//    {
+//    case UserInputManager::E_UserInput::LEFT:
+//        if (selectedChoiceIndex > 0) 
+//        {
+//            selectedChoiceIndex--;
+//        }
+//        break;
+//
+//    case UserInputManager::E_UserInput::RIGHT:
+//        if (selectedChoiceIndex < (NUMBER_OF_HIGHLIGHTED_MENU_LINES - 1))
+//        {
+//            selectedChoiceIndex++;
+//        }
+//        break;
+//
+//    default:
+//        break;
+//    }
+//
+//    std::cout << GetMenuAtLine(m_narrationManager->GetMenuFilePath(), sceneMenuChoicesArray[selectedChoiceIndex]);
+//    std::cout << std::endl;
+//
+//    //if (oneLoopOFTwo)
+//    //{
+//    //    if (GetCurrentPlainMenu() == EMPTY_MENU_LINE)
+//    //    {
+//    //        // Get no gizmo menu frame
+//    //        gameMenuLine = startingMenuLine;
+//    //        SetCurrentPlainMenu(startingMenuLine);
+//    //        SetCurrentSceneMenuText(m_narrationManager->GetTextBetweenLines(m_narrationManager->GetMenuFilePath(), gameMenuLine, gameMenuLine));
+//    //    }
+//    //}
+//    //else
+//    //{
+//    //    if (GetCurrentSceneMenuText() == EMPTY_MENU_TEXT)
+//    //    {
+//    //        // Get menu frame with gizmo
+//    //        selectedMenuLine = 1;
+//    //        gameMenuLine = startingMenuLine + selectedMenuLine;
+//    //        SetSelectedMenuLine(gameMenuLine);
+//    //        SetCurrentSceneMenuText(GetMenuAtLine(m_narrationManager->GetMenuFilePath(), gameMenuLine));
+//    //    }
+//    //}
+//}
 
-    default:
-        break;
-    }
-
-    std::cout << GetMenuAtLine(m_narrationManager->GetMenuFilePath(), sceneMenuChoicesArray[selectedChoiceIndex]);
-    std::cout << std::endl;
-
-    //if (oneLoopOFTwo)
-    //{
-    //    if (GetCurrentPlainMenu() == EMPTY_MENU_LINE)
-    //    {
-    //        // Get no gizmo menu frame
-    //        gameMenuLine = startingMenuLine;
-    //        SetCurrentPlainMenu(startingMenuLine);
-    //        SetCurrentSceneMenuText(m_narrationManager->GetTextBetweenLines(m_narrationManager->GetMenuFilePath(), gameMenuLine, gameMenuLine));
-    //    }
-    //}
-    //else
-    //{
-    //    if (GetCurrentSceneMenuText() == EMPTY_MENU_TEXT)
-    //    {
-    //        // Get menu frame with gizmo
-    //        selectedMenuLine = 1;
-    //        gameMenuLine = startingMenuLine + selectedMenuLine;
-    //        SetSelectedMenuLine(gameMenuLine);
-    //        SetCurrentSceneMenuText(GetMenuAtLine(m_narrationManager->GetMenuFilePath(), gameMenuLine));
-    //    }
-    //}
-}
-
-unsigned short int* ScenesMenuManager::GetSceneMenuLines(UserScenesManager::E_SceneSequence scene)
-{
-    unsigned short int* sceneMenuLines = new unsigned short int[NUMBER_OF_HIGHLIGHTED_MENU_LINES];
-    int startingNumber = 0;
-
-    switch (scene)
-    {
-    case UserScenesManager::E_SceneSequence::INTRO_SCENE:
-        startingNumber = m_narrationManager->GetSceneMenuLine(UserScenesManager::E_SceneSequence::INTRO_SCENE);
-        startingNumber += UNHIGHLIGHTED_MENU_LINE;
-
-        for (unsigned short int i = 0; i < NUMBER_OF_HIGHLIGHTED_MENU_LINES; i++)
-        {
-            sceneMenuLines[i] = startingNumber + i;
-        }
-        break;
-
-    case UserScenesManager::E_SceneSequence::MOVING_SCENE:
-        startingNumber = m_narrationManager->GetSceneMenuLine(UserScenesManager::E_SceneSequence::MOVING_SCENE);
-        for (unsigned short int i = 0; i < NUMBER_OF_HIGHLIGHTED_MENU_LINES; i++)
-        {
-            sceneMenuLines[i] = startingNumber + i;
-        }
-        break;
-
-    default:
-        return nullptr;
-    }
-
-    return sceneMenuLines;
-}
+//unsigned short int* ScenesMenuManager::GetSceneMenuLines(UserScenesManager::E_SceneSequence scene)
+//{
+//    unsigned short int* sceneMenuLines[] = {0, 0, 0, 0};
+//    unsigned short int* startingNumber = 0;
+//
+//    switch (scene)
+//    {
+//    case UserScenesManager::E_SceneSequence::INTRO_SCENE:
+//        startingNumber = m_narrationManager->GetSceneMenuLine(UserScenesManager::E_SceneSequence::INTRO_SCENE);
+//        startingNumber += UNHIGHLIGHTED_MENU_LINE;
+//
+//        for (unsigned short int* i = 0; i < NUMBER_OF_HIGHLIGHTED_MENU_LINES; i++)
+//        {
+//            sceneMenuLines[i] = startingNumber + i;
+//        }
+//        break;
+//
+//    case UserScenesManager::E_SceneSequence::MOVING_SCENE:
+//        startingNumber = m_narrationManager->GetSceneMenuLine(UserScenesManager::E_SceneSequence::MOVING_SCENE);
+//        for (unsigned short int* i = 0; i < NUMBER_OF_HIGHLIGHTED_MENU_LINES; i++)
+//        {
+//            sceneMenuLines[i] = startingNumber + i;
+//        }
+//        break;
+//
+//    default:
+//        DEBUG_MSG("#R SceneMenuManager.cpp : GetSceneMenuLines() : Error no scene");
+//    }
+//
+//    return sceneMenuLines;
+//}
  
 
 //void ScenesMenuManager::PrintMenuFromScene(UserInputManager::E_UserInput userInput, bool oneLoopOFTwo)
@@ -189,9 +287,9 @@ std::string ScenesMenuManager::GetLastLineInConsole()
     SetConsoleCursorPosition(consoleHandle, position);
 
     std::string lastLine;
-   // DEBUG_MSG("¢R Last line:");
+   // DEBUG_MSG("#R Last line:");
     //std::cout << "\n" << lastLine << std::endl;
-    //DEBUG_MSG("¢R :Last line");
+    //DEBUG_MSG("#R :Last line");
 
     // Check if the last line is empty
     if (screenBufferInfo.dwCursorPosition.X == 0) 
@@ -204,7 +302,7 @@ std::string ScenesMenuManager::GetLastLineInConsole()
     return lastLine;
 }
 
-std::string ScenesMenuManager::GetMenuAtLine(std::string& filePathStr, unsigned int atLine)
+std::string ScenesMenuManager::GetMenuAtLine(std::string& filePathStr, unsigned short int atLine)
 {
     std::ifstream filePath(filePathStr);
     std::string text;
@@ -213,13 +311,13 @@ std::string ScenesMenuManager::GetMenuAtLine(std::string& filePathStr, unsigned 
     if (!filePath.is_open())
     {
         // File could not be opened, so return an empty string
-        DEBUG_MSG("¢RERROR: Could not open the game text file.");
+        DEBUG_MSG("#R ERROR: Could not open the game text file.");
         exit(EXIT_FAILURE);
     }
     else
     {
         std::string line;
-        unsigned int currentLine = 0;
+        unsigned short int currentLine = 0;
 
         // Read the file line by line
         while (getline(filePath, line))
@@ -287,4 +385,9 @@ void ScenesMenuManager::SetCurrentPlainMenu(short int currentPlainMenu)
 short int ScenesMenuManager::GetCurrentPlainMenu()
 {
     return m_currentPlainMenu;
+}
+
+void ScenesMenuManager::ClearConsolePreviousLine()
+{
+    std::cout << "\033[1A\033[0K";
 }

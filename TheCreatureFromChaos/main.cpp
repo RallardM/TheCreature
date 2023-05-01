@@ -13,7 +13,7 @@
 
 int main()
 {
-	//DEBUG_MSG("¢Bmain.cpp : main() : Enters main function.");
+	//DEBUG_MSG("#B main.cpp : main() : Enters main function.");
 
 	// Create a Utils object, set the console size and position.
 	//DEBUG_MSG("main.cpp : main() : Create a Utils object, set the console size and position.");
@@ -26,8 +26,6 @@ int main()
 	// Initialize the UserInputManager object.
 	//DEBUG_MSG("main.cpp : main() : Initialize the UserInputManager object.");
 	UserInputManager inputManager{};
-	//DEBUG_MSG("main.cpp : main() : Get user input.");
-	UserInputManager::E_UserInput userInput = inputManager.GetInput();
 
 	// Initialize the MainClass object.
 	//DEBUG_MSG("main.cpp : main() : Initialize the MainClass object.");
@@ -50,8 +48,10 @@ int main()
 	unsigned short int numLoops = 5;
 
 	mainClassAccess->SetIsMenuCleared(true);
-	bool oneLoopOFTwo = true;
+	//bool oneLoopOFTwo = true;
+	UserInputManager::E_UserInput userInput = UserInputManager::E_UserInput::EMPTY;
 	bool isSceneCleared = true;
+	
 	//bool isMenuCleared = true;
 	bool gameRunning = true;
 	//DEBUG_MSG("main.cpp : main() : Enters main loop.");
@@ -60,16 +60,14 @@ int main()
 		// Process user input
 		if (inputManager.HasInput()) 
 		{
-			//std::cout << inputManager.GetInput();
-			//InputData inputData = inputManager.GetInput();
-			//ProcessInput(inputData);
-
-			// Clear the console.
-			//system("cls");
 			userInput = inputManager.GetInput();
-			utils->ClearConsole();
-			//mainClassAcces->SetIsSceneCleared(true);
-			isSceneCleared = true;
+			//std::cout << "Has input : " << static_cast<int>(userInput) << std::endl;
+			if (userInput == UserInputManager::E_UserInput::LEFT || userInput == UserInputManager::E_UserInput::RIGHT)
+			{
+				
+				menuManager->PrintMenuFromScene(userInput);
+				mainClassAccess->SetIsMenuCleared(false);
+			}
 		}
 
 		//if (mainClassAcces->GetIsSceneCleared())
@@ -81,50 +79,56 @@ int main()
 			isSceneCleared = false;
 		}
 
-		if (oneLoopOFTwo)
+		if (mainClassAccess->GetIsMenuCleared())
 		{
-			for (int i = 0; i < numLoops; i++) 
-			{
-				if (mainClassAccess->GetIsMenuCleared())
-				{
-					menuManager->PrintMenuFromScene(userInput, true);
-					mainClassAccess->SetIsMenuCleared(false);
-				}
-			}
-
-			if (!mainClassAccess->GetIsMenuCleared()) 
-			{
-				std::cout << "\033[1A\033[0K";
-				menuManager->SetCurrentSceneMenuText(EMPTY_MENU_TEXT);
-				mainClassAccess->SetIsMenuCleared(true);
-
-				menuManager->PrintMenuFromScene(userInput, false);
-				mainClassAccess->SetIsMenuCleared(false);
-			}
-			oneLoopOFTwo = false;
+			menuManager->PrintMenuFromScene(userInput);
+			mainClassAccess->SetIsMenuCleared(false);
 		}
-		else 
-		{
-			for (int i = 0; i < numLoops; i++) 
-			{
-				if (mainClassAccess->GetIsMenuCleared())
-				{
-					menuManager->PrintMenuFromScene(userInput, false);
-					mainClassAccess->SetIsMenuCleared(false);
-				}
-			}
 
-			if (!mainClassAccess->GetIsMenuCleared()) 
-			{
-				std::cout << "\033[1A\033[0K";
-				menuManager->SetCurrentSceneMenuText(EMPTY_MENU_TEXT);
-				mainClassAccess->SetIsMenuCleared(true);
+		//if (oneLoopOFTwo)
+		//{
+		//	for (int i = 0; i < numLoops; i++) 
+		//	{
+		//		if (mainClassAccess->GetIsMenuCleared())
+		//		{
+		//			menuManager->PrintMenuFromScene(userInput, true);
+		//			mainClassAccess->SetIsMenuCleared(false);
+		//		}
+		//	}
 
-				menuManager->PrintMenuFromScene(userInput, true);
-				mainClassAccess->SetIsMenuCleared(false);
-			}
-			oneLoopOFTwo = true;
-		}
+		//	if (!mainClassAccess->GetIsMenuCleared()) 
+		//	{
+		//		std::cout << "\033[1A\033[0K";
+		//		menuManager->SetCurrentSceneMenuText(EMPTY_MENU_TEXT);
+		//		mainClassAccess->SetIsMenuCleared(true);
+
+		//		menuManager->PrintMenuFromScene(userInput, false);
+		//		mainClassAccess->SetIsMenuCleared(false);
+		//	}
+		//	oneLoopOFTwo = false;
+		//}
+		//else 
+		//{
+		//	for (int i = 0; i < numLoops; i++) 
+		//	{
+		//		if (mainClassAccess->GetIsMenuCleared())
+		//		{
+		//			menuManager->PrintMenuFromScene(userInput, false);
+		//			mainClassAccess->SetIsMenuCleared(false);
+		//		}
+		//	}
+
+		//	if (!mainClassAccess->GetIsMenuCleared()) 
+		//	{
+		//		std::cout << "\033[1A\033[0K";
+		//		menuManager->SetCurrentSceneMenuText(EMPTY_MENU_TEXT);
+		//		mainClassAccess->SetIsMenuCleared(true);
+
+		//		menuManager->PrintMenuFromScene(userInput, true);
+		//		mainClassAccess->SetIsMenuCleared(false);
+		//	}
+		//	oneLoopOFTwo = true;
+		//}
 
 		//if (oneLoopOFTwo)
 		//{

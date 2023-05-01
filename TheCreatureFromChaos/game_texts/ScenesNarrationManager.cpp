@@ -83,7 +83,7 @@ std::string ScenesNarrationManager::GetTextBetweenLines(std::string& filePathStr
     if (!filePath.is_open())
     {
         // File could not be opened, so return an empty string
-        DEBUG_MSG("¢RERROR: Could not open the game text file.");
+        DEBUG_MSG("#R ERROR: Could not open the game text file.");
         exit(EXIT_FAILURE);
     }
     else

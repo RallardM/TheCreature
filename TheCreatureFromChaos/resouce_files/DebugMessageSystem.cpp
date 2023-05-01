@@ -7,8 +7,10 @@
 void DEBUG_MSG(const char* message);
 #endif
 
-int getColorCode(char color) {
-    switch (toupper(color)) {
+int getColorCode(char color) 
+{
+    switch (toupper(color)) 
+    {
     case 'R':
         return 31; // red
     case 'G':
@@ -29,10 +31,12 @@ int getColorCode(char color) {
 }
 
 #ifdef _DEBUG
-void DEBUG_MSG(const char* message) {
+void DEBUG_MSG(const char* message) 
+{
     char color = '\0';
     const char* text = message;
-    if (message[0] == '¢' && isalpha(message[1])) {
+    if (message[0] == '#' && isalpha(message[1])) 
+    {
         color = message[1];
         text = message + 2;
     }
