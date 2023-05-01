@@ -1,4 +1,5 @@
 #include "UserScenesManager.h"
+#include <iostream>
 
 UserScenesManager::UserScenesManager() :
 	m_userCurrentScene(E_SceneSequence::INTRO_SCENE)

@@ -5,7 +5,7 @@
 #include "UserScenesManager.h"
 #include "UserInputManager.h"
 #include "ScenesNarrationManager.h"
-#include "main.h"
+//#include "main.h"
 
 //class UserInputManager;
 //class UserScenesManager;
@@ -18,20 +18,21 @@ const unsigned short int UNHIGHLIGHTED_MENU_LINE = 1;
 
 class ScenesMenuManager {
 public:
-	ScenesMenuManager(MainClass* mainClassAccess, UserScenesManager* sceneManager, ScenesNarrationManager* textManager);
+	ScenesMenuManager(UserScenesManager* sceneManager, ScenesNarrationManager* textManager);
+	//ScenesMenuManager(MainClass* mainClassAccess, UserScenesManager* sceneManager, ScenesNarrationManager* textManager);
 	ScenesMenuManager();
 
 	void PrintMenuFromScene(UserInputManager::E_UserInput userInput);
 
 	std::string GetLastLineInConsole();
 
-	unsigned short int GetGameMenuLine(UserScenesManager::E_SceneSequence fromLine);
+	//unsigned short int GetGameMenuLine(UserScenesManager::E_SceneSequence fromLine);
 
-	void SetCurrentPlainMenu(short int currentPlainMenu);
-	short int GetCurrentPlainMenu();
+	//void SetCurrentPlainMenu(short int currentPlainMenu);
+	//short int GetCurrentPlainMenu();
 
-	std::string GetCurrentSceneMenuText();
-	void SetCurrentSceneMenuText(std::string sceneMenu);
+	//std::string GetCurrentSceneMenuText();
+	//void SetCurrentSceneMenuText(std::string sceneMenu);
 
 	unsigned short int GetSelectedMenuLine();
 	void SetSelectedMenuLine(unsigned short int selectedMenuLine);
@@ -40,14 +41,14 @@ public:
 	void ClearConsolePreviousLine();
 
 private:
-	unsigned short int m_gameMenuLines[2];
+	//unsigned short int m_gameMenuLines[2];
 	unsigned short int m_introHighlightedMenu[NUMBER_OF_HIGHLIGHTED_MENU_LINES];
 	short int m_selectedMenuLine;
-	short int m_currentPlainMenu;
-	std::string m_currenSceneMenuText;
+	//short int m_currentPlainMenu;
+	//std::string m_currenSceneMenuText;
 	std::ifstream m_menuFilePath;
 
-	MainClass* m_mainClassAccess;
+	//MainClass* m_mainClassAccess;
 	UserScenesManager* m_sceneManager;
 	ScenesNarrationManager* m_narrationManager;
 };

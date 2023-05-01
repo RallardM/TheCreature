@@ -8,21 +8,28 @@
 //#include "UserInputManager.h"
 //#include "ScenesNarrationManager.h"
 #include "DebugMessageSystem.h"
+#include "main.h"
 
-ScenesMenuManager::ScenesMenuManager(MainClass* mainClassAcces, UserScenesManager* sceneManager, ScenesNarrationManager* narrationManager) :
-    m_gameMenuLines{ 1, 6 },
-    m_introHighlightedMenu{ 2, 3 },
-    m_mainClassAccess(mainClassAcces),
+//ScenesMenuManager::ScenesMenuManager(MainClass* mainClassAcces, UserScenesManager* sceneManager, ScenesNarrationManager* narrationManager) :
+ScenesMenuManager::ScenesMenuManager(UserScenesManager* sceneManager, ScenesNarrationManager* narrationManager) :
+   // m_gameMenuLines{ 1, 6 },
+    m_introHighlightedMenu{ 2, 3, 4, 5 },
+    //m_mainClassAccess(mainClassAcces),
     m_narrationManager(narrationManager),
-    m_sceneManager(sceneManager),
-    m_currentPlainMenu(EMPTY_MENU_LINE),
-    m_currenSceneMenuText(EMPTY_MENU_TEXT)
+    m_sceneManager(sceneManager)
+   // m_currentPlainMenu(EMPTY_MENU_LINE),
+    //m_currenSceneMenuText(EMPTY_MENU_TEXT)
 {
     m_selectedMenuLine = static_cast<int>(UserScenesManager::E_SceneSequence::NO_SCENE);
 }
 
-ScenesMenuManager::ScenesMenuManager()
+ScenesMenuManager::ScenesMenuManager() :
+    m_introHighlightedMenu{ 2, 3, 4, 5 }
 {
+    MainClass* mainClass{};
+    m_narrationManager = mainClass->GetMainNarrationManager();
+    m_sceneManager = mainClass-­>GetMainMenuManager();
+    m_selectedMenuLine = GetSelectedMenuLine();
 }
 
 void ScenesMenuManager::PrintMenuFromScene(UserInputManager:: E_UserInput userInput)
@@ -44,10 +51,12 @@ void ScenesMenuManager::PrintMenuFromScene(UserInputManager:: E_UserInput userIn
             if (userInput == UserInputManager::E_UserInput::LEFT)
             {
                 std::cout << GetMenuAtLine(m_narrationManager->GetMenuFilePath(), m_introHighlightedMenu[0]) << std::endl;
+                SetSelectedMenuLine(m_introHighlightedMenu[0]);
             }
             else if (userInput == UserInputManager::E_UserInput::RIGHT)
             {
                 std::cout << GetMenuAtLine(m_narrationManager->GetMenuFilePath(), m_introHighlightedMenu[1]) << std::endl;
+                SetSelectedMenuLine(m_introHighlightedMenu[1]);
             }
         }
         else
@@ -138,20 +147,20 @@ std::string ScenesMenuManager::GetMenuAtLine(std::string& filePathStr, unsigned 
     return text;
 }
 
-std::string ScenesMenuManager::GetCurrentSceneMenuText()
-{
-	return m_currenSceneMenuText;
-}
+//std::string ScenesMenuManager::GetCurrentSceneMenuText()
+//{
+//	return m_currenSceneMenuText;
+//}
 
-void ScenesMenuManager::SetCurrentSceneMenuText(std::string sceneMenu)
-{
-    m_currenSceneMenuText = sceneMenu;
-}
+//void ScenesMenuManager::SetCurrentSceneMenuText(std::string sceneMenu)
+//{
+//    m_currenSceneMenuText = sceneMenu;
+//}
 
-unsigned short int ScenesMenuManager::GetGameMenuLine(UserScenesManager::E_SceneSequence atLine)
-{
-	return m_gameMenuLines[static_cast<int>(atLine)];
-}
+//unsigned short int ScenesMenuManager::GetGameMenuLine(UserScenesManager::E_SceneSequence atLine)
+//{
+//	return m_gameMenuLines[static_cast<int>(atLine)];
+//}
 
 //UserScenesManager* ScenesMenuManager::GetSceneManager()
 //{
@@ -173,15 +182,15 @@ void ScenesMenuManager::SetSelectedMenuLine(unsigned short int selectedMenuLine)
     m_selectedMenuLine = selectedMenuLine;
 }
 
-void ScenesMenuManager::SetCurrentPlainMenu(short int currentPlainMenu)
-{
-    m_currentPlainMenu = currentPlainMenu;
-}
+//void ScenesMenuManager::SetCurrentPlainMenu(short int currentPlainMenu)
+//{
+//    m_currentPlainMenu = currentPlainMenu;
+//}
 
-short int ScenesMenuManager::GetCurrentPlainMenu()
-{
-    return m_currentPlainMenu;
-}
+//short int ScenesMenuManager::GetCurrentPlainMenu()
+//{
+//    return m_currentPlainMenu;
+//}
 
 void ScenesMenuManager::ClearConsolePreviousLine()
 {

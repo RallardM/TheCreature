@@ -5,8 +5,10 @@
 #include "UserInputManager.h"
 #include "ScenesMenuManager.h"
 
+ScenesMenuManager* g_menuManager;
+MainClass* g_mainClass{};
+
 //UserInputManager::UserInputManager(MainClass* mainClassAccess) :
-//    m_mainClassAccess(mainClassAccess),
 //	m_hasInput(false)
 //{
 //}
@@ -60,15 +62,28 @@ UserInputManager::E_UserInput UserInputManager::GetInput()
 void UserInputManager::SetAction(UserInputManager::E_UserInput userInput)
 {
     userInput = GetInput();
-    ScenesMenuManager menuManager;
-    MainClass mainClass{};
+
 
     if (userInput == UserInputManager::E_UserInput::LEFT || userInput == UserInputManager::E_UserInput::RIGHT)
     {
-        menuManager.PrintMenuFromScene(userInput);
-        mainClass.SetIsMenuCleared(false);
+        g_menuManager->PrintMenuFromScene(userInput);
+        g_mainClass->SetIsMenuCleared(false);
         SetHasInput(false);
     }
+    if (userInput == UserInputManager::E_UserInput::UP)
+    {
+	}
+    if (userInput == UserInputManager::E_UserInput::DOWN)
+    {
+	}
+    if (userInput == UserInputManager::E_UserInput::ENTER)
+    {
+        std::cout << g_menuManager->GetSelectedMenuLine() << std::endl;
+	}
+    if (userInput == UserInputManager::E_UserInput::ESC)
+    {
+
+	}
 }
 
 bool UserInputManager::HasInput()
