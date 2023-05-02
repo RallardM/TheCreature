@@ -8,6 +8,7 @@
 //#include "UserInputManager.h"
 //#include "NarrationManager.h"
 #include "DebugMessageSystem.h"
+#include "ScenesManager.h"
 //#include "main.h"
 
 //MenuManager::MenuManager(MainClass* mainClassAcces, ScenesManager* sceneManager, NarrationManager* narrationManager) :
@@ -21,7 +22,7 @@ MenuManager::MenuManager(ScenesManager* sceneManager, NarrationManager* narratio
    // m_currentPlainMenu(EMPTY_MENU_LINE),
     //m_currenSceneMenuText(EMPTY_MENU_TEXT)
 {
-    m_selectedMenuLine = static_cast<int>(ScenesManager::E_SceneSequence::NO_SCENE);
+    m_selectedMenuLine = E_MenuChoices::G_NO_MENU_LINE;
 }
 
 //MenuManager::MenuManager()
@@ -32,7 +33,7 @@ MenuManager::MenuManager(ScenesManager* sceneManager, NarrationManager* narratio
 //    m_selectedMenuLine = GetSelectedMenuLine();
 //}
 
-void MenuManager::PrintMenuFromScene(UserInputManager:: E_UserInput userInput)
+void MenuManager::PrintMenuFromScene(UserInputManager::E_UserInput userInput)
 {
     ScenesManager::E_SceneSequence scene = m_sceneManager->GetPlayerCurrentScene();
     //short int gameMenuLine = 0;
@@ -109,7 +110,7 @@ std::string MenuManager::GetLastLineInConsole()
     return lastLine;
 }
 
-std::string MenuManager::GetMenuAtLine(std::string& filePathStr, unsigned short int atLine)
+std::string MenuManager::GetMenuAtLine(std::string& filePathStr, E_MenuChoices atLine)
 {
     std::ifstream filePath(filePathStr);
     std::string text;
@@ -134,7 +135,7 @@ std::string MenuManager::GetMenuAtLine(std::string& filePathStr, unsigned short 
 
             // If the current line number matches the specified line number, 
             // store the line in the output string and break out of the loop
-            if (currentLine == atLine)
+            if (currentLine == static_cast<unsigned short int>(atLine))
             {
                 text = line;
                 break;
@@ -174,12 +175,12 @@ std::string MenuManager::GetMenuAtLine(std::string& filePathStr, unsigned short 
 //	return m_narrationManager;
 //}
 
-unsigned short int MenuManager::GetSelectedMenuLine()
+E_MenuChoices MenuManager::GetSelectedMenuLine()
 {
     return m_selectedMenuLine;
 }
 
-void MenuManager::SetSelectedMenuLine(unsigned short int selectedMenuLine)
+void MenuManager::SetSelectedMenuLine(E_MenuChoices selectedMenuLine)
 {
     m_selectedMenuLine = selectedMenuLine;
 }

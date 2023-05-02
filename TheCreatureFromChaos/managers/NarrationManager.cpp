@@ -10,6 +10,8 @@
 #include "NarrationManager.h"
 #include "DebugMessageSystem.h"
 
+
+
 //NarrationManager::NarrationManager(MainClass* mainClassAcces, ScenesManager* sceneManager) :
 NarrationManager::NarrationManager(ScenesManager* sceneManager) :
     m_textFilePath("resouce_files/ScenesNarrationText.txt"), 

@@ -1,5 +1,8 @@
 #pragma once
 
+class MenuManager; 
+#include "MenuManager.h"
+
 class ScenesManager {
 public:
 	enum class E_SceneSequence {
@@ -10,8 +13,13 @@ public:
 	};
 
 	ScenesManager();
+
 	E_SceneSequence GetPlayerCurrentScene();
+
 	void SetPlayerCurrentScene(E_SceneSequence scene);
+	void SetNextScene(E_MenuChoices menuChoice);
+
+	void ClearAllConsoleText();
 
 private:
 	E_SceneSequence m_userCurrentScene;

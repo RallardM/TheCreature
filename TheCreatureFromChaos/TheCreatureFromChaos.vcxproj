@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="managers\InterfaceManager.cpp" />
     <ClCompile Include="managers\MenuManager.cpp" />
     <ClCompile Include="managers\NarrationManager.cpp" />
     <ClCompile Include="main.cpp" />

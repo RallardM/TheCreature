@@ -6,8 +6,9 @@
 #include "MenuManager.h"
 //#include <MenuManager.h>
 
-UserInputManager::UserInputManager(MenuManager* menuManager) :
+UserInputManager::UserInputManager(ScenesManager* sceneManager, MenuManager* menuManager) :
     m_hasInput(false),
+    m_sceneManager(sceneManager),
     m_menuManager(menuManager)
 {
 }
@@ -77,7 +78,7 @@ void UserInputManager::SetAction(UserInputManager::E_UserInput userInput)
 	}
     if (userInput == UserInputManager::E_UserInput::ENTER)
     {
-        std::cout << GetMenuManager()->GetSelectedMenuLine() << std::endl;
+        GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
 	}
     if (userInput == UserInputManager::E_UserInput::ESC)
     {
@@ -98,4 +99,9 @@ void UserInputManager::SetHasInput(bool hasInput)
 MenuManager* UserInputManager::GetMenuManager()
 {
     return m_menuManager;
+}
+
+ScenesManager* UserInputManager::GetScenesManager()
+{
+    return m_sceneManager;
 }

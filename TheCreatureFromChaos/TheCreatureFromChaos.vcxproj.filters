@@ -39,6 +39,9 @@
     <ClCompile Include="managers\UserInputManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="managers\InterfaceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resouce_files\GameArtEnding.jpg">

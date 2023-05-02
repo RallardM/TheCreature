@@ -1,21 +1,38 @@
-#ifndef MENUMANAGER_H
-#define MENUMANAGER_H
+#pragma once
 
 #include <fstream>
 
-#include "ScenesManager.h"
+//#include "ScenesManager.h"
 #include "UserInputManager.h"
-#include "NarrationManager.h"
-#include "MenuManager.h"
+//#include "NarrationManager.h"
 
-const short int EMPTY_MENU_LINE = -1;
-const std::string EMPTY_MENU_TEXT = "";
-const unsigned short int NUMBER_OF_HIGHLIGHTED_MENU_LINES = 4;
-const unsigned short int UNHIGHLIGHTED_MENU_LINE = 1;
+class ScenesManager;
+class NarrationManager;
+//class UserInputManager;
+
+
+const unsigned short int G_FOUR_MENU_CHOICES = 4;
+const unsigned short int G_TWO_MENU_CHOICES = 2;
+
+enum class E_MenuChoices {
+	G_NO_MENU_LINE = 1,
+	G_TRY_TO_MOVE = 3,
+	G_DO_NOTHING = 4
+};
+
 
 class MenuManager {
 public:
-	unsigned short int g_introHighlightedMenu[NUMBER_OF_HIGHLIGHTED_MENU_LINES]{ 2, 3, 4, 5 };
+
+
+	E_MenuChoices g_introHighlightedMenu[G_TWO_MENU_CHOICES]
+	{
+		E_MenuChoices::G_TRY_TO_MOVE,
+		E_MenuChoices::G_DO_NOTHING
+	};
+
+	const short int EMPTY_MENU_LINE = -1;
+	const std::string EMPTY_MENU_TEXT = "";
 
 	MenuManager(ScenesManager* sceneManager, NarrationManager* textManager);
 
@@ -24,9 +41,9 @@ public:
 
 	std::string GetLastLineInConsole();
 
-	unsigned short int GetSelectedMenuLine();
-	void SetSelectedMenuLine(unsigned short int selectedMenuLine);
-	std::string GetMenuAtLine(std::string& filePath, unsigned short int atLine);
+	E_MenuChoices GetSelectedMenuLine();
+	void SetSelectedMenuLine(E_MenuChoices selectedMenuLine);
+	std::string GetMenuAtLine(std::string& filePath, E_MenuChoices atLine);
 
 	void ClearConsolePreviousLine();
 
@@ -35,7 +52,7 @@ public:
 
 private:
 
-	short int m_selectedMenuLine;
+	E_MenuChoices m_selectedMenuLine;
 
 	std::ifstream m_menuFilePath;
 	bool m_isMenuCleared;
@@ -43,4 +60,3 @@ private:
 	ScenesManager* m_sceneManager;
 	NarrationManager* m_narrationManager;
 };
-#endif // MENUMANAGER_H

@@ -1,14 +1,11 @@
-#ifndef NARRATIONMANAGER_H
-#define NARRATIONMANAGER_H
+#pragma once
 
 #include <fstream>
 
 #include "Utils.h"
-#include "ScenesManager.h"
-//#include "UserInputManager.h"
-//#include "MenuManager.h"
-//#include "main.h"
 
+#include "ScenesManager.h"
+//class ScenesManager;
 //class MenuManager;
 
 class NarrationManager{
@@ -39,4 +36,3 @@ private:
 	unsigned short int m_sceneMenuLines[2];
 
 };
-#endif // NARRATIONMANAGER_H

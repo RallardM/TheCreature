@@ -5,14 +5,11 @@
 #include <conio.h>
 
 #include "Utils.h"
-
-
 #include "UserInputManager.h"
 #include "NarrationManager.h"
 #include "MenuManager.h"
 #include "DebugMessageSystem.h"
-#include "main.h"
-
+#include "ScenesManager.h"
 
 int main()
 {
@@ -26,32 +23,14 @@ int main()
 	utils->DisableConsoleCursor();
 	//utils->ActivateConsoleCursor();
 
-	// Initialize the MainClass object.
-	//DEBUG_MSG("main.cpp : main() : Initialize the MainClass object.");
-	//MainClass* mainClassAccess = new MainClass();
-	//mainClassAccess->SetMainClassAccess(mainClassAccess);
-
-	// Initialize the ScenesManager object.
-	//DEBUG_MSG("main.cpp : main() : Initialize the ScenesManager object.");
 	ScenesManager* sceneManager = new ScenesManager();
-	//mainClassAccess->SetMainSceneManager(sceneManager);
 
-	// Initialize the NarrationManager object.
-	//DEBUG_MSG("main.cpp : main() : Initialize the NarrationManager object.");
-	//NarrationManager* narrationManager = new NarrationManager(mainClassAcces, sceneManager);
 	NarrationManager* narrationManager = new NarrationManager(sceneManager);
-	//mainClassAccess->SetMainNarrationManager(narrationManager);
 
-	// Initialize the MenuManager object.
-	//DEBUG_MSG("main.cpp : main() : Initialize the MenuManager object.");
 	MenuManager* menuManager = new MenuManager(sceneManager, narrationManager);
-	//MenuManager* menuManager = new MenuManager(mainClassAccess, sceneManager, narrationManager);
-	//mainClassAccess->SetMainMenuManager(menuManager);
 
-	// Initialize the UserInputManager object.
-	//DEBUG_MSG("main.cpp : main() : Initialize the UserInputManager object.");
-	UserInputManager* inputManager = new UserInputManager(menuManager);
-	//mainClassAccess->SetMainInputManager(inputManager);
+	UserInputManager* inputManager = new UserInputManager(sceneManager, menuManager);
+
 
 	unsigned short int counter = 0;
 	unsigned short int numLoops = 5;
