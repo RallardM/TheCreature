@@ -1,5 +1,5 @@
-#ifndef NARRATIONMANAGER_HPP
-#define NARRATIONMANAGER_HPP
+#ifndef NARRATIONMANAGER_H
+#define NARRATIONMANAGER_H
 
 #include <fstream>
 
@@ -11,7 +11,7 @@
 
 //class MenuManager;
 
-class NarrationManager : ScenesManager {
+class NarrationManager{
 public:
 	NarrationManager(ScenesManager* sceneManager);
 	void PrintLinesFromScene();
@@ -39,4 +39,4 @@ private:
 	unsigned short int m_sceneMenuLines[2];
 
 };
-#endif // NARRATIONMANAGER_HPP
+#endif // NARRATIONMANAGER_H

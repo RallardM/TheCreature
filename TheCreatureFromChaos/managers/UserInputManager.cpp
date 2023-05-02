@@ -3,15 +3,8 @@
 #include <iostream>
 
 #include "UserInputManager.h"
-//#include "MenuManager.h"
-
-//MenuManager* g_menuManager;
-//MainClass* g_mainClass{};
-
-//UserInputManager::UserInputManager(MainClass* mainClassAccess) :
-//	m_hasInput(false)
-//{
-//}
+#include "MenuManager.h"
+//#include <MenuManager.h>
 
 UserInputManager::UserInputManager(MenuManager* menuManager) :
     m_hasInput(false),
@@ -72,8 +65,8 @@ void UserInputManager::SetAction(UserInputManager::E_UserInput userInput)
 
     if (userInput == UserInputManager::E_UserInput::LEFT || userInput == UserInputManager::E_UserInput::RIGHT)
     {
-        m_menuManager->PrintMenuFromScene(userInput);
-        m_menuManager->SetIsMenuCleared(false);
+        GetMenuManager()->PrintMenuFromScene(userInput);
+        GetMenuManager()->SetIsMenuCleared(false);
         SetHasInput(false);
     }
     if (userInput == UserInputManager::E_UserInput::UP)
@@ -84,7 +77,7 @@ void UserInputManager::SetAction(UserInputManager::E_UserInput userInput)
 	}
     if (userInput == UserInputManager::E_UserInput::ENTER)
     {
-        std::cout << m_menuManager->GetSelectedMenuLine() << std::endl;
+        std::cout << GetMenuManager()->GetSelectedMenuLine() << std::endl;
 	}
     if (userInput == UserInputManager::E_UserInput::ESC)
     {
@@ -100,4 +93,9 @@ bool UserInputManager::HasInput()
 void UserInputManager::SetHasInput(bool hasInput)
 {
     m_hasInput = hasInput;
+}
+
+MenuManager* UserInputManager::GetMenuManager()
+{
+    return m_menuManager;
 }

@@ -31,8 +31,6 @@ int main()
 	//MainClass* mainClassAccess = new MainClass();
 	//mainClassAccess->SetMainClassAccess(mainClassAccess);
 
-
-
 	// Initialize the ScenesManager object.
 	//DEBUG_MSG("main.cpp : main() : Initialize the ScenesManager object.");
 	ScenesManager* sceneManager = new ScenesManager();
