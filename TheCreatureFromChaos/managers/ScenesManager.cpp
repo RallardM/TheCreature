@@ -8,7 +8,7 @@ ScenesManager::ScenesManager() :
 {
 }
 
-ScenesManager::E_SceneSequence ScenesManager::GetPlayerCurrentScene()
+E_SceneSequence ScenesManager::GetPlayerCurrentScene()
 {
 	return m_userCurrentScene;
 }
@@ -24,13 +24,13 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 
 	switch (menuChoice)
 	{
-		case E_MenuChoices::G_NO_MENU_LINE:
+		case E_MenuChoices::NO_MENU_LINE:
 			std::cout << "Error: ScenesManager::SetNextScene() returned no choice." << std::endl;
 			break;
-		case E_MenuChoices::G_TRY_TO_MOVE:
+		case E_MenuChoices::TRY_TO_MOVE:
 
 			break;
-		case E_MenuChoices::G_DO_NOTHING:
+		case E_MenuChoices::DO_NOTHING:
 
 			break;
 		default:

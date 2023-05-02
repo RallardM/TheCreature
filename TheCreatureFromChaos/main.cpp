@@ -37,7 +37,7 @@ int main()
 
 	//mainClassAccess->SetIsMenuCleared(true);
 	//bool oneLoopOFTwo = true;
-	UserInputManager::E_UserInput userInput = UserInputManager::E_UserInput::EMPTY;
+	E_UserInput userInput = E_UserInput::EMPTY;
 	bool isSceneCleared = true;
 	
 	//bool isMenuCleared = true;

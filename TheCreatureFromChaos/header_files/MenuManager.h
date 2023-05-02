@@ -2,33 +2,23 @@
 
 #include <fstream>
 
-//#include "ScenesManager.h"
-#include "UserInputManager.h"
+#include "ScenesManager.h"
+#include "Globals.h"
+//#include "UserInputManager.h"
 //#include "NarrationManager.h"
 
+
 class ScenesManager;
-class NarrationManager;
+//class NarrationManager;
 //class UserInputManager;
-
-
-const unsigned short int G_FOUR_MENU_CHOICES = 4;
-const unsigned short int G_TWO_MENU_CHOICES = 2;
-
-enum class E_MenuChoices {
-	G_NO_MENU_LINE = 1,
-	G_TRY_TO_MOVE = 3,
-	G_DO_NOTHING = 4
-};
-
 
 class MenuManager {
 public:
 
-
 	E_MenuChoices g_introHighlightedMenu[G_TWO_MENU_CHOICES]
 	{
-		E_MenuChoices::G_TRY_TO_MOVE,
-		E_MenuChoices::G_DO_NOTHING
+		E_MenuChoices::TRY_TO_MOVE,
+		E_MenuChoices::DO_NOTHING
 	};
 
 	const short int EMPTY_MENU_LINE = -1;
@@ -37,7 +27,7 @@ public:
 	MenuManager(ScenesManager* sceneManager, NarrationManager* textManager);
 
 
-	void PrintMenuFromScene(UserInputManager::E_UserInput userInput);
+	void PrintMenuFromScene(E_UserInput userInput);
 
 	std::string GetLastLineInConsole();
 
@@ -49,6 +39,8 @@ public:
 
 	bool GetIsMenuCleared();
 	void SetIsMenuCleared(bool isMenuCleared);
+
+	NarrationManager* GetNarrationManager();
 
 private:
 

@@ -143,7 +143,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="managers\InterfaceManager.cpp" />
     <ClCompile Include="managers\MenuManager.cpp" />
     <ClCompile Include="managers\NarrationManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -163,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_files\DebugMessageSystem.h" />
+    <ClInclude Include="header_files\Globals.h" />
     <ClInclude Include="header_files\MenuManager.h" />
     <ClInclude Include="header_files\NarrationManager.h" />
     <ClInclude Include="header_files\ScenesManager.h" />

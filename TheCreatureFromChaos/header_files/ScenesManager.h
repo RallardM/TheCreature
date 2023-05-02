@@ -1,17 +1,16 @@
 #pragma once
 
-class MenuManager; 
+class MenuManager;
+class NarrationManager;
+class UserInputManager;
+
 #include "MenuManager.h"
+#include "NarrationManager.h"
+#include "UserInputManager.h"
+#include "Globals.h"
 
 class ScenesManager {
 public:
-	enum class E_SceneSequence {
-		//  NarrationManager.cpp m_sceneMenuLines{ 1, 6 }
-		NO_SCENE = -1, 
-		INTRO_SCENE = 0, // line 1 
-		MOVING_SCENE = 2, // line 6
-	};
-
 	ScenesManager();
 
 	E_SceneSequence GetPlayerCurrentScene();

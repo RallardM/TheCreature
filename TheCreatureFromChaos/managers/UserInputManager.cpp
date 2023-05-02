@@ -1,9 +1,9 @@
-
 #include <conio.h>
 #include <iostream>
-
 #include "UserInputManager.h"
-#include "MenuManager.h"
+
+//#include "ScenesManager.h"
+//#include "MenuManager.h"
 //#include <MenuManager.h>
 
 UserInputManager::UserInputManager(ScenesManager* sceneManager, MenuManager* menuManager) :
@@ -13,7 +13,7 @@ UserInputManager::UserInputManager(ScenesManager* sceneManager, MenuManager* men
 {
 }
 
-UserInputManager::E_UserInput UserInputManager::GetInput()
+E_UserInput UserInputManager::GetInput()
 {
     char key = 0;
     while (true) 
@@ -59,28 +59,28 @@ UserInputManager::E_UserInput UserInputManager::GetInput()
      }
 }
 
-void UserInputManager::SetAction(UserInputManager::E_UserInput userInput)
+void UserInputManager::SetAction(E_UserInput userInput)
 {
     userInput = GetInput();
 
 
-    if (userInput == UserInputManager::E_UserInput::LEFT || userInput == UserInputManager::E_UserInput::RIGHT)
+    if (userInput == E_UserInput::LEFT || userInput == E_UserInput::RIGHT)
     {
         GetMenuManager()->PrintMenuFromScene(userInput);
         GetMenuManager()->SetIsMenuCleared(false);
         SetHasInput(false);
     }
-    if (userInput == UserInputManager::E_UserInput::UP)
+    if (userInput == E_UserInput::UP)
     {
 	}
-    if (userInput == UserInputManager::E_UserInput::DOWN)
+    if (userInput == E_UserInput::DOWN)
     {
 	}
-    if (userInput == UserInputManager::E_UserInput::ENTER)
+    if (userInput == E_UserInput::ENTER)
     {
         GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
 	}
-    if (userInput == UserInputManager::E_UserInput::ESC)
+    if (userInput == E_UserInput::ESC)
     {
 
 	}

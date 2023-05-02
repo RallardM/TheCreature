@@ -4,9 +4,14 @@
 
 #include "Utils.h"
 
+class ScenesManager;
 #include "ScenesManager.h"
-//class ScenesManager;
-//class MenuManager;
+#include "Globals.h"
+//lass ScenesManager;
+
+
+//#include "MenuManager.h" 
+//#include "ScenesManager.h"
 
 class NarrationManager{
 public:
@@ -20,10 +25,10 @@ public:
 
 	ScenesManager* GetSceneManager();
 
-	unsigned short int GetSceneMenuLine(ScenesManager::E_SceneSequence fromLine);
+	unsigned short int GetSceneMenuLine(E_SceneSequence fromLine);
 private:
-	unsigned short int GetSceneTextLines(ScenesManager::E_SceneSequence fromLine);
-	unsigned short int GetSceneImageLines(ScenesManager::E_SceneSequence fromLine);
+	unsigned short int GetSceneTextLines(E_SceneSequence fromLine);
+	unsigned short int GetSceneImageLines(E_SceneSequence fromLine);
 
 	ScenesManager* m_sceneManager;
 
