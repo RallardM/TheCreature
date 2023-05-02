@@ -15,7 +15,7 @@ class ScenesManager;
 class MenuManager {
 public:
 
-	E_MenuChoices g_introHighlightedMenu[G_TWO_MENU_CHOICES]
+	E_MenuChoices g_scenesOptions[G_TWO_MENU_CHOICES]
 	{
 		E_MenuChoices::TRY_TO_MOVE,
 		E_MenuChoices::DO_NOTHING

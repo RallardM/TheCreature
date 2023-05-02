@@ -16,8 +16,6 @@ enum class E_MenuChoices {
 	DO_NOTHING = 4
 };
 
-
-
 enum class E_UserInput { 
 	LEFT, 
 	RIGHT, 

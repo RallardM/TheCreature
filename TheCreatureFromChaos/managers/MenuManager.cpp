@@ -51,20 +51,20 @@ void MenuManager::PrintMenuFromScene(E_UserInput userInput)
             ClearConsolePreviousLine();
             if (userInput == E_UserInput::LEFT)
             {
-                std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), g_introHighlightedMenu[0]) << std::endl;
+                std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), g_scenesOptions[0]) << std::endl;
                 SetIsMenuCleared(false);
-                SetSelectedMenuLine(g_introHighlightedMenu[0]);
+                SetSelectedMenuLine(g_scenesOptions[0]);
             }
             else if (userInput == E_UserInput::RIGHT)
             {
-                std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), g_introHighlightedMenu[1]) << std::endl;
+                std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), g_scenesOptions[1]) << std::endl;
                 SetIsMenuCleared(false);
-                SetSelectedMenuLine(g_introHighlightedMenu[1]);
+                SetSelectedMenuLine(g_scenesOptions[1]);
             }
         }
         else
         {
-            std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), g_introHighlightedMenu[0]) << std::endl;
+            std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), g_scenesOptions[0]) << std::endl;
         }
         break;
 
