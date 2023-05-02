@@ -24,20 +24,11 @@
     <ClCompile Include="resouce_files\Utils.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="managers\MenuManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="managers\NarrationManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
     <ClCompile Include="managers\ScenesManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="resouce_files\DebugMessageSystem.cpp">
       <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="managers\UserInputManager.cpp">
-      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,22 +51,13 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="header_files\UserInputManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="header_files\Utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="header_files\ScenesManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header_files\DebugMessageSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\MenuManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="header_files\NarrationManager.h">
+    <ClInclude Include="header_files\ScenesManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

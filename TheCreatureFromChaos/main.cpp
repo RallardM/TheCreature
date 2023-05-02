@@ -4,14 +4,13 @@
 #include <thread>
 #include <conio.h>
 
-#include "Utils.h"
-
-
-#include "UserInputManager.h"
-#include "NarrationManager.h"
-#include "MenuManager.h"
+//#include "NarrationManager.h"
+//#include "MenuManager.h"
 #include "DebugMessageSystem.h"
-#include "main.h"
+//#include "UserInputManager.h"
+#include "ScenesManager.h"
+#include "Utils.h"
+//#include "main.h"
 
 
 int main()
@@ -41,18 +40,18 @@ int main()
 	// Initialize the NarrationManager object.
 	//DEBUG_MSG("main.cpp : main() : Initialize the NarrationManager object.");
 	//NarrationManager* narrationManager = new NarrationManager(mainClassAcces, sceneManager);
-	NarrationManager* narrationManager = new NarrationManager(sceneManager);
+	//NarrationManager* narrationManager = new NarrationManager(sceneManager);
 	//mainClassAccess->SetMainNarrationManager(narrationManager);
 
 	// Initialize the MenuManager object.
 	//DEBUG_MSG("main.cpp : main() : Initialize the MenuManager object.");
-	MenuManager* menuManager = new MenuManager(sceneManager, narrationManager);
+	//MenuManager* menuManager = new MenuManager(sceneManager, narrationManager);
 	//MenuManager* menuManager = new MenuManager(mainClassAccess, sceneManager, narrationManager);
 	//mainClassAccess->SetMainMenuManager(menuManager);
 
 	// Initialize the UserInputManager object.
 	//DEBUG_MSG("main.cpp : main() : Initialize the UserInputManager object.");
-	UserInputManager* inputManager = new UserInputManager(menuManager);
+	//UserInputManager* inputManager = new UserInputManager(sceneManager);
 	//mainClassAccess->SetMainInputManager(inputManager);
 
 	unsigned short int counter = 0;
@@ -60,7 +59,7 @@ int main()
 
 	//mainClassAccess->SetIsMenuCleared(true);
 	//bool oneLoopOFTwo = true;
-	UserInputManager::E_UserInput userInput = UserInputManager::E_UserInput::EMPTY;
+	ScenesManager::E_UserInput userInput = ScenesManager::E_UserInput::EMPTY;
 	bool isSceneCleared = true;
 	
 	//bool isMenuCleared = true;
@@ -71,21 +70,21 @@ int main()
 		// Process user input
 		if (_kbhit())
 		{
-			inputManager->SetAction(userInput);
+			sceneManager->SetAction(userInput);
 		}
 
 		//if (mainClassAcces->GetIsSceneCleared())
 		if (isSceneCleared)
 		{
 			// Print the scene text.
-			narrationManager->PrintLinesFromScene();
+			sceneManager->PrintLinesFromScene();
 			//mainClassAcces->SetIsSceneCleared(false);
 			isSceneCleared = false;
 		}
 
-		if (menuManager->GetIsMenuCleared())
+		if (sceneManager->GetIsMenuCleared())
 		{
-			menuManager->PrintMenuFromScene(userInput);
+			sceneManager->PrintMenuFromScene(userInput);
 			//menuManager->SetIsMenuCleared(false);
 		}
 
@@ -93,9 +92,9 @@ int main()
 	}
 
 	// Clean up dynamically allocated memory.
-	delete menuManager;
-	delete inputManager;
-	delete narrationManager;
+	//delete menuManager;
+	//delete inputManager;
+	//delete narrationManager;
 	delete sceneManager;
 
 	return 0;
