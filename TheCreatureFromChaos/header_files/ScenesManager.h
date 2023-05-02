@@ -19,7 +19,14 @@ public:
 	void SetNextScene(E_MenuChoices menuChoice);
 
 	void ClearAllConsoleText();
+	NarrationManager* GetNarrationManager();
+	void SetNarrationManager(NarrationManager* narrationManager);
+
+	//bool GetIsSceneCleared();
+	//void SetIsSceneCleared(bool isSceneCleared);
 
 private:
 	E_SceneSequence m_userCurrentScene;
+	NarrationManager* m_narrationManager;
+	//bool m_isSceneCleared;
 };

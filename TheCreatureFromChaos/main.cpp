@@ -26,8 +26,12 @@ int main()
 	ScenesManager* sceneManager = new ScenesManager();
 
 	NarrationManager* narrationManager = new NarrationManager(sceneManager);
+	sceneManager->SetNarrationManager(narrationManager);
 
 	MenuManager* menuManager = new MenuManager(sceneManager, narrationManager);
+
+	// Print Intro scene.
+	narrationManager->PrintLinesFromScene();
 
 	UserInputManager* inputManager = new UserInputManager(sceneManager, menuManager);
 
@@ -38,7 +42,6 @@ int main()
 	//mainClassAccess->SetIsMenuCleared(true);
 	//bool oneLoopOFTwo = true;
 	E_UserInput userInput = E_UserInput::EMPTY;
-	bool isSceneCleared = true;
 	
 	//bool isMenuCleared = true;
 	bool gameRunning = true;
@@ -51,14 +54,11 @@ int main()
 			inputManager->SetAction(userInput);
 		}
 
-		//if (mainClassAcces->GetIsSceneCleared())
-		if (isSceneCleared)
-		{
-			// Print the scene text.
-			narrationManager->PrintLinesFromScene();
-			//mainClassAcces->SetIsSceneCleared(false);
-			isSceneCleared = false;
-		}
+		//if (sceneManager->GetIsSceneCleared())
+		//{
+		//	// Print the scene text.
+		//	narrationManager->PrintLinesFromScene();
+		//}
 
 		if (menuManager->GetIsMenuCleared())
 		{

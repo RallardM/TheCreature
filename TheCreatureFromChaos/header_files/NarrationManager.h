@@ -36,8 +36,8 @@ private:
 	std::string m_pictureFilePath;
 	std::string m_menuFilePath;
 
-	unsigned short int m_sceneTextLines[2];
-	unsigned short int m_sceneImageLines[2];
-	unsigned short int m_sceneMenuLines[2];
+	//unsigned short int m_sceneTextLines[2];
+	//unsigned short int m_sceneImageLines[2];
+	//unsigned short int m_sceneMenuLines[2];
 
 };

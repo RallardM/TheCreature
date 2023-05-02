@@ -147,6 +147,7 @@
     <ClCompile Include="managers\NarrationManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="resouce_files\DebugMessageSystem.cpp" />
+    <ClCompile Include="resouce_files\Globals.cpp" />
     <ClCompile Include="resouce_files\Utils.cpp" />
     <ClCompile Include="managers\UserInputManager.cpp" />
     <ClCompile Include="managers\ScenesManager.cpp" />

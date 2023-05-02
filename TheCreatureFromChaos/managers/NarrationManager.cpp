@@ -17,9 +17,9 @@ NarrationManager::NarrationManager(ScenesManager* sceneManager) :
     m_textFilePath("resouce_files/ScenesNarrationText.txt"), 
     m_pictureFilePath("resouce_files/ScenesAsciiArt.txt"),
     m_menuFilePath("resouce_files/ScenesMenuText.txt"),
-    m_sceneTextLines{ 1, 6 },
-    m_sceneImageLines{ 1, 35 },
-    m_sceneMenuLines{ 1, 6 },
+    //m_sceneTextLines{ 1, 6 },
+    //m_sceneImageLines{ 1, 35 },
+    //m_sceneMenuLines{ 1, 6 },
     m_sceneManager(sceneManager)
 {
 
@@ -71,6 +71,7 @@ void NarrationManager::PrintLinesFromScene()
 
 	std::cout << scenePicture;
 	std::cout << sceneText;
+    //GetSceneManager()->SetIsSceneCleared();
 	
 }
 
@@ -129,17 +130,17 @@ std::string& NarrationManager::GetMenuFilePath()
 
 unsigned short int NarrationManager::GetSceneImageLines(E_SceneSequence fromLine)
 {
-    return m_sceneImageLines[static_cast<int>(fromLine)];
+    return G_SCENES_IMAGE_LINES[static_cast<int>(fromLine)];
 }
 
 unsigned short int NarrationManager::GetSceneTextLines(E_SceneSequence fromLine)
 {
-    return m_sceneTextLines[static_cast<int>(fromLine)];
+    return G_SCENES_TEXT_LINES[static_cast<int>(fromLine)];
 }
 
 unsigned short int NarrationManager::GetSceneMenuLine(E_SceneSequence fromLine)
 {
-    return m_sceneMenuLines[static_cast<int>(fromLine)];
+    return G_SCENES_MENU_LINES[static_cast<int>(fromLine)];
 }
 
 ScenesManager* NarrationManager::GetSceneManager()
