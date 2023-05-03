@@ -6,12 +6,9 @@
 
 class ScenesManager;
 #include "ScenesManager.h"
-#include "Globals.h"
-//lass ScenesManager;
 
-
-//#include "MenuManager.h" 
-//#include "ScenesManager.h"
+#include "ScenesControllers.h"
+using namespace ScenesControllers;
 
 class NarrationManager{
 public:

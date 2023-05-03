@@ -1,16 +1,10 @@
 #pragma once
 
-
-
-//#include "MenuManager.h"
-//#include "Globals.h"
-
 class ScenesManager;
-#include "ScenesManager.h"
-#include "Globals.h"
 
-//class NarrationManager;
-//class MenuManager;
+#include "ScenesManager.h"
+#include "ScenesControllers.h"
+using namespace ScenesControllers;
 
 class UserInputManager {
 public:

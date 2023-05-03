@@ -39,9 +39,6 @@
     <ClCompile Include="managers\UserInputManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="resouce_files\Globals.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resouce_files\GameArtEnding.jpg">
@@ -49,16 +46,16 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="resouce_files\ScenesNarrationText.txt">
+    <Text Include="resouce_files\NarrationText.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="resouce_files\MainMenuAscii.txt">
+    <Text Include="resouce_files\MainMenu.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="resouce_files\ScenesAsciiArt.txt">
+    <Text Include="resouce_files\ScenesArt.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="resouce_files\ScenesMenuText.txt">
+    <Text Include="resouce_files\MenuText.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
@@ -81,7 +78,7 @@
     <ClInclude Include="header_files\NarrationManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\Globals.h">
+    <ClInclude Include="header_files\ScenesControllers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

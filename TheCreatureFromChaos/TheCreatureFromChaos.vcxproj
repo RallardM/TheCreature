@@ -147,7 +147,6 @@
     <ClCompile Include="managers\NarrationManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="resouce_files\DebugMessageSystem.cpp" />
-    <ClCompile Include="resouce_files\Globals.cpp" />
     <ClCompile Include="resouce_files\Utils.cpp" />
     <ClCompile Include="managers\UserInputManager.cpp" />
     <ClCompile Include="managers\ScenesManager.cpp" />
@@ -156,16 +155,16 @@
     <Image Include="resouce_files\GameArtEnding.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="resouce_files\ScenesAsciiArt.txt" />
-    <Text Include="resouce_files\ScenesMenuText.txt" />
-    <Text Include="resouce_files\MainMenuAscii.txt" />
-    <Text Include="resouce_files\ScenesNarrationText.txt" />
+    <Text Include="resouce_files\ScenesArt.txt" />
+    <Text Include="resouce_files\MenuText.txt" />
+    <Text Include="resouce_files\MainMenu.txt" />
+    <Text Include="resouce_files\NarrationText.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_files\DebugMessageSystem.h" />
-    <ClInclude Include="header_files\Globals.h" />
     <ClInclude Include="header_files\MenuManager.h" />
     <ClInclude Include="header_files\NarrationManager.h" />
+    <ClInclude Include="header_files\ScenesControllers.h" />
     <ClInclude Include="header_files\ScenesManager.h" />
     <ClInclude Include="header_files\UserInputManager.h" />
     <ClInclude Include="header_files\Utils.h" />

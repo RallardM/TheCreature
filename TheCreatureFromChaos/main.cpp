@@ -29,15 +29,16 @@ int main()
 	sceneManager->SetNarrationManager(narrationManager);
 
 	MenuManager* menuManager = new MenuManager(sceneManager, narrationManager);
+	sceneManager->SetMenuManager(menuManager);
 
 	// Print Intro scene.
 	narrationManager->PrintLinesFromScene();
 
 	UserInputManager* inputManager = new UserInputManager(sceneManager, menuManager);
+	//menuManager->SetUserInputManager(inputManager);
 
-
-	unsigned short int counter = 0;
-	unsigned short int numLoops = 5;
+	//unsigned short int counter = 0;
+	//unsigned short int numLoops = 5;
 
 	//mainClassAccess->SetIsMenuCleared(true);
 	//bool oneLoopOFTwo = true;
@@ -62,8 +63,9 @@ int main()
 
 		if (menuManager->GetIsMenuCleared())
 		{
+			DEBUG_MSG("main.cpp : main() : GetIsMenuCleared() PrintMenuFromScene()");
 			menuManager->PrintMenuFromScene(userInput);
-			//menuManager->SetIsMenuCleared(false);
+			menuManager->SetIsMenuCleared(false);
 		}
 
 		//std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -77,63 +79,3 @@ int main()
 
 	return 0;
 }
-
-//void MainClass::SetIsSceneCleared(bool isSceneCleared)
-//{
-//	m_isSceneCleared = isSceneCleared;
-//}
-//
-//bool MainClass::GetIsSceneCleared()
-//{
-//	return m_isSceneCleared;
-//}
-
-//void MainClass::SetIsMenuCleared(bool isMenuCleared)
-//{
-//	m_isMenuCleared = isMenuCleared;
-//}
-//
-//bool MainClass::GetIsMenuCleared()
-//{
-//	return m_isMenuCleared;
-//}
-
-//UserInputManager* MainClass::GetMainInputManager()
-//{
-//	return m_inputManager;
-//}
-//
-//ScenesManager* MainClass::GetMainSceneManager()
-//{
-//	return m_sceneManager;
-//}
-//
-//NarrationManager* MainClass::GetMainNarrationManager()
-//{
-//	return m_narrationManager;
-//}
-//
-//MenuManager* MainClass::GetMainMenuManager()
-//{
-//	return m_menuManager;
-//}
-//
-//void MainClass::SetMainInputManager(UserInputManager* inputManager)
-//{
-//	m_inputManager = inputManager;
-//}
-//
-//void MainClass::SetMainSceneManager(ScenesManager* sceneManager)
-//{
-//	m_sceneManager = sceneManager;
-//}
-//
-//void MainClass::SetMainNarrationManager(NarrationManager* narrationManager)
-//{
-//	m_narrationManager = narrationManager;
-//}
-//
-//void MainClass::SetMainMenuManager(MenuManager* menuManager)
-//{
-//	m_menuManager = menuManager;
-//}
