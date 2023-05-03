@@ -1,8 +1,19 @@
+INTRO_SCENE:
+                            <Try to move>    Try to remeber 
+                             Try to move    <Try to remeber>
+MOVING_SCENE:
+                            <Look around>    Try to remeber
+                             Look around    <Try to remeber>
+KOBOLD_SCENE:
+                           <"Who are you?">      Attack
+						    "Who are you?"      <Attack>
+NAME_SCENE: View code
 
-                             Try to move    Do nothing 
-                            <Try to move>   Do nothing 
-                             Try to move   <Do nothing>
-                      Try to move    Do nothing   Try to remeber 
-                     <Try to move>   Do nothing   Try to remeber 
-                      Try to move   <Do nothing>  Try to remeber 
-                      Try to move    Do nothing  <Try to remeber>
+ATTACK_SCENE: View code
+
+DEAD_END_SCENE:
+                                       <Go back>
+
+ENNEMY_SCENE:
+                               <Attack>         Run away 
+                                Attack         <Run away>

@@ -125,12 +125,12 @@ void UserInputManager::SetAction(E_UserInput userInput)
     }
     if (userInput == E_UserInput::UP)
     {
-        DEBUG_MSG("UserInputManager.cpp : SetAction() : User is pressed UP.");
+        DEBUG_MSG("UserInputManager.cpp : SetAction() : User pressed UP.");
         return;
 	}
     if (userInput == E_UserInput::DOWN)
     {
-        DEBUG_MSG("UserInputManager.cpp : SetAction() : User is pressed DOWN.");
+        DEBUG_MSG("UserInputManager.cpp : SetAction() : User pressed DOWN.");
         return;
 	}
     if (userInput == E_UserInput::ENTER)
@@ -141,7 +141,7 @@ void UserInputManager::SetAction(E_UserInput userInput)
     }
     if (userInput == E_UserInput::ESC)
     {
-        DEBUG_MSG("UserInputManager.cpp : SetAction() : User is pressed ESC.");
+        DEBUG_MSG("UserInputManager.cpp : SetAction() : User pressed ESC.");
         return;
 	}
 }

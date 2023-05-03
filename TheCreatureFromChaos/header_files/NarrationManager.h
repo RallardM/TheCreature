@@ -22,7 +22,8 @@ public:
 
 	ScenesManager* GetSceneManager();
 
-	unsigned short int GetSceneMenuLine(E_SceneSequence fromLine);
+	//unsigned short int GetSceneMenuLine(E_SceneSequence fromLine);
+
 private:
 	unsigned short int GetSceneTextLines(E_SceneSequence fromLine);
 	unsigned short int GetSceneImageLines(E_SceneSequence fromLine);

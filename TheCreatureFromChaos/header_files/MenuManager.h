@@ -14,6 +14,7 @@ public:
 	MenuManager(ScenesManager* sceneManager, NarrationManager* textManager);
 
 	void PrintMenuFromScene(E_UserInput userInput);
+	void SelectSceneToPrint(E_UserInput userInput, E_MenuChoices LeftMenuChoice, E_MenuChoices rightMenuChoice);
 
 	std::string GetLastLineInConsole();
 
@@ -27,6 +28,7 @@ public:
 	void SetIsMenuCleared(bool isMenuCleared);
 
 	NarrationManager* GetNarrationManager();
+	ScenesManager* GetSceneManager();
 
 	//UserInputManager* GetUserInputManager();
 	//void SetUserInputManager(UserInputManager* inputManager);

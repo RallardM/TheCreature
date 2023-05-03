@@ -16,74 +16,128 @@ MenuManager::MenuManager(ScenesManager* sceneManager, NarrationManager* narratio
     m_selectedMenuLine = E_MenuChoices::NO_MENU_LINE;
 }
 
+//void MenuManager::PrintMenuFromScene(E_UserInput userInput)
+//{
+//    //E_UserInput userInput = GetUserInputManager()->GetInput();
+//    E_SceneSequence scene = GetSceneManager()->GetPlayerCurrentScene();
+//
+//    switch (scene)
+//    {
+//        case E_SceneSequence::INTRO_SCENE:
+//            if (userInput != E_UserInput::EMPTY)
+//            {
+//                ClearConsolePreviousLine();
+//                int numMenuChoices = GetNumberOfMenuChoices(scene);
+//                int selectedMenuLine = static_cast<int>(GetSelectedMenuLine());
+//
+//                if (userInput == E_UserInput::LEFT)
+//                {
+//                    for (int i = 0; i < numMenuChoices; i++)
+//                    {
+//
+//					}
+//                }
+//                else if (userInput == E_UserInput::RIGHT)
+//                {
+//
+//                }
+//
+//                SetSelectedMenuLine(selectedMenuLine);
+//                std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), selectedMenuLine) << std::endl;
+//                SetIsMenuCleared(false);
+//                break;
+//            }  
+//
+//        case E_SceneSequence::MOVING_SCENE:
+//            DEBUG_MSG("#R MenuManager.cpp : PrintMenuFromScene() : MOVING_SCENE");
+//            if (userInput != E_UserInput::EMPTY)
+//            {
+//                ClearConsolePreviousLine();
+//                if (userInput == E_UserInput::LEFT)
+//                {
+//                    DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print TRY_TO_MOVE menu");
+//                    std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), E_MenuChoices::TRY_TO_MOVE) << std::endl;
+//                    SetIsMenuCleared(false);
+//                    SetSelectedMenuLine(E_MenuChoices::TRY_TO_MOVE);
+//                    break;
+//                }
+//                else if (userInput == E_UserInput::RIGHT)
+//                {
+//                    DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print DO_NOTHING menu");
+//                    std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), E_MenuChoices::DO_NOTHING) << std::endl;
+//                    SetIsMenuCleared(false);
+//                    SetSelectedMenuLine(E_MenuChoices::DO_NOTHING);
+//                    break;
+//                }
+//            }
+//            else
+//            {
+//                DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : UserInput is EMPTY Print TRY_TO_MOVE menu");
+//                std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), E_MenuChoices::TRY_TO_MOVE) << std::endl;
+//                SetIsMenuCleared(false);
+//                SetSelectedMenuLine(E_MenuChoices::TRY_TO_MOVE);
+//                break;
+//            }
+//
+//        default:
+//            DEBUG_MSG("#R MenuManager.cpp : PrintMenuFromScene() : Default no menu selected");
+//            break;
+//    }
+//}
+//
+//unsigned short int GetNumberOfMenuChoices(E_SceneSequence scene)
+//{
+//    const unsigned short int FOUR_MENU_CHOICES = 4;
+//    const unsigned short int THREE_MENU_CHOICES = 3;
+//    const unsigned short int TWO_MENU_CHOICES = 2;
+//
+//    switch (scene)
+//    {
+//		case E_SceneSequence::INTRO_SCENE:
+//			return TWO_MENU_CHOICES;
+//		case E_SceneSequence::MOVING_SCENE:
+//			return THREE_MENU_CHOICES;
+//		default:
+//			DEBUG_MSG("#R MenuManager.cpp : GetNumberOfMenuChoices() : Default no number of menu");
+//			break;
+//	}
+//}
+
 void MenuManager::PrintMenuFromScene(E_UserInput userInput)
 {
-    //E_UserInput userInput = GetUserInputManager()->GetInput();
     E_SceneSequence scene = m_sceneManager->GetPlayerCurrentScene();
 
     switch (scene)
     {
     case E_SceneSequence::INTRO_SCENE:
-        if (userInput != E_UserInput::EMPTY)
-        {
-            ClearConsolePreviousLine();
-            if (userInput == E_UserInput::LEFT)
-            {
-                DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print TRY_TO_MOVE menu");
-                std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), E_MenuChoices::TRY_TO_MOVE) << std::endl;
-                SetIsMenuCleared(false);
-                SetSelectedMenuLine(E_MenuChoices::TRY_TO_MOVE);
-                break;
-            }
-            else if (userInput == E_UserInput::RIGHT)
-            {
-                DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print DO_NOTHING menu");
-                std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), E_MenuChoices::DO_NOTHING) << std::endl;
-                SetIsMenuCleared(false);
-                SetSelectedMenuLine(E_MenuChoices::DO_NOTHING);
-                break;
-            }
-        }
-        else
-        {
-            DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : UserInput is EMPTY Print TRY_TO_MOVE menu");
-            std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), E_MenuChoices::TRY_TO_MOVE) << std::endl;
-            SetIsMenuCleared(false);
-            SetSelectedMenuLine(E_MenuChoices::TRY_TO_MOVE);
-            break;
-        }
+        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : INTRO_SCENE");
+        SelectSceneToPrint(userInput, E_MenuChoices::TRY_TO_MOVE, E_MenuChoices::TRY_TO_REMEBER);
         break;
 
     case E_SceneSequence::MOVING_SCENE:
-        DEBUG_MSG("#R MenuManager.cpp : PrintMenuFromScene() : MOVING_SCENE");
-        if (userInput != E_UserInput::EMPTY)
-        {
-            ClearConsolePreviousLine();
-            if (userInput == E_UserInput::LEFT)
-            {
-                DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print TRY_TO_MOVE menu");
-                std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), E_MenuChoices::TRY_TO_MOVE) << std::endl;
-                SetIsMenuCleared(false);
-                SetSelectedMenuLine(E_MenuChoices::TRY_TO_MOVE);
-                break;
-            }
-            else if (userInput == E_UserInput::RIGHT)
-            {
-                DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print DO_NOTHING menu");
-                std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), E_MenuChoices::DO_NOTHING) << std::endl;
-                SetIsMenuCleared(false);
-                SetSelectedMenuLine(E_MenuChoices::DO_NOTHING);
-                break;
-            }
-        }
-        else
-        {
-            DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : UserInput is EMPTY Print TRY_TO_MOVE menu");
-            std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), E_MenuChoices::TRY_TO_MOVE) << std::endl;
-            SetIsMenuCleared(false);
-            SetSelectedMenuLine(E_MenuChoices::TRY_TO_MOVE);
-            break;
-        }
+        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : MOVING_SCENE");
+        SelectSceneToPrint(userInput, E_MenuChoices::LOOK_AROUND, E_MenuChoices::TRY_TO_REMEBER_TWO);
+        break;
+
+    case E_SceneSequence::KOBOLD_SCENE:
+        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : KOBOLD_SCENE");
+        SelectSceneToPrint(userInput, E_MenuChoices::WHO_ARE_YOU, E_MenuChoices::ATTACK_KOBOLD);
+        break;
+
+    case E_SceneSequence::NAME_SCENE:
+    case E_SceneSequence::ATTACK_SCENE:
+        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : NAME_SCENE TODO");
+        // TODO : cin name
+        break;
+
+    case E_SceneSequence::DEAD_END_SCENE:
+        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : KOBOLD_SCENE");
+        SelectSceneToPrint(userInput, E_MenuChoices::GO_BACK, E_MenuChoices::GO_BACK);
+        break;
+
+    case E_SceneSequence::ENNEMY_SCENE:
+        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : KOBOLD_SCENE");
+        SelectSceneToPrint(userInput, E_MenuChoices::ATTACK_ENEMY, E_MenuChoices::RUNAWAY);
         break;
 
     default:
@@ -92,81 +146,37 @@ void MenuManager::PrintMenuFromScene(E_UserInput userInput)
     }
 }
 
-//void MenuManager::PrintMenuFromScene(E_UserInput userInput)
-//{
-//    //E_UserInput userInput = GetUserInputManager()->GetInput();
-//    E_SceneSequence scene = m_sceneManager->GetPlayerCurrentScene();
-//
-//    switch (scene)
-//    {
-//    case E_SceneSequence::INTRO_SCENE:
-//        if (userInput != E_UserInput::EMPTY)
-//        {
-//            ClearConsolePreviousLine();
-//            if (userInput == E_UserInput::LEFT)
-//            {
-//                DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print TRY_TO_MOVE menu");
-//                std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), E_MenuChoices::TRY_TO_MOVE) << std::endl;
-//                SetIsMenuCleared(false);
-//                SetSelectedMenuLine(E_MenuChoices::TRY_TO_MOVE);
-//                break;
-//            }
-//            else if (userInput == E_UserInput::RIGHT)
-//            {
-//                DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print DO_NOTHING menu");
-//                std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), E_MenuChoices::DO_NOTHING) << std::endl;
-//                SetIsMenuCleared(false);
-//                SetSelectedMenuLine(E_MenuChoices::DO_NOTHING);
-//                break;
-//            }
-//        }
-//        else
-//        {
-//            DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : UserInput is EMPTY Print TRY_TO_MOVE menu");
-//            std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), E_MenuChoices::TRY_TO_MOVE) << std::endl;
-//            SetIsMenuCleared(false);
-//            SetSelectedMenuLine(E_MenuChoices::TRY_TO_MOVE);
-//            break;
-//        }
-//        break;
-//
-//    case E_SceneSequence::MOVING_SCENE:
-//        DEBUG_MSG("#R MenuManager.cpp : PrintMenuFromScene() : MOVING_SCENE");
-//        if (userInput != E_UserInput::EMPTY)
-//        {
-//            ClearConsolePreviousLine();
-//            if (userInput == E_UserInput::LEFT)
-//            {
-//                DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print TRY_TO_MOVE menu");
-//                std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), E_MenuChoices::TRY_TO_MOVE) << std::endl;
-//                SetIsMenuCleared(false);
-//                SetSelectedMenuLine(E_MenuChoices::TRY_TO_MOVE);
-//                break;
-//            }
-//            else if (userInput == E_UserInput::RIGHT)
-//            {
-//                DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print DO_NOTHING menu");
-//                std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), E_MenuChoices::DO_NOTHING) << std::endl;
-//                SetIsMenuCleared(false);
-//                SetSelectedMenuLine(E_MenuChoices::DO_NOTHING);
-//                break;
-//            }
-//        }
-//        else
-//        {
-//            DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : UserInput is EMPTY Print TRY_TO_MOVE menu");
-//            std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), E_MenuChoices::TRY_TO_MOVE) << std::endl;
-//            SetIsMenuCleared(false);
-//            SetSelectedMenuLine(E_MenuChoices::TRY_TO_MOVE);
-//            break;
-//        }
-//        break;
-//
-//    default:
-//        DEBUG_MSG("#R MenuManager.cpp : PrintMenuFromScene() : Default no menu selected");
-//        break;
-//    }
-//}
+void MenuManager::SelectSceneToPrint(E_UserInput userInput, E_MenuChoices LeftMenuChoice, E_MenuChoices rightMenuChoice)
+{
+    if (userInput != E_UserInput::EMPTY)
+    {
+        ClearConsolePreviousLine();
+        if (userInput == E_UserInput::LEFT)
+        {
+            DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print LeftMenuChoice");
+            std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), LeftMenuChoice) << std::endl;
+            SetIsMenuCleared(false);
+            SetSelectedMenuLine(LeftMenuChoice);
+            return;
+        }
+        else if (userInput == E_UserInput::RIGHT)
+        {
+            DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print DO_NOTHING menu");
+            std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), rightMenuChoice) << std::endl;
+            SetIsMenuCleared(false);
+            SetSelectedMenuLine(rightMenuChoice);
+            return;
+        }
+    }
+    else
+    {
+        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : UserInput is EMPTY Print TRY_TO_MOVE menu");
+        std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), LeftMenuChoice) << std::endl;
+        SetIsMenuCleared(false);
+        SetSelectedMenuLine(LeftMenuChoice);
+        return;
+    }
+}
 
 std::string MenuManager::GetLastLineInConsole()
 {
@@ -232,11 +242,6 @@ std::string MenuManager::GetMenuAtLine(std::string& filePathStr, E_MenuChoices a
     return text;
 }
 
-NarrationManager* MenuManager::GetNarrationManager()
-{
-	return m_narrationManager;
-}
-
 E_MenuChoices MenuManager::GetSelectedMenuLine()
 {
     DEBUG_MSG("#C MenuManager.cpp : GetSelectedMenuLine() : ");
@@ -277,3 +282,13 @@ void MenuManager::SetIsMenuCleared(bool isMenuCleared)
 //{
 //    m_inputManager = inputManager;
 //}
+
+NarrationManager* MenuManager::GetNarrationManager()
+{
+    return m_narrationManager;
+}
+
+ScenesManager* MenuManager::GetSceneManager()
+{
+	return m_sceneManager;
+}

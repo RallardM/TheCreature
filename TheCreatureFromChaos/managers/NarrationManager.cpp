@@ -152,10 +152,10 @@ unsigned short int NarrationManager::GetSceneTextLines(E_SceneSequence fromLine)
     return SCENES_TEXT_LINES[static_cast<int>(fromLine)];
 }
 
-unsigned short int NarrationManager::GetSceneMenuLine(E_SceneSequence fromLine)
-{
-    return SCENES_MENU_LINES[static_cast<int>(fromLine)];
-}
+//unsigned short int NarrationManager::GetSceneMenuLine(E_SceneSequence fromLine)
+//{
+//    return SCENES_MENU_LINES[static_cast<int>(fromLine)];
+//}
 
 ScenesManager* NarrationManager::GetSceneManager()
 {
