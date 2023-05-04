@@ -6,7 +6,8 @@
 
 ScenesManager::ScenesManager() :
 	m_userCurrentScene(E_SceneSequence::INTRO_SCENE),
-	m_narrationManager()
+	m_narrationManager(),
+	m_menuManager()
 {
 }
 
@@ -45,7 +46,7 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 
 		case E_MenuChoices::LOOK_AROUND:
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO.");
-			//SetPlayerCurrentScene(E_SceneSequence::);
+			SetPlayerCurrentScene(E_SceneSequence::KOBOLD_SCENE);
 			break;
 
 		case E_MenuChoices::WHO_ARE_YOU:

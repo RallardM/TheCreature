@@ -11,8 +11,6 @@ class UserInputManager;
 
 using namespace ScenesControllers;
 
-
-
 class ScenesManager {
 public:
 	ScenesManager();

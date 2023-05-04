@@ -76,8 +76,15 @@ void NarrationManager::PrintLinesFromScene()
 	std::cout << scenePicture;
 	std::cout << sceneText;
     //GetSceneManager()->SetIsSceneCleared();
-	
 }
+
+//std::string GetPictureScene(E_SceneSequence scene)
+//{
+//    gameImageFirstLine = GetSceneImageLines(scene);
+//    gameImageLastLine = gameImageFirstLine + ASCII_IMAGE_HEIGHT;
+//    std::string scenePicture = GetTextBetweenLines(GetPictureFilePath(), gameImageFirstLine, gameImageLastLine);
+//    return scenePicture;
+//}
 
 std::string NarrationManager::GetTextBetweenLines(std::string& filePathStr, unsigned int firstLine, unsigned int lastLine)
 {

@@ -114,7 +114,6 @@ void UserInputManager::SetAction(E_UserInput userInput)
 {
     userInput = GetInput();
 
-
     if (userInput == E_UserInput::LEFT || userInput == E_UserInput::RIGHT)
     {
         DEBUG_MSG("UserInputManager.cpp : SetAction() : User is using LEFT RIGHT.");

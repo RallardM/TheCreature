@@ -15,5 +15,36 @@ DEAD_END_SCENE:
                                        <Go back>
 
 ENNEMY_SCENE:
-                               <Attack>         Run away 
-                                Attack         <Run away>
+                                <Attack>         Run away 
+                                 Attack         <Run away>
+NAVIGATION_MENU:
+Plain
+                                       Go foward
+
+                          Look Left                  Look Right
+
+                                        Go back
+UP
+                                      <Go foward>
+
+                          Look Left                  Look Right
+
+                                        Go back
+DOWN
+                                       Go foward
+
+                          Look Left                  Look Right
+
+                                       <Go back>
+LEFT
+                                       Go foward
+
+                         <Look Left>                 Look Right
+
+                                        Go back
+RIGHT
+                                       Go foward
+
+                          Look Left                 <Look Right>
+
+                                        Go back
