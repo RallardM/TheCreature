@@ -4,6 +4,9 @@
 #include "ScenesManager.h"
 class ScenesManager;
 #include "ScenesControllers.h"
+#include "UserData.h"
+#include "ConsoleHandler.h"
+
 using namespace ScenesControllers;
 
 class MenuManager {
@@ -11,10 +14,12 @@ public:
 	const short int EMPTY_MENU_LINE = -1;
 	const std::string EMPTY_MENU_TEXT = "";
 
-	MenuManager(ScenesManager* sceneManager, NarrationManager* textManager);
+	MenuManager(ConsoleHandler* consoleHandler, ScenesManager* sceneManager, NarrationManager* narrationManager, UserData* userData);
 
 	void PrintMenuFromScene(E_UserInput userInput);
-	void SelectSceneToPrint(E_UserInput userInput, E_MenuChoices LeftMenuChoice, E_MenuChoices rightMenuChoice);
+	void SelectMenuChoice(E_UserInput userInput, E_MenuChoices LeftMenuChoice, E_MenuChoices rightMenuChoice);
+	void PrintSelectedMenu(E_MenuChoices currentMenuChoice);
+	void PrintEnterNameMenu();
 
 	std::string GetLastLineInConsole();
 
@@ -27,8 +32,10 @@ public:
 	bool GetIsMenuCleared();
 	void SetIsMenuCleared(bool isMenuCleared);
 
+	ConsoleHandler* GetConsoleHandler();
 	NarrationManager* GetNarrationManager();
-	ScenesManager* GetSceneManager();
+	ScenesManager* GetScenesManager();
+	UserData* GetUserData();
 
 	//UserInputManager* GetUserInputManager();
 	//void SetUserInputManager(UserInputManager* inputManager);
@@ -40,8 +47,10 @@ private:
 	std::ifstream m_menuFilePath;
 	bool m_isMenuCleared;
 
-	ScenesManager* m_sceneManager;
+	ConsoleHandler* m_consoleHandler;
+	ScenesManager* m_scenesManager;
 	NarrationManager* m_narrationManager;
+	UserData* m_userData;
 	//UserInputManager* m_inputManager;
 
 };

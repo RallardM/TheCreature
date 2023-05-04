@@ -146,8 +146,9 @@
     <ClCompile Include="managers\MenuManager.cpp" />
     <ClCompile Include="managers\NarrationManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="player_data\UserData.cpp" />
     <ClCompile Include="resouce_files\DebugMessageSystem.cpp" />
-    <ClCompile Include="resouce_files\Utils.cpp" />
+    <ClCompile Include="resouce_files\ConsoleHandler.cpp" />
     <ClCompile Include="managers\UserInputManager.cpp" />
     <ClCompile Include="managers\ScenesManager.cpp" />
   </ItemGroup>
@@ -167,7 +168,8 @@
     <ClInclude Include="header_files\ScenesControllers.h" />
     <ClInclude Include="header_files\ScenesManager.h" />
     <ClInclude Include="header_files\UserInputManager.h" />
-    <ClInclude Include="header_files\Utils.h" />
+    <ClInclude Include="header_files\ConsoleHandler.h" />
+    <ClInclude Include="header_files\UserData.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

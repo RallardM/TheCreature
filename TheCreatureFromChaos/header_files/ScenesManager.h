@@ -28,12 +28,9 @@ public:
 
 	MenuManager* GetMenuManager();
 	void SetMenuManager(MenuManager* menuManager);
-	//bool GetIsSceneCleared();
-	//void SetIsSceneCleared(bool isSceneCleared);
 
 private:
 	E_SceneSequence m_userCurrentScene;
 	NarrationManager* m_narrationManager;
 	MenuManager* m_menuManager;
-	//bool m_isSceneCleared;
 };

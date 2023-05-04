@@ -1,7 +1,7 @@
 #pragma once
 //#include <fstream>
 
-class Utils {
+class ConsoleHandler {
 public:
 	void SetConsoleColour(int colour);
 	void SetConsolesize();
@@ -9,5 +9,10 @@ public:
 	void ClearConsole();
 	void DisableConsoleCursor();
 	void ActivateConsoleCursor();
-	
+
+	//bool GetIsUserPrompted();
+	//void SetIsUserPrompted(bool userIsPrompted);
+
+private:
+	//bool m_isUserPrompted;
 };

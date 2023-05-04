@@ -4,12 +4,13 @@
 #include <thread>
 #include <conio.h>
 
-#include "Utils.h"
+#include "ConsoleHandler.h"
 #include "UserInputManager.h"
 #include "NarrationManager.h"
 #include "MenuManager.h"
 #include "DebugMessageSystem.h"
 #include "ScenesManager.h"
+#include "UserData.h"
 
 int main()
 {
@@ -17,24 +18,27 @@ int main()
 
 	// Create a Utils object, set the console size and position.
 	//DEBUG_MSG("main.cpp : main() : Create a Utils object, set the console size and position.");
-	Utils* utils = nullptr;
-	utils->SetConsolesize();
-	utils->SetCenterConsolePosition();
-	utils->DisableConsoleCursor();
+	ConsoleHandler* consoleHandler = new ConsoleHandler();
+	consoleHandler->SetConsolesize();
+	consoleHandler->SetCenterConsolePosition();
+	consoleHandler->DisableConsoleCursor();
+	//consoleHandler->SetIsUserPrompted(false);
 	//utils->ActivateConsoleCursor();
 
-	ScenesManager* sceneManager = new ScenesManager();
+	ScenesManager* scenesManager = new ScenesManager();
 
-	NarrationManager* narrationManager = new NarrationManager(sceneManager);
-	sceneManager->SetNarrationManager(narrationManager);
+	NarrationManager* narrationManager = new NarrationManager(scenesManager);
+	scenesManager->SetNarrationManager(narrationManager);
 
-	MenuManager* menuManager = new MenuManager(sceneManager, narrationManager);
-	sceneManager->SetMenuManager(menuManager);
+	UserData* userData = new UserData();
+
+	MenuManager* menuManager = new MenuManager(consoleHandler, scenesManager, narrationManager, userData);
+	scenesManager->SetMenuManager(menuManager);
 
 	// Print Intro scene.
 	narrationManager->PrintLinesFromScene();
 
-	UserInputManager* inputManager = new UserInputManager(sceneManager, menuManager);
+	UserInputManager* inputManager = new UserInputManager(consoleHandler, scenesManager, menuManager);
 	//menuManager->SetUserInputManager(inputManager);
 
 	//unsigned short int counter = 0;
@@ -72,10 +76,12 @@ int main()
 	}
 
 	// Clean up dynamically allocated memory.
+	delete consoleHandler;
 	delete menuManager;
+	delete userData;
 	delete inputManager;
 	delete narrationManager;
-	delete sceneManager;
+	delete scenesManager;
 
 	return 0;
 }

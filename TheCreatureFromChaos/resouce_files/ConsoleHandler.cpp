@@ -1,13 +1,13 @@
-#include "Utils.h"
+#include "ConsoleHandler.h"
 #include <windows.h>
 
-void Utils::SetConsoleColour(int colour)
+void ConsoleHandler::SetConsoleColour(int colour)
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, colour);
 }
 
-void Utils::SetConsolesize()
+void ConsoleHandler::SetConsolesize()
 {
     const unsigned short int CONSOLE_WIDTH = 710;
     const unsigned short int CONSOLE_HEIGHT = 700;
@@ -26,7 +26,7 @@ void Utils::SetConsolesize()
     SetWindowPos(consoleWindow, NULL, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 }
 
-void Utils::SetCenterConsolePosition()
+void ConsoleHandler::SetCenterConsolePosition()
 {
     HWND consoleWindow = GetConsoleWindow();
 
@@ -50,7 +50,7 @@ void Utils::SetCenterConsolePosition()
     SetWindowPos(consoleWindow, NULL, left_margin, top_margin, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 }
 
-void Utils::ClearConsole()
+void ConsoleHandler::ClearConsole()
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO screenBufferInfo;
@@ -68,7 +68,7 @@ void Utils::ClearConsole()
     SetConsoleCursorPosition(console, topLeft);
 }
 
-void Utils::DisableConsoleCursor()
+void ConsoleHandler::DisableConsoleCursor()
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO cursorInfo;
@@ -77,7 +77,7 @@ void Utils::DisableConsoleCursor()
     SetConsoleCursorInfo(hConsole, &cursorInfo);
 }
 
-void Utils::ActivateConsoleCursor()
+void ConsoleHandler::ActivateConsoleCursor()
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO cursor_info;
@@ -86,3 +86,13 @@ void Utils::ActivateConsoleCursor()
     cursor_info.dwSize = 100; // Set cursor size to 100
     SetConsoleCursorInfo(console, &cursor_info);
 }
+
+//bool ConsoleHandler::GetIsUserPrompted()
+//{
+//	return m_isUserPrompted;
+//}
+//
+//void ConsoleHandler::SetIsUserPrompted(bool isUserPrompted)
+//{
+//    m_isUserPrompted = isUserPrompted;
+//}

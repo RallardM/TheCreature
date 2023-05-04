@@ -2,49 +2,58 @@ INTRO_SCENE:
                             <Try to move>    Try to remeber 
                              Try to move    <Try to remeber>
 MOVING_SCENE:
-                            <Look around>    Try to remeber
+                            <Look around>    Try to remeber 
                              Look around    <Try to remeber>
 KOBOLD_SCENE:
-                           <"Who are you?">      Attack
-						    "Who are you?"      <Attack>
-NAME_SCENE: View code
+                           <"Who are you?">      Attack     
+                            "Who are you?"      <Attack>    
+NAME_SCENE: View MenuManager.cpp PrintMenuFromScene()
 
-ATTACK_SCENE: View code
+ATTACK_SCENE: View code MenuManager.cpp PrintMenuFromScene()
+
+WEAPONS_SCENE:
+                                  <Take weapons>
 
 DEAD_END_SCENE:
-                                       <Go back>
+                                    <Go back>
 
 ENNEMY_SCENE:
-                                <Attack>         Run away 
-                                 Attack         <Run away>
-NAVIGATION_MENU:
+                             <Attack>         Run away 
+                              Attack         <Run away>
+
+Navigation menu front back scenes:
 Plain
-                                       Go foward
+                                   Go foward
+                
+                      Look Left                  Look Right
+                
+                                    Go back
+UP              
+                                  <Go foward>
+                
+                      Look Left                  Look Right
+                
+                                    Go back
+DOWN            
+                                   Go foward
+                
+                      Look Left                  Look Right
+                
+                                   <Go back>
+LEFT            
+                                   Go foward
+                
+                     <Look Left>                 Look Right
+                
+                                    Go back
+RIGHT           
+                                   Go foward
+                
+                      Look Left                 <Look Right>
+                
+                                    Go back
 
-                          Look Left                  Look Right
-
-                                        Go back
-UP
-                                      <Go foward>
-
-                          Look Left                  Look Right
-
-                                        Go back
-DOWN
-                                       Go foward
-
-                          Look Left                  Look Right
-
-                                       <Go back>
-LEFT
-                                       Go foward
-
-                         <Look Left>                 Look Right
-
-                                        Go back
-RIGHT
-                                       Go foward
-
-                          Look Left                 <Look Right>
-
-                                        Go back
+Navigation menuleft right scenes:
+                      Look Left                  Look Right
+                     <Look Left>                 Look Right
+                      Look Left                 <Look Right>

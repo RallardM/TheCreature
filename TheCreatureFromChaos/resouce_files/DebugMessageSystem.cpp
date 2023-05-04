@@ -33,6 +33,12 @@ int getColorCode(char color)
 #ifdef _DEBUG
 void DEBUG_MSG(const char* message) 
 {
+    bool isDebugMessageActivated = false;
+    if (isDebugMessageActivated == false)
+    {
+		return;
+	}
+
     char color = '\0';
     const char* text = message;
     if (message[0] == '#' && isalpha(message[1])) 

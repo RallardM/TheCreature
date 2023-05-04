@@ -1,45 +1,52 @@
 INTRO_SCENE:
-           You awaken in complete darkness. You can barely see anything, 
-              but you can feel the damp, cold stone floor beneath you.
-                 You don't know where you are or how you got here, 
-         but you feel a sense of unease, as if something is not quite right. 
-
+           You awaken in complete darkness. You can barely see anything,          
+              but you can feel the damp, cold stone floor beneath you.            
+                 You don't know where you are or how you got here,                
+         but you feel a sense of unease, as if something is not quite right.      
+                                                                                  
 MOVING_SCENE:
-       You try to move, but your body feels unfamiliar, as if it's not your own.
-              You can't remember your name, or anything about your past. 
-
-
-
+                                                                                  
+       You try to move, but your body feels unfamiliar, as if it's not your own.  
+              You can't remember your name, or anything about your past.          
+                                                                                  
+                                                                                  
 KOBOLD_SCENE:
-           As you try to piece together what might have happened to you, 
-       a small, scrappy creature scurries up to you and begins spitting at you. 
- Its beady eyes reflect the dim light, and you can tell that it's some sort of kobold.
-
-
+           As you try to piece together what might have happened to you,          
+       a small, scrappy creature scurries up to you and begins spitting at you.   
+ Its beady eyes reflect the dim light, you can tell that it's some sort of kobold.
+                                                                                  
+                                                                                  
  NAME_SCENE:
-	             "Me name it Kruj, and me be your guide. 
-                      Come... What me call you? Me show you way out."
-
-
+                                                                                  
+	                  "Me name it Kruj, and me be your guide.                     
+                  Come... What me call you? Me show you way out."                 
+                                                                                  
+                                                                                  
 ATTACK_SCENE:
-                          You try to fight off the kobold, 
-                     but it's too dark and he's too fast for you.
-              "Kruj no fight please! Kruj friend! 
-                             Me show you way out! What me call you?"
-
-CUL_DE_SAC_SCENE:
-                You reach a dead end. Iron bars block your path, 
-         you try to break them with all your might, but they won't budge.
-
-
-
+                          You try to fight off the kobold,                        
+                     but it's too dark and he's too fast for you.                 
+          "No fight please! Friend! Me show you way out! What me call you?"       
+                                                                                  
+                                                                                  
+WEAPONS_SCENE:
+                                                                                  
+               Kruj: "There be weapons here. Take! Seeee? Kruj friend!"           
+                                                                                  
+                                                                                  
+                                                                                  
+DEAD_END_SCENE:
+                You reach a dead end. Iron bars block your path,                  
+         you try to break them with all your might, but they won't budge.         
+                                                                                  
+                                                                                  
+                                                                                  
 ENNEMY_SCENE:
-              You arrive at the end of the tunnel, but you see a large, 
+                                                                                  
+              You arrive at the end of the tunnel, but you see a large,           
       hulking figure standing before you. It's about to attack but you are faster:
-
-
-
-
+                                                                                  
+                                                                                  
+                                                                                  
                You are unsure how to react to this sudden intrusion.
           You can try to communicate with the creature or fight it off.
                              The choice is yours.

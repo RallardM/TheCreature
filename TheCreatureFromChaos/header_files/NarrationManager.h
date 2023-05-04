@@ -2,7 +2,7 @@
 
 #include <fstream>
 
-#include "Utils.h"
+//#include "ConsoleHandler.h"
 
 class ScenesManager;
 #include "ScenesManager.h"
@@ -12,17 +12,19 @@ using namespace ScenesControllers;
 
 class NarrationManager{
 public:
+
 	NarrationManager(ScenesManager* sceneManager);
 	void PrintLinesFromScene();
-
+	std::string GetPictureTextScene(E_SceneSequence scene, const unsigned short int height);
 	std::string& GetPictureFilePath();
 	std::string& GetTextFilePath();
 	std::string& GetMenuFilePath();
 	std::string GetTextBetweenLines(std::string& filePathStr, unsigned int firstLine, unsigned int lastLine);
 
-	ScenesManager* GetSceneManager();
+	ScenesManager* GetScenesManager();
 
-	//unsigned short int GetSceneMenuLine(E_SceneSequence fromLine);
+	const unsigned short int ASCII_IMAGE_HEIGHT = 33;
+	const unsigned short int STORY_TEXT_HEIGHT = 5;
 
 private:
 	unsigned short int GetSceneTextLines(E_SceneSequence fromLine);
@@ -34,8 +36,5 @@ private:
 	std::string m_pictureFilePath;
 	std::string m_menuFilePath;
 
-	//unsigned short int m_sceneTextLines[2];
-	//unsigned short int m_sceneImageLines[2];
-	//unsigned short int m_sceneMenuLines[2];
 
 };

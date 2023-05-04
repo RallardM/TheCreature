@@ -3,14 +3,11 @@
 #include "UserInputManager.h"
 #include "DebugMessageSystem.h"
 
-//#include "ScenesManager.h"
-//#include "MenuManager.h"
-//#include <MenuManager.h>
-
-UserInputManager::UserInputManager(ScenesManager* sceneManager, MenuManager* menuManager) :
-    m_hasInput(false),
+UserInputManager::UserInputManager(ConsoleHandler* m_consoleHandler, ScenesManager* sceneManager, MenuManager* menuManager) :
+    m_consoleHandler(),
     m_sceneManager(sceneManager),
-    m_menuManager(menuManager)
+    m_menuManager(menuManager),
+    m_hasInput(false)
 {
 }
 
@@ -71,49 +68,16 @@ E_UserInput UserInputManager::GetInput()
      }
 }
 
-//void UserInputManager::SetAction(E_UserInput userInput)
-//{
-//    //E_UserInput userInput = GetInput();
-//    while (true)
-//    {
-//        switch (userInput)
-//        { 
-//            case E_UserInput::LEFT:
-//            case E_UserInput::RIGHT:
-//                DEBUG_MSG("UserInputManager.cpp : SetAction() : User is using LEFT RIGHT.");
-//                GetMenuManager()->PrintMenuFromScene(userInput);
-//                GetMenuManager()->SetIsMenuCleared(false);
-//                SetHasInput(false);
-//                break;
-//
-//            case E_UserInput::UP:
-//                DEBUG_MSG("UserInputManager.cpp : SetAction() : User is pressed UP.");
-//                break;
-//
-//            case E_UserInput::DOWN:
-//                DEBUG_MSG("UserInputManager.cpp : SetAction() : User is pressed DOWN.");
-//				break;
-//
-//            case E_UserInput::ENTER:
-//				DEBUG_MSG("UserInputManager.cpp : SetAction() : User is pressed ENTER.");
-//				GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
-//				break;
-//
-//			case E_UserInput::ESC:
-//				DEBUG_MSG("UserInputManager.cpp : SetAction() : User is pressed ESC.");
-//				break;
-//
-//			default:
-//				DEBUG_MSG("UserInputManager.cpp : SetAction() : Default switch case.");
-//				break;
-//        }
-//    }
-//}
-
 void UserInputManager::SetAction(E_UserInput userInput)
 {
     userInput = GetInput();
 
+    //bool isUserPrompted = GetConsoleHandler()->GetIsUserPrompted();
+
+    //if (isUserPrompted)
+    //{
+    //    return;
+    //}
     if (userInput == E_UserInput::LEFT || userInput == E_UserInput::RIGHT)
     {
         DEBUG_MSG("UserInputManager.cpp : SetAction() : User is using LEFT RIGHT.");
@@ -154,6 +118,12 @@ void UserInputManager::SetHasInput(bool hasInput)
 {
     m_hasInput = hasInput;
 }
+
+ConsoleHandler* UserInputManager::GetConsoleHandler()
+{
+    return m_consoleHandler;
+}
+
 
 MenuManager* UserInputManager::GetMenuManager()
 {

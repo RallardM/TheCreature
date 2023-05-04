@@ -21,7 +21,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="resouce_files\Utils.cpp">
+    <ClCompile Include="resouce_files\ConsoleHandler.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="managers\MenuManager.cpp">
@@ -38,6 +38,9 @@
     </ClCompile>
     <ClCompile Include="managers\UserInputManager.cpp">
       <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="player_data\UserData.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -63,7 +66,7 @@
     <ClInclude Include="header_files\UserInputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\Utils.h">
+    <ClInclude Include="header_files\ConsoleHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header_files\ScenesManager.h">
@@ -79,6 +82,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header_files\ScenesControllers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header_files\UserData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
