@@ -1,7 +1,7 @@
 #pragma once
 
-const unsigned short int SCENES_IMAGE_LINES[19] = { 
-	2, 37, 72, 247, 247, 389, 420, 
+const unsigned short int SCENES_IMAGE_LINES[20] = { 
+	2, 37, 72, 247, 247, 212, 389, 420, 
 	2, 107, 142, 177, 
 	282, 317, 353, 389, 
 	455, 490, 526, 562 };
@@ -18,7 +18,7 @@ namespace ScenesControllers {
 		NAME_SCENE         =   3,   // Image line 247 ; Text line 20 ; View MenuManager.cpp PrintMenuFromScene()
 		ATTACK_SCENE       =   4,   // Image line 247 ; Text line 26 ; View MenuManager.cpp PrintMenuFromScene()
 		WEAPONS_SCENE      =   5,   // Image line 212 ; Text line 32 ; Menu line 15
-		DEAD_END_SCENE     =   6,   // Image line 389 ; Text line 38 ; Menu line 18 // TODO return to navigation menu at lin 26
+		DEAD_END_SCENE     =   6,   // Image line 389 ; Text line 38 ; Menu line 18 // TODO return to navigation menu at line 26
 		ENNEMY_SCENE       =   7,   // Image line 420 ; Text line 44 ; Menu line 21
 		
 		ROOM_ONE_FRONT     =   8,   // Image line 2   ;              ; Menu line 23

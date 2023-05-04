@@ -23,30 +23,39 @@ ENNEMY_SCENE:
 
 Navigation menu front back scenes:
 Plain
+
                                    Go foward
                 
                       Look Left                  Look Right
                 
-                                    Go back
-UP              
+                                    Go back 
+
+UP
+
                                   <Go foward>
                 
                       Look Left                  Look Right
                 
                                     Go back
+
 DOWN            
+
                                    Go foward
                 
                       Look Left                  Look Right
                 
                                    <Go back>
+
 LEFT            
+
                                    Go foward
                 
                      <Look Left>                 Look Right
                 
                                     Go back
+
 RIGHT           
+
                                    Go foward
                 
                       Look Left                 <Look Right>
@@ -54,6 +63,23 @@ RIGHT
                                     Go back
 
 Navigation menuleft right scenes:
+
+
+
                       Look Left                  Look Right
+
+
+
+
+
+
                      <Look Left>                 Look Right
+
+
+
+
+
+
                       Look Left                 <Look Right>
+
+

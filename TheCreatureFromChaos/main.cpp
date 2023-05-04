@@ -22,8 +22,9 @@ int main()
 	consoleHandler->SetConsolesize();
 	consoleHandler->SetCenterConsolePosition();
 	consoleHandler->DisableConsoleCursor();
+	//consoleHandler->DisableConsoleScrolling();
 	//consoleHandler->SetIsUserPrompted(false);
-	//utils->ActivateConsoleCursor();
+	//consoleHandler->ActivateConsoleCursor();
 
 	ScenesManager* scenesManager = new ScenesManager();
 

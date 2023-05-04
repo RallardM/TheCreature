@@ -9,6 +9,7 @@ public:
 	void ClearConsole();
 	void DisableConsoleCursor();
 	void ActivateConsoleCursor();
+	void DisableConsoleScrolling();
 
 	//bool GetIsUserPrompted();
 	//void SetIsUserPrompted(bool userIsPrompted);

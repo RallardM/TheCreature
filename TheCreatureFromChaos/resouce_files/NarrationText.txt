@@ -17,11 +17,11 @@ KOBOLD_SCENE:
                                                                                   
                                                                                   
  NAME_SCENE:
-                                                                                  
-	                  "Me name it Kruj, and me be your guide.                     
-                  Come... What me call you? Me show you way out."                 
-                                                                                  
-                                                                                  
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+........................"Me name is Khai, me be your guide.,,,,,,,,,,,,,,,,,,,,,,,
+...................Come... What me call you? Me show you way out.",,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ATTACK_SCENE:
                           You try to fight off the kobold,                        
                      but it's too dark and he's too fast for you.                 
@@ -30,7 +30,7 @@ ATTACK_SCENE:
                                                                                   
 WEAPONS_SCENE:
                                                                                   
-               Kruj: "There be weapons here. Take! Seeee? Kruj friend!"           
+               Khai: "There be weapons here. Take! Seeee? Khai friend!"           
                                                                                   
                                                                                   
                                                                                   

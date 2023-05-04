@@ -9,8 +9,8 @@ void ConsoleHandler::SetConsoleColour(int colour)
 
 void ConsoleHandler::SetConsolesize()
 {
-    const unsigned short int CONSOLE_WIDTH = 710;
-    const unsigned short int CONSOLE_HEIGHT = 700;
+    const unsigned short int CONSOLE_WIDTH = 697;
+    const unsigned short int CONSOLE_HEIGHT = 695;
     const unsigned short int CONSOLE_BUFFER_WIDTH = 81;
     const unsigned short int CONSOLE_BUFFER_HEIGHT = 25;
 
@@ -85,6 +85,23 @@ void ConsoleHandler::ActivateConsoleCursor()
     cursor_info.bVisible = TRUE; // Set cursor visibility to true
     cursor_info.dwSize = 100; // Set cursor size to 100
     SetConsoleCursorInfo(console, &cursor_info);
+}
+
+void ConsoleHandler::DisableConsoleScrolling()
+{
+    // Get the current console screen buffer info
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+
+    // Set the screen buffer size to the window size
+    COORD size = { csbi.srWindow.Right - csbi.srWindow.Left + 1, csbi.srWindow.Bottom - csbi.srWindow.Top + 1 };
+    SetConsoleScreenBufferSize(GetStdHandle(STD_OUTPUT_HANDLE), size);
+
+    // Disable vertical scrolling of the console window
+    CONSOLE_CURSOR_INFO cursorInfo;
+    GetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
+    cursorInfo.dwSize = 1;
+    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
 }
 
 //bool ConsoleHandler::GetIsUserPrompted()

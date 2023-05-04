@@ -91,7 +91,7 @@ std::string NarrationManager::GetPictureTextScene(E_SceneSequence scene, const u
 {
     
     unsigned short int textFirstLine = 0;
-    unsigned short int textLastLine = 0;
+    //unsigned short int textLastLine = 0;
     std::string pathToFile = "";
 
     if (height == ASCII_IMAGE_HEIGHT)
@@ -109,19 +109,20 @@ std::string NarrationManager::GetPictureTextScene(E_SceneSequence scene, const u
         DEBUG_MSG("#R NarrationManager.cpp : GetPictureTextScene() : No text height found!");
 	}
     
-    textLastLine = textFirstLine + height;
-    std::string sceneTextOrPicture = GetTextBetweenLines(pathToFile, textFirstLine, textLastLine);
+    //textLastLine = textFirstLine + height;
+    std::string sceneTextOrPicture = GetTextBetweenLines(pathToFile, textFirstLine, height);
 
     return sceneTextOrPicture;
 }
 
-std::string NarrationManager::GetTextBetweenLines(std::string& filePathStr, unsigned int firstLine, unsigned int lastLine)
+std::string NarrationManager::GetTextBetweenLines(std::string& filePathStr, unsigned int firstLine, const unsigned short int height)
 {
     DEBUG_MSG("NarrationMAnager.cpp : GetTextBetweenLines() : Enters GetTextBetweenLines().");
     //std::ifstream filePath("resouce_files/ScenesAsciiArt.txt");
     std::ifstream filePath(filePathStr);
     std::string text;
     std::string line;
+    unsigned int lastLine = (firstLine -1) + height;
 
     // Check if file opens
     if (!filePath.is_open())
@@ -132,8 +133,8 @@ std::string NarrationManager::GetTextBetweenLines(std::string& filePathStr, unsi
     }
     else
     {
-        //unsigned int currentLine = 1;
         unsigned int currentLine = 1;
+        //unsigned int currentLine = firstLine;
 
         // Read each line in the file until we reach the end or the desired line range.
         while (std::getline(filePath, line) && currentLine <= lastLine)

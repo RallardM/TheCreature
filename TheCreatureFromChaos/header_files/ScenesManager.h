@@ -22,6 +22,7 @@ public:
 	void SetNextScene(E_MenuChoices menuChoice);
 
 	void ClearAllConsoleText();
+	unsigned short int GetCurrentConsololeTextHeight();
 
 	NarrationManager* GetNarrationManager();
 	void SetNarrationManager(NarrationManager* narrationManager);

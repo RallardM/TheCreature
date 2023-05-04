@@ -92,6 +92,7 @@ void MenuManager::SelectMenuChoice(E_UserInput userInput, E_MenuChoices LeftMenu
         return;
     }
 
+    ClearConsolePreviousLine();
     if (userInput == E_UserInput::LEFT && GetSelectedMenuLine() != LeftMenuChoice)
     {
         DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print LeftMenuChoice");
@@ -108,7 +109,7 @@ void MenuManager::SelectMenuChoice(E_UserInput userInput, E_MenuChoices LeftMenu
 
 void MenuManager::PrintSelectedMenu(E_MenuChoices currentMenuChoice)
 {
-    ClearConsolePreviousLine();
+    
     std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), currentMenuChoice) << std::endl;
     SetIsMenuCleared(false);
     SetSelectedMenuLine(currentMenuChoice);
@@ -117,7 +118,7 @@ void MenuManager::PrintSelectedMenu(E_MenuChoices currentMenuChoice)
 
 void MenuManager::PrintEnterNameMenu()
 {
-    std::cout << "            What name do you want Kruj to call you? ";
+    std::cout << "            What name do you want Khai to call you? ";
     std::string playerName;
     GetConsoleHandler()->ActivateConsoleCursor();
     //GetConsoleHandler()->SetIsUserPrompted(true);

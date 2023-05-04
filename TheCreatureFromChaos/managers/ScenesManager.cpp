@@ -89,8 +89,54 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 void ScenesManager::ClearAllConsoleText()
 {
 	DEBUG_MSG("#Y ScenesManager.cpp : ClearAllConsoleText() : Clear whole scene debug deactivated.");
-	//std::cout << "\033[2J\033[1;1H";
-	// TO DO: Call multiple std::cout << "\033[1A\033[0K"; in MenuManager::ClearConsolePreviousLine() instead
+	unsigned short int numberOflinesToDelete = GetCurrentConsololeTextHeight();
+	for (size_t i = 0; i < numberOflinesToDelete; i++)
+	{
+		GetMenuManager()->ClearConsolePreviousLine();
+	}
+}
+
+unsigned short int ScenesManager::GetCurrentConsololeTextHeight()
+{
+	unsigned short int imageHeight           = GetNarrationManager()->ASCII_IMAGE_HEIGHT;
+	unsigned short int menuHeight            = GetNarrationManager()->NARRATION_MENU_HEIGHT;
+	unsigned short int textHeight            = GetNarrationManager()->STORY_TEXT_HEIGHT;
+	unsigned short int navigationHeight      = GetNarrationManager()->NAVIGATION_MENU_HEIGHT;
+	unsigned short int numberOflinesToDelete = 0
+		;
+	E_SceneSequence scene = GetPlayerCurrentScene();
+
+	switch (scene)
+	{
+	case E_SceneSequence::INTRO_SCENE:
+	case E_SceneSequence::MOVING_SCENE:
+	case E_SceneSequence::KOBOLD_SCENE:
+	case E_SceneSequence::NAME_SCENE:
+	case E_SceneSequence::WEAPONS_SCENE:
+	case E_SceneSequence::ATTACK_SCENE:
+	case E_SceneSequence::DEAD_END_SCENE:
+	case E_SceneSequence::ENNEMY_SCENE:
+		numberOflinesToDelete = imageHeight + textHeight + menuHeight;
+		break;
+	case E_SceneSequence::ROOM_ONE_FRONT:
+	case E_SceneSequence::ROOM_ONE_BACK:
+	case E_SceneSequence::ROOM_TWO_FRONT:
+	case E_SceneSequence::ROOM_TWO_BACK:
+	case E_SceneSequence::ROOM_THREE_FRONT:
+	case E_SceneSequence::ROOM_THREE_BACK:
+	case E_SceneSequence::ROOM_ONE_RIGHT:
+	case E_SceneSequence::ROOM_ONE_LEFT:
+	case E_SceneSequence::ROOM_TWO_RIGHT:
+	case E_SceneSequence::ROOM_TWO_LEFT:
+	case E_SceneSequence::ROOM_THREE_RIGHT:
+	case E_SceneSequence::ROOM_THREE_LEFT:
+		numberOflinesToDelete = imageHeight + navigationHeight;
+		break;
+	default:
+		break;
+	}
+
+	return numberOflinesToDelete;
 }
 
 NarrationManager* ScenesManager::GetNarrationManager()
