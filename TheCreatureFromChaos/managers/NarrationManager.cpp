@@ -28,51 +28,32 @@ void NarrationManager::PrintLinesFromScene()
     switch (scene)
     {
 		case E_SceneSequence::INTRO_SCENE:
-            DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG for INTRO_SCENE.");
-            scenePicture = GetPictureTextScene(E_SceneSequence::INTRO_SCENE, ASCII_IMAGE_HEIGHT);
-            sceneText = GetPictureTextScene(E_SceneSequence::INTRO_SCENE, STORY_TEXT_HEIGHT);
-			break;
-
 		case E_SceneSequence::MOVING_SCENE:
-            DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG for MOVING_SCENE.");
-            scenePicture = GetPictureTextScene(E_SceneSequence::MOVING_SCENE, ASCII_IMAGE_HEIGHT);
-            sceneText = GetPictureTextScene(E_SceneSequence::MOVING_SCENE, STORY_TEXT_HEIGHT);
-			break;
-
         case E_SceneSequence::KOBOLD_SCENE:
-            DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG for KOBOLD_SCENE.");
-            scenePicture = GetPictureTextScene(E_SceneSequence::KOBOLD_SCENE, ASCII_IMAGE_HEIGHT);
-            sceneText = GetPictureTextScene(E_SceneSequence::KOBOLD_SCENE, STORY_TEXT_HEIGHT);
-            break;
-
         case E_SceneSequence::NAME_SCENE:
-            DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG for NAME_SCENE.");
-            scenePicture = GetPictureTextScene(E_SceneSequence::NAME_SCENE, ASCII_IMAGE_HEIGHT);
-            sceneText = GetPictureTextScene(E_SceneSequence::NAME_SCENE, STORY_TEXT_HEIGHT);
-            break;
-
         case E_SceneSequence::ATTACK_SCENE:
-            DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG for ATTACK_SCENE.");
-            scenePicture = GetPictureTextScene(E_SceneSequence::ATTACK_SCENE, ASCII_IMAGE_HEIGHT);
-            sceneText = GetPictureTextScene(E_SceneSequence::ATTACK_SCENE, STORY_TEXT_HEIGHT);
-            break;
-
         case E_SceneSequence::WEAPONS_SCENE:
-            DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG for WEAPONS_SCENE.");
-            scenePicture = GetPictureTextScene(E_SceneSequence::WEAPONS_SCENE, ASCII_IMAGE_HEIGHT);
-            sceneText = GetPictureTextScene(E_SceneSequence::WEAPONS_SCENE, STORY_TEXT_HEIGHT);
-            break;
-
         case E_SceneSequence::DEAD_END_SCENE:
-            DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG for DEAD_END_SCENE.");
-            scenePicture = GetPictureTextScene(E_SceneSequence::DEAD_END_SCENE, ASCII_IMAGE_HEIGHT);
-            sceneText = GetPictureTextScene(E_SceneSequence::DEAD_END_SCENE, STORY_TEXT_HEIGHT);
+        case E_SceneSequence::ENNEMY_SCENE:
+            DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
+            scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
+            sceneText = GetPictureTextScene(scene, STORY_TEXT_HEIGHT);
             break;
 
-        case E_SceneSequence::ENNEMY_SCENE:
-            DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG for ENNEMY_SCENE.");
-            scenePicture = GetPictureTextScene(E_SceneSequence::ENNEMY_SCENE, ASCII_IMAGE_HEIGHT);
-            sceneText = GetPictureTextScene(E_SceneSequence::ENNEMY_SCENE, STORY_TEXT_HEIGHT);
+        case E_SceneSequence::ROOM_ONE_FRONT:
+        case E_SceneSequence::ROOM_ONE_RIGHT:
+        case E_SceneSequence::ROOM_ONE_LEFT:
+        case E_SceneSequence::ROOM_ONE_BACK:
+        case E_SceneSequence::ROOM_TWO_FRONT:
+        case E_SceneSequence::ROOM_TWO_RIGHT:
+        case E_SceneSequence::ROOM_TWO_LEFT:
+        case E_SceneSequence::ROOM_TWO_BACK:
+        case E_SceneSequence::ROOM_THREE_FRONT:
+        case E_SceneSequence::ROOM_THREE_RIGHT:
+        case E_SceneSequence::ROOM_THREE_LEFT:
+        case E_SceneSequence::ROOM_THREE_BACK:
+            DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
+            scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
             break;
 
 		default:
@@ -120,8 +101,8 @@ std::string NarrationManager::GetTextBetweenLines(std::string& filePathStr, unsi
     DEBUG_MSG("NarrationMAnager.cpp : GetTextBetweenLines() : Enters GetTextBetweenLines().");
     //std::ifstream filePath("resouce_files/ScenesAsciiArt.txt");
     std::ifstream filePath(filePathStr);
-    std::string text;
-    std::string line;
+    std::string text = "";
+    std::string line = "";
     unsigned int lastLine = (firstLine -1) + height;
 
     // Check if file opens

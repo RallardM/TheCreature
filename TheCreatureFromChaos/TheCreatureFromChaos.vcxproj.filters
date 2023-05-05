@@ -61,6 +61,7 @@
     <Text Include="resouce_files\MenuText.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="resouce_files\MenuTextOriginal.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_files\UserInputManager.h">

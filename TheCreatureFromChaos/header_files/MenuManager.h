@@ -13,13 +13,18 @@ class MenuManager {
 public:
 	const short int EMPTY_MENU_LINE = -1;
 	const std::string EMPTY_MENU_TEXT = "";
-
 	MenuManager(ConsoleHandler* consoleHandler, ScenesManager* sceneManager, NarrationManager* narrationManager, UserData* userData);
+	
 
 	void PrintMenuFromScene(E_UserInput userInput);
 	void SelectMenuChoice(E_UserInput userInput, E_MenuChoices LeftMenuChoice, E_MenuChoices rightMenuChoice);
+	void SelectFourWaysNavigation(E_UserInput userInput, E_MenuChoices menuChoice);
+	void SelectTwoWaysNavigation(E_UserInput userInput, E_MenuChoices menuChoice);
+	void PrintSingleMenuChoice(E_UserInput userInput, E_MenuChoices menuChoice);
 	void PrintSelectedMenu(E_MenuChoices currentMenuChoice);
+	void PrintNavigationMenu(E_MenuChoices currentMenuChoice);
 	void PrintEnterNameMenu();
+
 
 	std::string GetLastLineInConsole();
 
@@ -28,6 +33,7 @@ public:
 	std::string GetMenuAtLine(std::string& filePath, E_MenuChoices atLine);
 
 	void ClearConsolePreviousLine();
+	void ClearConsoleNavigationMenu();
 
 	bool GetIsMenuCleared();
 	void SetIsMenuCleared(bool isMenuCleared);

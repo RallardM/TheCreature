@@ -11,6 +11,9 @@ class UserInputManager {
 public:
 	UserInputManager(ConsoleHandler* m_consoleHandler, ScenesManager* sceneManager, MenuManager* menuManager);
 	
+	void ActivateSelection(E_UserInput userInput);
+	void EnterSelection();
+
 	bool HasInput();
 	void SetHasInput(bool hasInput);
 	E_UserInput GetInput();

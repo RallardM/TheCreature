@@ -70,19 +70,10 @@ E_UserInput UserInputManager::GetInput()
 
 void UserInputManager::SetAction(E_UserInput userInput)
 {
-    userInput = GetInput();
-
-    //bool isUserPrompted = GetConsoleHandler()->GetIsUserPrompted();
-
-    //if (isUserPrompted)
-    //{
-    //    return;
-    //}
     if (userInput == E_UserInput::LEFT || userInput == E_UserInput::RIGHT)
     {
         DEBUG_MSG("UserInputManager.cpp : SetAction() : User is using LEFT RIGHT.");
-        GetMenuManager()->PrintMenuFromScene(userInput);
-        GetMenuManager()->SetIsMenuCleared(false);
+        ActivateSelection(userInput);
         SetHasInput(false);
         return;
     }
@@ -99,7 +90,8 @@ void UserInputManager::SetAction(E_UserInput userInput)
     if (userInput == E_UserInput::ENTER)
     {
         DEBUG_MSG("UserInputManager.cpp : SetAction() : User pressed ENTER.");
-        GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
+        EnterSelection();
+        SetHasInput(false);
         return;
     }
     if (userInput == E_UserInput::ESC)
@@ -107,6 +99,40 @@ void UserInputManager::SetAction(E_UserInput userInput)
         DEBUG_MSG("UserInputManager.cpp : SetAction() : User pressed ESC.");
         return;
 	}
+}
+
+void UserInputManager::ActivateSelection(E_UserInput userInput)
+{
+    E_SceneSequence currentScene = GetScenesManager()->GetPlayerCurrentScene();
+    unsigned short int currentNumberOfChoices = SCENE_NUMBER_OF_MENU_CHOICES[int(currentScene)];
+    if (currentNumberOfChoices == TWO_CHOICES_MENU)
+    {
+        GetMenuManager()->PrintMenuFromScene(userInput);
+        return;
+    }
+    else if (currentNumberOfChoices == TWO_WAYS_NAVIGATION)
+    {
+        GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
+        return;
+    }
+}
+
+void UserInputManager::EnterSelection()
+{
+    E_SceneSequence currentScene = GetScenesManager()->GetPlayerCurrentScene();
+    unsigned short int currentNumberOfChoices = SCENE_NUMBER_OF_MENU_CHOICES[int(currentScene)];
+    if (currentNumberOfChoices == ONE_CHOICE_MENU)
+    {
+        GetMenuManager()->PrintMenuFromScene(E_UserInput::ENTER);
+
+        GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
+        return;
+	}
+    else if (currentNumberOfChoices == TWO_CHOICES_MENU)
+    {
+        GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
+        return;
+    }
 }
 
 bool UserInputManager::HasInput()

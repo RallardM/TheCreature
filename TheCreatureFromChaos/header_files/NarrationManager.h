@@ -33,6 +33,7 @@ private:
 
 	ScenesManager* m_sceneManager;
 
+	std::string* m_fullTextToPrint;
 	std::string m_textFilePath;
 	std::string m_pictureFilePath;
 	std::string m_menuFilePath;

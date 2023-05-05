@@ -15,9 +15,7 @@ class ScenesManager {
 public:
 	ScenesManager();
 
-
 	E_SceneSequence GetPlayerCurrentScene();
-
 	void SetPlayerCurrentScene(E_SceneSequence scene);
 	void SetNextScene(E_MenuChoices menuChoice);
 

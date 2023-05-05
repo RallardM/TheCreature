@@ -3,6 +3,7 @@
 #include <string>
 #include <algorithm>
 #include <array>
+#include <chrono>
 
 #include "MenuManager.h"
 #include "DebugMessageSystem.h"
@@ -46,12 +47,12 @@ void MenuManager::PrintMenuFromScene(E_UserInput userInput)
 
     case E_SceneSequence::WEAPONS_SCENE:
         DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : WEAPONS_SCENE TODO");
-        //SelectMenuChoice(userInput, E_MenuChoices::GO_BACK, E_MenuChoices::GO_BACK);
+        PrintSingleMenuChoice(userInput, E_MenuChoices::TAKE_WEAPONS);
         break;
 
     case E_SceneSequence::DEAD_END_SCENE:
         DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : KOBOLD_SCENE");
-        SelectMenuChoice(userInput, E_MenuChoices::GO_BACK, E_MenuChoices::GO_BACK);
+        PrintSingleMenuChoice(userInput, E_MenuChoices::GO_BACK);
         break;
 
     case E_SceneSequence::ENNEMY_SCENE:
@@ -65,7 +66,8 @@ void MenuManager::PrintMenuFromScene(E_UserInput userInput)
     case E_SceneSequence::ROOM_TWO_BACK:
     case E_SceneSequence::ROOM_THREE_FRONT:
     case E_SceneSequence::ROOM_THREE_BACK:
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : TODO Front back rooms navigation system");
+        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Prints 4-ways navigation system");
+        SelectFourWaysNavigation(userInput, E_MenuChoices::NAVIGATION_PLAIN);
         break;
 
     case E_SceneSequence::ROOM_ONE_RIGHT:
@@ -74,7 +76,8 @@ void MenuManager::PrintMenuFromScene(E_UserInput userInput)
     case E_SceneSequence::ROOM_TWO_LEFT:
     case E_SceneSequence::ROOM_THREE_RIGHT:
     case E_SceneSequence::ROOM_THREE_LEFT:
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : TODO Left right rooms navigation system");
+        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Prints 2-ways navigation system");
+        SelectTwoWaysNavigation(userInput, E_MenuChoices::LR_NAVIGATION_PLAIN);
         break;
 
     default:
@@ -87,12 +90,13 @@ void MenuManager::SelectMenuChoice(E_UserInput userInput, E_MenuChoices LeftMenu
 {
     if (userInput == E_UserInput::EMPTY)
     {
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : UserInput is EMPTY Print TRY_TO_MOVE menu");
+        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : UserInput is EMPTY.");
         PrintSelectedMenu(LeftMenuChoice);
         return;
     }
 
     ClearConsolePreviousLine();
+    SetIsMenuCleared(true);
     if (userInput == E_UserInput::LEFT && GetSelectedMenuLine() != LeftMenuChoice)
     {
         DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print LeftMenuChoice");
@@ -101,10 +105,123 @@ void MenuManager::SelectMenuChoice(E_UserInput userInput, E_MenuChoices LeftMenu
     }
     else if (userInput == E_UserInput::RIGHT && GetSelectedMenuLine() != rightMenuChoice)
     {
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print DO_NOTHING menu");
+        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print rightMenuChoice");
         PrintSelectedMenu(rightMenuChoice);
         return;
     }
+}
+
+void MenuManager::SelectFourWaysNavigation(E_UserInput userInput, E_MenuChoices menuChoice)
+{
+    if (userInput == E_UserInput::EMPTY)
+    {
+        DEBUG_MSG("MenuManager.cpp : PrintSingleMenuChoice() : UserInput is EMPTY");
+        PrintSelectedMenu(menuChoice);
+        return;
+    }
+
+    if (userInput == E_UserInput::LEFT)
+    {
+        ClearConsoleNavigationMenu();
+        SetIsMenuCleared(true);
+        int myInt = static_cast<int>(menuChoice);
+        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + NEXT_NAVIGATION_ELEMENT);
+        PrintSelectedMenu(nextMenuInEnum);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        return;
+    }
+    else if (userInput == E_UserInput::RIGHT)
+    {
+        ClearConsoleNavigationMenu();
+        SetIsMenuCleared(true);
+        int myInt = static_cast<int>(menuChoice);
+        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NEXT_NAVIGATION_ELEMENT * JUMP_TWO_MENU_ELEMENTS));
+        PrintSelectedMenu(nextMenuInEnum);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        return;
+    }
+    else if (userInput == E_UserInput::UP)
+    {
+        ClearConsoleNavigationMenu();
+        SetIsMenuCleared(true);
+        int myInt = static_cast<int>(menuChoice);
+        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NEXT_NAVIGATION_ELEMENT * JUMP_THREE_MENU_ELEMENTS));
+        PrintSelectedMenu(nextMenuInEnum);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        return;
+    }
+    else if (userInput == E_UserInput::DOWN)
+    {
+        ClearConsoleNavigationMenu();
+        SetIsMenuCleared(true);
+        int myInt = static_cast<int>(menuChoice);
+        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NEXT_NAVIGATION_ELEMENT * JUMP_FOUR_MENU_ELEMENTS));
+        PrintSelectedMenu(nextMenuInEnum);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        return;
+    }
+    return;
+}
+
+void MenuManager::SelectTwoWaysNavigation(E_UserInput userInput, E_MenuChoices menuChoice)
+{
+    if (userInput == E_UserInput::EMPTY)
+    {
+        DEBUG_MSG("MenuManager.cpp : PrintSingleMenuChoice() : UserInput is EMPTY");
+        ClearConsolePreviousLine();
+        PrintNavigationMenu(menuChoice);
+        return;
+    }
+
+    if (userInput == E_UserInput::LEFT)
+    {
+        //ClearConsolePreviousLine();
+        ClearConsoleNavigationMenu();
+        SetIsMenuCleared(true);
+        int myInt = static_cast<int>(menuChoice);
+        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + NEXT_NAVIGATION_ELEMENT);
+        PrintNavigationMenu(nextMenuInEnum);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        return;
+    }
+    else if (userInput == E_UserInput::RIGHT)
+    {
+        //ClearConsolePreviousLine();
+        ClearConsoleNavigationMenu();
+        SetIsMenuCleared(true);
+        int myInt = static_cast<int>(menuChoice);
+        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NEXT_NAVIGATION_ELEMENT * JUMP_TWO_MENU_ELEMENTS));
+        PrintNavigationMenu(nextMenuInEnum);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        return;
+    }
+
+    return;
+}
+
+
+void MenuManager::PrintSingleMenuChoice(E_UserInput userInput, E_MenuChoices menuChoice)
+{
+
+    if (userInput == E_UserInput::EMPTY)
+    {
+        DEBUG_MSG("MenuManager.cpp : PrintSingleMenuChoice() : UserInput is EMPTY");
+        PrintSelectedMenu(menuChoice);
+        return;
+    }
+    
+    if (userInput == E_UserInput::ENTER)
+    {
+        ClearConsolePreviousLine();
+        SetIsMenuCleared(true);
+        int enumToInt = static_cast<int>(menuChoice);
+        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(enumToInt + NEXT_MENU_ELEMENT);
+        PrintSelectedMenu(nextMenuInEnum);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        return;
+    }
+
+    return;
 }
 
 void MenuManager::PrintSelectedMenu(E_MenuChoices currentMenuChoice)
@@ -113,6 +230,17 @@ void MenuManager::PrintSelectedMenu(E_MenuChoices currentMenuChoice)
     std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), currentMenuChoice) << std::endl;
     SetIsMenuCleared(false);
     SetSelectedMenuLine(currentMenuChoice);
+    return;
+}
+
+void MenuManager::PrintNavigationMenu(E_MenuChoices currentNavigationChoice)
+{
+    unsigned int enumToInt = static_cast<unsigned int>(currentNavigationChoice);
+    std::string& menuFilePath = GetNarrationManager()->GetMenuFilePath();
+    std::string navigationMenuText = GetNarrationManager()->GetTextBetweenLines(menuFilePath, enumToInt, NAVIGATION_MENU_HEIGHT);
+    std::cout << navigationMenuText;
+    SetIsMenuCleared(false);
+    SetSelectedMenuLine(currentNavigationChoice);
     return;
 }
 
@@ -214,7 +342,15 @@ void MenuManager::ClearConsolePreviousLine()
 {
     DEBUG_MSG("#Y MenuManager.cpp : ClearConsolePreviousLine() : Clear previous line debug deactivated");
     std::cout << "\033[1A\033[0K"; 
-    SetIsMenuCleared(true);
+}
+
+void MenuManager::ClearConsoleNavigationMenu()
+{
+    DEBUG_MSG("#Y MenuManager.cpp : ClearConsolePreviousLine() : Clear navigation menu");
+    for (size_t i = 0; i < NAVIGATION_MENU_HEIGHT; i++)
+    {
+        ClearConsolePreviousLine();
+    }
 }
 
 bool MenuManager::GetIsMenuCleared()
@@ -224,6 +360,7 @@ bool MenuManager::GetIsMenuCleared()
 
 void MenuManager::SetIsMenuCleared(bool isMenuCleared)
 {
+
     m_isMenuCleared = isMenuCleared;
 }
 

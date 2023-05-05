@@ -33,48 +33,53 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 			DEBUG_MSG("#R ScenesManager.cpp : SetNextScene() : Returned no menu choice.");
 			break;
 
-		case E_MenuChoices::TRY_TO_MOVE:        // From INTRO_SCENE
+		case E_MenuChoices::TRY_TO_MOVE:           // From INTRO_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set MOVING_SCENE.");
 			SetPlayerCurrentScene(E_SceneSequence::MOVING_SCENE);
 			break;
 
-		case E_MenuChoices::TRY_TO_REMEBER:     // From INTRO_SCENE
-		case E_MenuChoices::TRY_TO_REMEBER_TWO: // From MOVING_SCENE
+		case E_MenuChoices::TRY_TO_REMEBER:        // From INTRO_SCENE
+		case E_MenuChoices::TRY_TO_REMEBER_TWO:    // From MOVING_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set KOBOLD_SCENE.");
 			SetPlayerCurrentScene(E_SceneSequence::KOBOLD_SCENE);
 			break;
 
-		case E_MenuChoices::LOOK_AROUND:        // From MOVING_SCENE
+		case E_MenuChoices::LOOK_AROUND:           // From MOVING_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set KOBOLD_SCENE.");
 			SetPlayerCurrentScene(E_SceneSequence::KOBOLD_SCENE);
 			break;
 
-		case E_MenuChoices::WHO_ARE_YOU:        // From KOBOLD_SCENE
+		case E_MenuChoices::WHO_ARE_YOU:           // From KOBOLD_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set NAME_SCENE.");
 			SetPlayerCurrentScene(E_SceneSequence::NAME_SCENE);
 			break;
 
-		case E_MenuChoices::ATTACK_KOBOLD:      // From KOBOLD_SCENE
+		case E_MenuChoices::ATTACK_KOBOLD:         // From KOBOLD_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ATTACK_SCENE.");
 			SetPlayerCurrentScene(E_SceneSequence::ATTACK_SCENE);
 			break;
 
-		case E_MenuChoices::ENTER_NAME:         // From NAME_SCENE
+		case E_MenuChoices::ENTER_NAME:            // From NAME_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set WEAPONS_SCENE.");
 			SetPlayerCurrentScene(E_SceneSequence::WEAPONS_SCENE);
 			break;
 
-		case E_MenuChoices::GO_BACK:            // From DEAD_END_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO.");
-			//SetPlayerCurrentScene(E_SceneSequence::); 
+		case E_MenuChoices::TAKE_WEAPONS_SELECTED: // From WEAPONS_SCENE
+			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ROOM_ONE_LEFT.");
+			SetPlayerCurrentScene(E_SceneSequence::ROOM_ONE_LEFT);
 			break;
 
-		case E_MenuChoices::ATTACK_ENEMY:       // From ENNEMY_SCENE
+		case E_MenuChoices::GO_BACK_SELECTED:      // From DEAD_END_SCENE
+			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ROOM_TWO_FRONT.");
+			SetPlayerCurrentScene(E_SceneSequence::ROOM_TWO_FRONT); 
+			break;
+
+		case E_MenuChoices::ATTACK_ENEMY:          // From ENNEMY_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO.");
 			//SetPlayerCurrentScene(E_SceneSequence::);
 			break;
 
-		case E_MenuChoices::RUN_AWAY:           // From ENNEMY_SCENE
+		case E_MenuChoices::RUN_AWAY:              // From ENNEMY_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO.");
 			//SetPlayerCurrentScene(E_SceneSequence::);
 			break;

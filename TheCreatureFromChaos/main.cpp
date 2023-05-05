@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <chrono>
+//#include <chrono>
 #include <thread>
 #include <conio.h>
 
@@ -21,7 +21,7 @@ int main()
 	ConsoleHandler* consoleHandler = new ConsoleHandler();
 	consoleHandler->SetConsolesize();
 	consoleHandler->SetCenterConsolePosition();
-	consoleHandler->DisableConsoleCursor();
+	//consoleHandler->DisableConsoleCursor();
 	//consoleHandler->DisableConsoleScrolling();
 	//consoleHandler->SetIsUserPrompted(false);
 	//consoleHandler->ActivateConsoleCursor();
@@ -42,9 +42,6 @@ int main()
 	UserInputManager* inputManager = new UserInputManager(consoleHandler, scenesManager, menuManager);
 	//menuManager->SetUserInputManager(inputManager);
 
-	//unsigned short int counter = 0;
-	//unsigned short int numLoops = 5;
-
 	//mainClassAccess->SetIsMenuCleared(true);
 	//bool oneLoopOFTwo = true;
 	E_UserInput userInput = E_UserInput::EMPTY;
@@ -57,20 +54,16 @@ int main()
 		// Process user input
 		if (_kbhit())
 		{
+			userInput = inputManager->GetInput();
 			inputManager->SetAction(userInput);
 		}
-
-		//if (sceneManager->GetIsSceneCleared())
-		//{
-		//	// Print the scene text.
-		//	narrationManager->PrintLinesFromScene();
-		//}
 
 		if (menuManager->GetIsMenuCleared())
 		{
 			DEBUG_MSG("main.cpp : main() : GetIsMenuCleared() PrintMenuFromScene()");
+			userInput = E_UserInput::EMPTY;
 			menuManager->PrintMenuFromScene(userInput);
-			menuManager->SetIsMenuCleared(false);
+			//menuManager->SetIsMenuCleared(false);
 		}
 
 		//std::this_thread::sleep_for(std::chrono::milliseconds(100));
