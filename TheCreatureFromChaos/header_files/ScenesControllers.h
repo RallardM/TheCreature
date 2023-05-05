@@ -8,18 +8,32 @@ const unsigned short int SCENES_IMAGE_LINES[20] = {
 
 const unsigned short int SCENES_TEXT_LINES[8] = { 2, 8, 14, 20, 26, 32, 38, 44 };
 
-const unsigned short int NEXT_MENU_ELEMENT        = 1;
-const unsigned short int JUMP_TWO_MENU_ELEMENTS   = 2;
-const unsigned short int JUMP_THREE_MENU_ELEMENTS = 3;
-const unsigned short int JUMP_FOUR_MENU_ELEMENTS  = 4;
-const unsigned short int NEXT_NAVIGATION_ELEMENT  = 8;
+const unsigned short int NEXT_MENU_ELEMENT        =  1;
+const unsigned short int JUMP_TWO_MENU_ELEMENTS   =  2;
+const unsigned short int JUMP_THREE_MENU_ELEMENTS =  3;
+const unsigned short int JUMP_FOUR_MENU_ELEMENTS  =  4;
+const unsigned short int NB_LINES_NEXT_NAVIG_UI   =  8;
+												    
+const unsigned short int NAVIGATION_MENU_HEIGHT   =  7;
+												    
+const unsigned short int ONE_CHOICE_MENU          =  1;
+const unsigned short int TWO_CHOICES_MENU         =  2;
+												    
+const unsigned short int TWO_WAYS_RIGHT           =  3;
+const unsigned short int TWO_WAYS_LEFT            =  4;
+const unsigned short int FOUR_WAYS_FRONT          =  5;
+const unsigned short int FOUR_WAYS_BACK           =  6;
 
-const unsigned short int NAVIGATION_MENU_HEIGHT   = 7;
-
-const unsigned short int ONE_CHOICE_MENU          = 1;
-const unsigned short int TWO_CHOICES_MENU         = 2;
-const unsigned short int TWO_WAYS_NAVIGATION      = 3;
-const unsigned short int FOUR_WAYS_NAVIGATION     = 4;
+const unsigned short int LEFT_TO_FRONT            =  1;
+const unsigned short int LEFT_TO_BACK             =  3;
+const short int          FRONT_TO_LEFT            = -1;
+const unsigned short int FRONT_TO_RIGHT           =  1;
+const unsigned short int FRONT_TO_BACK            =  2;
+const short int          RIGHT_TO_FRONT           = -1;
+const unsigned short int RIGHT_TO_BACK            =  1;
+const short int          BACK_TO_LEFT             = -3;
+const short int          BACK_TO_FRONT            = -2;
+const short int          BACK_TO_RIGHT            = -1;
 
 const unsigned short int SCENE_NUMBER_OF_MENU_CHOICES[] = {
 	TWO_CHOICES_MENU,     // INTRO_SCENE
@@ -31,20 +45,20 @@ const unsigned short int SCENE_NUMBER_OF_MENU_CHOICES[] = {
 	ONE_CHOICE_MENU,      // DEAD_END_SCENE
 	TWO_CHOICES_MENU,     // ENNEMY_SCENE
 
-	FOUR_WAYS_NAVIGATION, // ROOM_ONE_FRONT
-	TWO_WAYS_NAVIGATION,  // ROOM_ONE_RIGHT
-	TWO_WAYS_NAVIGATION,  // ROOM_ONE_LEFT
-	FOUR_WAYS_NAVIGATION, // ROOM_ONE_BACK
+	TWO_WAYS_LEFT,        // ROOM_ONE_LEFT
+	FOUR_WAYS_FRONT,      // ROOM_ONE_FRONT
+	TWO_WAYS_RIGHT,       // ROOM_ONE_RIGHT
+	FOUR_WAYS_BACK,       // ROOM_ONE_BACK
 
-	FOUR_WAYS_NAVIGATION, // ROOM_TWO_FRONT
-	TWO_WAYS_NAVIGATION,  // ROOM_TWO_RIGHT
-	TWO_WAYS_NAVIGATION,  // ROOM_TWO_LEFT
-	FOUR_WAYS_NAVIGATION, // ROOM_TWO_BACK
+	TWO_WAYS_LEFT,        // ROOM_TWO_LEFT
+	FOUR_WAYS_FRONT,      // ROOM_TWO_FRONT
+	TWO_WAYS_RIGHT,       // ROOM_TWO_RIGHT
+	FOUR_WAYS_BACK,       // ROOM_TWO_BACK
 
-	FOUR_WAYS_NAVIGATION, // ROOM_THREE_FRONT
-	TWO_WAYS_NAVIGATION,  // ROOM_THREE_RIGHT
-	TWO_WAYS_NAVIGATION,  // ROOM_THREE_LEFT
-	FOUR_WAYS_NAVIGATION, // ROOM_THREE_BACK
+	TWO_WAYS_LEFT,        // ROOM_THREE_LEFT
+	FOUR_WAYS_FRONT,      // ROOM_THREE_FRONT
+	TWO_WAYS_RIGHT,       // ROOM_THREE_RIGHT
+	FOUR_WAYS_BACK,       // ROOM_THREE_BACK
 };
 
 namespace ScenesControllers {
@@ -60,19 +74,19 @@ namespace ScenesControllers {
 		DEAD_END_SCENE         =   6,   // Image line 389 ; Text line 38 ; Menu line 18 // TODO return to navigation menu at line 26
 		ENNEMY_SCENE           =   7,   // Image line 420 ; Text line 44 ; Menu line 21
 						       
-		ROOM_ONE_FRONT         =   8,   // Image line 2   ;              ; Menu line 23
-		ROOM_ONE_RIGHT         =   9,   // Image line 107 ;              ; Menu line 54
-		ROOM_ONE_LEFT          =  10,   // Image line 142 ;              ; Menu line 54
+		ROOM_ONE_LEFT          =   8,   // Image line 2   ;              ; Menu line 23
+		ROOM_ONE_FRONT         =   9,   // Image line 107 ;              ; Menu line 54
+		ROOM_ONE_RIGHT         =  10,   // Image line 142 ;              ; Menu line 54
 		ROOM_ONE_BACK          =  11,   // Image line 177 ;              ; Menu line 23
 							    						                 
-		ROOM_TWO_FRONT         =  12,   // Image line 282 ;              ; Menu line 23
-		ROOM_TWO_RIGHT         =  13,   // Image line 317 ;              ; Menu line 54
-		ROOM_TWO_LEFT          =  14,   // Image line 353 ;              ; Menu line 54
+		ROOM_TWO_LEFT          =  12,   // Image line 282 ;              ; Menu line 23
+		ROOM_TWO_FRONT         =  13,   // Image line 317 ;              ; Menu line 54
+		ROOM_TWO_RIGHT         =  14,   // Image line 353 ;              ; Menu line 54
 		ROOM_TWO_BACK          =  15,   // Image line 389 ;              ; Menu line 23
 							    						                 
-		ROOM_THREE_FRONT       =  16,   // Image line 455 ;              ; Menu line 23
-		ROOM_THREE_RIGHT       =  17,   // Image line 490 ;              ; Menu line 54
-		ROOM_THREE_LEFT        =  18,   // Image line 526 ;              ; Menu line 45
+		ROOM_THREE_LEFT        =  16,   // Image line 455 ;              ; Menu line 23
+		ROOM_THREE_FRONT       =  17,   // Image line 490 ;              ; Menu line 54
+		ROOM_THREE_RIGHT       =  18,   // Image line 526 ;              ; Menu line 45
 		ROOM_THREE_BACK        =  19    // Image line 562 ;              ; Menu line 23
 	};                              
 	                                

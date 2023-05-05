@@ -26,12 +26,12 @@ int main()
 	//consoleHandler->SetIsUserPrompted(false);
 	//consoleHandler->ActivateConsoleCursor();
 
-	ScenesManager* scenesManager = new ScenesManager();
+	UserData* userData = new UserData();
+
+	ScenesManager* scenesManager = new ScenesManager(userData);
 
 	NarrationManager* narrationManager = new NarrationManager(scenesManager);
 	scenesManager->SetNarrationManager(narrationManager);
-
-	UserData* userData = new UserData();
 
 	MenuManager* menuManager = new MenuManager(consoleHandler, scenesManager, narrationManager, userData);
 	scenesManager->SetMenuManager(menuManager);

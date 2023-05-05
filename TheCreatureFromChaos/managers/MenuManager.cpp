@@ -125,7 +125,7 @@ void MenuManager::SelectFourWaysNavigation(E_UserInput userInput, E_MenuChoices 
         ClearConsoleNavigationMenu();
         SetIsMenuCleared(true);
         int myInt = static_cast<int>(menuChoice);
-        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + NEXT_NAVIGATION_ELEMENT);
+        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + NB_LINES_NEXT_NAVIG_UI);
         PrintSelectedMenu(nextMenuInEnum);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         return;
@@ -135,7 +135,7 @@ void MenuManager::SelectFourWaysNavigation(E_UserInput userInput, E_MenuChoices 
         ClearConsoleNavigationMenu();
         SetIsMenuCleared(true);
         int myInt = static_cast<int>(menuChoice);
-        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NEXT_NAVIGATION_ELEMENT * JUMP_TWO_MENU_ELEMENTS));
+        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NB_LINES_NEXT_NAVIG_UI * JUMP_TWO_MENU_ELEMENTS));
         PrintSelectedMenu(nextMenuInEnum);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         return;
@@ -145,7 +145,7 @@ void MenuManager::SelectFourWaysNavigation(E_UserInput userInput, E_MenuChoices 
         ClearConsoleNavigationMenu();
         SetIsMenuCleared(true);
         int myInt = static_cast<int>(menuChoice);
-        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NEXT_NAVIGATION_ELEMENT * JUMP_THREE_MENU_ELEMENTS));
+        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NB_LINES_NEXT_NAVIG_UI * JUMP_THREE_MENU_ELEMENTS));
         PrintSelectedMenu(nextMenuInEnum);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         return;
@@ -155,7 +155,7 @@ void MenuManager::SelectFourWaysNavigation(E_UserInput userInput, E_MenuChoices 
         ClearConsoleNavigationMenu();
         SetIsMenuCleared(true);
         int myInt = static_cast<int>(menuChoice);
-        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NEXT_NAVIGATION_ELEMENT * JUMP_FOUR_MENU_ELEMENTS));
+        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NB_LINES_NEXT_NAVIG_UI * JUMP_FOUR_MENU_ELEMENTS));
         PrintSelectedMenu(nextMenuInEnum);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         return;
@@ -179,7 +179,7 @@ void MenuManager::SelectTwoWaysNavigation(E_UserInput userInput, E_MenuChoices m
         ClearConsoleNavigationMenu();
         SetIsMenuCleared(true);
         int myInt = static_cast<int>(menuChoice);
-        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + NEXT_NAVIGATION_ELEMENT);
+        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + NB_LINES_NEXT_NAVIG_UI);
         PrintNavigationMenu(nextMenuInEnum);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         return;
@@ -190,7 +190,7 @@ void MenuManager::SelectTwoWaysNavigation(E_UserInput userInput, E_MenuChoices m
         ClearConsoleNavigationMenu();
         SetIsMenuCleared(true);
         int myInt = static_cast<int>(menuChoice);
-        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NEXT_NAVIGATION_ELEMENT * JUMP_TWO_MENU_ELEMENTS));
+        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NB_LINES_NEXT_NAVIG_UI * JUMP_TWO_MENU_ELEMENTS));
         PrintNavigationMenu(nextMenuInEnum);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         return;
@@ -226,7 +226,6 @@ void MenuManager::PrintSingleMenuChoice(E_UserInput userInput, E_MenuChoices men
 
 void MenuManager::PrintSelectedMenu(E_MenuChoices currentMenuChoice)
 {
-    
     std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), currentMenuChoice) << std::endl;
     SetIsMenuCleared(false);
     SetSelectedMenuLine(currentMenuChoice);

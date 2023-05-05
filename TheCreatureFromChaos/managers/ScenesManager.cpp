@@ -1,30 +1,23 @@
 #include <iostream>
+//#include <opencv2/opencv.hpp>
 
 #include "ScenesManager.h"
 #include "MenuManager.h"
 #include "DebugMessageSystem.h"
 
-ScenesManager::ScenesManager() :
+ScenesManager::ScenesManager(UserData* userData) :
 	m_userCurrentScene(E_SceneSequence::INTRO_SCENE),
 	m_narrationManager(),
-	m_menuManager()
+	m_menuManager(),
+	m_userData(userData)
 {
-}
-
-E_SceneSequence ScenesManager::GetPlayerCurrentScene()
-{
-	return m_userCurrentScene;
-}
-
-void ScenesManager::SetPlayerCurrentScene(E_SceneSequence scene)
-{
-	m_userCurrentScene = scene;
 }
 
 void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 {
 	ClearAllConsoleText();
 	GetMenuManager()->SetIsMenuCleared(true);
+	E_SceneSequence movingTowardScene = E_SceneSequence::NO_SCENE;
 	//SetIsSceneCleared(true);
 
 	switch (menuChoice)
@@ -65,8 +58,8 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 			break;
 
 		case E_MenuChoices::TAKE_WEAPONS_SELECTED: // From WEAPONS_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ROOM_ONE_LEFT.");
-			SetPlayerCurrentScene(E_SceneSequence::ROOM_ONE_LEFT);
+			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ROOM_ONE_RIGHT.");
+			SetPlayerCurrentScene(E_SceneSequence::ROOM_ONE_RIGHT);
 			break;
 
 		case E_MenuChoices::GO_BACK_SELECTED:      // From DEAD_END_SCENE
@@ -75,13 +68,24 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 			break;
 
 		case E_MenuChoices::ATTACK_ENEMY:          // From ENNEMY_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO.");
+			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO."); // TODO
 			//SetPlayerCurrentScene(E_SceneSequence::);
 			break;
 
 		case E_MenuChoices::RUN_AWAY:              // From ENNEMY_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO.");
+			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO."); // TODO
 			//SetPlayerCurrentScene(E_SceneSequence::);
+			break;
+
+		case E_MenuChoices::NAVIGATION_LEFT:
+		case E_MenuChoices::NAVIGATION_RIGHT:
+		case E_MenuChoices::NAVIGATION_FOWARD:
+		case E_MenuChoices::NAVIGATION_BACK:
+		case E_MenuChoices::LR_NAVIGATION_LEFT:
+		case E_MenuChoices::LR_NAVIGATION_RIGHT:
+			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO."); // TODO
+			movingTowardScene = GetUserDirectionScene(menuChoice);
+			SetPlayerCurrentScene(movingTowardScene);
 			break;
 
 		default:
@@ -89,6 +93,117 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 			break;
 	}
 	GetNarrationManager()->PrintLinesFromScene();
+}
+
+E_SceneSequence ScenesManager::GetUserDirectionScene(E_MenuChoices playerInputDirection)
+{
+	E_SceneSequence currectScene = GetPlayerCurrentScene();
+	E_SceneSequence nextScene = E_SceneSequence::NO_SCENE;
+	E_MenuChoices intToEnum = E_MenuChoices::NO_MENU_LINE;
+
+	unsigned short int currentSceneEnumToInt = static_cast<int>(currectScene);
+
+	bool isFacingFront = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == FOUR_WAYS_FRONT);
+	bool isFacingRight = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == TWO_WAYS_RIGHT);
+	bool isFacingLeft = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == TWO_WAYS_LEFT);
+	bool isFacingBack = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == FOUR_WAYS_BACK);
+
+	bool turnsLeft = (playerInputDirection == E_MenuChoices::NAVIGATION_LEFT || playerInputDirection == E_MenuChoices::LR_NAVIGATION_LEFT);
+	bool turnsRight = (playerInputDirection == E_MenuChoices::NAVIGATION_RIGHT || playerInputDirection == E_MenuChoices::LR_NAVIGATION_RIGHT);
+	bool goesFoward = (playerInputDirection == E_MenuChoices::NAVIGATION_FOWARD);
+	bool goesBack = (playerInputDirection == E_MenuChoices::NAVIGATION_BACK);
+
+	if (isFacingFront && turnsLeft)
+	{
+		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + FRONT_TO_LEFT);
+		nextScene = static_cast<E_SceneSequence>(intToEnum);
+	}
+	else if (isFacingFront && turnsRight)
+	{
+		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + FRONT_TO_RIGHT);
+		nextScene = static_cast<E_SceneSequence>(intToEnum);
+	}
+	else if (isFacingFront && goesBack)
+	{
+		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + FRONT_TO_BACK);
+		nextScene = static_cast<E_SceneSequence>(intToEnum);
+	}
+	else if (isFacingRight && turnsLeft)
+	{
+		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + RIGHT_TO_FRONT);
+		nextScene = static_cast<E_SceneSequence>(intToEnum);
+	}
+	else if (isFacingRight && turnsRight)
+	{
+		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + RIGHT_TO_BACK);
+		nextScene = static_cast<E_SceneSequence>(intToEnum);
+	}
+	else if (isFacingLeft && turnsLeft)
+	{
+		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + LEFT_TO_BACK);
+		nextScene = static_cast<E_SceneSequence>(intToEnum);
+	}
+	else if (isFacingLeft && turnsRight)
+	{
+		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + LEFT_TO_FRONT);
+		nextScene = static_cast<E_SceneSequence>(intToEnum);
+	}
+	else if (isFacingBack && turnsLeft)
+	{
+		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + BACK_TO_RIGHT);
+		nextScene = static_cast<E_SceneSequence>(intToEnum);
+	}
+	else if (isFacingBack && turnsRight)
+	{
+		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + BACK_TO_LEFT);
+		nextScene = static_cast<E_SceneSequence>(intToEnum);
+	}
+	else if (isFacingBack && goesBack)
+	{
+		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + BACK_TO_FRONT);
+		nextScene = static_cast<E_SceneSequence>(intToEnum);
+	}
+	else if (isFacingBack && goesFoward)
+	{
+		if (currectScene == E_SceneSequence::ROOM_ONE_BACK)
+		{
+			if (GetUserData()->GetIsPlayerSeenDeadEnd())
+			{
+				nextScene = E_SceneSequence::ROOM_TWO_BACK;
+			}
+			else
+			{
+				nextScene = E_SceneSequence::DEAD_END_SCENE;
+			}
+		}
+		else if (currectScene == E_SceneSequence::ROOM_THREE_BACK)
+		{
+			nextScene = E_SceneSequence::ROOM_ONE_BACK;
+		}
+	}
+	else if (isFacingFront && goesFoward)
+	{
+		if (currectScene == E_SceneSequence::ROOM_ONE_FRONT)
+		{
+			if (GetUserData()->GetIsBossDefeated())
+			{
+				nextScene = E_SceneSequence::ROOM_THREE_FRONT;
+			}
+			else
+			{
+				nextScene = E_SceneSequence::ENNEMY_SCENE;
+			}
+		}
+		else if (currectScene == E_SceneSequence::ROOM_TWO_FRONT)
+		{
+			nextScene = E_SceneSequence::ROOM_ONE_FRONT;
+		}
+		else if (currectScene == E_SceneSequence::ROOM_THREE_FRONT)
+		{
+			// TODO
+		}
+	}
+	return nextScene;
 }
 
 void ScenesManager::ClearAllConsoleText()
@@ -165,12 +280,23 @@ void ScenesManager::SetMenuManager(MenuManager* menuManager)
 	m_menuManager = menuManager;
 }
 
-//bool ScenesManager::GetIsSceneCleared()
-//{
-//	return m_isSceneCleared;
-//}
-//
-//void ScenesManager::SetIsSceneCleared(bool isSceneCleared)
-//{
-//	m_isSceneCleared = isSceneCleared;
-//}
+E_SceneSequence ScenesManager::GetPlayerCurrentScene()
+{
+	return m_userCurrentScene;
+}
+
+void ScenesManager::SetPlayerCurrentScene(E_SceneSequence scene)
+{
+	m_userCurrentScene = scene;
+}
+
+
+UserData* ScenesManager::GetUserData()
+{
+	return m_userData;
+}
+
+void ScenesManager::SetUserData(UserData* userData)
+{
+	m_userData = userData;
+}

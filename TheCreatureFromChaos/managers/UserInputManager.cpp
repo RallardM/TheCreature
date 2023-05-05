@@ -104,16 +104,47 @@ void UserInputManager::SetAction(E_UserInput userInput)
 void UserInputManager::ActivateSelection(E_UserInput userInput)
 {
     E_SceneSequence currentScene = GetScenesManager()->GetPlayerCurrentScene();
-    unsigned short int currentNumberOfChoices = SCENE_NUMBER_OF_MENU_CHOICES[int(currentScene)];
+    unsigned short int currentSceneEnumToInt = static_cast<int>(currentScene);
+    unsigned short int currentNumberOfChoices = SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt];
+    bool bidirectionalMenus = (currentNumberOfChoices == TWO_WAYS_RIGHT || currentNumberOfChoices == TWO_WAYS_LEFT);
+    bool quadridiractionalMenus = (currentNumberOfChoices == FOUR_WAYS_FRONT || currentNumberOfChoices == FOUR_WAYS_BACK);
+
     if (currentNumberOfChoices == TWO_CHOICES_MENU)
     {
         GetMenuManager()->PrintMenuFromScene(userInput);
         return;
     }
-    else if (currentNumberOfChoices == TWO_WAYS_NAVIGATION)
+    else if (bidirectionalMenus)
     {
-        GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
-        return;
+        if (userInput == E_UserInput::LEFT)
+        {
+            GetMenuManager()->PrintMenuFromScene(E_UserInput::LEFT);
+            GetScenesManager()->SetNextScene(E_MenuChoices::LR_NAVIGATION_LEFT);
+        }
+        else if (userInput == E_UserInput::RIGHT)
+        {
+            GetMenuManager()->PrintMenuFromScene(E_UserInput::RIGHT);
+            GetScenesManager()->SetNextScene(E_MenuChoices::LR_NAVIGATION_RIGHT);
+        }
+    }
+    else if (quadridiractionalMenus)
+    {
+        if (userInput == E_UserInput::LEFT)
+        {
+            GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_LEFT);
+        }
+        else if (userInput == E_UserInput::RIGHT)
+        {
+            GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_RIGHT);
+        }
+        else if (userInput == E_UserInput::UP)
+        {
+            GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_FOWARD);
+        }
+        else if (userInput == E_UserInput::DOWN)
+        {
+            GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_BACK);
+        }
     }
 }
 
@@ -124,7 +155,6 @@ void UserInputManager::EnterSelection()
     if (currentNumberOfChoices == ONE_CHOICE_MENU)
     {
         GetMenuManager()->PrintMenuFromScene(E_UserInput::ENTER);
-
         GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
         return;
 	}
