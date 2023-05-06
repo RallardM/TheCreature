@@ -3,11 +3,11 @@
 #include <fstream>
 #include "ScenesManager.h"
 class ScenesManager;
-#include "ScenesControllers.h"
+#include "PublicConstants.h"
 #include "UserData.h"
 #include "ConsoleHandler.h"
 
-using namespace ScenesControllers;
+using namespace PublicConstants;
 
 class MenuManager {
 public:
@@ -47,8 +47,8 @@ public:
 
 	void AddDelay();
 
-	//UserInputManager* GetUserInputManager();
-	//void SetUserInputManager(UserInputManager* inputManager);
+	WeaponManager* GetWeaponManager();
+	void SetWeaponManager(WeaponManager* weaponManager);
 
 private:
 
@@ -61,6 +61,9 @@ private:
 	ScenesManager* m_scenesManager;
 	NarrationManager* m_narrationManager;
 	UserData* m_userData;
-	//UserInputManager* m_inputManager;
+	WeaponManager* m_weaponManager;
 
 };
+
+
+	

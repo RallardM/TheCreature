@@ -145,6 +145,8 @@ void MenuManager::SelectNavigationElement(E_UserInput userInput, E_MenuChoices m
 
 void MenuManager::PrepareNavigationMenu(E_MenuChoices menuChoice, unsigned short int numberOfUiElementsToJumpOver)
 {
+    GetWeaponManager()->ClearWeaponLogLine();
+    GetWeaponManager()->SetIsMenuCleared(true);
     ClearConsoleNavigationMenu();
     SetIsMenuCleared(true);
     int enumToInt = static_cast<int>(menuChoice);
@@ -202,10 +204,10 @@ void MenuManager::PrintEnterNameMenu()
     std::cout << "            What name do you want Khai to call you? ";
     std::string playerName;
     GetConsoleHandler()->ActivateConsoleCursor();
-    //GetConsoleHandler()->SetIsUserPrompted(true);
+
     std::cin >> playerName;
-    //GetConsoleHandler()->SetIsUserPrompted(false);
-    GetConsoleHandler()->DisableConsoleCursor();
+
+    //GetConsoleHandler()->DisableConsoleCursor(); // TODO: readd
     GetUserData()->SetPlayerName(playerName);
     SetIsMenuCleared(false);
     GetScenesManager()->SetNextScene(E_MenuChoices::ENTER_NAME);
@@ -313,7 +315,6 @@ bool MenuManager::GetIsMenuCleared()
 
 void MenuManager::SetIsMenuCleared(bool isMenuCleared)
 {
-
     m_isMenuCleared = isMenuCleared;
 }
 
@@ -340,4 +341,15 @@ UserData* MenuManager::GetUserData()
 void MenuManager::AddDelay()
 {
 	std::this_thread::sleep_for(std::chrono::milliseconds(200));
+}
+
+
+WeaponManager* MenuManager::GetWeaponManager()
+{
+    return m_weaponManager;
+}
+
+void MenuManager::SetWeaponManager(WeaponManager* weaponManager)
+{
+    m_weaponManager = weaponManager;
 }

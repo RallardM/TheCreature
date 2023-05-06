@@ -151,6 +151,7 @@
     <ClCompile Include="resouce_files\ConsoleHandler.cpp" />
     <ClCompile Include="managers\UserInputManager.cpp" />
     <ClCompile Include="managers\ScenesManager.cpp" />
+    <ClCompile Include="managers\WeaponManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resouce_files\GameArtEnding.jpg" />
@@ -163,10 +164,11 @@
     <Text Include="resouce_files\NarrationText.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="header_files\WeaponManager.h" />
     <ClInclude Include="header_files\DebugMessageSystem.h" />
     <ClInclude Include="header_files\MenuManager.h" />
     <ClInclude Include="header_files\NarrationManager.h" />
-    <ClInclude Include="header_files\ScenesControllers.h" />
+    <ClInclude Include="header_files\PublicConstants.h" />
     <ClInclude Include="header_files\ScenesManager.h" />
     <ClInclude Include="header_files\UserInputManager.h" />
     <ClInclude Include="header_files\ConsoleHandler.h" />

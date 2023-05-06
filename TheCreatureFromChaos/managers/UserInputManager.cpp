@@ -52,10 +52,19 @@ E_UserInput UserInputManager::GetInput()
                 case 80: // Down arrow key
                     return E_UserInput::DOWN;
                     break;
-
+                
+                case 'e':
+                case 'E':
                 case 13: // Enter key
                     return E_UserInput::ENTER;
                     break;
+
+                case '1':
+                    return E_UserInput::ONE;
+					break;
+
+                case '2':
+					return E_UserInput::TWO;
 
                 case 27: // Escape key
                     return E_UserInput::ESC;
@@ -86,6 +95,12 @@ void UserInputManager::SetAction(E_UserInput userInput)
     {
         DEBUG_MSG("UserInputManager.cpp : SetAction() : User pressed ENTER.");
         EnterSelection();
+        SetHasInput(false);
+        return;
+    }
+    if (userInput == E_UserInput::ONE || userInput == E_UserInput::TWO)
+    {
+        GetWeaponManager()->SelectWeapon(userInput);
         SetHasInput(false);
         return;
     }
@@ -179,7 +194,6 @@ ConsoleHandler* UserInputManager::GetConsoleHandler()
     return m_consoleHandler;
 }
 
-
 MenuManager* UserInputManager::GetMenuManager()
 {
     return m_menuManager;
@@ -188,4 +202,14 @@ MenuManager* UserInputManager::GetMenuManager()
 ScenesManager* UserInputManager::GetScenesManager()
 {
     return m_sceneManager;
+}
+
+WeaponManager* UserInputManager::GetWeaponManager()
+{
+    return m_weaponManager;
+}
+
+void UserInputManager::SetWeaponManager(WeaponManager* weaponManager)
+{
+    m_weaponManager = weaponManager;
 }

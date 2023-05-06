@@ -9,6 +9,9 @@ public:
 	std::string GetPlayerName();
 	void SetPlayerName(std::string playerName);
 
+	bool GetAreWeaponsEquiped();
+	void SetAreWeaponsEquiped(bool areWeaponEquiped);
+
 	bool GetIsPlayerSeenDeadEnd();
 	void SetIsPlayerSeenDeadEnd(bool isPlayerSeenDeadEnd);
 
@@ -21,6 +24,7 @@ public:
 
 private:
 	std::string m_playerName;
+	bool m_areWeaponsEquiped;
 	bool m_isPlayerSeenDeadEnd;
 	bool m_isBossDefeated;
 	//bool m_attackedKobold; // TODO

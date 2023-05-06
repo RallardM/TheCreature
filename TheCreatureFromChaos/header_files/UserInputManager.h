@@ -4,8 +4,9 @@ class ScenesManager;
 
 #include "ScenesManager.h"
 #include "ConsoleHandler.h"
-#include "ScenesControllers.h"
-using namespace ScenesControllers;
+#include "PublicConstants.h"
+#include "WeaponManager.h"
+using namespace PublicConstants;
 
 class UserInputManager {
 public:
@@ -23,10 +24,14 @@ public:
 	MenuManager* GetMenuManager();
 	ScenesManager* GetScenesManager();
 
+	WeaponManager* GetWeaponManager();
+	void SetWeaponManager(WeaponManager* weaponManager);
+
 private:
 	bool m_hasInput;
 
 	ConsoleHandler* m_consoleHandler;
 	MenuManager* m_menuManager;
 	ScenesManager* m_sceneManager;
+	WeaponManager* m_weaponManager;
 };

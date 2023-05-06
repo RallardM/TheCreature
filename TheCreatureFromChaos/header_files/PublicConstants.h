@@ -30,7 +30,7 @@ const short int          BACK_TO_LEFT             = -3;
 const short int          BACK_TO_FRONT            = -2;
 const short int          BACK_TO_RIGHT            = -1;
 
-const unsigned short int SCENE_NUMBER_OF_MENU_CHOICES[] = {
+const unsigned short int SCENE_NUMBER_OF_MENU_CHOICES[20] = {
 	TWO_CHOICES_MENU,     // INTRO_SCENE
 	TWO_CHOICES_MENU,     // MOVING_SCENE
 	TWO_CHOICES_MENU,     // KOBOLD_SCENE
@@ -82,32 +82,32 @@ const unsigned short int SCENES_IMAGE_LINES[20] = {
 	531   // ROOM_THREE_BACK
 };
 
-namespace ScenesControllers {
+namespace PublicConstants {
 	enum class E_SceneSequence {
 		NO_SCENE               =  -1,
-		INTRO_SCENE            =   0,    // Image line 2   ; Text line 2  ; Menu line 2
-		MOVING_SCENE           =   1,    // Image line 37  ; Text line 8  ; Menu line 5
-		KOBOLD_SCENE           =   2,    // Image line 72  ; Text line 14 ; Menu line 8
-		NAME_SCENE             =   3,    // Image line 72  ; Text line 20 ; View MenuManager.cpp PrintMenuFromScene()
-		ATTACK_KOBOLD_SCENE    =   4,    // Image line 282 ; Text line 26 ; View MenuManager.cpp PrintMenuFromScene()
-		WEAPONS_SCENE          =   5,    // Image line 107 ; Text line 32 ; Menu line 15
-		DEAD_END_SCENE         =   6,    // Image line 142 ; Text line 38 ; Menu line 18 // TODO return to navigation menu at line 26
-		ENNEMY_SCENE           =   7,    // Image line 177 ; Text line 44 ; Menu line 21
-						       		    
-		ROOM_ONE_LEFT          =   8,    // Image line 212 ;              ; Menu line 23
-		ROOM_ONE_FRONT         =   9,    // Image line   2 ;              ; Menu line 54
-		ROOM_ONE_RIGHT         =  10,    // Image line 247 ;              ; Menu line 54
-		ROOM_ONE_BACK          =  11,    // Image line 282 ;              ; Menu line 23
-							    		 				                 
-		ROOM_TWO_LEFT          =  12,    // Image line 317 ;              ; Menu line 23
-		ROOM_TWO_FRONT         =  13,    // Image line 353 ;              ; Menu line 54
-		ROOM_TWO_RIGHT         =  14,    // Image line 388 ;              ; Menu line 54
-		ROOM_TWO_BACK          =  15,    // Image line 142 ;              ; Menu line 23
-							    		 				                 
-		ROOM_THREE_LEFT        =  16,    // Image line 424 ;              ; Menu line 23
-		ROOM_THREE_FRONT       =  17,    // Image line 460 ;              ; Menu line 54
-		ROOM_THREE_RIGHT       =  18,    // Image line 495 ;              ; Menu line 45
-		ROOM_THREE_BACK        =  19     // Image line 531 ;              ; Menu line 23
+		INTRO_SCENE            ,  // Image line 2   ; Text line 2  ; Menu line 2
+		MOVING_SCENE           ,  // Image line 37  ; Text line 8  ; Menu line 5
+		KOBOLD_SCENE           ,  // Image line 72  ; Text line 14 ; Menu line 8
+		NAME_SCENE             ,  // Image line 72  ; Text line 20 ; View MenuManager.cpp PrintMenuFromScene()
+		ATTACK_KOBOLD_SCENE    ,  // Image line 282 ; Text line 26 ; View MenuManager.cpp PrintMenuFromScene()
+		WEAPONS_SCENE          ,  // Image line 107 ; Text line 32 ; Menu line 15
+		DEAD_END_SCENE         ,  // Image line 142 ; Text line 38 ; Menu line 18 // TODO return to navigation menu at line 26
+		ENNEMY_SCENE           ,  // Image line 177 ; Text line 44 ; Menu line 21
+						       	   
+		ROOM_ONE_LEFT          ,  // Image line 212 ;              ; Menu line 23
+		ROOM_ONE_FRONT         ,  // Image line   2 ;              ; Menu line 54
+		ROOM_ONE_RIGHT         ,  // Image line 247 ;              ; Menu line 54
+		ROOM_ONE_BACK          ,  // Image line 282 ;              ; Menu line 23
+							     				                 
+		ROOM_TWO_LEFT          ,  // Image line 317 ;              ; Menu line 23
+		ROOM_TWO_FRONT         ,  // Image line 353 ;              ; Menu line 54
+		ROOM_TWO_RIGHT         ,  // Image line 388 ;              ; Menu line 54
+		ROOM_TWO_BACK          ,  // Image line 142 ;              ; Menu line 23
+							     				                 
+		ROOM_THREE_LEFT        ,  // Image line 424 ;              ; Menu line 23
+		ROOM_THREE_FRONT       ,  // Image line 460 ;              ; Menu line 54
+		ROOM_THREE_RIGHT       ,  // Image line 495 ;              ; Menu line 45
+		ROOM_THREE_BACK           // Image line 531 ;              ; Menu line 23
 	};                              
 	                                
 	//MenuText.txt                  
@@ -151,7 +151,24 @@ namespace ScenesControllers {
 		UP,
 		DOWN,
 		ENTER,
+		ONE,
+		TWO,
 		ESC,
 		EMPTY
 	};
+
+	struct S_Weapon
+	{
+		S_Weapon() = default;
+		S_Weapon(std::string _weaponName, unsigned short int _weaponMinDamage, unsigned short int _weaponMaxDamage)
+		{
+			weaponName = _weaponName;
+			weaponMinDamage = _weaponMinDamage;
+			weaponMaxDamage = _weaponMaxDamage;
+		}
+		std::string weaponName = "";
+		unsigned short int weaponMinDamage = 0;
+		unsigned short int weaponMaxDamage = 0;
+	};
+
 }

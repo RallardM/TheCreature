@@ -11,6 +11,7 @@
 #include "DebugMessageSystem.h"
 #include "ScenesManager.h"
 #include "UserData.h"
+#include "WeaponManager.h"
 
 int main()
 {
@@ -23,8 +24,8 @@ int main()
 	consoleHandler->SetCenterConsolePosition();
 	//consoleHandler->DisableConsoleCursor();
 	//consoleHandler->DisableConsoleScrolling();
-	//consoleHandler->SetIsUserPrompted(false);
-	//consoleHandler->ActivateConsoleCursor();
+
+	consoleHandler->ActivateConsoleCursor();
 
 	UserData* userData = new UserData();
 
@@ -40,14 +41,15 @@ int main()
 	narrationManager->PrintLinesFromScene();
 
 	UserInputManager* inputManager = new UserInputManager(consoleHandler, scenesManager, menuManager);
-	//menuManager->SetUserInputManager(inputManager);
-
-	//mainClassAccess->SetIsMenuCleared(true);
-	//bool oneLoopOFTwo = true;
 	E_UserInput userInput = E_UserInput::EMPTY;
+
+	WeaponManager* weaponManager = new WeaponManager(menuManager);
+	scenesManager->SetWeaponManager(weaponManager);
+	inputManager->SetWeaponManager(weaponManager);
+	menuManager->SetWeaponManager(weaponManager);
 	
-	//bool isMenuCleared = true;
 	bool gameRunning = true;
+
 	//DEBUG_MSG("main.cpp : main() : Enters main loop.");
 	while (gameRunning)
 	{
@@ -60,10 +62,14 @@ int main()
 
 		if (menuManager->GetIsMenuCleared())
 		{
-			DEBUG_MSG("main.cpp : main() : GetIsMenuCleared() SelectMenuFromScene()");
 			userInput = E_UserInput::EMPTY;
 			menuManager->SelectMenuFromScene(userInput);
-			//menuManager->SetIsMenuCleared(false);
+		}
+
+		if (userData->GetAreWeaponsEquiped() && weaponManager->GetIsMenuCleared())
+		{
+			userInput = E_UserInput::EMPTY;
+			weaponManager->SelectWeapon(userInput);
 		}
 
 		//std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -76,6 +82,7 @@ int main()
 	delete inputManager;
 	delete narrationManager;
 	delete scenesManager;
+	delete weaponManager;
 
 	return 0;
 }

@@ -3,14 +3,15 @@
 class MenuManager;
 class NarrationManager;
 class UserInputManager;
-#include "UserData.h"
+class WeaponManager;
 
+#include "UserData.h"
 #include "MenuManager.h"
 #include "NarrationManager.h"
 #include "UserInputManager.h"
-#include "ScenesControllers.h"
+#include "PublicConstants.h"
 
-using namespace ScenesControllers;
+using namespace PublicConstants;
 
 class ScenesManager {
 public:
@@ -30,12 +31,18 @@ public:
 	MenuManager* GetMenuManager();
 	void SetMenuManager(MenuManager* menuManager);
 
+	WeaponManager* GetWeaponManager();
+	void SetWeaponManager(WeaponManager* weaponManager);
+
 	UserData* GetUserData();
 	void SetUserData(UserData* userData);
 
 private:
 	E_SceneSequence m_userCurrentScene;
+
 	NarrationManager* m_narrationManager;
 	MenuManager* m_menuManager;
+	WeaponManager* m_weaponManager;
+
 	UserData* m_userData;
 };

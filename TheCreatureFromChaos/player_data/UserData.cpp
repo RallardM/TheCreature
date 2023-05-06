@@ -2,6 +2,7 @@
 
 UserData::UserData() :
 	m_playerName(""),
+	m_areWeaponsEquiped(false),
 	m_isPlayerSeenDeadEnd(false),
 	m_isBossDefeated(false)
 {
@@ -15,6 +16,16 @@ std::string UserData::GetPlayerName()
 void UserData::SetPlayerName(std::string playerName)
 {
 	m_playerName = playerName;
+}
+
+bool UserData::GetAreWeaponsEquiped()
+{
+	return m_areWeaponsEquiped;
+}
+
+void UserData::SetAreWeaponsEquiped(bool areWeaponEquiped)
+{
+	m_areWeaponsEquiped = areWeaponEquiped;
 }
 
 bool UserData::GetIsPlayerSeenDeadEnd()
