@@ -62,7 +62,6 @@ private:
 	NarrationManager* m_narrationManager;
 	UserData* m_userData;
 	WeaponManager* m_weaponManager;
-
 };
 
 

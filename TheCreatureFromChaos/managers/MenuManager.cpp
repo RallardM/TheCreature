@@ -13,6 +13,7 @@ MenuManager::MenuManager(ConsoleHandler* consoleHandler, ScenesManager* scenesMa
     m_narrationManager(narrationManager),
     m_scenesManager(scenesManager),
     m_userData(userData),
+    m_weaponManager(nullptr),
     m_isMenuCleared(true)
 {
     m_selectedMenuLine = E_MenuChoices::NO_MENU_LINE;
