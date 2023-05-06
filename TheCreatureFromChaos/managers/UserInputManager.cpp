@@ -111,19 +111,19 @@ void UserInputManager::ActivateSelection(E_UserInput userInput)
 
     if (currentNumberOfChoices == TWO_CHOICES_MENU)
     {
-        GetMenuManager()->PrintMenuFromScene(userInput);
+        GetMenuManager()->SelectMenuFromScene(userInput);
         return;
     }
     else if (bidirectionalMenus)
     {
         if (userInput == E_UserInput::LEFT)
         {
-            GetMenuManager()->PrintMenuFromScene(E_UserInput::LEFT);
+            GetMenuManager()->SelectMenuFromScene(E_UserInput::LEFT);
             GetScenesManager()->SetNextScene(E_MenuChoices::LR_NAVIGATION_LEFT);
         }
         else if (userInput == E_UserInput::RIGHT)
         {
-            GetMenuManager()->PrintMenuFromScene(E_UserInput::RIGHT);
+            GetMenuManager()->SelectMenuFromScene(E_UserInput::RIGHT);
             GetScenesManager()->SetNextScene(E_MenuChoices::LR_NAVIGATION_RIGHT);
         }
     }
@@ -131,18 +131,22 @@ void UserInputManager::ActivateSelection(E_UserInput userInput)
     {
         if (userInput == E_UserInput::LEFT)
         {
+            GetMenuManager()->SelectMenuFromScene(E_UserInput::LEFT);
             GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_LEFT);
         }
         else if (userInput == E_UserInput::RIGHT)
         {
+            GetMenuManager()->SelectMenuFromScene(E_UserInput::RIGHT);
             GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_RIGHT);
         }
         else if (userInput == E_UserInput::UP)
         {
+            GetMenuManager()->SelectMenuFromScene(E_UserInput::UP);
             GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_FOWARD);
         }
         else if (userInput == E_UserInput::DOWN)
         {
+            GetMenuManager()->SelectMenuFromScene(E_UserInput::DOWN);
             GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_BACK);
         }
     }
@@ -154,7 +158,7 @@ void UserInputManager::EnterSelection()
     unsigned short int currentNumberOfChoices = SCENE_NUMBER_OF_MENU_CHOICES[int(currentScene)];
     if (currentNumberOfChoices == ONE_CHOICE_MENU)
     {
-        GetMenuManager()->PrintMenuFromScene(E_UserInput::ENTER);
+        GetMenuManager()->SelectMenuFromScene(E_UserInput::ENTER);
         GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
         return;
 	}

@@ -18,45 +18,45 @@ MenuManager::MenuManager(ConsoleHandler* consoleHandler, ScenesManager* scenesMa
     m_selectedMenuLine = E_MenuChoices::NO_MENU_LINE;
 }
 
-void MenuManager::PrintMenuFromScene(E_UserInput userInput)
+void MenuManager::SelectMenuFromScene(E_UserInput userInput)
 {
     E_SceneSequence scene = GetScenesManager()->GetPlayerCurrentScene();
 
     switch (scene)
     {
     case E_SceneSequence::INTRO_SCENE:
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : INTRO_SCENE");
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : INTRO_SCENE");
         SelectMenuChoice(userInput, E_MenuChoices::TRY_TO_MOVE, E_MenuChoices::TRY_TO_REMEBER);
         break;
 
     case E_SceneSequence::MOVING_SCENE:
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : MOVING_SCENE");
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : MOVING_SCENE");
         SelectMenuChoice(userInput, E_MenuChoices::LOOK_AROUND, E_MenuChoices::TRY_TO_REMEBER_TWO);
         break;
 
     case E_SceneSequence::KOBOLD_SCENE:
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : KOBOLD_SCENE");
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : KOBOLD_SCENE");
         SelectMenuChoice(userInput, E_MenuChoices::WHO_ARE_YOU, E_MenuChoices::ATTACK_KOBOLD);
         break;
 
     case E_SceneSequence::NAME_SCENE:
     case E_SceneSequence::ATTACK_SCENE:
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : NAME_SCENE, ATTACK_SCENE");
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : NAME_SCENE, ATTACK_SCENE");
         PrintEnterNameMenu();
         break;
 
     case E_SceneSequence::WEAPONS_SCENE:
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : WEAPONS_SCENE TODO");
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : WEAPONS_SCENE TODO");
         PrintSingleMenuChoice(userInput, E_MenuChoices::TAKE_WEAPONS);
         break;
 
     case E_SceneSequence::DEAD_END_SCENE:
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : KOBOLD_SCENE");
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : KOBOLD_SCENE");
         PrintSingleMenuChoice(userInput, E_MenuChoices::GO_BACK);
         break;
 
     case E_SceneSequence::ENNEMY_SCENE:
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : KOBOLD_SCENE");
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : KOBOLD_SCENE");
         SelectMenuChoice(userInput, E_MenuChoices::ATTACK_ENEMY, E_MenuChoices::RUN_AWAY);
         break;
     
@@ -66,22 +66,21 @@ void MenuManager::PrintMenuFromScene(E_UserInput userInput)
     case E_SceneSequence::ROOM_TWO_BACK:
     case E_SceneSequence::ROOM_THREE_FRONT:
     case E_SceneSequence::ROOM_THREE_BACK:
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Prints 4-ways navigation system");
-        SelectFourWaysNavigation(userInput, E_MenuChoices::NAVIGATION_PLAIN);
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : Prints 4-ways navigation system");
+        SelectNavigationElement(userInput, E_MenuChoices::NAVIGATION_PLAIN);
         break;
-
     case E_SceneSequence::ROOM_ONE_RIGHT:
     case E_SceneSequence::ROOM_ONE_LEFT:
     case E_SceneSequence::ROOM_TWO_RIGHT:
     case E_SceneSequence::ROOM_TWO_LEFT:
     case E_SceneSequence::ROOM_THREE_RIGHT:
     case E_SceneSequence::ROOM_THREE_LEFT:
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Prints 2-ways navigation system");
-        SelectTwoWaysNavigation(userInput, E_MenuChoices::LR_NAVIGATION_PLAIN);
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : Prints 2-ways navigation system");
+        SelectNavigationElement(userInput, E_MenuChoices::LR_NAVIGATION_PLAIN);
         break;
 
     default:
-        DEBUG_MSG("#R MenuManager.cpp : PrintMenuFromScene() : Default no menu selected");
+        DEBUG_MSG("#R MenuManager.cpp : SelectMenuFromScene() : Default no menu selected");
         break;
     }
 }
@@ -90,7 +89,7 @@ void MenuManager::SelectMenuChoice(E_UserInput userInput, E_MenuChoices LeftMenu
 {
     if (userInput == E_UserInput::EMPTY)
     {
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : UserInput is EMPTY.");
+        DEBUG_MSG("MenuManager.cpp : SelectMenuChoice() : UserInput is EMPTY.");
         PrintSelectedMenu(LeftMenuChoice);
         return;
     }
@@ -99,23 +98,23 @@ void MenuManager::SelectMenuChoice(E_UserInput userInput, E_MenuChoices LeftMenu
     SetIsMenuCleared(true);
     if (userInput == E_UserInput::LEFT && GetSelectedMenuLine() != LeftMenuChoice)
     {
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print LeftMenuChoice");
+        DEBUG_MSG("MenuManager.cpp : SelectMenuChoice() : Print LeftMenuChoice");
         PrintSelectedMenu(LeftMenuChoice);
         return;
     }
     else if (userInput == E_UserInput::RIGHT && GetSelectedMenuLine() != rightMenuChoice)
     {
-        DEBUG_MSG("MenuManager.cpp : PrintMenuFromScene() : Print rightMenuChoice");
+        DEBUG_MSG("MenuManager.cpp : SelectMenuChoice() : Print rightMenuChoice");
         PrintSelectedMenu(rightMenuChoice);
         return;
     }
 }
 
-void MenuManager::SelectFourWaysNavigation(E_UserInput userInput, E_MenuChoices menuChoice)
+void MenuManager::SelectNavigationElement(E_UserInput userInput, E_MenuChoices menuChoice)
 {
     if (userInput == E_UserInput::EMPTY)
     {
-        DEBUG_MSG("MenuManager.cpp : PrintSingleMenuChoice() : UserInput is EMPTY");
+        DEBUG_MSG("MenuManager.cpp : SelectNavigationElement() : UserInput is EMPTY");
         ClearConsolePreviousLine();
         PrintNavigationMenu(menuChoice);
         return;
@@ -123,83 +122,37 @@ void MenuManager::SelectFourWaysNavigation(E_UserInput userInput, E_MenuChoices 
 
     if (userInput == E_UserInput::LEFT)
     {
-        ClearConsoleNavigationMenu();
-        SetIsMenuCleared(true);
-        int myInt = static_cast<int>(menuChoice);
-        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + NB_LINES_NEXT_NAVIG_UI);
-        PrintNavigationMenu(nextMenuInEnum);
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        PrepareNavigationMenu(menuChoice, CURRENT_UI_ELEMENT);
         return;
     }
     else if (userInput == E_UserInput::RIGHT)
     {
-        ClearConsoleNavigationMenu();
-        SetIsMenuCleared(true);
-        int myInt = static_cast<int>(menuChoice);
-        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NB_LINES_NEXT_NAVIG_UI * JUMP_TWO_MENU_ELEMENTS));
-        PrintNavigationMenu(nextMenuInEnum);
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        PrepareNavigationMenu(menuChoice, JUMP_TWO_MENU_ELEMENTS);
         return;
     }
     else if (userInput == E_UserInput::UP)
     {
-        ClearConsoleNavigationMenu();
-        SetIsMenuCleared(true);
-        int myInt = static_cast<int>(menuChoice);
-        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NB_LINES_NEXT_NAVIG_UI * JUMP_THREE_MENU_ELEMENTS));
-        PrintNavigationMenu(nextMenuInEnum);
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        PrepareNavigationMenu(menuChoice, JUMP_THREE_MENU_ELEMENTS);
         return;
     }
     else if (userInput == E_UserInput::DOWN)
     {
-        ClearConsoleNavigationMenu();
-        SetIsMenuCleared(true);
-        int myInt = static_cast<int>(menuChoice);
-        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NB_LINES_NEXT_NAVIG_UI * JUMP_FOUR_MENU_ELEMENTS));
-        PrintNavigationMenu(nextMenuInEnum);
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        PrepareNavigationMenu(menuChoice, JUMP_FOUR_MENU_ELEMENTS);
         return;
     }
     return;
 }
 
-void MenuManager::SelectTwoWaysNavigation(E_UserInput userInput, E_MenuChoices menuChoice)
+void MenuManager::PrepareNavigationMenu(E_MenuChoices menuChoice, unsigned short int numberOfUiElementsToJumpOver)
 {
-    if (userInput == E_UserInput::EMPTY)
-    {
-        DEBUG_MSG("MenuManager.cpp : PrintSingleMenuChoice() : UserInput is EMPTY");
-        ClearConsolePreviousLine();
-        PrintNavigationMenu(menuChoice);
-        return;
-    }
-
-    if (userInput == E_UserInput::LEFT)
-    {
-        //ClearConsolePreviousLine();
-        ClearConsoleNavigationMenu();
-        SetIsMenuCleared(true);
-        int myInt = static_cast<int>(menuChoice);
-        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + NB_LINES_NEXT_NAVIG_UI);
-        PrintNavigationMenu(nextMenuInEnum);
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        return;
-    }
-    else if (userInput == E_UserInput::RIGHT)
-    {
-        //ClearConsolePreviousLine();
-        ClearConsoleNavigationMenu();
-        SetIsMenuCleared(true);
-        int myInt = static_cast<int>(menuChoice);
-        E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NB_LINES_NEXT_NAVIG_UI * JUMP_TWO_MENU_ELEMENTS));
-        PrintNavigationMenu(nextMenuInEnum);
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        return;
-    }
-
+    ClearConsoleNavigationMenu();
+    SetIsMenuCleared(true);
+    int enumToInt = static_cast<int>(menuChoice);
+    E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(enumToInt + (NB_LINES_NEXT_NAVIG_UI * numberOfUiElementsToJumpOver));
+    PrintNavigationMenu(nextMenuInEnum);
+    AddDelay();
     return;
 }
-
 
 void MenuManager::PrintSingleMenuChoice(E_UserInput userInput, E_MenuChoices menuChoice)
 {
@@ -218,7 +171,7 @@ void MenuManager::PrintSingleMenuChoice(E_UserInput userInput, E_MenuChoices men
         int enumToInt = static_cast<int>(menuChoice);
         E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(enumToInt + NEXT_MENU_ELEMENT);
         PrintSelectedMenu(nextMenuInEnum);
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        AddDelay();
         return;
     }
 
@@ -382,4 +335,9 @@ ScenesManager* MenuManager::GetScenesManager()
 UserData* MenuManager::GetUserData()
 {
     return m_userData;
+}
+
+void MenuManager::AddDelay()
+{
+	std::this_thread::sleep_for(std::chrono::milliseconds(200));
 }

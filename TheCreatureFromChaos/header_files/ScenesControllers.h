@@ -3,6 +3,7 @@
 const unsigned short int SCENES_TEXT_LINES[8] = { 2, 8, 14, 20, 26, 32, 38, 44 };
 
 const unsigned short int NEXT_MENU_ELEMENT        =  1;
+const unsigned short int CURRENT_UI_ELEMENT       =  1;
 const unsigned short int JUMP_TWO_MENU_ELEMENTS   =  2;
 const unsigned short int JUMP_THREE_MENU_ELEMENTS =  3;
 const unsigned short int JUMP_FOUR_MENU_ELEMENTS  =  4;

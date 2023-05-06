@@ -60,9 +60,9 @@ int main()
 
 		if (menuManager->GetIsMenuCleared())
 		{
-			DEBUG_MSG("main.cpp : main() : GetIsMenuCleared() PrintMenuFromScene()");
+			DEBUG_MSG("main.cpp : main() : GetIsMenuCleared() SelectMenuFromScene()");
 			userInput = E_UserInput::EMPTY;
-			menuManager->PrintMenuFromScene(userInput);
+			menuManager->SelectMenuFromScene(userInput);
 			//menuManager->SetIsMenuCleared(false);
 		}
 

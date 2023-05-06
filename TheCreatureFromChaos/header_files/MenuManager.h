@@ -16,10 +16,12 @@ public:
 	MenuManager(ConsoleHandler* consoleHandler, ScenesManager* sceneManager, NarrationManager* narrationManager, UserData* userData);
 	
 
-	void PrintMenuFromScene(E_UserInput userInput);
+	void SelectMenuFromScene(E_UserInput userInput);
 	void SelectMenuChoice(E_UserInput userInput, E_MenuChoices LeftMenuChoice, E_MenuChoices rightMenuChoice);
-	void SelectFourWaysNavigation(E_UserInput userInput, E_MenuChoices menuChoice);
-	void SelectTwoWaysNavigation(E_UserInput userInput, E_MenuChoices menuChoice);
+
+	void SelectNavigationElement(E_UserInput userInput, E_MenuChoices menuChoice);
+	void PrepareNavigationMenu(E_MenuChoices menuChoice, unsigned short int numberOfUiElementsToJumpOver);
+
 	void PrintSingleMenuChoice(E_UserInput userInput, E_MenuChoices menuChoice);
 	void PrintSelectedMenu(E_MenuChoices currentMenuChoice);
 	void PrintNavigationMenu(E_MenuChoices currentMenuChoice);
@@ -42,6 +44,8 @@ public:
 	NarrationManager* GetNarrationManager();
 	ScenesManager* GetScenesManager();
 	UserData* GetUserData();
+
+	void AddDelay();
 
 	//UserInputManager* GetUserInputManager();
 	//void SetUserInputManager(UserInputManager* inputManager);
