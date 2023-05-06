@@ -1,7 +1,9 @@
 #include "UserData.h"
 
 UserData::UserData() :
-	m_playerName("")
+	m_playerName(""),
+	m_isPlayerSeenDeadEnd(false),
+	m_isBossDefeated(false)
 {
 }
 

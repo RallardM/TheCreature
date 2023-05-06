@@ -59,7 +59,7 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 
 		case E_MenuChoices::TAKE_WEAPONS_SELECTED: // From WEAPONS_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ROOM_ONE_RIGHT.");
-			SetPlayerCurrentScene(E_SceneSequence::ROOM_ONE_RIGHT);
+			SetPlayerCurrentScene(E_SceneSequence::ROOM_ONE_LEFT);
 			break;
 
 		case E_MenuChoices::GO_BACK_SELECTED:      // From DEAD_END_SCENE
@@ -83,7 +83,7 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		case E_MenuChoices::NAVIGATION_BACK:
 		case E_MenuChoices::LR_NAVIGATION_LEFT:
 		case E_MenuChoices::LR_NAVIGATION_RIGHT:
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO."); // TODO
+			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : movingTowardScene.");
 			movingTowardScene = GetUserDirectionScene(menuChoice);
 			SetPlayerCurrentScene(movingTowardScene);
 			break;

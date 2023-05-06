@@ -116,7 +116,8 @@ void MenuManager::SelectFourWaysNavigation(E_UserInput userInput, E_MenuChoices 
     if (userInput == E_UserInput::EMPTY)
     {
         DEBUG_MSG("MenuManager.cpp : PrintSingleMenuChoice() : UserInput is EMPTY");
-        PrintSelectedMenu(menuChoice);
+        ClearConsolePreviousLine();
+        PrintNavigationMenu(menuChoice);
         return;
     }
 
@@ -126,7 +127,7 @@ void MenuManager::SelectFourWaysNavigation(E_UserInput userInput, E_MenuChoices 
         SetIsMenuCleared(true);
         int myInt = static_cast<int>(menuChoice);
         E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + NB_LINES_NEXT_NAVIG_UI);
-        PrintSelectedMenu(nextMenuInEnum);
+        PrintNavigationMenu(nextMenuInEnum);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         return;
     }
@@ -136,7 +137,7 @@ void MenuManager::SelectFourWaysNavigation(E_UserInput userInput, E_MenuChoices 
         SetIsMenuCleared(true);
         int myInt = static_cast<int>(menuChoice);
         E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NB_LINES_NEXT_NAVIG_UI * JUMP_TWO_MENU_ELEMENTS));
-        PrintSelectedMenu(nextMenuInEnum);
+        PrintNavigationMenu(nextMenuInEnum);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         return;
     }
@@ -146,7 +147,7 @@ void MenuManager::SelectFourWaysNavigation(E_UserInput userInput, E_MenuChoices 
         SetIsMenuCleared(true);
         int myInt = static_cast<int>(menuChoice);
         E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NB_LINES_NEXT_NAVIG_UI * JUMP_THREE_MENU_ELEMENTS));
-        PrintSelectedMenu(nextMenuInEnum);
+        PrintNavigationMenu(nextMenuInEnum);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         return;
     }
@@ -156,7 +157,7 @@ void MenuManager::SelectFourWaysNavigation(E_UserInput userInput, E_MenuChoices 
         SetIsMenuCleared(true);
         int myInt = static_cast<int>(menuChoice);
         E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(myInt + (NB_LINES_NEXT_NAVIG_UI * JUMP_FOUR_MENU_ELEMENTS));
-        PrintSelectedMenu(nextMenuInEnum);
+        PrintNavigationMenu(nextMenuInEnum);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         return;
     }
