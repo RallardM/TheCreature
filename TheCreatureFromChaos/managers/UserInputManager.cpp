@@ -70,21 +70,16 @@ E_UserInput UserInputManager::GetInput()
 
 void UserInputManager::SetAction(E_UserInput userInput)
 {
-    if (userInput == E_UserInput::LEFT || userInput == E_UserInput::RIGHT)
+    bool left = (userInput == E_UserInput::LEFT);
+    bool right = (userInput == E_UserInput::RIGHT);
+    bool up = (userInput == E_UserInput::UP);
+    bool down = (userInput == E_UserInput::DOWN);
+
+    if (left || right || up || down)
     {
         DEBUG_MSG("UserInputManager.cpp : SetAction() : User is using LEFT RIGHT.");
         ActivateSelection(userInput);
         SetHasInput(false);
-        return;
-    }
-    if (userInput == E_UserInput::UP)
-    {
-        DEBUG_MSG("UserInputManager.cpp : SetAction() : User pressed UP.");
-        return;
-	}
-    if (userInput == E_UserInput::DOWN)
-    {
-        DEBUG_MSG("UserInputManager.cpp : SetAction() : User pressed DOWN.");
         return;
 	}
     if (userInput == E_UserInput::ENTER)

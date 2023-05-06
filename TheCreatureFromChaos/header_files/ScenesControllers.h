@@ -61,25 +61,25 @@ const unsigned short int SCENES_IMAGE_LINES[20] = {
 	37,   // MOVING_SCENE
 	72,   // KOBOLD_SCENE      ROOM_ONE_BACK
 	72,   // NAME_SCENE
-	177,  // ATTACK_SCENE
-	212,  // WEAPONS_SCENE
-	389,  // DEAD_END_SCENE    ROOM_TWO_BACK
-	420,  // ENNEMY_SCENE  
+	282,  // ATTACK_KOBOLD_SCENE
+	107,  // WEAPONS_SCENE
+	142,  // DEAD_END_SCENE    ROOM_TWO_BACK
+	177,  // ENNEMY_SCENE  
 
-	142,  // ROOM_ONE_LEFT
+	212,  // ROOM_ONE_LEFT
 	  2,  // ROOM_ONE_FRONT
-	107,  // ROOM_ONE_RIGHT 
-	177,  // ROOM_ONE_BACK     KOBOLD_SCENE
+	247,  // ROOM_ONE_RIGHT 
+	282,  // ROOM_ONE_BACK     KOBOLD_SCENE
 
-	282,  // ROOM_TWO_FRONT
-	317,  // ROOM_TWO_RIGHT
-	353,  // ROOM_TWO_LEFT
-	389,  // ROOM_TWO_BACK     DEAD_END_SCENE
+	317,  // ROOM_TWO_FRONT
+	353,  // ROOM_TWO_RIGHT
+	388,  // ROOM_TWO_LEFT
+	142,  // ROOM_TWO_BACK     DEAD_END_SCENE
 
-	455,  // ROOM_THREE_FRONT 
-	490,  // ROOM_THREE_RIGHT
-	526,  // ROOM_THREE_LEFT
-	562   // ROOM_THREE_BACK
+	424,  // ROOM_THREE_FRONT 
+	460,  // ROOM_THREE_RIGHT
+	495,  // ROOM_THREE_LEFT
+	531   // ROOM_THREE_BACK
 };
 
 namespace ScenesControllers {
@@ -89,25 +89,25 @@ namespace ScenesControllers {
 		MOVING_SCENE           =   1,    // Image line 37  ; Text line 8  ; Menu line 5
 		KOBOLD_SCENE           =   2,    // Image line 72  ; Text line 14 ; Menu line 8
 		NAME_SCENE             =   3,    // Image line 72  ; Text line 20 ; View MenuManager.cpp PrintMenuFromScene()
-		ATTACK_SCENE           =   4,    // Image line 177 ; Text line 26 ; View MenuManager.cpp PrintMenuFromScene()
-		WEAPONS_SCENE          =   5,    // Image line 212 ; Text line 32 ; Menu line 15
-		DEAD_END_SCENE         =   6,    // Image line 389 ; Text line 38 ; Menu line 18 // TODO return to navigation menu at line 26
-		ENNEMY_SCENE           =   7,    // Image line 420 ; Text line 44 ; Menu line 21
+		ATTACK_KOBOLD_SCENE    =   4,    // Image line 282 ; Text line 26 ; View MenuManager.cpp PrintMenuFromScene()
+		WEAPONS_SCENE          =   5,    // Image line 107 ; Text line 32 ; Menu line 15
+		DEAD_END_SCENE         =   6,    // Image line 142 ; Text line 38 ; Menu line 18 // TODO return to navigation menu at line 26
+		ENNEMY_SCENE           =   7,    // Image line 177 ; Text line 44 ; Menu line 21
 						       		    
-		ROOM_ONE_LEFT          =   8,    // Image line 142 ;              ; Menu line 23
-		ROOM_ONE_FRONT         =   9,    // Image line 107 ;              ; Menu line 54
-		ROOM_ONE_RIGHT         =  10,    // Image line 142 ;              ; Menu line 54
-		ROOM_ONE_BACK          =  11,    // Image line 177 ;              ; Menu line 23
+		ROOM_ONE_LEFT          =   8,    // Image line 212 ;              ; Menu line 23
+		ROOM_ONE_FRONT         =   9,    // Image line   2 ;              ; Menu line 54
+		ROOM_ONE_RIGHT         =  10,    // Image line 247 ;              ; Menu line 54
+		ROOM_ONE_BACK          =  11,    // Image line 282 ;              ; Menu line 23
 							    		 				                 
-		ROOM_TWO_LEFT          =  12,    // Image line 282 ;              ; Menu line 23
-		ROOM_TWO_FRONT         =  13,    // Image line 317 ;              ; Menu line 54
-		ROOM_TWO_RIGHT         =  14,    // Image line 353 ;              ; Menu line 54
-		ROOM_TWO_BACK          =  15,    // Image line 389 ;              ; Menu line 23
+		ROOM_TWO_LEFT          =  12,    // Image line 317 ;              ; Menu line 23
+		ROOM_TWO_FRONT         =  13,    // Image line 353 ;              ; Menu line 54
+		ROOM_TWO_RIGHT         =  14,    // Image line 388 ;              ; Menu line 54
+		ROOM_TWO_BACK          =  15,    // Image line 142 ;              ; Menu line 23
 							    		 				                 
-		ROOM_THREE_LEFT        =  16,    // Image line 455 ;              ; Menu line 23
-		ROOM_THREE_FRONT       =  17,    // Image line 490 ;              ; Menu line 54
-		ROOM_THREE_RIGHT       =  18,    // Image line 526 ;              ; Menu line 45
-		ROOM_THREE_BACK        =  19     // Image line 562 ;              ; Menu line 23
+		ROOM_THREE_LEFT        =  16,    // Image line 424 ;              ; Menu line 23
+		ROOM_THREE_FRONT       =  17,    // Image line 460 ;              ; Menu line 54
+		ROOM_THREE_RIGHT       =  18,    // Image line 495 ;              ; Menu line 45
+		ROOM_THREE_BACK        =  19     // Image line 531 ;              ; Menu line 23
 	};                              
 	                                
 	//MenuText.txt                  

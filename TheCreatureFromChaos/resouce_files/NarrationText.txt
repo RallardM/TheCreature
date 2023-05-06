@@ -22,7 +22,7 @@ KOBOLD_SCENE:
                    Come... Me show you way out. What you name?"                
                                                                                   
                                                                                   
-ATTACK_SCENE:
+ATTACK_KOBOLD_SCENE:
                           You try to fight off the kobold,                        
                      but it's too dark and he's too fast for you.                 
              "No fight please! Friend! Me show you way out! What you name?"       

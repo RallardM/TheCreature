@@ -9,7 +9,7 @@ KOBOLD_SCENE:
                           "Who are you?"       <Attack>    
 NAME_SCENE: View MenuManager.cpp PrintMenuFromScene()
 
-ATTACK_SCENE: View code MenuManager.cpp PrintMenuFromScene()
+ATTACK_KOBOLD_SCENE: View code MenuManager.cpp PrintMenuFromScene()
 
 WEAPONS_SCENE:
                                    Take weapons 

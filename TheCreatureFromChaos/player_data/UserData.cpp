@@ -36,3 +36,14 @@ void UserData::SetIsBossDefeated(bool isBossDefeated)
 {
 	m_isBossDefeated = isBossDefeated;
 }
+
+// TODO
+//bool UserData::GetAttackedKobold()
+//{
+//	return m_attackedKobold;
+//}
+//
+//void UserData::SetAttackedKobold(bool attackedKobold)
+//{
+//	m_attackedKobold = attackedKobold;
+//}

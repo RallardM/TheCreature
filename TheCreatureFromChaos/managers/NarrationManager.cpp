@@ -31,7 +31,7 @@ void NarrationManager::PrintLinesFromScene()
 		case E_SceneSequence::MOVING_SCENE:
         case E_SceneSequence::KOBOLD_SCENE:
         case E_SceneSequence::NAME_SCENE:
-        case E_SceneSequence::ATTACK_SCENE:
+        case E_SceneSequence::ATTACK_KOBOLD_SCENE:
         case E_SceneSequence::WEAPONS_SCENE:
         case E_SceneSequence::DEAD_END_SCENE:
         case E_SceneSequence::ENNEMY_SCENE:
@@ -115,7 +115,6 @@ std::string NarrationManager::GetTextBetweenLines(std::string& filePathStr, unsi
     else
     {
         unsigned int currentLine = 1;
-        //unsigned int currentLine = firstLine;
 
         // Read each line in the file until we reach the end or the desired line range.
         while (std::getline(filePath, line) && currentLine <= lastLine)

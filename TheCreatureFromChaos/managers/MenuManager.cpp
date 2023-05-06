@@ -40,8 +40,8 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
         break;
 
     case E_SceneSequence::NAME_SCENE:
-    case E_SceneSequence::ATTACK_SCENE:
-        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : NAME_SCENE, ATTACK_SCENE");
+    case E_SceneSequence::ATTACK_KOBOLD_SCENE:
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : NAME_SCENE, ATTACK_KOBOLD_SCENE");
         PrintEnterNameMenu();
         break;
 

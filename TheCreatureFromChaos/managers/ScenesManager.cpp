@@ -48,8 +48,8 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 			break;
 
 		case E_MenuChoices::ATTACK_KOBOLD:         // From KOBOLD_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ATTACK_SCENE.");
-			SetPlayerCurrentScene(E_SceneSequence::ATTACK_SCENE);
+			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ATTACK_KOBOLD_SCENE.");
+			SetPlayerCurrentScene(E_SceneSequence::ATTACK_KOBOLD_SCENE);
 			break;
 
 		case E_MenuChoices::ENTER_NAME:            // From NAME_SCENE
@@ -174,11 +174,16 @@ E_SceneSequence ScenesManager::GetUserDirectionScene(E_MenuChoices playerInputDi
 			else
 			{
 				nextScene = E_SceneSequence::DEAD_END_SCENE;
+				GetUserData()->SetIsPlayerSeenDeadEnd(true);
 			}
 		}
 		else if (currectScene == E_SceneSequence::ROOM_THREE_BACK)
 		{
 			nextScene = E_SceneSequence::ROOM_ONE_BACK;
+		}
+		else if (currectScene == E_SceneSequence::ROOM_TWO_BACK)
+		{
+			nextScene = E_SceneSequence::DEAD_END_SCENE;
 		}
 	}
 	else if (isFacingFront && goesFoward)
@@ -233,7 +238,7 @@ unsigned short int ScenesManager::GetCurrentConsololeTextHeight()
 	case E_SceneSequence::KOBOLD_SCENE:
 	case E_SceneSequence::NAME_SCENE:
 	case E_SceneSequence::WEAPONS_SCENE:
-	case E_SceneSequence::ATTACK_SCENE:
+	case E_SceneSequence::ATTACK_KOBOLD_SCENE:
 	case E_SceneSequence::DEAD_END_SCENE:
 	case E_SceneSequence::ENNEMY_SCENE:
 		numberOflinesToDelete = imageHeight + textHeight + menuHeight;
