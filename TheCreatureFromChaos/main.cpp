@@ -30,17 +30,17 @@ int main()
 
 	UserData* userData = new UserData();
 
-	ScenesManager* scenesManager = new ScenesManager(userData);
-
 	NarrationManager* narrationManager = new NarrationManager(scenesManager);
 	scenesManager->SetNarrationManager(narrationManager);
 
 	MenuManager* menuManager = new MenuManager(consoleHandler, scenesManager, narrationManager, userData);
 	scenesManager->SetMenuManager(menuManager);
 
-
 	CombatManager* combatManager = new CombatManager(userData);
 	scenesManager->SetCombatManager(combatManager);
+
+	ScenesManager* scenesManager = new ScenesManager(userData);
+	narrationManager->SetScenesManager(scenesManager);
 
 	UserInputManager* inputManager = new UserInputManager(consoleHandler, scenesManager, menuManager, combatManager);
 	E_UserInput userInput = E_UserInput::EMPTY;
