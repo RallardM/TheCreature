@@ -100,7 +100,7 @@ E_UserInput UserInputManager::GetInput()
                         return E_UserInput::EMPTY;
                     }
                     break;
-
+        
                 case    77:    // Right arrow key
                 case '\033[C': // Right arrow key
                     if (GetCurrentInputType() == E_CurrentInputType::COMBAT)
@@ -123,7 +123,6 @@ E_UserInput UserInputManager::GetInput()
                         return E_UserInput::EMPTY;
                     }
                     break;
-
 
                 case   102:    //'f':           // Flee
                 case    70:    //'F': 
