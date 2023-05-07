@@ -76,7 +76,7 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		break;
 
 	case E_MenuChoices::ATTACK_ENEMY:          // From ENNEMY_SCENE
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO.");
+		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set COMBAT_SCENE.");
 		SetPlayerCurrentScene(E_SceneSequence::COMBAT_SCENE);
 		break;
 
@@ -213,7 +213,7 @@ E_SceneSequence ScenesManager::GetUserDirectionScene(E_MenuChoices playerInputDi
 		}
 		else if (currectScene == E_SceneSequence::ROOM_THREE_FRONT)
 		{
-			// TODO
+			// TODO the end
 		}
 	}
 	return nextScene;
