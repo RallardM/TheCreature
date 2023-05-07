@@ -51,6 +51,8 @@ int main()
 	menuManager->SetWeaponManager(weaponManager);
 	combatManager->SetWeaponManager(weaponManager);
 
+	//ClassesManager* classesManager = new ClassesManager(consoleHandler, );
+
 	// Print Intro scene.
 	narrationManager->PrintLinesFromScene();
 
