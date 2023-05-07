@@ -31,7 +31,7 @@ void WeaponManager::PrintBeltMenu(unsigned int short selectedWeaponIndex)
 	}
 	numberOfPotions = GetMenuManager()->GetUserData()->GetNumberOfPotions();
 	currentWeapon = GetCurrentWeapon(selectedWeaponIndex).weaponName;
-	std::cout << "   " << currentWeapon << " is equiped | Number of potions : ";
+	std::cout << "   " << currentWeapon << " is equiped | Number of potions : " << numberOfPotions;
 	SetIsMenuCleared(false);
 }
 

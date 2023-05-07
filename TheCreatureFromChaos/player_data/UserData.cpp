@@ -2,10 +2,10 @@
 
 UserData::UserData() :
 	m_playerName(""),
+	m_numberOfPotions(0),
 	m_playerLifePoints(25),
 	m_areWeaponsEquiped(false),
-	m_isPlayerSeenDeadEnd(false),
-	m_isBossDefeated(false)
+	m_isPlayerSeenDeadEnd(false)
 {
 }
 
@@ -39,14 +39,14 @@ void UserData::SetIsPlayerSeenDeadEnd(bool isPlayerSeenDeadEnd)
 	m_isPlayerSeenDeadEnd = isPlayerSeenDeadEnd;
 }
 
-bool UserData::GetIsBossDefeated()
+unsigned short int UserData::GetNumberOfPotions()
 {
-	return m_isBossDefeated;
+	return m_numberOfPotions;
 }
 
-void UserData::SetIsBossDefeated(bool isBossDefeated)
+void UserData::SetNumberOfPotions(unsigned short int numberOfPotions)
 {
-	m_isBossDefeated = isBossDefeated;
+	m_numberOfPotions = numberOfPotions;
 }
 
 // TODO

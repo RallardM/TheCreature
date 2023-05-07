@@ -40,6 +40,7 @@ int main()
 
 
 	CombatManager* combatManager = new CombatManager(userData);
+	scenesManager->SetCombatManager(combatManager);
 
 	UserInputManager* inputManager = new UserInputManager(consoleHandler, scenesManager, menuManager, combatManager);
 	E_UserInput userInput = E_UserInput::EMPTY;
@@ -51,7 +52,16 @@ int main()
 	menuManager->SetWeaponManager(weaponManager);
 	combatManager->SetWeaponManager(weaponManager);
 
-	//ClassesManager* classesManager = new ClassesManager(consoleHandler, );
+	//ClassesManager* classesManager = new ClassesManager(
+	//	consoleHandler, 
+	//	userData,
+	//	scenesManager,
+	//	narrationManager,
+	//	menuManager,
+	//	combatManager,
+	//	inputManager,
+	//	weaponManager
+	//);
 
 	// Print Intro scene.
 	narrationManager->PrintLinesFromScene();
@@ -78,6 +88,12 @@ int main()
 		{
 			userInput = E_UserInput::EMPTY;
 			weaponManager->SelectWeapon(userInput);
+		}
+
+		if (combatManager->GetIsFightStarted() && combatManager->GetIsFightLogCleared())
+		{
+			userInput = E_UserInput::EMPTY;
+			combatManager->SetCombatAction(userInput);
 		}
 
 		//std::this_thread::sleep_for(std::chrono::milliseconds(100));

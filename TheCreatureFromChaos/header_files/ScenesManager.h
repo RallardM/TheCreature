@@ -36,6 +36,9 @@ public:
 	UserData* GetUserData();
 	void SetUserData(UserData* userData);
 
+	CombatManager* GetCombatManager();
+	void SetCombatManager(CombatManager* combatManager);
+
 private:
 	E_SceneSequence m_userCurrentScene;
 
@@ -44,4 +47,6 @@ private:
 	WeaponManager* m_weaponManager;
 
 	UserData* m_userData;
+
+	CombatManager* m_combatManager;
 };

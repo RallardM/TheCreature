@@ -15,8 +15,8 @@ public:
 	bool GetIsPlayerSeenDeadEnd();
 	void SetIsPlayerSeenDeadEnd(bool isPlayerSeenDeadEnd);
 
-	bool GetIsBossDefeated();
-	void SetIsBossDefeated(bool isBossDefeated);
+	unsigned short int GetNumberOfPotions();
+	void SetNumberOfPotions(unsigned short int numberOfPotions);
 
 	/// TODO
 	//bool GetAttackedKobold();
@@ -26,7 +26,7 @@ private:
 	std::string m_playerName;
 	bool m_areWeaponsEquiped;
 	bool m_isPlayerSeenDeadEnd;
-	bool m_isBossDefeated;
 	short int m_playerLifePoints;
+	unsigned short int m_numberOfPotions;
 	//bool m_attackedKobold; // TODO
 };

@@ -48,6 +48,9 @@
     <ClCompile Include="managers\CombatManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="managers\ClassesManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resouce_files\GameArtEnding.jpg">
@@ -97,6 +100,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header_files\CombatManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header_files\ClassesManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -25,13 +25,21 @@ public:
 
 	unsigned short int GetEnemyHitPoints();
 
-	bool GetIsFightLogFull();
-	void SetIsFightLogFull(bool fightLogState);
+	bool GetIsFightLogCleared();
+	void SetIsFightLogCleared(bool fightLogState);
+
+	bool GetIsEnemyDefeated();
+	void SetIsEnemyDefeated(bool isEnemyDefeated);
+
+	bool GetIsFightStarted();
+	void SetIsFightStarted(bool isFightStarted);
 
 private:
 	short int m_ennemyLifePoints;
 	unsigned short int m_enemyHitPoints;
 	WeaponManager* m_weaponManager;
 	UserData* m_userData;
-	bool m_isFightLogFull;
+	bool m_isFightLogCleared;
+	bool m_isEnemyDefeated;
+	bool m_isFightStarted;
 };

@@ -12,6 +12,7 @@ ScenesManager::ScenesManager(UserData* userData) :
 	m_narrationManager(),
 	m_menuManager(),
 	m_weaponManager(),
+	m_combatManager(),
 	m_userData(userData)
 {
 }
@@ -67,6 +68,7 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 	case E_MenuChoices::TAKE_WEAPONS_SELECTED: // From WEAPONS_SCENE
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ROOM_ONE_RIGHT.");
 		GetUserData()->SetAreWeaponsEquiped(true);
+		GetUserData()->SetNumberOfPotions(1);
 		SetPlayerCurrentScene(E_SceneSequence::ROOM_ONE_LEFT);
 		break;
 
@@ -78,6 +80,8 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 	case E_MenuChoices::ATTACK_ENEMY:          // From ENNEMY_SCENE
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set COMBAT_SCENE.");
 		SetPlayerCurrentScene(E_SceneSequence::COMBAT_SCENE);
+		//SetIsFightStarted(true);
+		GetCombatManager()->SetIsFightStarted(true);
 		break;
 
 	case E_MenuChoices::RUN_AWAY:              // From ENNEMY_SCENE
@@ -322,4 +326,14 @@ UserData* ScenesManager::GetUserData()
 void ScenesManager::SetUserData(UserData* userData)
 {
 	m_userData = userData;
+}
+
+CombatManager* ScenesManager::GetCombatManager()
+{
+	return m_combatManager;
+}
+
+void ScenesManager::SetCombatManager(CombatManager* combatManager)
+{
+	m_combatManager = combatManager;
 }

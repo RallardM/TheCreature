@@ -10,7 +10,7 @@ void ConsoleHandler::SetConsoleColour(int colour)
 void ConsoleHandler::SetConsolesize()
 {
     const unsigned short int CONSOLE_WIDTH = 697;
-    const unsigned short int CONSOLE_HEIGHT = 695;
+    const unsigned short int CONSOLE_HEIGHT = 712;
     const unsigned short int CONSOLE_BUFFER_WIDTH = 81;
     const unsigned short int CONSOLE_BUFFER_HEIGHT = 25;
 

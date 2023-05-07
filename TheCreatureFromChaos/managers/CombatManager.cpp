@@ -11,7 +11,9 @@ CombatManager::CombatManager(UserData* userData) :
 	m_enemyHitPoints(10),
 	m_weaponManager(nullptr),
 	m_userData(userData),
-	m_isFightLogFull(false)
+	m_isEnemyDefeated(false),
+	m_isFightStarted(false),
+	m_isFightLogCleared(true)
 {
 }
 
@@ -21,7 +23,7 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 	{		
 	case PublicConstants::E_UserInput::LEFT: // Khail help
 		PlayerAttack();
-		EnnemyAttack();
+		//EnnemyAttack();
 		break;
 
 	case PublicConstants::E_UserInput::RIGHT: // Potion
@@ -68,11 +70,11 @@ void CombatManager::PlayerAttack()
 
 	if (hitPoints == 0)
 	{
-		playerHitLog = "                                                    You missed!";
+		playerHitLog = "                            You missed!";
 	}
 	else
 	{
-		playerHitLog = "                                      You hit the monster : ";
+		playerHitLog = "              You hit the monster : ";
 	}
 
 	InflictDamage(hitPoints);
@@ -96,11 +98,11 @@ void CombatManager::EnnemyAttack()
 
 	if (hitPoints == 0)
 	{
-		ennemyHitLog = "                                            The monster missed!";
+		ennemyHitLog = "                    The monster missed!";
 	}
 	else
 	{
-		ennemyHitLog = "                                      The monster hit you : ";
+		ennemyHitLog = "              The monster hit you : ";
 	}
 	
 	InflictDamage(hitPoints);
@@ -113,7 +115,7 @@ void CombatManager::InflictDamage(short int hitPoints)
 	if (resultingCausalty <= 0)
 	{
 		SetEnnemyLifePoints(0);
-		GetUserData()->SetIsBossDefeated(true);
+		SetIsEnemyDefeated(true);
 	}
 	else
 	{
@@ -125,7 +127,7 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 {
 	if (GetIsFightLogFull())
 	{
-		for (size_t i = 0; i < 64; i++)
+		for (size_t i = 0; i < 40; i++)
 		{
 			std::cout << "\b";
 		}
@@ -180,12 +182,32 @@ unsigned short int CombatManager::GetEnemyHitPoints()
 	return m_enemyHitPoints;
 }
 
-bool CombatManager::GetIsFightLogFull()
+bool CombatManager::GetIsFightLogCleared()
 {
-	return m_isFightLogFull;
+	return m_isFightLogCleared;
 }
 
-void CombatManager::SetIsFightLogFull(bool fightLogState)
+void CombatManager::SetIsFightLogCleared(bool fightLogState)
 {
-	m_isFightLogFull = fightLogState;
+	m_isFightLogCleared = fightLogState;
+}
+
+bool CombatManager::GetIsEnemyDefeated()
+{
+	return m_isEnemyDefeated;
+}
+
+void CombatManager::SetIsEnemyDefeated(bool isEnemyDefeated)
+{
+	m_isEnemyDefeated = isEnemyDefeated;
+}
+
+bool CombatManager::GetIsFightStarted()
+{
+	return m_isFightStarted;
+}
+
+void CombatManager::SetIsFightStarted(bool isFightStarted)
+{
+	m_isFightStarted = isFightStarted;
 }
