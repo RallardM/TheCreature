@@ -24,7 +24,7 @@ int main()
 	consoleHandler->SetConsolesize();
 	consoleHandler->SetCenterConsolePosition();
 	//consoleHandler->DisableConsoleCursor();
-	//consoleHandler->DisableConsoleScrolling();
+	consoleHandler->DisableConsoleScrolling();
 
 	consoleHandler->ActivateConsoleCursor();
 
@@ -38,8 +38,6 @@ int main()
 	MenuManager* menuManager = new MenuManager(consoleHandler, scenesManager, narrationManager, userData);
 	scenesManager->SetMenuManager(menuManager);
 
-	// Print Intro scene.
-	narrationManager->PrintLinesFromScene();
 
 	CombatManager* combatManager = new CombatManager(userData);
 
@@ -52,6 +50,9 @@ int main()
 	inputManager->SetWeaponManager(weaponManager);
 	menuManager->SetWeaponManager(weaponManager);
 	combatManager->SetWeaponManager(weaponManager);
+
+	// Print Intro scene.
+	narrationManager->PrintLinesFromScene();
 
 	bool gameRunning = true;
 

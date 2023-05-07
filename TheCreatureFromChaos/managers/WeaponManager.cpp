@@ -22,13 +22,16 @@ void WeaponManager::SelectWeapon(E_UserInput userInput)
 
 void WeaponManager::PrintBeltMenu(unsigned int short selectedWeaponIndex)
 {
+	std::string currentWeapon = "";
+	unsigned short int numberOfPotions = 0;
+
 	if (GetIsMenuCleared() == false)
 	{
 		ClearWeaponLogLine();
 	}
-	std::string currentWeapon = "";
+	numberOfPotions = GetMenuManager()->GetUserData()->GetNumberOfPotions();
 	currentWeapon = GetCurrentWeapon(selectedWeaponIndex).weaponName;
-	std::cout << "   " << currentWeapon << " is equiped";
+	std::cout << "   " << currentWeapon << " is equiped | Number of potions : ";
 	SetIsMenuCleared(false);
 }
 

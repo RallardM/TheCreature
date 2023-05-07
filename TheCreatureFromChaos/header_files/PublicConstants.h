@@ -152,9 +152,9 @@ namespace PublicConstants {
 		LR_NAVIGATION_RIGHT    =  82,    // Bidirectional ROOM_*_LEFT, ROOM_*_RIGHT
 	
 		COMBAT_PLAIN           =  90,
-		COMBAT_HELP            =  98,
+		COMBAT_ATTACK		   =  98,
 		COMBAT_POTION          = 106,
-		COMBAT_ATTACK          = 114,
+		COMBAT_HELP            = 114,
 		COMBAT_FLEE            = 122
 	};
 	                                

@@ -7,12 +7,12 @@
 UserInputManager::UserInputManager(ConsoleHandler* m_consoleHandler, ScenesManager* sceneManager, MenuManager* menuManager, CombatManager* combatManager) :
     m_consoleHandler(),
     m_weaponManager(),
-    m_currentInputType(E_CurrentInputType::DIALOGUES),
     m_combatManager(combatManager),
     m_sceneManager(sceneManager),
     m_menuManager(menuManager),
     m_hasInput(false)
 {
+    SetCurrentInputType(E_CurrentInputType::DIALOGUES);
 }
 
 E_UserInput UserInputManager::GetInput()
@@ -27,46 +27,12 @@ E_UserInput UserInputManager::GetInput()
             
             switch (key)
             {
-                case    97:    //'a':           // Attack
+                case    97:    //'a':           // Attack - move left
                 case    65:    //'A':
-                    if (GetCurrentInputType() == E_CurrentInputType::COMBAT)
-                    {
-						return E_UserInput::UP;
-					}
-                    else if (GetCurrentInputType() == E_CurrentInputType::NAVIGATION)
-                    {
-						return E_UserInput::LEFT;
-					}
-                    else
-                    {
-						return E_UserInput::EMPTY;
-					}
+  					return E_UserInput::LEFT;
                     break;
 
-                case    72:    // Up arrow key
-                case '\033[A': // Up arrow key
-                    if (GetCurrentInputType() == E_CurrentInputType::COMBAT || GetCurrentInputType() == E_CurrentInputType::NAVIGATION)
-                    {
-                        return E_UserInput::UP;
-                    }
-                    else
-                    {
-                        return E_UserInput::EMPTY;
-                    }
-
-                case   107:    //'k':           // Khai help
-                case    75:    //'K': // Is the smae as Left arrow key
-                    if (GetCurrentInputType() == E_CurrentInputType::COMBAT)
-                    {
-                        return E_UserInput::LEFT;
-                    }
-                    // If is in navigation mode and the input is not the left arrow key then return nothing
-                    else if (GetCurrentInputType() == E_CurrentInputType::NAVIGATION && key != '\033[D')
-                    {
-                        return E_UserInput::EMPTY;
-                    }
-                    break;
-
+                case    75:    // Left arrow key
                 case '\033[D': // Left arrow key
                     if (GetCurrentInputType() == E_CurrentInputType::COMBAT)
                     {
@@ -82,37 +48,53 @@ E_UserInput UserInputManager::GetInput()
                     }
                     break;
 
-                case   112:    //'p':           // Potion
+                case   119:    //'w':           // Move forward - Khai Attack
+                case    87:    //'W':
+                case    72:    // Up arrow key
+                case '\033[A': // Up arrow key
+                    if (GetCurrentInputType() == E_CurrentInputType::COMBAT || GetCurrentInputType() == E_CurrentInputType::NAVIGATION)
+                    {
+                        return E_UserInput::UP;
+                    }
+                    else
+                    {
+                        return E_UserInput::EMPTY;
+                    }
+
+                case  100:     //'d':           // Move right - Potion
+                case   68:     //'D':
+                    return E_UserInput::RIGHT;
+                    break;
+
+                case   112:    //'p':           
                 case    80:    //'P': 
                     if (GetCurrentInputType() == E_CurrentInputType::COMBAT)
                     {
-                        return E_UserInput::RIGHT;
+                        return E_UserInput::RIGHT; // Potion
                     }
                     else if (GetCurrentInputType() == E_CurrentInputType::NAVIGATION)
                     {
-					    if (key == '\033[B') // Down arrow key = 80
-                        {
-                            return E_UserInput::DOWN;
-                        }
-					}
+                         return E_UserInput::DOWN;
+
+                    }
                     else
                     {
                         return E_UserInput::EMPTY;
                     }
                     break;
-        
-                case    77:    // Right arrow key
+
+                case    77:    // Right arrow key 
                 case '\033[C': // Right arrow key
-                    if (GetCurrentInputType() == E_CurrentInputType::COMBAT)
+                    if (GetCurrentInputType() == E_CurrentInputType::COMBAT) 
                     {
                         if (key != '\033[B') // Down arrow key = 80
                         {
-							return E_UserInput::RIGHT;
-						}
+                            return E_UserInput::RIGHT; // Potion
+                        }
                         else
                         {
-							return E_UserInput::EMPTY;
-						}
+                            return E_UserInput::EMPTY;
+                        }
                     }
                     else if (GetCurrentInputType() == E_CurrentInputType::NAVIGATION)
                     {
@@ -136,7 +118,10 @@ E_UserInput UserInputManager::GetInput()
                     }
                     break;
 
-                case '\033[B': // Down arrow key
+                //case    80:    // Down arrow key Taken by potion
+                case   115:     //'s':
+                case    83:     //'S':
+                case '\033[B':  // Down arrow key
                     return E_UserInput::DOWN;
                     break;
                 

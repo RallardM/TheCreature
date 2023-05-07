@@ -20,7 +20,7 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 	switch (userInput)
 	{		
 	case PublicConstants::E_UserInput::LEFT: // Khail help
-
+		PlayerAttack();
 		EnnemyAttack();
 		break;
 
@@ -30,7 +30,7 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 		break;
 
 	case PublicConstants::E_UserInput::UP: // Attack
-		PlayerAttack();
+
 		EnnemyAttack();
 		break;
 
@@ -64,10 +64,17 @@ void CombatManager::PlayerAttack()
 	if (zeroDist(gen)) 
 	{
 		hitPoints = 0;
-		playerHitLog = "                                                     You missed!";
 	}
 
-	playerHitLog = "                                       You hit the monster : ";
+	if (hitPoints == 0)
+	{
+		playerHitLog = "                                                    You missed!";
+	}
+	else
+	{
+		playerHitLog = "                                      You hit the monster : ";
+	}
+
 	InflictDamage(hitPoints);
 	PrintCausaltyLog(playerHitLog, hitPoints);
 }
@@ -85,9 +92,17 @@ void CombatManager::EnnemyAttack()
 	if (zeroDist(gen))
 	{
 		hitPoints = 0;
-		ennemyHitLog = "                                             The monster missed!";
 	}
-	ennemyHitLog = "                                       The monster hit you : "; 
+
+	if (hitPoints == 0)
+	{
+		ennemyHitLog = "                                            The monster missed!";
+	}
+	else
+	{
+		ennemyHitLog = "                                      The monster hit you : ";
+	}
+	
 	InflictDamage(hitPoints);
 	PrintCausaltyLog(ennemyHitLog, hitPoints);
 }
