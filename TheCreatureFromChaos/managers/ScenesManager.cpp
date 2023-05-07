@@ -5,6 +5,7 @@
 #include "MenuManager.h"
 #include "DebugMessageSystem.h"
 #include "WeaponManager.h"
+#include "PublicConstants.h"
 
 ScenesManager::ScenesManager(UserData* userData) :
 	m_userCurrentScene(E_SceneSequence::INTRO_SCENE),
@@ -15,7 +16,7 @@ ScenesManager::ScenesManager(UserData* userData) :
 {
 }
 
-void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
+void ScenesManager::SetNextScene(MenuManager::E_MenuChoices menuChoice)
 {
 	ClearAllConsoleText();
 	GetMenuManager()->SetIsMenuCleared(true);
@@ -28,68 +29,68 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 
 	switch (menuChoice)
 	{
-		case E_MenuChoices::NO_MENU_LINE:
+		case MenuManager::E_MenuChoices::NO_MENU_LINE:
 			DEBUG_MSG("#R ScenesManager.cpp : SetNextScene() : Returned no menu choice.");
 			break;
 
-		case E_MenuChoices::TRY_TO_MOVE:           // From INTRO_SCENE
+		case MenuManager::E_MenuChoices::TRY_TO_MOVE:           // From INTRO_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set MOVING_SCENE.");
 			SetPlayerCurrentScene(E_SceneSequence::MOVING_SCENE);
 			break;
 
-		case E_MenuChoices::TRY_TO_REMEBER:        // From INTRO_SCENE
-		case E_MenuChoices::TRY_TO_REMEBER_TWO:    // From MOVING_SCENE
+		case MenuManager::E_MenuChoices::TRY_TO_REMEBER:        // From INTRO_SCENE
+		case MenuManager::E_MenuChoices::TRY_TO_REMEBER_TWO:    // From MOVING_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set KOBOLD_SCENE.");
 			SetPlayerCurrentScene(E_SceneSequence::KOBOLD_SCENE);
 			break;
 
-		case E_MenuChoices::LOOK_AROUND:           // From MOVING_SCENE
+		case MenuManager::E_MenuChoices::LOOK_AROUND:           // From MOVING_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set KOBOLD_SCENE.");
 			SetPlayerCurrentScene(E_SceneSequence::KOBOLD_SCENE);
 			break;
 
-		case E_MenuChoices::WHO_ARE_YOU:           // From KOBOLD_SCENE
+		case MenuManager::E_MenuChoices::WHO_ARE_YOU:           // From KOBOLD_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set NAME_SCENE.");
 			SetPlayerCurrentScene(E_SceneSequence::NAME_SCENE);
 			break;
 
-		case E_MenuChoices::ATTACK_KOBOLD:         // From KOBOLD_SCENE
+		case MenuManager::E_MenuChoices::ATTACK_KOBOLD:         // From KOBOLD_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ATTACK_KOBOLD_SCENE.");
 			SetPlayerCurrentScene(E_SceneSequence::ATTACK_KOBOLD_SCENE);
 			break;
 
-		case E_MenuChoices::ENTER_NAME:            // From NAME_SCENE
+		case MenuManager::E_MenuChoices::ENTER_NAME:            // From NAME_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set WEAPONS_SCENE.");
 			SetPlayerCurrentScene(E_SceneSequence::WEAPONS_SCENE);
 			break;
 
-		case E_MenuChoices::TAKE_WEAPONS_SELECTED: // From WEAPONS_SCENE
+		case MenuManager::E_MenuChoices::TAKE_WEAPONS_SELECTED: // From WEAPONS_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ROOM_ONE_RIGHT.");
 			GetUserData()->SetAreWeaponsEquiped(true);
 			SetPlayerCurrentScene(E_SceneSequence::ROOM_ONE_LEFT);
 			break;
 
-		case E_MenuChoices::GO_BACK_SELECTED:      // From DEAD_END_SCENE
+		case MenuManager::E_MenuChoices::GO_BACK_SELECTED:      // From DEAD_END_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ROOM_TWO_FRONT.");
 			SetPlayerCurrentScene(E_SceneSequence::ROOM_TWO_FRONT); 
 			break;
 
-		case E_MenuChoices::ATTACK_ENEMY:          // From ENNEMY_SCENE
+		case MenuManager::E_MenuChoices::ATTACK_ENEMY:          // From ENNEMY_SCENE
+			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO.");
+			SetPlayerCurrentScene(E_SceneSequence::COMBAT_SCENE);
+			break;
+
+		case MenuManager::E_MenuChoices::RUN_AWAY:              // From ENNEMY_SCENE
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO."); // TODO
 			//SetPlayerCurrentScene(E_SceneSequence::);
 			break;
 
-		case E_MenuChoices::RUN_AWAY:              // From ENNEMY_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO."); // TODO
-			//SetPlayerCurrentScene(E_SceneSequence::);
-			break;
-
-		case E_MenuChoices::NAVIGATION_LEFT:
-		case E_MenuChoices::NAVIGATION_RIGHT:
-		case E_MenuChoices::NAVIGATION_FOWARD:
-		case E_MenuChoices::NAVIGATION_BACK:
-		case E_MenuChoices::LR_NAVIGATION_LEFT:
-		case E_MenuChoices::LR_NAVIGATION_RIGHT:
+		case MenuManager::E_MenuChoices::NAVIGATION_LEFT:
+		case MenuManager::E_MenuChoices::NAVIGATION_RIGHT:
+		case MenuManager::E_MenuChoices::NAVIGATION_FOWARD:
+		case MenuManager::E_MenuChoices::NAVIGATION_BACK:
+		case MenuManager::E_MenuChoices::LR_NAVIGATION_LEFT:
+		case MenuManager::E_MenuChoices::LR_NAVIGATION_RIGHT:
 			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : movingTowardScene.");
 			movingTowardScene = GetUserDirectionScene(menuChoice);
 			SetPlayerCurrentScene(movingTowardScene);
@@ -106,19 +107,19 @@ E_SceneSequence ScenesManager::GetUserDirectionScene(E_MenuChoices playerInputDi
 {
 	E_SceneSequence currectScene = GetPlayerCurrentScene();
 	E_SceneSequence nextScene = E_SceneSequence::NO_SCENE;
-	E_MenuChoices intToEnum = E_MenuChoices::NO_MENU_LINE;
+	E_MenuChoices intToEnum = MenuManager::E_MenuChoices::NO_MENU_LINE;
 
 	unsigned short int currentSceneEnumToInt = static_cast<int>(currectScene);
 
-	bool isFacingFront = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == FOUR_WAYS_FRONT);
-	bool isFacingRight = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == TWO_WAYS_RIGHT);
-	bool isFacingLeft = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == TWO_WAYS_LEFT);
-	bool isFacingBack = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == FOUR_WAYS_BACK);
+	bool isFacingFront = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == E_MenuTypes::FOUR_WAYS_FRONT);
+	bool isFacingRight = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == E_MenuTypes::TWO_WAYS_RIGHT);
+	bool isFacingLeft = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == E_MenuTypes::TWO_WAYS_LEFT);
+	bool isFacingBack = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == E_MenuTypes::FOUR_WAYS_BACK);
 
-	bool turnsLeft = (playerInputDirection == E_MenuChoices::NAVIGATION_LEFT || playerInputDirection == E_MenuChoices::LR_NAVIGATION_LEFT);
-	bool turnsRight = (playerInputDirection == E_MenuChoices::NAVIGATION_RIGHT || playerInputDirection == E_MenuChoices::LR_NAVIGATION_RIGHT);
-	bool goesFoward = (playerInputDirection == E_MenuChoices::NAVIGATION_FOWARD);
-	bool goesBack = (playerInputDirection == E_MenuChoices::NAVIGATION_BACK);
+	bool turnsLeft = (playerInputDirection == MenuManager::E_MenuChoices::NAVIGATION_LEFT || playerInputDirection == MenuManager::E_MenuChoices::LR_NAVIGATION_LEFT);
+	bool turnsRight = (playerInputDirection == MenuManager::E_MenuChoices::NAVIGATION_RIGHT || playerInputDirection == MenuManager::E_MenuChoices::LR_NAVIGATION_RIGHT);
+	bool goesFoward = (playerInputDirection == MenuManager::E_MenuChoices::NAVIGATION_FOWARD);
+	bool goesBack = (playerInputDirection == MenuManager::E_MenuChoices::NAVIGATION_BACK);
 
 	if (isFacingFront && turnsLeft)
 	{

@@ -47,6 +47,8 @@ int main()
 	scenesManager->SetWeaponManager(weaponManager);
 	inputManager->SetWeaponManager(weaponManager);
 	menuManager->SetWeaponManager(weaponManager);
+
+
 	
 	bool gameRunning = true;
 
@@ -71,8 +73,6 @@ int main()
 			userInput = E_UserInput::EMPTY;
 			weaponManager->SelectWeapon(userInput);
 		}
-
-		//std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	}
 
 	// Clean up dynamically allocated memory.

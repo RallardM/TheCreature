@@ -8,6 +8,8 @@
 #include "MenuManager.h"
 #include "DebugMessageSystem.h"
 
+using namespace PublicConstants;
+
 MenuManager::MenuManager(ConsoleHandler* consoleHandler, ScenesManager* scenesManager, NarrationManager* narrationManager, UserData* userData) :
     m_consoleHandler(consoleHandler),
     m_narrationManager(narrationManager),
@@ -80,6 +82,11 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
         SelectNavigationElement(userInput, E_MenuChoices::LR_NAVIGATION_PLAIN);
         break;
 
+    case E_SceneSequence::COMBAT_SCENE:
+    	DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : COMBAT_SCENE");
+		SelectCombatChoice(userInput, E_MenuChoices::COMBAT_PLAIN);
+		break;
+
     default:
         DEBUG_MSG("#R MenuManager.cpp : SelectMenuFromScene() : Default no menu selected");
         break;
@@ -123,22 +130,55 @@ void MenuManager::SelectNavigationElement(E_UserInput userInput, E_MenuChoices m
 
     if (userInput == E_UserInput::LEFT)
     {
-        PrepareNavigationMenu(menuChoice, CURRENT_UI_ELEMENT);
+        PrepareNavigationMenu(menuChoice, CURRENT_MENU_ELEMENT);
         return;
     }
     else if (userInput == E_UserInput::RIGHT)
     {
-        PrepareNavigationMenu(menuChoice, JUMP_TWO_MENU_ELEMENTS);
+        PrepareNavigationMenu(menuChoice, NEXT_TWO_MENU_ELEMENTS);
         return;
     }
     else if (userInput == E_UserInput::UP)
     {
-        PrepareNavigationMenu(menuChoice, JUMP_THREE_MENU_ELEMENTS);
+        PrepareNavigationMenu(menuChoice, NEXT_THREE_MENU_ELEMENTS);
         return;
     }
     else if (userInput == E_UserInput::DOWN)
     {
-        PrepareNavigationMenu(menuChoice, JUMP_FOUR_MENU_ELEMENTS);
+        PrepareNavigationMenu(menuChoice, NEXT_FOUR_MENU_ELEMENTS);
+        return;
+    }
+    return;
+}
+
+void MenuManager::SelectCombatChoice(E_UserInput userInput, E_MenuChoices menuChoice)
+{
+    if (userInput == E_UserInput::EMPTY)
+    {
+        DEBUG_MSG("MenuManager.cpp : SelectCombatChoice() : UserInput is EMPTY");
+        ClearConsolePreviousLine();
+        PrintNavigationMenu(menuChoice);
+        return;
+    }
+
+    if (userInput == E_UserInput::LEFT || userInput == E_UserInput::HELP)
+    {
+        PrepareNavigationMenu(menuChoice, CURRENT_MENU_ELEMENT);
+        return;
+    }
+    else if (userInput == E_UserInput::RIGHT || userInput == E_UserInput::POTION)
+    {
+        PrepareNavigationMenu(menuChoice, NEXT_TWO_MENU_ELEMENTS);
+        return;
+    }
+    else if (userInput == E_UserInput::UP) // ATTACK
+    {
+        PrepareNavigationMenu(menuChoice, NEXT_THREE_MENU_ELEMENTS);
+        return;
+    }
+    else if (userInput == E_UserInput::DOWN || userInput == E_UserInput::FLEE)
+    {
+        PrepareNavigationMenu(menuChoice, NEXT_FOUR_MENU_ELEMENTS);
         return;
     }
     return;
@@ -280,7 +320,7 @@ std::string MenuManager::GetMenuAtLine(std::string& filePathStr, E_MenuChoices a
     return text;
 }
 
-E_MenuChoices MenuManager::GetSelectedMenuLine()
+MenuManager::E_MenuChoices MenuManager::GetSelectedMenuLine()
 {
     DEBUG_MSG("#C MenuManager.cpp : GetSelectedMenuLine() : ");
     //std::cout << int(m_selectedMenuLine) << std::endl; // Debug line

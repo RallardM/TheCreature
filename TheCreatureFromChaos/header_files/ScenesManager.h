@@ -9,9 +9,9 @@ class WeaponManager;
 #include "MenuManager.h"
 #include "NarrationManager.h"
 #include "UserInputManager.h"
-#include "PublicConstants.h"
+#include "ScenesConstants.h"
 
-using namespace PublicConstants;
+using namespace ScenesConstants;
 
 class ScenesManager {
 public:
@@ -19,11 +19,10 @@ public:
 
 	E_SceneSequence GetPlayerCurrentScene();
 	void SetPlayerCurrentScene(E_SceneSequence scene);
-	void SetNextScene(E_MenuChoices menuChoice);
-	E_SceneSequence GetUserDirectionScene(E_MenuChoices playerInputDirection);
+	void SetNextScene(MenuManager::E_MenuChoices menuChoice);
+	E_SceneSequence GetUserDirectionScene(MenuManager::E_MenuChoices playerInputDirection);
 
 	void ClearAllConsoleText();
-	unsigned short int GetCurrentConsololeTextHeight();
 
 	NarrationManager* GetNarrationManager();
 	void SetNarrationManager(NarrationManager* narrationManager);

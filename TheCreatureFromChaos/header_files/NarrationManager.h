@@ -6,8 +6,10 @@ class ScenesManager;
 
 #include "ScenesManager.h"
 #include "PublicConstants.h"
+#include "ScenesConstants.h"
 
 using namespace PublicConstants;
+using namespace ScenesConstants;
 
 class NarrationManager{
 public:

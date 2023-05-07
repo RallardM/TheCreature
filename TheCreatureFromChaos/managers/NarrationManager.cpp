@@ -52,6 +52,7 @@ void NarrationManager::PrintLinesFromScene()
         case E_SceneSequence::ROOM_THREE_RIGHT:
         case E_SceneSequence::ROOM_THREE_LEFT:
         case E_SceneSequence::ROOM_THREE_BACK:
+        case E_SceneSequence::COMBAT_SCENE:
             DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
             scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
             break;
@@ -64,15 +65,11 @@ void NarrationManager::PrintLinesFromScene()
     DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Picture printed.");
 	std::cout << sceneText;
     DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Text printed.");
-
-    //GetScenesManager()->SetIsSceneCleared();
 }
 
 std::string NarrationManager::GetPictureTextScene(E_SceneSequence scene, const unsigned short int height)
 {
-    
     unsigned short int textFirstLine = 0;
-    //unsigned short int textLastLine = 0;
     std::string pathToFile = "";
 
     if (height == ASCII_IMAGE_HEIGHT)

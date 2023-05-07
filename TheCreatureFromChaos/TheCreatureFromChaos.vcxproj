@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="managers\CombatManager.cpp" />
     <ClCompile Include="managers\MenuManager.cpp" />
     <ClCompile Include="managers\NarrationManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -157,13 +158,14 @@
     <Image Include="resouce_files\GameArtEnding.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="resouce_files\MenuTextOriginal.txt" />
     <Text Include="resouce_files\ScenesArt.txt" />
     <Text Include="resouce_files\MenuText.txt" />
     <Text Include="resouce_files\MainMenu.txt" />
     <Text Include="resouce_files\NarrationText.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="header_files\CombatManager.h" />
+    <ClInclude Include="header_files\ScenesConstants.h" />
     <ClInclude Include="header_files\WeaponManager.h" />
     <ClInclude Include="header_files\DebugMessageSystem.h" />
     <ClInclude Include="header_files\MenuManager.h" />
