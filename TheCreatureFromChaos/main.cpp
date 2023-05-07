@@ -41,16 +41,18 @@ int main()
 	// Print Intro scene.
 	narrationManager->PrintLinesFromScene();
 
-	CombatManager* combatManager = new CombatManager();
+	CombatManager* combatManager = new CombatManager(userData);
 
 	UserInputManager* inputManager = new UserInputManager(consoleHandler, scenesManager, menuManager, combatManager);
 	E_UserInput userInput = E_UserInput::EMPTY;
+	narrationManager->SetUserInputManager(inputManager);
 
 	WeaponManager* weaponManager = new WeaponManager(menuManager);
 	scenesManager->SetWeaponManager(weaponManager);
 	inputManager->SetWeaponManager(weaponManager);
 	menuManager->SetWeaponManager(weaponManager);
-	
+	combatManager->SetWeaponManager(weaponManager);
+
 	bool gameRunning = true;
 
 	//DEBUG_MSG("main.cpp : main() : Enters main loop.");

@@ -7,6 +7,7 @@
 UserInputManager::UserInputManager(ConsoleHandler* m_consoleHandler, ScenesManager* sceneManager, MenuManager* menuManager, CombatManager* combatManager) :
     m_consoleHandler(),
     m_weaponManager(),
+    m_currentInputType(E_CurrentInputType::DIALOGUES),
     m_combatManager(combatManager),
     m_sceneManager(sceneManager),
     m_menuManager(menuManager),
@@ -28,33 +29,114 @@ E_UserInput UserInputManager::GetInput()
             {
                 case    97:    //'a':           // Attack
                 case    65:    //'A':
+                    if (GetCurrentInputType() == E_CurrentInputType::COMBAT)
+                    {
+						return E_UserInput::UP;
+					}
+                    else if (GetCurrentInputType() == E_CurrentInputType::NAVIGATION)
+                    {
+						return E_UserInput::LEFT;
+					}
+                    else
+                    {
+						return E_UserInput::EMPTY;
+					}
+                    break;
+
                 case    72:    // Up arrow key
                 case '\033[A': // Up arrow key
-                    return E_UserInput::UP;
-					break;
+                    if (GetCurrentInputType() == E_CurrentInputType::COMBAT || GetCurrentInputType() == E_CurrentInputType::NAVIGATION)
+                    {
+                        return E_UserInput::UP;
+                    }
+                    else
+                    {
+                        return E_UserInput::EMPTY;
+                    }
 
                 case   107:    //'k':           // Khai help
                 case    75:    //'K': // Is the smae as Left arrow key
+                    if (GetCurrentInputType() == E_CurrentInputType::COMBAT)
+                    {
+                        return E_UserInput::LEFT;
+                    }
+                    // If is in navigation mode and the input is not the left arrow key then return nothing
+                    else if (GetCurrentInputType() == E_CurrentInputType::NAVIGATION && key != '\033[D')
+                    {
+                        return E_UserInput::EMPTY;
+                    }
+                    break;
+
                 case '\033[D': // Left arrow key
-                    return E_UserInput::LEFT;
+                    if (GetCurrentInputType() == E_CurrentInputType::COMBAT)
+                    {
+                        return E_UserInput::LEFT;
+                    }
+                    else if (GetCurrentInputType() == E_CurrentInputType::NAVIGATION)
+                    {
+                        return E_UserInput::LEFT;
+                    }
+                    else
+                    {
+                        return E_UserInput::EMPTY;
+                    }
                     break;
 
                 case   112:    //'p':           // Potion
                 case    80:    //'P': 
+                    if (GetCurrentInputType() == E_CurrentInputType::COMBAT)
+                    {
+                        return E_UserInput::RIGHT;
+                    }
+                    else if (GetCurrentInputType() == E_CurrentInputType::NAVIGATION)
+                    {
+					    if (key == '\033[B') // Down arrow key = 80
+                        {
+                            return E_UserInput::DOWN;
+                        }
+					}
+                    else
+                    {
+                        return E_UserInput::EMPTY;
+                    }
+                    break;
+
                 case    77:    // Right arrow key
                 case '\033[C': // Right arrow key
-                    if (key == '\033[B') // Down arrow key = 80
+                    if (GetCurrentInputType() == E_CurrentInputType::COMBAT)
+                    {
+                        if (key != '\033[B') // Down arrow key = 80
+                        {
+							return E_UserInput::RIGHT;
+						}
+                        else
+                        {
+							return E_UserInput::EMPTY;
+						}
+                    }
+                    else if (GetCurrentInputType() == E_CurrentInputType::NAVIGATION)
+                    {
+                        return E_UserInput::RIGHT;
+                    }
+                    else
+                    {
+                        return E_UserInput::EMPTY;
+                    }
+                    break;
+
+
+                case   102:    //'f':           // Flee
+                case    70:    //'F': 
+                    if (GetCurrentInputType() == E_CurrentInputType::COMBAT)
                     {
                         return E_UserInput::DOWN;
                     }
                     else
                     {
-                        return E_UserInput::RIGHT;
-                    }   
+                        return E_UserInput::EMPTY;
+                    }
                     break;
 
-                case   102:    //'f':           // Flee
-                case    70:    //'F': 
                 case '\033[B': // Down arrow key
                     return E_UserInput::DOWN;
                     break;
@@ -206,6 +288,16 @@ void UserInputManager::EnterSelection()
         GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
         return;
     }
+}
+
+UserInputManager::E_CurrentInputType UserInputManager::GetCurrentInputType()
+{
+    return m_currentInputType;
+}
+
+void UserInputManager::SetCurrentInputType(E_CurrentInputType currentInputType)
+{
+    m_currentInputType = currentInputType;
 }
 
 bool UserInputManager::HasInput()

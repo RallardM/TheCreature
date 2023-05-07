@@ -23,7 +23,6 @@ public:
 	E_SceneSequence GetUserDirectionScene(E_MenuChoices playerInputDirection);
 
 	void ClearAllConsoleText();
-	unsigned short int GetCurrentConsololeTextHeight();
 
 	NarrationManager* GetNarrationManager();
 	void SetNarrationManager(NarrationManager* narrationManager);

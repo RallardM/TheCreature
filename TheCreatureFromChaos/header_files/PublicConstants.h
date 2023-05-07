@@ -173,15 +173,15 @@ namespace PublicConstants {
 	struct S_Weapon
 	{
 		S_Weapon() = default;
-		S_Weapon(std::string _weaponName, unsigned short int _weaponMinDamage, unsigned short int _weaponMaxDamage)
+		S_Weapon(std::string _weaponName, unsigned short int _minHitPoints, unsigned short int _maxHitPoints)
 		{
 			weaponName = _weaponName;
-			weaponMinDamage = _weaponMinDamage;
-			weaponMaxDamage = _weaponMaxDamage;
+			minHitPoints = _minHitPoints;
+			maxHitPoints = _maxHitPoints;
 		}
 		std::string weaponName = "";
-		unsigned short int weaponMinDamage = 0;
-		unsigned short int weaponMaxDamage = 0;
+		unsigned short int minHitPoints = 0;
+		unsigned short int maxHitPoints = 0;
 	};
 
 }

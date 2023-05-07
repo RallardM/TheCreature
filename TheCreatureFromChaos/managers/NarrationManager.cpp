@@ -9,12 +9,14 @@
 
 #include "NarrationManager.h"
 #include "DebugMessageSystem.h"
+#include "UserInputManager.h"
 
 NarrationManager::NarrationManager(ScenesManager* sceneManager) :
     m_textFilePath("resouce_files/NarrationText.txt"),
     m_pictureFilePath("resouce_files/ScenesArt.txt"),
     m_menuFilePath("resouce_files/MenuText.txt"),
-    m_sceneManager(sceneManager)
+    m_sceneManager(sceneManager),
+    m_userInputManager(nullptr)
 {
 
 }
@@ -38,6 +40,7 @@ void NarrationManager::PrintLinesFromScene()
         DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
         sceneText = GetPictureTextScene(scene, STORY_TEXT_HEIGHT);
+        GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::DIALOGUES);
         break;
 
     case E_SceneSequence::ROOM_ONE_FRONT:
@@ -52,9 +55,12 @@ void NarrationManager::PrintLinesFromScene()
     case E_SceneSequence::ROOM_THREE_RIGHT:
     case E_SceneSequence::ROOM_THREE_LEFT:
     case E_SceneSequence::ROOM_THREE_BACK:
-    case E_SceneSequence::COMBAT_SCENE:
-        DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
+        GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::NAVIGATION);
+        break;
+    case E_SceneSequence::COMBAT_SCENE:
+        scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
+        GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::COMBAT);
         break;
 
     default:
@@ -169,4 +175,14 @@ unsigned short int NarrationManager::GetSceneTextLines(E_SceneSequence fromLine)
 ScenesManager* NarrationManager::GetScenesManager()
 {
     return m_sceneManager;
+}
+
+UserInputManager* NarrationManager::GetUserInputManager()
+{
+	return m_userInputManager;
+}
+
+void NarrationManager::SetUserInputManager(UserInputManager* userInputManager)
+{
+    m_userInputManager = userInputManager;
 }

@@ -22,6 +22,9 @@ public:
 
 	ScenesManager* GetScenesManager();
 
+	UserInputManager* GetUserInputManager();
+	void SetUserInputManager(UserInputManager* userInputManager);
+
 	const unsigned short int ASCII_IMAGE_HEIGHT     = 34;
 	const unsigned short int NAVIGATION_MENU_HEIGHT =  7;
 	const unsigned short int STORY_TEXT_HEIGHT      =  5;
@@ -32,6 +35,7 @@ private:
 	unsigned short int GetSceneImageLines(E_SceneSequence fromLine);
 
 	ScenesManager* m_sceneManager;
+	UserInputManager* m_userInputManager;
 
 	std::string m_textFilePath;
 	std::string m_pictureFilePath;

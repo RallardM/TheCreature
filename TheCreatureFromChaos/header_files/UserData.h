@@ -27,6 +27,6 @@ private:
 	bool m_areWeaponsEquiped;
 	bool m_isPlayerSeenDeadEnd;
 	bool m_isBossDefeated;
-	unsigned short int m_playerLifePoints;
+	short int m_playerLifePoints;
 	//bool m_attackedKobold; // TODO
 };

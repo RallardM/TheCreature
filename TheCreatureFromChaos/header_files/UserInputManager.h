@@ -12,10 +12,20 @@ using namespace PublicConstants;
 
 class UserInputManager {
 public:
+
+	enum class E_CurrentInputType : const unsigned short int {
+		DIALOGUES,
+		NAVIGATION,
+		COMBAT
+	};
+
 	UserInputManager(ConsoleHandler* m_consoleHandler, ScenesManager* sceneManager, MenuManager* menuManager, CombatManager* combatManager);
 	
 	void ActivateSelection(E_UserInput userInput);
 	void EnterSelection();
+
+	E_CurrentInputType GetCurrentInputType();
+	void SetCurrentInputType(E_CurrentInputType currentInputType);
 
 	bool HasInput();
 	void SetHasInput(bool hasInput);
@@ -31,9 +41,10 @@ public:
 
 	CombatManager* GetCombatManager();
 
+	
 private:
 	bool m_hasInput;
-
+	E_CurrentInputType m_currentInputType;
 	ConsoleHandler* m_consoleHandler;
 	MenuManager* m_menuManager;
 	ScenesManager* m_sceneManager;
