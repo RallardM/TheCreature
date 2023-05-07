@@ -28,7 +28,7 @@ void WeaponManager::PrintBeltMenu(unsigned int short selectedWeaponIndex)
 	}
 	std::string currentWeapon = "";
 	currentWeapon = GetCurrentWeapon(selectedWeaponIndex).weaponName;
-	std::cout << "  " << currentWeapon << " is equiped";
+	std::cout << "   " << currentWeapon << " is equiped";
 	SetIsMenuCleared(false);
 }
 

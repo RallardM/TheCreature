@@ -6,319 +6,163 @@
 #include "DebugMessageSystem.h"
 #include "WeaponManager.h"
 
-ScenesManager::ScenesManager(UserData* userData) :
-	m_userCurrentScene(E_SceneSequence::INTRO_SCENE),
-	m_narrationManager(),
-	m_menuManager(),
-	m_weaponManager(),
-	m_userData(userData)
+NarrationManager::NarrationManager(ScenesManager* sceneManager) :
+    m_textFilePath("resouce_files/NarrationText.txt"), 
+    m_pictureFilePath("resouce_files/ScenesArt.txt"),
+    m_menuFilePath("resouce_files/MenuText.txt"),
+    m_sceneManager(sceneManager)
 {
+
 }
 
-void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
+void NarrationManager::PrintLinesFromScene()
 {
-	ClearAllConsoleText();
-	GetMenuManager()->SetIsMenuCleared(true);
-	if (GetUserData()->GetAreWeaponsEquiped() == true)
-	{
-		GetWeaponManager()->SetIsMenuCleared(true);
-	}
+    E_SceneSequence scene = GetScenesManager()->GetPlayerCurrentScene();
+    std::string scenePicture = "";
+    std::string sceneText = "";
 
-	E_SceneSequence movingTowardScene = E_SceneSequence::NO_SCENE;
+    switch (scene)
+    {
+		case E_SceneSequence::INTRO_SCENE:
+		case E_SceneSequence::MOVING_SCENE:
+        case E_SceneSequence::KOBOLD_SCENE:
+        case E_SceneSequence::NAME_SCENE:
+        case E_SceneSequence::ATTACK_KOBOLD_SCENE:
+        case E_SceneSequence::WEAPONS_SCENE:
+        case E_SceneSequence::DEAD_END_SCENE:
+        case E_SceneSequence::ENNEMY_SCENE:
+            DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
+            scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
+            sceneText = GetPictureTextScene(scene, STORY_TEXT_HEIGHT);
+            break;
 
-	switch (menuChoice)
-	{
-		case E_MenuChoices::NO_MENU_LINE:
-			DEBUG_MSG("#R ScenesManager.cpp : SetNextScene() : Returned no menu choice.");
-			break;
-
-		case E_MenuChoices::TRY_TO_MOVE:           // From INTRO_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set MOVING_SCENE.");
-			SetPlayerCurrentScene(E_SceneSequence::MOVING_SCENE);
-			break;
-
-		case E_MenuChoices::TRY_TO_REMEBER:        // From INTRO_SCENE
-		case E_MenuChoices::TRY_TO_REMEBER_TWO:    // From MOVING_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set KOBOLD_SCENE.");
-			SetPlayerCurrentScene(E_SceneSequence::KOBOLD_SCENE);
-			break;
-
-		case E_MenuChoices::LOOK_AROUND:           // From MOVING_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set KOBOLD_SCENE.");
-			SetPlayerCurrentScene(E_SceneSequence::KOBOLD_SCENE);
-			break;
-
-		case E_MenuChoices::WHO_ARE_YOU:           // From KOBOLD_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set NAME_SCENE.");
-			SetPlayerCurrentScene(E_SceneSequence::NAME_SCENE);
-			break;
-
-		case E_MenuChoices::ATTACK_KOBOLD:         // From KOBOLD_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ATTACK_KOBOLD_SCENE.");
-			SetPlayerCurrentScene(E_SceneSequence::ATTACK_KOBOLD_SCENE);
-			break;
-
-		case E_MenuChoices::ENTER_NAME:            // From NAME_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set WEAPONS_SCENE.");
-			SetPlayerCurrentScene(E_SceneSequence::WEAPONS_SCENE);
-			break;
-
-		case E_MenuChoices::TAKE_WEAPONS_SELECTED: // From WEAPONS_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ROOM_ONE_RIGHT.");
-			GetUserData()->SetAreWeaponsEquiped(true);
-			SetPlayerCurrentScene(E_SceneSequence::ROOM_ONE_LEFT);
-			break;
-
-		case E_MenuChoices::GO_BACK_SELECTED:      // From DEAD_END_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ROOM_TWO_FRONT.");
-			SetPlayerCurrentScene(E_SceneSequence::ROOM_TWO_FRONT); 
-			break;
-
-		case E_MenuChoices::ATTACK_ENEMY:          // From ENNEMY_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO."); // TODO
-			//SetPlayerCurrentScene(E_SceneSequence::);
-			break;
-
-		case E_MenuChoices::RUN_AWAY:              // From ENNEMY_SCENE
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO."); // TODO
-			//SetPlayerCurrentScene(E_SceneSequence::);
-			break;
-
-		case E_MenuChoices::NAVIGATION_LEFT:
-		case E_MenuChoices::NAVIGATION_RIGHT:
-		case E_MenuChoices::NAVIGATION_FOWARD:
-		case E_MenuChoices::NAVIGATION_BACK:
-		case E_MenuChoices::LR_NAVIGATION_LEFT:
-		case E_MenuChoices::LR_NAVIGATION_RIGHT:
-			DEBUG_MSG("ScenesManager.cpp : SetNextScene() : movingTowardScene.");
-			movingTowardScene = GetUserDirectionScene(menuChoice);
-			SetPlayerCurrentScene(movingTowardScene);
-			break;
+        case E_SceneSequence::ROOM_ONE_FRONT:
+        case E_SceneSequence::ROOM_ONE_RIGHT:
+        case E_SceneSequence::ROOM_ONE_LEFT:
+        case E_SceneSequence::ROOM_ONE_BACK:
+        case E_SceneSequence::ROOM_TWO_FRONT:
+        case E_SceneSequence::ROOM_TWO_RIGHT:
+        case E_SceneSequence::ROOM_TWO_LEFT:
+        case E_SceneSequence::ROOM_TWO_BACK:
+        case E_SceneSequence::ROOM_THREE_FRONT:
+        case E_SceneSequence::ROOM_THREE_RIGHT:
+        case E_SceneSequence::ROOM_THREE_LEFT:
+        case E_SceneSequence::ROOM_THREE_BACK:
+        case E_SceneSequence::COMBAT_SCENE:
+            DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
+            scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
+            break;
 
 		default:
-			DEBUG_MSG("#R ScenesManager.cpp : SetNextScene() : Switch statement default case reached.");
 			break;
 	}
-	GetNarrationManager()->PrintLinesFromScene();
+    DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Print TXT-IMG for choosen scene.");
+	std::cout << scenePicture;
+    DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Picture printed.");
+	std::cout << sceneText;
+    DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Text printed.");
 }
 
-E_SceneSequence ScenesManager::GetUserDirectionScene(E_MenuChoices playerInputDirection)
+std::string NarrationManager::GetPictureTextScene(E_SceneSequence scene, const unsigned short int height)
 {
-	E_SceneSequence currectScene = GetPlayerCurrentScene();
-	E_SceneSequence nextScene = E_SceneSequence::NO_SCENE;
-	E_MenuChoices intToEnum = E_MenuChoices::NO_MENU_LINE;
+    unsigned short int textFirstLine = 0;
+    std::string pathToFile = "";
 
-	unsigned short int currentSceneEnumToInt = static_cast<int>(currectScene);
+    if (height == ASCII_IMAGE_HEIGHT)
+    {
+        textFirstLine = GetSceneImageLines(scene);
+        pathToFile = GetPictureFilePath();
+	}
+    else if (height == STORY_TEXT_HEIGHT)
+    {
+		textFirstLine = GetSceneTextLines(scene);
+        pathToFile = GetTextFilePath();
+    }
+    else
+    {
+        DEBUG_MSG("#R NarrationManager.cpp : GetPictureTextScene() : No text height found!");
+	}
+    
+    //textLastLine = textFirstLine + height;
+    std::string sceneTextOrPicture = GetTextBetweenLines(pathToFile, textFirstLine, height);
 
-	bool isFacingFront = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == FOUR_WAYS_FRONT);
-	bool isFacingRight = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == TWO_WAYS_RIGHT);
-	bool isFacingLeft = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == TWO_WAYS_LEFT);
-	bool isFacingBack = (SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt] == FOUR_WAYS_BACK);
-
-	bool turnsLeft = (playerInputDirection == E_MenuChoices::NAVIGATION_LEFT || playerInputDirection == E_MenuChoices::LR_NAVIGATION_LEFT);
-	bool turnsRight = (playerInputDirection == E_MenuChoices::NAVIGATION_RIGHT || playerInputDirection == E_MenuChoices::LR_NAVIGATION_RIGHT);
-	bool goesFoward = (playerInputDirection == E_MenuChoices::NAVIGATION_FOWARD);
-	bool goesBack = (playerInputDirection == E_MenuChoices::NAVIGATION_BACK);
-
-	if (isFacingFront && turnsLeft)
-	{
-		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + FRONT_TO_LEFT);
-		nextScene = static_cast<E_SceneSequence>(intToEnum);
-	}
-	else if (isFacingFront && turnsRight)
-	{
-		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + FRONT_TO_RIGHT);
-		nextScene = static_cast<E_SceneSequence>(intToEnum);
-	}
-	else if (isFacingFront && goesBack)
-	{
-		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + FRONT_TO_BACK);
-		nextScene = static_cast<E_SceneSequence>(intToEnum);
-	}
-	else if (isFacingRight && turnsLeft)
-	{
-		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + RIGHT_TO_FRONT);
-		nextScene = static_cast<E_SceneSequence>(intToEnum);
-	}
-	else if (isFacingRight && turnsRight)
-	{
-		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + RIGHT_TO_BACK);
-		nextScene = static_cast<E_SceneSequence>(intToEnum);
-	}
-	else if (isFacingLeft && turnsLeft)
-	{
-		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + LEFT_TO_BACK);
-		nextScene = static_cast<E_SceneSequence>(intToEnum);
-	}
-	else if (isFacingLeft && turnsRight)
-	{
-		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + LEFT_TO_FRONT);
-		nextScene = static_cast<E_SceneSequence>(intToEnum);
-	}
-	else if (isFacingBack && turnsLeft)
-	{
-		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + BACK_TO_RIGHT);
-		nextScene = static_cast<E_SceneSequence>(intToEnum);
-	}
-	else if (isFacingBack && turnsRight)
-	{
-		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + BACK_TO_LEFT);
-		nextScene = static_cast<E_SceneSequence>(intToEnum);
-	}
-	else if (isFacingBack && goesBack)
-	{
-		intToEnum = static_cast<E_MenuChoices>(currentSceneEnumToInt + BACK_TO_FRONT);
-		nextScene = static_cast<E_SceneSequence>(intToEnum);
-	}
-	else if (isFacingBack && goesFoward)
-	{
-		if (currectScene == E_SceneSequence::ROOM_ONE_BACK)
-		{
-			if (GetUserData()->GetIsPlayerSeenDeadEnd())
-			{
-				nextScene = E_SceneSequence::ROOM_TWO_BACK;
-			}
-			else
-			{
-				nextScene = E_SceneSequence::DEAD_END_SCENE;
-				GetUserData()->SetIsPlayerSeenDeadEnd(true);
-			}
-		}
-		else if (currectScene == E_SceneSequence::ROOM_THREE_BACK)
-		{
-			nextScene = E_SceneSequence::ROOM_ONE_BACK;
-		}
-		else if (currectScene == E_SceneSequence::ROOM_TWO_BACK)
-		{
-			nextScene = E_SceneSequence::DEAD_END_SCENE;
-		}
-	}
-	else if (isFacingFront && goesFoward)
-	{
-		if (currectScene == E_SceneSequence::ROOM_ONE_FRONT)
-		{
-			if (GetUserData()->GetIsBossDefeated())
-			{
-				nextScene = E_SceneSequence::ROOM_THREE_FRONT;
-			}
-			else
-			{
-				nextScene = E_SceneSequence::ENNEMY_SCENE;
-			}
-		}
-		else if (currectScene == E_SceneSequence::ROOM_TWO_FRONT)
-		{
-			nextScene = E_SceneSequence::ROOM_ONE_FRONT;
-		}
-		else if (currectScene == E_SceneSequence::ROOM_THREE_FRONT)
-		{
-			// TODO
-		}
-	}
-	return nextScene;
+    return sceneTextOrPicture;
 }
 
-void ScenesManager::ClearAllConsoleText()
+std::string NarrationManager::GetTextBetweenLines(std::string& filePathStr, unsigned int firstLine, const unsigned short int height)
 {
-	DEBUG_MSG("#Y ScenesManager.cpp : ClearAllConsoleText() : Clear whole scene debug deactivated.");
-	system("cls");
-	//unsigned short int numberOflinesToDelete = GetCurrentConsololeTextHeight();
-	//for (size_t i = 0; i < numberOflinesToDelete; i++)
-	//{
-	//	GetMenuManager()->ClearConsolePreviousLine();
-	//}
+    DEBUG_MSG("NarrationMAnager.cpp : GetTextBetweenLines() : Enters GetTextBetweenLines().");
+    //std::ifstream filePath("resouce_files/ScenesAsciiArt.txt");
+    std::ifstream filePath(filePathStr);
+    std::string text = "";
+    std::string line = "";
+    unsigned int lastLine = (firstLine -1) + height;
+
+    // Check if file opens
+    if (!filePath.is_open())
+    {
+        // File could not be opened, so return an empty string
+        DEBUG_MSG("#R NarrationMAnager.cpp : GetTextBetweenLines() : Could not open the game text file.");
+        exit(EXIT_FAILURE);
+    }
+    else
+    {
+        unsigned int currentLine = 1;
+
+        // Read each line in the file until we reach the end or the desired line range.
+        while (std::getline(filePath, line) && currentLine <= lastLine)
+        {
+   //         // Debug condition, print a line :
+   //         if (currentLine == firstLine + 1)
+   //         {
+   //             DEBUG_MSG("#Y NarrationMAnager.cpp : GetTextBetweenLines() : Debug print line : ");
+   //             std::cout << (firstLine + 1) << std::endl;
+   //             DEBUG_MSG("#Y NarrationMAnager.cpp : GetTextBetweenLines() : line : ");
+   //             std::cout << line << std::endl << std::endl;
+			//}
+
+            // If the current line is within the desired range, add it to the output string.
+            if (currentLine >= firstLine)
+            {
+                text += line + "\n";
+            }
+            currentLine++;
+        }
+
+        // Close the file
+        filePath.close();
+    }
+
+    // Return the output string.
+    return text;
 }
 
-//unsigned short int ScenesManager::GetCurrentConsololeTextHeight()
-//{
-//	unsigned short int imageHeight           = GetNarrationManager()->ASCII_IMAGE_HEIGHT;
-//	unsigned short int menuHeight            = GetNarrationManager()->NARRATION_MENU_HEIGHT;
-//	unsigned short int textHeight            = GetNarrationManager()->STORY_TEXT_HEIGHT;
-//	unsigned short int navigationHeight      = GetNarrationManager()->NAVIGATION_MENU_HEIGHT;
-//	unsigned short int numberOflinesToDelete = 0
-//		;
-//	E_SceneSequence scene = GetPlayerCurrentScene();
-//
-//	switch (scene)
-//	{
-//	case E_SceneSequence::INTRO_SCENE:
-//	case E_SceneSequence::MOVING_SCENE:
-//	case E_SceneSequence::KOBOLD_SCENE:
-//	case E_SceneSequence::NAME_SCENE:
-//	case E_SceneSequence::WEAPONS_SCENE:
-//	case E_SceneSequence::ATTACK_KOBOLD_SCENE:
-//	case E_SceneSequence::DEAD_END_SCENE:
-//	case E_SceneSequence::ENNEMY_SCENE:
-//		numberOflinesToDelete = imageHeight + textHeight + menuHeight;
-//		break;
-//	case E_SceneSequence::ROOM_ONE_FRONT:
-//	case E_SceneSequence::ROOM_ONE_BACK:
-//	case E_SceneSequence::ROOM_TWO_FRONT:
-//	case E_SceneSequence::ROOM_TWO_BACK:
-//	case E_SceneSequence::ROOM_THREE_FRONT:
-//	case E_SceneSequence::ROOM_THREE_BACK:
-//	case E_SceneSequence::ROOM_ONE_RIGHT:
-//	case E_SceneSequence::ROOM_ONE_LEFT:
-//	case E_SceneSequence::ROOM_TWO_RIGHT:
-//	case E_SceneSequence::ROOM_TWO_LEFT:
-//	case E_SceneSequence::ROOM_THREE_RIGHT:
-//	case E_SceneSequence::ROOM_THREE_LEFT:
-//		numberOflinesToDelete = imageHeight + navigationHeight;
-//		break;
-//	default:
-//		break;
-//	}
-//
-//	return numberOflinesToDelete;
-//}
-
-NarrationManager* ScenesManager::GetNarrationManager()
+std::string& NarrationManager::GetPictureFilePath()
 {
-	return m_narrationManager;
+    return m_pictureFilePath;
 }
 
-void ScenesManager::SetNarrationManager(NarrationManager* narrationManager)
-{
-	m_narrationManager = narrationManager;
+std::string& NarrationManager::GetTextFilePath()
+{ 
+    return m_textFilePath;
 }
 
-MenuManager* ScenesManager::GetMenuManager()
+std::string& NarrationManager::GetMenuFilePath()
 {
-	return m_menuManager;
+    return m_menuFilePath;
 }
 
-void ScenesManager::SetMenuManager(MenuManager* menuManager)
+unsigned short int NarrationManager::GetSceneImageLines(E_SceneSequence fromLine)
 {
-	m_menuManager = menuManager;
+    return SCENES_IMAGE_LINES[static_cast<int>(fromLine)];
 }
 
-WeaponManager* ScenesManager::GetWeaponManager()
+unsigned short int NarrationManager::GetSceneTextLines(E_SceneSequence fromLine)
 {
-	return m_weaponManager;
+    return SCENES_TEXT_LINES[static_cast<int>(fromLine)];
 }
 
-void ScenesManager::SetWeaponManager(WeaponManager* weaponManager)
+ScenesManager* NarrationManager::GetScenesManager()
 {
-	m_weaponManager = weaponManager;
-}
-
-
-E_SceneSequence ScenesManager::GetPlayerCurrentScene()
-{
-	return m_userCurrentScene;
-}
-
-void ScenesManager::SetPlayerCurrentScene(E_SceneSequence scene)
-{
-	m_userCurrentScene = scene;
-}
-
-UserData* ScenesManager::GetUserData()
-{
-	return m_userData;
-}
-
-void ScenesManager::SetUserData(UserData* userData)
-{
-	m_userData = userData;
+	return m_sceneManager;
 }

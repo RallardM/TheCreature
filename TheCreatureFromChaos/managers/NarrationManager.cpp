@@ -11,7 +11,7 @@
 #include "DebugMessageSystem.h"
 
 NarrationManager::NarrationManager(ScenesManager* sceneManager) :
-    m_textFilePath("resouce_files/NarrationText.txt"), 
+    m_textFilePath("resouce_files/NarrationText.txt"),
     m_pictureFilePath("resouce_files/ScenesArt.txt"),
     m_menuFilePath("resouce_files/MenuText.txt"),
     m_sceneManager(sceneManager)
@@ -27,69 +27,66 @@ void NarrationManager::PrintLinesFromScene()
 
     switch (scene)
     {
-		case E_SceneSequence::INTRO_SCENE:
-		case E_SceneSequence::MOVING_SCENE:
-        case E_SceneSequence::KOBOLD_SCENE:
-        case E_SceneSequence::NAME_SCENE:
-        case E_SceneSequence::ATTACK_KOBOLD_SCENE:
-        case E_SceneSequence::WEAPONS_SCENE:
-        case E_SceneSequence::DEAD_END_SCENE:
-        case E_SceneSequence::ENNEMY_SCENE:
-            DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
-            scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
-            sceneText = GetPictureTextScene(scene, STORY_TEXT_HEIGHT);
-            break;
+    case E_SceneSequence::INTRO_SCENE:
+    case E_SceneSequence::MOVING_SCENE:
+    case E_SceneSequence::KOBOLD_SCENE:
+    case E_SceneSequence::NAME_SCENE:
+    case E_SceneSequence::ATTACK_KOBOLD_SCENE:
+    case E_SceneSequence::WEAPONS_SCENE:
+    case E_SceneSequence::DEAD_END_SCENE:
+    case E_SceneSequence::ENNEMY_SCENE:
+        DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
+        scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
+        sceneText = GetPictureTextScene(scene, STORY_TEXT_HEIGHT);
+        break;
 
-        case E_SceneSequence::ROOM_ONE_FRONT:
-        case E_SceneSequence::ROOM_ONE_RIGHT:
-        case E_SceneSequence::ROOM_ONE_LEFT:
-        case E_SceneSequence::ROOM_ONE_BACK:
-        case E_SceneSequence::ROOM_TWO_FRONT:
-        case E_SceneSequence::ROOM_TWO_RIGHT:
-        case E_SceneSequence::ROOM_TWO_LEFT:
-        case E_SceneSequence::ROOM_TWO_BACK:
-        case E_SceneSequence::ROOM_THREE_FRONT:
-        case E_SceneSequence::ROOM_THREE_RIGHT:
-        case E_SceneSequence::ROOM_THREE_LEFT:
-        case E_SceneSequence::ROOM_THREE_BACK:
-            DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
-            scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
-            break;
+    case E_SceneSequence::ROOM_ONE_FRONT:
+    case E_SceneSequence::ROOM_ONE_RIGHT:
+    case E_SceneSequence::ROOM_ONE_LEFT:
+    case E_SceneSequence::ROOM_ONE_BACK:
+    case E_SceneSequence::ROOM_TWO_FRONT:
+    case E_SceneSequence::ROOM_TWO_RIGHT:
+    case E_SceneSequence::ROOM_TWO_LEFT:
+    case E_SceneSequence::ROOM_TWO_BACK:
+    case E_SceneSequence::ROOM_THREE_FRONT:
+    case E_SceneSequence::ROOM_THREE_RIGHT:
+    case E_SceneSequence::ROOM_THREE_LEFT:
+    case E_SceneSequence::ROOM_THREE_BACK:
+    case E_SceneSequence::COMBAT_SCENE:
+        DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
+        scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
+        break;
 
-		default:
-			break;
-	}
+    default:
+        break;
+    }
     DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Print TXT-IMG for choosen scene.");
-	std::cout << scenePicture;
+    std::cout << scenePicture;
     DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Picture printed.");
-	std::cout << sceneText;
+    std::cout << sceneText;
     DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Text printed.");
-
-    //GetScenesManager()->SetIsSceneCleared();
 }
 
 std::string NarrationManager::GetPictureTextScene(E_SceneSequence scene, const unsigned short int height)
 {
-    
     unsigned short int textFirstLine = 0;
-    //unsigned short int textLastLine = 0;
     std::string pathToFile = "";
 
     if (height == ASCII_IMAGE_HEIGHT)
     {
         textFirstLine = GetSceneImageLines(scene);
         pathToFile = GetPictureFilePath();
-	}
+    }
     else if (height == STORY_TEXT_HEIGHT)
     {
-		textFirstLine = GetSceneTextLines(scene);
+        textFirstLine = GetSceneTextLines(scene);
         pathToFile = GetTextFilePath();
     }
     else
     {
         DEBUG_MSG("#R NarrationManager.cpp : GetPictureTextScene() : No text height found!");
-	}
-    
+    }
+
     //textLastLine = textFirstLine + height;
     std::string sceneTextOrPicture = GetTextBetweenLines(pathToFile, textFirstLine, height);
 
@@ -103,7 +100,7 @@ std::string NarrationManager::GetTextBetweenLines(std::string& filePathStr, unsi
     std::ifstream filePath(filePathStr);
     std::string text = "";
     std::string line = "";
-    unsigned int lastLine = (firstLine -1) + height;
+    unsigned int lastLine = (firstLine - 1) + height;
 
     // Check if file opens
     if (!filePath.is_open())
@@ -119,16 +116,16 @@ std::string NarrationManager::GetTextBetweenLines(std::string& filePathStr, unsi
         // Read each line in the file until we reach the end or the desired line range.
         while (std::getline(filePath, line) && currentLine <= lastLine)
         {
-   //         // Debug condition, print a line :
-   //         if (currentLine == firstLine + 1)
-   //         {
-   //             DEBUG_MSG("#Y NarrationMAnager.cpp : GetTextBetweenLines() : Debug print line : ");
-   //             std::cout << (firstLine + 1) << std::endl;
-   //             DEBUG_MSG("#Y NarrationMAnager.cpp : GetTextBetweenLines() : line : ");
-   //             std::cout << line << std::endl << std::endl;
-			//}
+            //         // Debug condition, print a line :
+            //         if (currentLine == firstLine + 1)
+            //         {
+            //             DEBUG_MSG("#Y NarrationMAnager.cpp : GetTextBetweenLines() : Debug print line : ");
+            //             std::cout << (firstLine + 1) << std::endl;
+            //             DEBUG_MSG("#Y NarrationMAnager.cpp : GetTextBetweenLines() : line : ");
+            //             std::cout << line << std::endl << std::endl;
+                     //}
 
-            // If the current line is within the desired range, add it to the output string.
+                     // If the current line is within the desired range, add it to the output string.
             if (currentLine >= firstLine)
             {
                 text += line + "\n";
@@ -150,7 +147,7 @@ std::string& NarrationManager::GetPictureFilePath()
 }
 
 std::string& NarrationManager::GetTextFilePath()
-{ 
+{
     return m_textFilePath;
 }
 
@@ -171,5 +168,5 @@ unsigned short int NarrationManager::GetSceneTextLines(E_SceneSequence fromLine)
 
 ScenesManager* NarrationManager::GetScenesManager()
 {
-	return m_sceneManager;
+    return m_sceneManager;
 }

@@ -22,6 +22,8 @@ public:
 	void SelectNavigationElement(E_UserInput userInput, E_MenuChoices menuChoice);
 	void PrepareNavigationMenu(E_MenuChoices menuChoice, unsigned short int numberOfUiElementsToJumpOver);
 
+	void SelectCombatChoice(E_UserInput userInput, E_MenuChoices menuChoice);
+
 	void PrintSingleMenuChoice(E_UserInput userInput, E_MenuChoices menuChoice);
 	void PrintSelectedMenu(E_MenuChoices currentMenuChoice);
 	void PrintNavigationMenu(E_MenuChoices currentMenuChoice);

@@ -1,12 +1,13 @@
 #pragma once
+#include <string>
 
 const unsigned short int SCENES_TEXT_LINES[8] = { 2, 8, 14, 20, 26, 32, 38, 44 };
 
 const unsigned short int NEXT_MENU_ELEMENT        =  1;
-const unsigned short int CURRENT_UI_ELEMENT       =  1;
-const unsigned short int JUMP_TWO_MENU_ELEMENTS   =  2;
-const unsigned short int JUMP_THREE_MENU_ELEMENTS =  3;
-const unsigned short int JUMP_FOUR_MENU_ELEMENTS  =  4;
+const unsigned short int CURRENT_MENU_ELEMENT     =  1;
+const unsigned short int NEXT_TWO_MENU_ELEMENTS   =  2;
+const unsigned short int NEXT_THREE_MENU_ELEMENTS =  3;
+const unsigned short int NEXT_FOUR_MENU_ELEMENTS  =  4;
 const unsigned short int NB_LINES_NEXT_NAVIG_UI   =  8;
 												    
 const unsigned short int NAVIGATION_MENU_HEIGHT   =  7;
@@ -18,6 +19,7 @@ const unsigned short int TWO_WAYS_RIGHT           =  3;
 const unsigned short int TWO_WAYS_LEFT            =  4;
 const unsigned short int FOUR_WAYS_FRONT          =  5;
 const unsigned short int FOUR_WAYS_BACK           =  6;
+const unsigned short int COMBAT_MENU              =  7;
 
 const unsigned short int LEFT_TO_FRONT            =  1;
 const unsigned short int LEFT_TO_BACK             =  3;
@@ -30,7 +32,7 @@ const short int          BACK_TO_LEFT             = -3;
 const short int          BACK_TO_FRONT            = -2;
 const short int          BACK_TO_RIGHT            = -1;
 
-const unsigned short int SCENE_NUMBER_OF_MENU_CHOICES[20] = {
+const unsigned short int SCENE_NUMBER_OF_MENU_CHOICES[21] = {
 	TWO_CHOICES_MENU,     // INTRO_SCENE
 	TWO_CHOICES_MENU,     // MOVING_SCENE
 	TWO_CHOICES_MENU,     // KOBOLD_SCENE
@@ -54,6 +56,7 @@ const unsigned short int SCENE_NUMBER_OF_MENU_CHOICES[20] = {
 	FOUR_WAYS_FRONT,      // ROOM_THREE_FRONT
 	TWO_WAYS_RIGHT,       // ROOM_THREE_RIGHT
 	FOUR_WAYS_BACK,       // ROOM_THREE_BACK
+	COMBAT_MENU		      // COMBAT_SCENE
 };
 
 const unsigned short int SCENES_IMAGE_LINES[20] = {
@@ -83,7 +86,7 @@ const unsigned short int SCENES_IMAGE_LINES[20] = {
 };
 
 namespace PublicConstants {
-	enum class E_SceneSequence {
+	enum class E_SceneSequence : const short int {
 		NO_SCENE               =  -1,
 		INTRO_SCENE            ,  // Image line 2   ; Text line 2  ; Menu line 2
 		MOVING_SCENE           ,  // Image line 37  ; Text line 8  ; Menu line 5
@@ -107,11 +110,13 @@ namespace PublicConstants {
 		ROOM_THREE_LEFT        ,  // Image line 424 ;              ; Menu line 23
 		ROOM_THREE_FRONT       ,  // Image line 460 ;              ; Menu line 54
 		ROOM_THREE_RIGHT       ,  // Image line 495 ;              ; Menu line 45
-		ROOM_THREE_BACK           // Image line 531 ;              ; Menu line 23
+		ROOM_THREE_BACK        ,  // Image line 531 ;              ; Menu line 23
+	
+		COMBAT_SCENE           ,  // Image line 177 ;              ; Menu line 90
 	};                              
 	                                
 	//MenuText.txt                  
-	enum class E_MenuChoices {      
+	enum class E_MenuChoices : const unsigned short int {
 		ENTER_NAME             =   0,    // NAME_SCENE
 
 		NO_MENU_LINE           =   1,
@@ -142,10 +147,16 @@ namespace PublicConstants {
 
 		LR_NAVIGATION_PLAIN    =  66,    // Bidirectional ROOM_*_LEFT, ROOM_*_RIGHT
 		LR_NAVIGATION_LEFT     =  74,    // Bidirectional ROOM_*_LEFT, ROOM_*_RIGHT
-		LR_NAVIGATION_RIGHT    =  82     // Bidirectional ROOM_*_LEFT, ROOM_*_RIGHT
+		LR_NAVIGATION_RIGHT    =  82,    // Bidirectional ROOM_*_LEFT, ROOM_*_RIGHT
+	
+		COMBAT_PLAIN           =  90,
+		COMBAT_HELP            =  98,
+		COMBAT_POTION          = 106,
+		COMBAT_ATTACK          = 114,
+		COMBAT_FLEE            = 122
 	};
 	                                
-	enum class E_UserInput {
+	enum class E_UserInput : const unsigned short int {
 		LEFT,
 		RIGHT,
 		UP,
@@ -153,6 +164,9 @@ namespace PublicConstants {
 		ENTER,
 		ONE,
 		TWO,
+		FLEE,
+		POTION,
+		HELP,
 		ESC,
 		EMPTY
 	};
