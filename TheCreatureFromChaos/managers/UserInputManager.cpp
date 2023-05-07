@@ -2,10 +2,12 @@
 #include <iostream>
 #include "UserInputManager.h"
 #include "DebugMessageSystem.h"
+#include "CombatManager.h"
 
-UserInputManager::UserInputManager(ConsoleHandler* m_consoleHandler, ScenesManager* sceneManager, MenuManager* menuManager) :
+UserInputManager::UserInputManager(ConsoleHandler* m_consoleHandler, ScenesManager* sceneManager, MenuManager* menuManager, CombatManager* combatManager) :
     m_consoleHandler(),
     m_weaponManager(),
+    m_combatManager(combatManager),
     m_sceneManager(sceneManager),
     m_menuManager(menuManager),
     m_hasInput(false)
@@ -24,27 +26,36 @@ E_UserInput UserInputManager::GetInput()
             
             switch (key)
             {
-                case 'a': 
-                case 'A': 
-                case 75: // Left arrow keya
+                case    97:    //'a':           // Attack
+                case    65:    //'A':
+                case    72:    // Up arrow key
+                case '\033[A': // Up arrow key
+                    return E_UserInput::UP;
+					break;
+
+                case   107:    //'k':           // Khai help
+                case    75:    //'K': // Is the smae as Left arrow key
+                case '\033[D': // Left arrow key
                     return E_UserInput::LEFT;
                     break;
 
-                case 100: // Letter d
-                    return E_UserInput::RIGHT;
+                case   112:    //'p':           // Potion
+                case    80:    //'P': 
+                case    77:    // Right arrow key
+                case '\033[C': // Right arrow key
+                    if (key == '\033[B') // Down arrow key = 80
+                    {
+                        return E_UserInput::DOWN;
+                    }
+                    else
+                    {
+                        return E_UserInput::RIGHT;
+                    }   
                     break;
 
-                case 68: // Letter D
-                    return E_UserInput::RIGHT;
-                    break;
-
-                case 'w':
-                case 'W':
-                    return E_UserInput::UP;
-                    break;
-
-                case 's':
-                case 'S':
+                case   102:    //'f':           // Flee
+                case    70:    //'F': 
+                case '\033[B': // Down arrow key
                     return E_UserInput::DOWN;
                     break;
                 
@@ -60,20 +71,7 @@ E_UserInput UserInputManager::GetInput()
 
                 case '2':
 					return E_UserInput::TWO;
-
-                case 'f':
-                case 'F':
-                    return E_UserInput::FLEE;
                     break;
-
-                case 'p':
-                case 'P':
-                    return E_UserInput::POTION;
-                    break;
-
-                case 'h':
-                case 'H':
-                    return E_UserInput::HELP;
 
                 case 27: // Escape key
                     return E_UserInput::ESC;
@@ -92,11 +90,9 @@ void UserInputManager::SetAction(E_UserInput userInput)
     bool right = (userInput == E_UserInput::RIGHT);
     bool up = (userInput == E_UserInput::UP);
     bool down = (userInput == E_UserInput::DOWN);
-    bool potion = (userInput == E_UserInput::POTION);
-    bool flee = (userInput == E_UserInput::FLEE);
-    bool help = (userInput == E_UserInput::HELP);
 
-    if (left || right || up || down || potion || flee || help)
+
+    if (left || right || up || down)
     {
         DEBUG_MSG("UserInputManager.cpp : SetAction() : User is using LEFT RIGHT.");
         ActivateSelection(userInput);
@@ -175,26 +171,23 @@ void UserInputManager::ActivateSelection(E_UserInput userInput)
     }
     else if (combatMenu)
     {
-        if (userInput == E_UserInput::LEFT || userInput == E_UserInput::HELP)
+        if (userInput == E_UserInput::LEFT) // Khail help
         {
             GetMenuManager()->SelectMenuFromScene(E_UserInput::LEFT);
-
         }
-        else if (userInput == E_UserInput::RIGHT || userInput == E_UserInput::POTION)
+        else if (userInput == E_UserInput::RIGHT) // Potion
         {
             GetMenuManager()->SelectMenuFromScene(E_UserInput::RIGHT);
-
         }
-        else if (userInput == E_UserInput::UP)
+        else if (userInput == E_UserInput::UP) // Attack
         {
             GetMenuManager()->SelectMenuFromScene(E_UserInput::UP);
-
         }
-        else if (userInput == E_UserInput::DOWN || userInput == E_UserInput::FLEE)
+        else if (userInput == E_UserInput::DOWN) // Flee
         {
             GetMenuManager()->SelectMenuFromScene(E_UserInput::DOWN);
-
         }
+        GetCombatManager()->SetCombatAction(userInput);
     }
 }
 
@@ -248,4 +241,9 @@ WeaponManager* UserInputManager::GetWeaponManager()
 void UserInputManager::SetWeaponManager(WeaponManager* weaponManager)
 {
     m_weaponManager = weaponManager;
+}
+
+CombatManager* UserInputManager::GetCombatManager()
+{
+    return m_combatManager;
 }

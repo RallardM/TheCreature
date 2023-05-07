@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="managers\CombatManager.cpp" />
     <ClCompile Include="managers\MenuManager.cpp" />
     <ClCompile Include="managers\NarrationManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -163,6 +164,7 @@
     <Text Include="resouce_files\NarrationText.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="header_files\CombatManager.h" />
     <ClInclude Include="header_files\WeaponManager.h" />
     <ClInclude Include="header_files\DebugMessageSystem.h" />
     <ClInclude Include="header_files\MenuManager.h" />

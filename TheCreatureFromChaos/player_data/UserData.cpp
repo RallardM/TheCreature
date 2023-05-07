@@ -2,6 +2,7 @@
 
 UserData::UserData() :
 	m_playerName(""),
+	m_playerLifePoints(25),
 	m_areWeaponsEquiped(false),
 	m_isPlayerSeenDeadEnd(false),
 	m_isBossDefeated(false)

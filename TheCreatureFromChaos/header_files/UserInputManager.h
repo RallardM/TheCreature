@@ -6,11 +6,13 @@ class ScenesManager;
 #include "ConsoleHandler.h"
 #include "PublicConstants.h"
 #include "WeaponManager.h"
+
+class CombatManager;
 using namespace PublicConstants;
 
 class UserInputManager {
 public:
-	UserInputManager(ConsoleHandler* m_consoleHandler, ScenesManager* sceneManager, MenuManager* menuManager);
+	UserInputManager(ConsoleHandler* m_consoleHandler, ScenesManager* sceneManager, MenuManager* menuManager, CombatManager* combatManager);
 	
 	void ActivateSelection(E_UserInput userInput);
 	void EnterSelection();
@@ -27,6 +29,8 @@ public:
 	WeaponManager* GetWeaponManager();
 	void SetWeaponManager(WeaponManager* weaponManager);
 
+	CombatManager* GetCombatManager();
+
 private:
 	bool m_hasInput;
 
@@ -34,4 +38,5 @@ private:
 	MenuManager* m_menuManager;
 	ScenesManager* m_sceneManager;
 	WeaponManager* m_weaponManager;
+	CombatManager* m_combatManager;
 };

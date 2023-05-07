@@ -12,6 +12,7 @@
 #include "ScenesManager.h"
 #include "UserData.h"
 #include "WeaponManager.h"
+#include "CombatManager.h"
 
 int main()
 {
@@ -40,7 +41,9 @@ int main()
 	// Print Intro scene.
 	narrationManager->PrintLinesFromScene();
 
-	UserInputManager* inputManager = new UserInputManager(consoleHandler, scenesManager, menuManager);
+	CombatManager* combatManager = new CombatManager();
+
+	UserInputManager* inputManager = new UserInputManager(consoleHandler, scenesManager, menuManager, combatManager);
 	E_UserInput userInput = E_UserInput::EMPTY;
 
 	WeaponManager* weaponManager = new WeaponManager(menuManager);
@@ -82,6 +85,7 @@ int main()
 	delete inputManager;
 	delete narrationManager;
 	delete scenesManager;
+	delete combatManager;
 	delete weaponManager;
 
 	return 0;
