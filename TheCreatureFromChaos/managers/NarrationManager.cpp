@@ -25,6 +25,7 @@ void NarrationManager::PrintLinesFromScene()
 {
     E_SceneSequence scene = GetScenesManager()->GetPlayerCurrentScene();
     std::string scenePicture = "";
+    std::string jumpLine = "";
     std::string sceneText = "";
 
     switch (scene)
@@ -39,6 +40,7 @@ void NarrationManager::PrintLinesFromScene()
     case E_SceneSequence::ENNEMY_SCENE:
         DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
+        jumpLine = "\n";
         sceneText = GetPictureTextScene(scene, STORY_TEXT_HEIGHT);
         GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::DIALOGUES);
         break;
@@ -69,7 +71,7 @@ void NarrationManager::PrintLinesFromScene()
     DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Print TXT-IMG for choosen scene.");
     std::cout << scenePicture;
     DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Picture printed.");
-    std::cout << sceneText;
+    std::cout << jumpLine << sceneText;
     DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Text printed.");
 }
 

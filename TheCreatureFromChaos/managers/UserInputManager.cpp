@@ -201,6 +201,11 @@ void UserInputManager::EnterSelection()
         GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
         return;
     }
+    else if (currentNumberOfChoices == COMBAT_MENU)
+    {
+        GetScenesManager()->GetCombatManager()->EnemyCounterAttack();
+        return;
+    }
 }
 
 UserInputManager::E_CurrentInputType UserInputManager::GetCurrentInputType()

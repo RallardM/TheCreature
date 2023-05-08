@@ -9,13 +9,16 @@ public:
 
 	void SetCombatAction(E_UserInput userInput);
 
-	void ClearLastCombatAction();
+	void RefreshMenuAndLogFrame();
 
 	void PlayerAttack();
-	void EnnemyAttack();
+	void EnemyCounterAttack();
+
 	void InflictDamage(short int hitPoints);
+	void ReceiveDamage(short int hitPoints);
 
 	void PrintCausaltyLog(std::string logText, short int hitPoints);
+
 
 	WeaponManager* GetWeaponManager();
 	void SetWeaponManager(WeaponManager* weaponManager);
@@ -37,6 +40,9 @@ public:
 	bool GetIsFightStarted();
 	void SetIsFightStarted(bool isFightStarted);
 
+	bool GetIsPlayerTurn();
+	void SetIsPlayerTurn(bool isPlayerTurn);
+
 	void ClearAllConsoleText();
 
 	MenuManager* GetMenuManager();
@@ -52,4 +58,5 @@ private:
 	bool m_isFightLogCleared;
 	bool m_isEnemyDefeated;
 	bool m_isFightStarted;
+	bool m_isPLayerTurn;
 };

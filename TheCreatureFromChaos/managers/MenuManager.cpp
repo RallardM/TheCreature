@@ -83,7 +83,14 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
 
     case E_SceneSequence::COMBAT_SCENE:
         DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : COMBAT_SCENE");
-        SelectCombatChoice(userInput, E_MenuChoices::COMBAT_PLAIN);
+        if (GetCombatManager()->GetIsPlayerTurn() == false)
+        {
+            SelectCombatChoice(userInput, E_MenuChoices::NEXT_TURN);
+        }
+        else
+        {
+            SelectCombatChoice(userInput, E_MenuChoices::COMBAT_PLAIN);
+        }
         break;
 
     default:
@@ -122,7 +129,7 @@ void MenuManager::SelectNavigationElement(E_UserInput userInput, E_MenuChoices m
     if (userInput == E_UserInput::EMPTY)
     {
         DEBUG_MSG("MenuManager.cpp : SelectNavigationElement() : UserInput is EMPTY");
-        ClearConsolePreviousLine();
+        //ClearConsolePreviousLine();
         PrintNavigationMenu(menuChoice);
         return;
     }
@@ -209,7 +216,6 @@ void MenuManager::PrepareNavigationMenu(E_MenuChoices menuChoice, unsigned short
 
 void MenuManager::PrintSingleMenuChoice(E_UserInput userInput, E_MenuChoices menuChoice)
 {
-
     if (userInput == E_UserInput::EMPTY)
     {
         DEBUG_MSG("MenuManager.cpp : PrintSingleMenuChoice() : UserInput is EMPTY");
@@ -227,7 +233,6 @@ void MenuManager::PrintSingleMenuChoice(E_UserInput userInput, E_MenuChoices men
         AddDelay();
         return;
     }
-
     return;
 }
 
@@ -241,6 +246,7 @@ void MenuManager::PrintSelectedMenu(E_MenuChoices currentMenuChoice)
 
 void MenuManager::PrintNavigationMenu(E_MenuChoices currentNavigationChoice)
 {
+    //ClearConsolePreviousLine();
     unsigned int enumToInt = static_cast<unsigned int>(currentNavigationChoice);
     std::string& menuFilePath = GetNarrationManager()->GetMenuFilePath();
     std::string navigationMenuText = GetNarrationManager()->GetTextBetweenLines(menuFilePath, enumToInt, NAVIGATION_MENU_HEIGHT);

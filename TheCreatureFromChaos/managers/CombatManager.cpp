@@ -14,7 +14,8 @@ CombatManager::CombatManager(UserData* userData, MenuManager* menuManager) :
 	m_menuManager(menuManager),
 	m_isEnemyDefeated(false),
 	m_isFightStarted(false),
-	m_isFightLogCleared(true)
+	m_isFightLogCleared(true),
+	m_isPLayerTurn(true)
 {
 }
 
@@ -23,22 +24,21 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 	switch (userInput)
 	{		
 	case PublicConstants::E_UserInput::LEFT: // Attack
-		ClearLastCombatAction();
-		GetMenuManager()->SelectMenuFromScene(E_UserInput::EMPTY);
-		GetWeaponManager()->SelectWeapon(E_UserInput::EMPTY);
+		SetIsPlayerTurn(false);
+		RefreshMenuAndLogFrame();
+
 		PlayerAttack();
-		
 		break;
 
 	case PublicConstants::E_UserInput::RIGHT: // Potion
 
-		ClearLastCombatAction();
+		RefreshMenuAndLogFrame();
 		//EnnemyAttack();
 		break;
 
 	case PublicConstants::E_UserInput::UP:  // Khail help
 
-		ClearLastCombatAction();
+		RefreshMenuAndLogFrame();
 		//EnnemyAttack();
 		break;
 
@@ -53,13 +53,12 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 	//GetWeaponManager()->SelectWeapon(E_UserInput::EMPTY);
 }
 
-void CombatManager::ClearLastCombatAction()
+void CombatManager::RefreshMenuAndLogFrame()
 {
 	GetWeaponManager()->ClearWeaponLogLine();
 	GetMenuManager()->ClearConsoleNavigationMenu();
-	//GetMenuManager()->SetIsMenuCleared(true);
-	//SetIsFightLogCleared(true);
-	//GetWeaponManager()->SetIsMenuCleared(true);
+	GetMenuManager()->SelectMenuFromScene(E_UserInput::EMPTY);
+	GetWeaponManager()->SelectWeapon(E_UserInput::EMPTY);
 }
 
 void CombatManager::PlayerAttack()
@@ -90,14 +89,14 @@ void CombatManager::PlayerAttack()
 	}
 	else
 	{
-		playerHitLog = "              You hit the monster : ";
+		playerHitLog = "             You hit the monster : ";
 	}
 
 	InflictDamage(hitPoints);
 	PrintCausaltyLog(playerHitLog, hitPoints);
 }
 
-void CombatManager::EnnemyAttack()
+void CombatManager::EnemyCounterAttack()
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -121,8 +120,10 @@ void CombatManager::EnnemyAttack()
 		ennemyHitLog = "              The monster hit you : ";
 	}
 	
-	InflictDamage(hitPoints);
+	ReceiveDamage(hitPoints);
+	RefreshMenuAndLogFrame();
 	PrintCausaltyLog(ennemyHitLog, hitPoints);
+	SetIsPlayerTurn(true);
 }
 
 void CombatManager::InflictDamage(short int hitPoints)
@@ -132,6 +133,7 @@ void CombatManager::InflictDamage(short int hitPoints)
 	{
 		SetEnnemyLifePoints(0);
 		SetIsEnemyDefeated(true);
+		// TODO: Add victory message
 	}
 	else
 	{
@@ -139,11 +141,27 @@ void CombatManager::InflictDamage(short int hitPoints)
 	}
 }
 
+void CombatManager::ReceiveDamage(short int hitPoints)
+{
+	short int resultingCausalty = GetUserData()->GetPlayerLifePoints() - hitPoints;
+	if (resultingCausalty <= 0)
+	{
+		SetPlayerLifePoints(0);
+		//SetIsPlayerDefeated(true);
+		// TODO: Add defeat message
+	}
+	else
+	{
+		SetPlayerLifePoints(resultingCausalty);
+	}
+}
+
+
 void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 {
 	if (!GetIsFightLogCleared())
 	{
-		for (size_t i = 0; i < 40; i++)
+		for (size_t i = 0; i < 38; i++)
 		{
 			std::cout << "\b";
 		}
@@ -152,7 +170,7 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 	{
 		std::cout << logText;
 	}
-	else if (hitPoints < 0 && hitPoints > 10)      // To fit the number of max characters 
+	else if (hitPoints > 0 && hitPoints < 10)      // To fit the number of max characters 
 	{											   // to remove in the log
 		std::cout << logText << " -" << hitPoints; // add a space before the minus sign
 	}
@@ -226,6 +244,16 @@ bool CombatManager::GetIsFightStarted()
 void CombatManager::SetIsFightStarted(bool isFightStarted)
 {
 	m_isFightStarted = isFightStarted;
+}
+
+bool CombatManager::GetIsPlayerTurn()
+{
+	return m_isPLayerTurn;
+}
+
+void CombatManager::SetIsPlayerTurn(bool isPlayerTurn)
+{
+	m_isPLayerTurn = isPlayerTurn;
 }
 
 void CombatManager::ClearAllConsoleText()

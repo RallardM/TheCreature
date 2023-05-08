@@ -25,7 +25,7 @@ public:
 	UserInputManager* GetUserInputManager();
 	void SetUserInputManager(UserInputManager* userInputManager);
 
-	const unsigned short int ASCII_IMAGE_HEIGHT     = 34;
+	const unsigned short int ASCII_IMAGE_HEIGHT     = 33;
 	const unsigned short int NAVIGATION_MENU_HEIGHT =  7;
 	const unsigned short int STORY_TEXT_HEIGHT      =  5;
 	const unsigned short int NARRATION_MENU_HEIGHT  =  1;

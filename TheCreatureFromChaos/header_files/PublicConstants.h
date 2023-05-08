@@ -155,7 +155,8 @@ namespace PublicConstants {
 		COMBAT_ATTACK		   =  98,
 		COMBAT_POTION          = 106,
 		COMBAT_HELP            = 114,
-		COMBAT_FLEE            = 122
+		COMBAT_FLEE            = 122,
+		NEXT_TURN			   = 130
 	};
 	                                
 	enum class E_UserInput : const unsigned short int {

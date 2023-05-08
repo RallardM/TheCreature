@@ -25,7 +25,6 @@ int main()
 	consoleHandler->SetCenterConsolePosition();
 	//consoleHandler->DisableConsoleCursor();
 	consoleHandler->DisableConsoleScrolling();
-
 	consoleHandler->ActivateConsoleCursor();
 
 	UserData* userData = new UserData();
