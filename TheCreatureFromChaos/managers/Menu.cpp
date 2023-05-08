@@ -8,12 +8,12 @@
 #include "Menu.h"
 #include "DebugMessageSystem.h"
 
-Menu::Menu() :
-    //m_consoleHandler(consoleHandler),
-    //m_narrationManager(narrationManager),
-    //m_scenesManager(scenesManager),
-    //m_userData(userData),
-    //m_weaponManager(nullptr),
+Menu::Menu(Scenes* scenes) :
+    m_userData(nullptr),
+    m_outputManager(nullptr),
+    m_scenes(scenes),
+   // m_gameplayManager(gameplayManager),
+    m_consoleHandler(nullptr),
     m_isMenuCleared(true)
 {
     m_selectedMenuLine = E_MenuChoices::NO_MENU_LINE;
@@ -21,7 +21,7 @@ Menu::Menu() :
 
 void Menu::SelectMenuFromScene(E_UserInput userInput)
 {
-    E_SceneSequence scene = GetGameplayManager()->GetScenes()->GetPlayerCurrentScene();
+    E_SceneSequence scene = GetScenes()->GetPlayerCurrentScene();
 
     switch (scene)
     {
@@ -252,7 +252,7 @@ void Menu::PrintEnterNameMenu()
     //GetConsoleHandler()->DisableConsoleCursor(); // TODO: readd
     GetUserData()->SetPlayerName(playerName);
     SetIsMenuCleared(false);
-    GetGameplayManager()->GetScenes()->SetNextScene(E_MenuChoices::ENTER_NAME);
+    GetScenes()->SetNextScene(E_MenuChoices::ENTER_NAME);
     return;
 }
 
@@ -394,15 +394,15 @@ void Menu::AddDelay()
     std::this_thread::sleep_for(std::chrono::milliseconds(200));
 }
 
-GameplayManager* Menu::GetGameplayManager()
-{
-    return m_gameplayManager;
-}
-
-void Menu::SetGameplayManager(GameplayManager* gameplayManager)
-{
-    m_gameplayManager = gameplayManager;
-}
+//GameplayManager* Menu::GetGameplayManager()
+//{
+//    return m_gameplayManager;
+//}
+//
+//void Menu::SetGameplayManager(GameplayManager* gameplayManager)
+//{
+//    m_gameplayManager = gameplayManager;
+//}
 
 UserData* Menu::GetUserData()
 {
@@ -433,3 +433,13 @@ void Menu::SetConsoleHandler(ConsoleHandler* consoleHandler)
 {
     m_consoleHandler = consoleHandler;
 }
+
+Scenes* Menu::GetScenes()
+{
+    return m_scenes;
+}
+
+//void Menu::SetScenes(Scenes* scenes)
+//{
+//    m_scenes = scenes;
+//}

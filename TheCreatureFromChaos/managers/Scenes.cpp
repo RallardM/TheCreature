@@ -6,8 +6,9 @@
 
 Scenes::Scenes() :
 	m_userCurrentScene(E_SceneSequence::INTRO_SCENE),
-	m_outputManager(nullptr),
-	m_userData(nullptr)//,
+	m_outputManager(),
+	m_userData(),
+	m_combat()
 	//m_gameplayManager(nullptr)
 {
 }

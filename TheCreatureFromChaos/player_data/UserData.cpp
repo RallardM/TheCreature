@@ -1,6 +1,7 @@
 #include "UserData.h"
 
 UserData::UserData(Weapons* weapon) :
+	m_weapons(weapon),
 	m_playerName(""),
 	m_numberOfPotions(0),
 	m_playerLifePoints(25),
@@ -54,10 +55,10 @@ Weapons* UserData::GetWeapons()
 	return m_weapons;
 }
 
-void UserData::SetWeapons(Weapons* weapon)
-{
-	m_weapons = weapon;
-}
+//void UserData::SetWeapons(Weapons* weapon)
+//{
+//	m_weapons = weapon;
+//}
 
 // TODO
 //bool UserData::GetAttackedKobold()

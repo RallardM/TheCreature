@@ -20,7 +20,7 @@ public:
 	void SetNumberOfPotions(unsigned short int numberOfPotions);
 
 	Weapons* GetWeapons();
-	void SetWeapons(Weapons* weapon);
+	//void SetWeapons(Weapons* weapon);
 
 	/// TODO
 	//bool GetAttackedKobold();

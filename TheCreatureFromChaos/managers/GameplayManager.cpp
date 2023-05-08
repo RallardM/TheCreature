@@ -15,10 +15,10 @@ Scenes* GameplayManager::GetScenes()
 	return m_scenes;
 }
 
-//void GameplayManager::SetScenes(Scenes* scenes)
-//{
-//	m_scenes = scenes;
-//}
+void GameplayManager::SetScenes(Scenes* scenes)
+{
+	m_scenes = scenes;
+}
 
 Combat* GameplayManager::GetCombat()
 {

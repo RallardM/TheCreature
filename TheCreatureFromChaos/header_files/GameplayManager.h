@@ -12,7 +12,7 @@ public:
 	~GameplayManager();
 
 	Scenes* GetScenes();
-	//void SetScenes(Scenes* scenes);
+	void SetScenes(Scenes* scenes);
 
 	Combat* GetCombat();
 	void SetCombat(Combat* combat);

@@ -1,12 +1,14 @@
 #pragma once
 
 #include <fstream>
-//#include "ScenesManager.h"
-//class Scenes;
+
+#include "Scenes.h"
+class Scenes;
 #include "PublicConstants.h"
 #include "UserData.h"
 #include "ConsoleHandler.h"
-#include "GameplayManager.h"
+//#include "GameplayManager.h"
+//class GameplayManager;
 
 using namespace PublicConstants;
 
@@ -14,9 +16,8 @@ class Menu {
 public:
 	const short int EMPTY_MENU_LINE = -1;
 	const std::string EMPTY_MENU_TEXT = "";
-	Menu();
-	
 
+	Menu(Scenes* scenes);
 	void SelectMenuFromScene(E_UserInput userInput);
 	void SelectMenuChoice(E_UserInput userInput, E_MenuChoices LeftMenuChoice, E_MenuChoices rightMenuChoice);
 
@@ -52,8 +53,8 @@ public:
 	//Weapons* GetWeaponManager();
 	//void SetWeaponManager(Weapons* weaponManager);
 
-	GameplayManager* GetGameplayManager();
-	void SetGameplayManager(GameplayManager* gameplayManager);
+	//GameplayManager* GetGameplayManager();
+	//void SetGameplayManager(GameplayManager* gameplayManager);
 
 	UserData* GetUserData();
 	void SetUserData(UserData* userData);
@@ -64,14 +65,18 @@ public:
 	ConsoleHandler* GetConsoleHandler();
 	void SetConsoleHandler(ConsoleHandler* consoleHandler);
 
+	Scenes* GetScenes();
+	//void SetScenes(Scenes* scenes);
+
 private:
 
 	E_MenuChoices m_selectedMenuLine;
 
-	std::ifstream m_menuFilePath;
+	//std::ifstream m_menuFilePath;
 	bool m_isMenuCleared;
 
-	GameplayManager* m_gameplayManager;
+	//GameplayManager* m_gameplayManager;
+	Scenes* m_scenes;
 	UserData* m_userData;
 	OutputManager* m_outputManager;
 

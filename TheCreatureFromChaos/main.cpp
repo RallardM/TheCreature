@@ -19,6 +19,8 @@
 int main()
 {
 	//DEBUG_MSG("#B main.cpp : main() : Enters main function.");
+	Scenes* scenes = new Scenes();
+	Menu* menu = new Menu(scenes);
 	Weapons* weapon = new Weapons();
 	UserData* userData = new UserData(weapon);
 	Combat* combat = new Combat();
@@ -34,23 +36,25 @@ int main()
 	narration->SetConsoleHandler(consoleHandler);
 	E_UserInput userInput = E_UserInput::EMPTY;
 
-	Scenes* scenes = new Scenes();
 
 	OutputManager* outputManager = new OutputManager();
 	GameplayManager* gameplayManager = new GameplayManager(scenes);
-	narration->SetGameplayManager(gameplayManager);
 	
+	narration->SetGameplayManager(gameplayManager);
+	inputManager->SetGameplayManager(gameplayManager);
+	inputManager->SetOutputManager(outputManager);
 	gameplayManager->SetCombat(combat);
 	combat->SetUserData(userData);
 
 	outputManager->SetNarration(narration);
 
-	Menu* menu = new Menu();
-	menu->SetGameplayManager(gameplayManager);
+	
+	//menu->SetGameplayManager(gameplayManager);
+	//menu->SetScenes(scenes);
 	menu->SetOutputManager(outputManager);
 	menu->SetConsoleHandler(consoleHandler);
 
-	//gameplayManager->SetScenes(scenes);
+	gameplayManager->SetScenes(scenes);
 	//scenes->SetGameplayManager(gameplayManager);
 	scenes->SetOutputManager(outputManager);
 	scenes->SetUserData(userData);
