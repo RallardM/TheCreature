@@ -34,19 +34,7 @@ E_UserInput UserInputManager::GetInput()
 
                 case    75:    // Left arrow key
                 case '\033[D': // Left arrow key
-                    if (GetCurrentInputType() == E_CurrentInputType::COMBAT)
-                    {
-                        return E_UserInput::LEFT;
-                    }
-                    else if (GetCurrentInputType() == E_CurrentInputType::NAVIGATION)
-                    {
-                        return E_UserInput::LEFT;
-                    }
-                    else
-                    {
-                        return E_UserInput::EMPTY;
-                    }
-                    break;
+                    return E_UserInput::LEFT;
 
                 case   119:    //'w':           // Move forward - Khai Attack
                 case    87:    //'W':
@@ -96,14 +84,11 @@ E_UserInput UserInputManager::GetInput()
                             return E_UserInput::EMPTY;
                         }
                     }
-                    else if (GetCurrentInputType() == E_CurrentInputType::NAVIGATION)
+                    else if (GetCurrentInputType() == E_CurrentInputType::NAVIGATION || GetCurrentInputType() == E_CurrentInputType::DIALOGUES)
                     {
                         return E_UserInput::RIGHT;
                     }
-                    else
-                    {
-                        return E_UserInput::EMPTY;
-                    }
+
                     break;
 
                 case   102:    //'f':           // Flee
@@ -190,6 +175,7 @@ void UserInputManager::EnterSelection()
 {
     E_SceneSequence currentScene = GetScenesManager()->GetPlayerCurrentScene();
     unsigned short int currentNumberOfChoices = SCENE_NUMBER_OF_MENU_CHOICES[int(currentScene)];
+    
     if (currentNumberOfChoices == ONE_CHOICE_MENU)
     {
         GetMenuManager()->SelectMenuFromScene(E_UserInput::ENTER);
@@ -201,7 +187,7 @@ void UserInputManager::EnterSelection()
         GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
         return;
     }
-    else if (currentNumberOfChoices == COMBAT_MENU)
+    else if (currentNumberOfChoices == COMBAT_MENU && !GetScenesManager()->GetCombatManager()->GetIsPlayerTurn())
     {
         GetScenesManager()->GetCombatManager()->EnemyCounterAttack();
         return;

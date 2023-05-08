@@ -1,6 +1,20 @@
 #include "WeaponManager.h"
 #include "DebugMessageSystem.h"
 
+enum class S_Weapons : unsigned short int
+{
+	SWORD = 0,
+	WAND = 1
+};
+
+WeaponManager::WeaponManager(MenuManager* menuManager) :
+	m_menuManager(menuManager),
+	m_isWeaponBeltCleared(true),
+	m_currentWeaponIndex(0)
+{
+	m_currentWeapons[0] = S_Weapon("Sword", 5, 15);
+	m_currentWeapons[1] = S_Weapon("Wand", 10, 18);
+}
 
 void WeaponManager::SelectWeapon(E_UserInput userInput)
 {
@@ -8,11 +22,11 @@ void WeaponManager::SelectWeapon(E_UserInput userInput)
 	{
 	case E_UserInput::ONE:
 		SetCurrentWeaponIndex(0); // Sword
-		PrintBeltMenu(0);
+		PrintBeltMenu(static_cast<unsigned int short>(S_Weapons::SWORD));
 		break;
 	case E_UserInput::TWO:
 		SetCurrentWeaponIndex(1); // Wand
-		PrintBeltMenu(1);
+		PrintBeltMenu(static_cast<unsigned int short>(S_Weapons::WAND));
 		break;
 	default:
 		PrintBeltMenu(GetCurrentWeaponIndex());
@@ -22,28 +36,38 @@ void WeaponManager::SelectWeapon(E_UserInput userInput)
 
 void WeaponManager::PrintBeltMenu(unsigned int short selectedWeaponIndex)
 {
+	if (GetMenuManager()->GetNarrationManager()->GetUserInputManager()->GetCurrentInputType() == UserInputManager::E_CurrentInputType::DIALOGUES)
+	{
+		return;
+	}
 	std::string currentWeapon = "";
+	std::string spaceEquilizer = "";
 	unsigned short int numberOfPotions = 0;
 
-	if (GetIsMenuCleared() == false)
+	if (GetIsWeaponBeltCleared() == false)
 	{
-		ClearWeaponLogLine();
+		//ClearWeaponLogLine();
+		GetMenuManager()->ClearConsolePreviousLine();
+	}
+	if (selectedWeaponIndex == static_cast<unsigned int short>(S_Weapons::WAND))
+	{
+		spaceEquilizer = " ";
 	}
 	numberOfPotions = GetMenuManager()->GetUserData()->GetNumberOfPotions();
 	currentWeapon = GetCurrentWeapon(selectedWeaponIndex).weaponName;
-	std::cout << "   " << currentWeapon << " is equiped | Number of potions : " << numberOfPotions;
-	SetIsMenuCleared(false);
+	std::cout << "   " << currentWeapon << " is equiped" << spaceEquilizer<<" | Number of potions : " << numberOfPotions << std::endl;
+	SetIsWeaponBeltCleared(false);
 }
 
 
-bool WeaponManager::GetIsMenuCleared()
+bool WeaponManager::GetIsWeaponBeltCleared()
 {
-	return m_isMenuCleared;
+	return m_isWeaponBeltCleared;
 }
 
-void WeaponManager::SetIsMenuCleared(bool isMenuCleared)
+void WeaponManager::SetIsWeaponBeltCleared(bool isMenuCleared)
 {
-	m_isMenuCleared = isMenuCleared;
+	m_isWeaponBeltCleared = isMenuCleared;
 }
 
 unsigned short int WeaponManager::GetCurrentWeaponIndex()
@@ -66,12 +90,12 @@ MenuManager* WeaponManager::GetMenuManager()
 	return 	m_menuManager;
 }
 
-void WeaponManager::ClearWeaponLogLine()
-{
-	std::cout << "\r";
-	for (int i = 0; i < 80; i++)
-	{
-		std::cout << " ";
-	}
-	std::cout << "\r";
-}
+//void WeaponManager::ClearWeaponLogLine()
+//{
+//	std::cout << "\r";
+//	for (int i = 0; i < 80; i++)
+//	{
+//		std::cout << " ";
+//	}
+//	std::cout << "\r";
+//}

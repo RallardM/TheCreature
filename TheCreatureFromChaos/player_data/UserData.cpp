@@ -49,7 +49,17 @@ void UserData::SetNumberOfPotions(unsigned short int numberOfPotions)
 	m_numberOfPotions = numberOfPotions;
 }
 
-// TODO
+short int UserData::GetPlayerLifePoints()
+{
+	return m_playerLifePoints;
+}
+
+void UserData::SetPlayerLifePoints(short int playerLifePoints)
+{
+	m_playerLifePoints = playerLifePoints;
+}
+
+// TODO If the player attacked Kobold at the beginning, the help menu in combat mode should not be accessible
 //bool UserData::GetAttackedKobold()
 //{
 //	return m_attackedKobold;

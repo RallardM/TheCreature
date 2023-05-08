@@ -24,7 +24,7 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 	switch (userInput)
 	{		
 	case PublicConstants::E_UserInput::LEFT: // Attack
-		SetIsPlayerTurn(false);
+		
 		RefreshMenuAndLogFrame();
 
 		PlayerAttack();
@@ -50,12 +50,16 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 		break;
 
 	}
+	SetIsFightStarted(true);
 	//GetWeaponManager()->SelectWeapon(E_UserInput::EMPTY);
 }
 
 void CombatManager::RefreshMenuAndLogFrame()
 {
-	GetWeaponManager()->ClearWeaponLogLine();
+	//GetWeaponManager()->ClearWeaponLogLine();
+	GetMenuManager()->ClearConsolePreviousLine();
+	SetIsFightLogCleared(true);
+	GetWeaponManager()->SetIsWeaponBeltCleared(true);
 	GetMenuManager()->ClearConsoleNavigationMenu();
 	GetMenuManager()->SelectMenuFromScene(E_UserInput::EMPTY);
 	GetWeaponManager()->SelectWeapon(E_UserInput::EMPTY);
@@ -85,7 +89,7 @@ void CombatManager::PlayerAttack()
 
 	if (hitPoints == 0)
 	{
-		playerHitLog = "                            You missed!";
+		playerHitLog = "                           You missed!";
 	}
 	else
 	{
@@ -94,6 +98,7 @@ void CombatManager::PlayerAttack()
 
 	InflictDamage(hitPoints);
 	PrintCausaltyLog(playerHitLog, hitPoints);
+	SetIsPlayerTurn(false);
 }
 
 void CombatManager::EnemyCounterAttack()
@@ -113,11 +118,11 @@ void CombatManager::EnemyCounterAttack()
 
 	if (hitPoints == 0)
 	{
-		ennemyHitLog = "                    The monster missed!";
+		ennemyHitLog = "                   The monster missed!";
 	}
 	else
 	{
-		ennemyHitLog = "              The monster hit you : ";
+		ennemyHitLog = "             The monster hit you : ";
 	}
 	
 	ReceiveDamage(hitPoints);
@@ -133,6 +138,7 @@ void CombatManager::InflictDamage(short int hitPoints)
 	{
 		SetEnnemyLifePoints(0);
 		SetIsEnemyDefeated(true);
+		std::cout << "TODO You won!";
 		// TODO: Add victory message
 	}
 	else
@@ -146,19 +152,29 @@ void CombatManager::ReceiveDamage(short int hitPoints)
 	short int resultingCausalty = GetUserData()->GetPlayerLifePoints() - hitPoints;
 	if (resultingCausalty <= 0)
 	{
-		SetPlayerLifePoints(0);
+		GetUserData()->SetPlayerLifePoints(0);
 		//SetIsPlayerDefeated(true);
+		std::cout << "TODO You died!";
 		// TODO: Add defeat message
 	}
 	else
 	{
-		SetPlayerLifePoints(resultingCausalty);
+		GetUserData()->SetPlayerLifePoints(resultingCausalty);
 	}
 }
 
 
 void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 {
+	bool isPlayerInDialogueMode = (GetMenuManager()->GetNarrationManager()->GetUserInputManager()->GetCurrentInputType() == UserInputManager::E_CurrentInputType::DIALOGUES);
+	bool isPlayerInNavigationMode = (GetMenuManager()->GetNarrationManager()->GetUserInputManager()->GetCurrentInputType() == UserInputManager::E_CurrentInputType::NAVIGATION);
+	if (isPlayerInDialogueMode || isPlayerInNavigationMode)
+	{
+		return;
+	}
+
+	MoveCursorAfterBeltLog();
+
 	if (!GetIsFightLogCleared())
 	{
 		for (size_t i = 0; i < 38; i++)
@@ -179,6 +195,12 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 		std::cout << logText << "-" << hitPoints;
 	}
 	SetIsFightLogCleared(false);
+}
+
+void CombatManager::MoveCursorAfterBeltLog()
+{
+	std::cout << "\033[A";
+	std::cout << "\033[44C";
 }
 
 WeaponManager* CombatManager::GetWeaponManager()

@@ -23,7 +23,7 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 	GetMenuManager()->SetIsMenuCleared(true);
 	if (GetUserData()->GetAreWeaponsEquiped() == true)
 	{
-		GetWeaponManager()->SetIsMenuCleared(true);
+		GetWeaponManager()->SetIsWeaponBeltCleared(true);
 	}
 
 	E_SceneSequence movingTowardScene = E_SceneSequence::NO_SCENE;
@@ -81,7 +81,7 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set COMBAT_SCENE.");
 		SetPlayerCurrentScene(E_SceneSequence::COMBAT_SCENE);
 		//SetIsFightStarted(true);
-		GetCombatManager()->SetIsFightStarted(true);
+		//GetCombatManager()->SetIsFightStarted(true);
 		break;
 
 	case E_MenuChoices::RUN_AWAY:              // From ENNEMY_SCENE

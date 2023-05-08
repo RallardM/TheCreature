@@ -7,20 +7,14 @@ using namespace PublicConstants;
 class WeaponManager
 {
 public:
-	WeaponManager(MenuManager* menuManager) :
-		m_menuManager(menuManager),
-		m_isMenuCleared(true),
-		m_currentWeaponIndex(0)
-	{
-		m_currentWeapons[0] = S_Weapon("Sword", 5, 15);
-		m_currentWeapons[1] = S_Weapon("Wand", 10, 18);
-	}
+
+	WeaponManager(MenuManager* menuManager);
 
 	void SelectWeapon(E_UserInput userInput);
 	void PrintBeltMenu(unsigned int short selectedWeaponIndex);
 
-	bool GetIsMenuCleared();
-	void SetIsMenuCleared(bool isMenuCleared);
+	bool GetIsWeaponBeltCleared();
+	void SetIsWeaponBeltCleared(bool isWeaponBeltCleared);
 
 	unsigned short int GetCurrentWeaponIndex();
 	void SetCurrentWeaponIndex(unsigned short int currentWeaponIndex);
@@ -29,10 +23,10 @@ public:
 
 	MenuManager* GetMenuManager();
 
-	void ClearWeaponLogLine();
+	//void ClearWeaponLogLine();
 
 private:
-	bool m_isMenuCleared;
+	bool m_isWeaponBeltCleared;
 	S_Weapon m_currentWeapons[2];
 	unsigned short int m_currentWeaponIndex;
 

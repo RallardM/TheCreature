@@ -83,14 +83,8 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
 
     case E_SceneSequence::COMBAT_SCENE:
         DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : COMBAT_SCENE");
-        if (GetCombatManager()->GetIsPlayerTurn() == false)
-        {
-            SelectCombatChoice(userInput, E_MenuChoices::NEXT_TURN);
-        }
-        else
-        {
-            SelectCombatChoice(userInput, E_MenuChoices::COMBAT_PLAIN);
-        }
+        //SelectCombatElement(userInput);
+        SelectCombatChoice(userInput, E_MenuChoices::NO_MENU_LINE);
         break;
 
     default:
@@ -108,16 +102,18 @@ void MenuManager::SelectMenuChoice(E_UserInput userInput, E_MenuChoices LeftMenu
         return;
     }
 
-    ClearConsolePreviousLine();
-    SetIsMenuCleared(true);
     if (userInput == E_UserInput::LEFT && GetSelectedMenuLine() != LeftMenuChoice)
     {
+        ClearConsolePreviousLine();
+        SetIsMenuCleared(true);
         DEBUG_MSG("MenuManager.cpp : SelectMenuChoice() : Print LeftMenuChoice");
         PrintSelectedMenu(LeftMenuChoice);
         return;
     }
     else if (userInput == E_UserInput::RIGHT && GetSelectedMenuLine() != rightMenuChoice)
     {
+        ClearConsolePreviousLine();
+        SetIsMenuCleared(true);
         DEBUG_MSG("MenuManager.cpp : SelectMenuChoice() : Print rightMenuChoice");
         PrintSelectedMenu(rightMenuChoice);
         return;
@@ -126,6 +122,10 @@ void MenuManager::SelectMenuChoice(E_UserInput userInput, E_MenuChoices LeftMenu
 
 void MenuManager::SelectNavigationElement(E_UserInput userInput, E_MenuChoices menuChoice)
 {
+    if (menuChoice == E_MenuChoices::LR_NAVIGATION_PLAIN && (userInput == E_UserInput::UP || userInput == E_UserInput::DOWN))
+    {
+        return;
+    }
     if (userInput == E_UserInput::EMPTY)
     {
         DEBUG_MSG("MenuManager.cpp : SelectNavigationElement() : UserInput is EMPTY");
@@ -161,13 +161,25 @@ void MenuManager::SelectNavigationElement(E_UserInput userInput, E_MenuChoices m
     return;
 }
 
+//void MenuManager::SelectCombatElement(E_UserInput userInput)
+//{
+//    if (GetCombatManager()->GetIsPlayerTurn())
+//    {
+//        SelectCombatChoice(userInput, E_MenuChoices::COMBAT_PLAIN);
+//    }
+//    else
+//    {
+//        SelectCombatChoice(userInput, E_MenuChoices::NEXT_TURN);
+//    }
+//}
+
 void MenuManager::SelectCombatChoice(E_UserInput userInput, E_MenuChoices menuChoice)
 {
     if (userInput == E_UserInput::EMPTY)
     {
         DEBUG_MSG("MenuManager.cpp : SelectCombatChoice() : UserInput is EMPTY");
         //ClearConsolePreviousLine();
-        PrintNavigationMenu(menuChoice);
+        PrintNavigationMenu(E_MenuChoices::COMBAT_PLAIN);
         return;
     }
 
@@ -200,8 +212,9 @@ void MenuManager::SelectCombatChoice(E_UserInput userInput, E_MenuChoices menuCh
 
 void MenuManager::PrepareNavigationMenu(E_MenuChoices menuChoice, unsigned short int numberOfUiElementsToJumpOver)
 {
-    GetWeaponManager()->ClearWeaponLogLine();
-    
+    //GetWeaponManager()->ClearWeaponLogLine();
+    ClearConsolePreviousLine();
+    GetWeaponManager()->SetIsWeaponBeltCleared(true);
     ClearConsoleNavigationMenu();
     //SetIsMenuCleared(true);
     int enumToInt = static_cast<int>(menuChoice);
@@ -260,7 +273,7 @@ void MenuManager::PrintEnterNameMenu()
 {
     std::cout << "            What name do you want Khai to call you? ";
     std::string playerName;
-    GetConsoleHandler()->ActivateConsoleCursor();
+    //GetConsoleHandler()->ActivateConsoleCursor(); // TODO
 
     std::cin >> playerName;
 

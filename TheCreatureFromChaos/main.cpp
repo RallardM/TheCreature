@@ -72,7 +72,7 @@ int main()
 			menuManager->SelectMenuFromScene(userInput);
 		}
 
-		if (userData->GetAreWeaponsEquiped() && weaponManager->GetIsMenuCleared())
+		if (userData->GetAreWeaponsEquiped() && weaponManager->GetIsWeaponBeltCleared())
 		{
 			userInput = E_UserInput::EMPTY;
 			weaponManager->SelectWeapon(userInput);

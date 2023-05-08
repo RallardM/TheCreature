@@ -19,6 +19,7 @@ public:
 
 	void PrintCausaltyLog(std::string logText, short int hitPoints);
 
+	void MoveCursorAfterBeltLog();
 
 	WeaponManager* GetWeaponManager();
 	void SetWeaponManager(WeaponManager* weaponManager);

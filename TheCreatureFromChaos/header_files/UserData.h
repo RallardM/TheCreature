@@ -18,6 +18,9 @@ public:
 	unsigned short int GetNumberOfPotions();
 	void SetNumberOfPotions(unsigned short int numberOfPotions);
 
+	short int GetPlayerLifePoints();
+	void SetPlayerLifePoints(short int playerLifePoints);
+
 	/// TODO
 	//bool GetAttackedKobold();
 	//void SetAttackedKobold(bool attackedKobold);

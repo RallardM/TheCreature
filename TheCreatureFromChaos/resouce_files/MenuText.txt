@@ -1,9 +1,9 @@
 ﻿INTRO_SCENE:
-                          <Try to move>     Try to remeber 
-                           Try to move     <Try to remeber>
+                          <Try to move>    Try to remember 
+                           Try to move    <Try to remember>
 MOVING_SCENE:
-                          <Look around>     Try to remeber 
-                           Look around     <Try to remeber>
+                          <Look around>    Try to remember 
+                           Look around    <Try to remember>
 KOBOLD_SCENE:
                          <"Who are you?">       Attack     
                           "Who are you?"       <Attack>    
@@ -12,11 +12,11 @@ NAME_SCENE: View MenuManager.cpp PrintMenuFromScene()
 ATTACK_KOBOLD_SCENE: View code MenuManager.cpp PrintMenuFromScene()
 
 WEAPONS_SCENE:
-                                   Take weapons 
+                            Press Enter To Take Weapons 
                                   <Take weapons>
 DEAD_END_SCENE:
-                              Press Enter To Go back 
-                                    <Go back>
+                              Press Enter To Go Back 
+                                    <Go Back>
 ENNEMY_SCENE:
                             <Attack>           Run away 
                              Attack           <Run away>
@@ -129,8 +129,8 @@ FLEE:
  Next turn:
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    % ;;;;;;:::;;;;;;;;;;;;;;;;;;;               ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;%
-   % ;;;::: ^ :::;;;;                                         ;;;;;;;;;;;;;;;;;;;%
-   % ;;; <  e  > ;;;;       Press Enter For Next Turn         ;;;;;;;;;;;;;;;;;;;%
-   % ;;;;;; v ;;;;;;;                                         ;;;;;;;;;;;;;;;;;;;%
+   % ;;;:::   :::;;;;                                         ;;;;;;;;;;;;;;;;;;;%
+   % ;;;    e    ;;;;       Press Enter For Next Turn         ;;;;;;;;;;;;;;;;;;;%
+   % ;;;;;;   ;;;;;;;                                         ;;;;;;;;;;;;;;;;;;;%
    % ;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;%
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
