@@ -15,7 +15,7 @@ CombatManager::CombatManager(UserData* userData, MenuManager* menuManager) :
 	m_isEnemyDefeated(false),
 	m_isFightStarted(false),
 	m_isFightLogCleared(true),
-	m_isPLayerTurn(true)
+	m_isPLayerTurn(false)
 {
 }
 
@@ -24,10 +24,11 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 	switch (userInput)
 	{		
 	case PublicConstants::E_UserInput::LEFT: // Attack
-		
+		SetIsPlayerTurn(true);
 		RefreshMenuAndLogFrame();
-
+		
 		PlayerAttack();
+		SetIsPlayerTurn(false);
 		break;
 
 	case PublicConstants::E_UserInput::RIGHT: // Potion
@@ -58,8 +59,8 @@ void CombatManager::RefreshMenuAndLogFrame()
 {
 	//GetWeaponManager()->ClearWeaponLogLine();
 	GetMenuManager()->ClearConsolePreviousLine();
-	SetIsFightLogCleared(true);
-	GetWeaponManager()->SetIsWeaponBeltCleared(true);
+	//SetIsFightLogCleared(true);
+	//GetWeaponManager()->SetIsWeaponBeltCleared(true);
 	GetMenuManager()->ClearConsoleNavigationMenu();
 	GetMenuManager()->SelectMenuFromScene(E_UserInput::EMPTY);
 	GetWeaponManager()->SelectWeapon(E_UserInput::EMPTY);
@@ -89,16 +90,22 @@ void CombatManager::PlayerAttack()
 
 	if (hitPoints == 0)
 	{
-		playerHitLog = "                           You missed!";
+		//std::string spaces = "                           ";
+		std::string spaces = "..........................."; // Debug TODO : Remove
+		std::string text = "You missed!";
+		playerHitLog = spaces + text;
 	}
 	else
 	{
-		playerHitLog = "             You hit the monster : ";
+		//std::string spaces = "             ";
+		std::string spaces = "............."; // Debug TODO : Remove
+		std::string text = "You hit the monster : ";
+		playerHitLog = spaces + text;
 	}
 
 	InflictDamage(hitPoints);
 	PrintCausaltyLog(playerHitLog, hitPoints);
-	SetIsPlayerTurn(false);
+	//SetIsPlayerTurn(false);
 }
 
 void CombatManager::EnemyCounterAttack()
@@ -118,17 +125,23 @@ void CombatManager::EnemyCounterAttack()
 
 	if (hitPoints == 0)
 	{
-		ennemyHitLog = "                   The monster missed!";
+		//std::string spaces = "                   ";
+		std::string spaces = "..................."; // Debug TODO : Remove
+		std::string text = "The monster missed!";
+		ennemyHitLog = spaces + text;
 	}
 	else
 	{
-		ennemyHitLog = "             The monster hit you : ";
+		//std::string spaces = "             ";
+		std::string spaces = "............."; // Debug TODO : Remove
+		std::string text = "The monster hit you : ";
+		ennemyHitLog = spaces + text;
 	}
 	
 	ReceiveDamage(hitPoints);
 	RefreshMenuAndLogFrame();
 	PrintCausaltyLog(ennemyHitLog, hitPoints);
-	SetIsPlayerTurn(true);
+	//SetIsPlayerTurn(true);
 }
 
 void CombatManager::InflictDamage(short int hitPoints)
@@ -188,7 +201,8 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 	}
 	else if (hitPoints > 0 && hitPoints < 10)      // To fit the number of max characters 
 	{											   // to remove in the log
-		std::cout << logText << " -" << hitPoints; // add a space before the minus sign
+		//std::cout << logText << " -" << hitPoints; // add a space before the minus sign
+		std::cout << logText << ".-" << hitPoints; // Debug TODO : Remove
 	}
 	else
 	{
@@ -200,7 +214,7 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 void CombatManager::MoveCursorAfterBeltLog()
 {
 	std::cout << "\033[A";
-	std::cout << "\033[44C";
+	std::cout << "\033[43C";
 }
 
 WeaponManager* CombatManager::GetWeaponManager()

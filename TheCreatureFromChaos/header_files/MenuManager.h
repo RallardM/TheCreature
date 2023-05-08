@@ -22,10 +22,11 @@ public:
 	void SelectMenuChoice(E_UserInput userInput, E_MenuChoices LeftMenuChoice, E_MenuChoices rightMenuChoice);
 
 	void SelectNavigationElement(E_UserInput userInput, E_MenuChoices menuChoice);
-	void SelectCombatElement(E_UserInput userInput);
 	void PrepareNavigationMenu(E_MenuChoices menuChoice, unsigned short int numberOfUiElementsToJumpOver);
 
+	//void SelectCombatElement(E_UserInput userInput);
 	void SelectCombatChoice(E_UserInput userInput, E_MenuChoices menuChoice);
+	void PrepareCombatMenu(E_MenuChoices menuChoice);
 
 	void PrintSingleMenuChoice(E_UserInput userInput, E_MenuChoices menuChoice);
 	void PrintSelectedMenu(E_MenuChoices currentMenuChoice);

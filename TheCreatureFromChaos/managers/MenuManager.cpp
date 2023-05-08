@@ -161,6 +161,23 @@ void MenuManager::SelectNavigationElement(E_UserInput userInput, E_MenuChoices m
     return;
 }
 
+void MenuManager::PrepareNavigationMenu(E_MenuChoices menuChoice, unsigned short int numberOfUiElementsToJumpOver)
+{
+    //GetWeaponManager()->ClearWeaponLogLine();
+    ClearConsolePreviousLine();
+    GetWeaponManager()->SetIsWeaponBeltCleared(true);
+    ClearConsoleNavigationMenu();
+    //SetIsMenuCleared(true);
+    int enumToInt = static_cast<int>(menuChoice);
+    E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(enumToInt + (NB_LINES_NEXT_NAVIG_UI * numberOfUiElementsToJumpOver));
+    PrintNavigationMenu(nextMenuInEnum);
+
+    GetWeaponManager()->SelectWeapon(E_UserInput::EMPTY);
+
+    AddDelay();
+    return;
+}
+
 //void MenuManager::SelectCombatElement(E_UserInput userInput)
 //{
 //    if (GetCombatManager()->GetIsPlayerTurn())
@@ -175,6 +192,13 @@ void MenuManager::SelectNavigationElement(E_UserInput userInput, E_MenuChoices m
 
 void MenuManager::SelectCombatChoice(E_UserInput userInput, E_MenuChoices menuChoice)
 {
+    if (!GetCombatManager()->GetIsPlayerTurn())
+    {
+	    DEBUG_MSG("MenuManager.cpp : SelectCombatChoice() : Not player turn");
+        PrepareCombatMenu(E_MenuChoices::NEXT_TURN);
+        return;
+	}
+
     if (userInput == E_UserInput::EMPTY)
     {
         DEBUG_MSG("MenuManager.cpp : SelectCombatChoice() : UserInput is EMPTY");
@@ -182,44 +206,42 @@ void MenuManager::SelectCombatChoice(E_UserInput userInput, E_MenuChoices menuCh
         PrintNavigationMenu(E_MenuChoices::COMBAT_PLAIN);
         return;
     }
-
-    if (userInput == E_UserInput::LEFT) // ATTACK
+    else if (userInput == E_UserInput::LEFT) // ATTACK
     {
-        PrepareNavigationMenu(menuChoice, CURRENT_MENU_ELEMENT);
+        PrepareCombatMenu(E_MenuChoices::COMBAT_ATTACK);
         GetCombatManager()->SetCombatAction(userInput);
         return;
     }
     else if (userInput == E_UserInput::RIGHT) // Potion
     {
-        PrepareNavigationMenu(menuChoice, NEXT_TWO_MENU_ELEMENTS);
+        PrepareCombatMenu(E_MenuChoices::COMBAT_POTION);
         GetCombatManager()->SetCombatAction(userInput);
         return;
     }
     else if (userInput == E_UserInput::UP)  // Khai Help
     {
-        PrepareNavigationMenu(menuChoice, NEXT_THREE_MENU_ELEMENTS);
+        PrepareCombatMenu(E_MenuChoices::COMBAT_HELP);
         GetCombatManager()->SetCombatAction(userInput);
         return;
     }
     else if (userInput == E_UserInput::DOWN) // Flee
     {
-        PrepareNavigationMenu(menuChoice, NEXT_FOUR_MENU_ELEMENTS);
+        PrepareCombatMenu(E_MenuChoices::COMBAT_FLEE);
         GetCombatManager()->SetCombatAction(userInput);
         return;
     }
     return;
 }
 
-void MenuManager::PrepareNavigationMenu(E_MenuChoices menuChoice, unsigned short int numberOfUiElementsToJumpOver)
+void MenuManager::PrepareCombatMenu(E_MenuChoices menuChoice)
 {
     //GetWeaponManager()->ClearWeaponLogLine();
     ClearConsolePreviousLine();
     GetWeaponManager()->SetIsWeaponBeltCleared(true);
     ClearConsoleNavigationMenu();
     //SetIsMenuCleared(true);
-    int enumToInt = static_cast<int>(menuChoice);
-    E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(enumToInt + (NB_LINES_NEXT_NAVIG_UI * numberOfUiElementsToJumpOver));
-    PrintNavigationMenu(nextMenuInEnum);
+    
+    PrintNavigationMenu(menuChoice);
 
     GetWeaponManager()->SelectWeapon(E_UserInput::EMPTY);
 
