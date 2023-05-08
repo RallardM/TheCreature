@@ -202,11 +202,11 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 	else if (hitPoints > 0 && hitPoints < 10)      // To fit the number of max characters 
 	{											   // to remove in the log
 		//std::cout << logText << " -" << hitPoints; // add a space before the minus sign
-		std::cout << logText << ".-" << hitPoints; // Debug TODO : Remove
+		std::cout << logText << ".-" << hitPoints << std::endl; // Debug TODO : Remove
 	}
 	else
 	{
-		std::cout << logText << "-" << hitPoints;
+		std::cout << logText << "-" << hitPoints << std::endl;
 	}
 	SetIsFightLogCleared(false);
 }

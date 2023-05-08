@@ -66,7 +66,6 @@ int main()
 			inputManager->SetAction(userInput);
 		}
 
-
 		if (menuManager->GetIsMenuCleared())
 		{
 			userInput = E_UserInput::EMPTY;
@@ -84,7 +83,6 @@ int main()
 			userInput = E_UserInput::EMPTY;
 			combatManager->SetCombatAction(userInput);
 		}
-
 		//std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	}
 
