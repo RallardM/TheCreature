@@ -125,7 +125,7 @@ void CombatManager::InflictDamage(short int hitPoints)
 
 void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 {
-	if (GetIsFightLogFull())
+	if (GetIsFightLogCleared())
 	{
 		for (size_t i = 0; i < 40; i++)
 		{
@@ -144,7 +144,7 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 	{
 		std::cout << logText << "-" << hitPoints;
 	}
-	SetIsFightLogFull(true);
+	SetIsFightLogCleared(true);
 }
 
 WeaponManager* CombatManager::GetWeaponManager()

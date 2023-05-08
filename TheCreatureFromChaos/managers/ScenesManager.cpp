@@ -202,7 +202,7 @@ E_SceneSequence ScenesManager::GetUserDirectionScene(E_MenuChoices playerInputDi
 	{
 		if (currectScene == E_SceneSequence::ROOM_ONE_FRONT)
 		{
-			if (GetUserData()->GetIsBossDefeated())
+			if (GetCombatManager()->GetIsEnemyDefeated())
 			{
 				nextScene = E_SceneSequence::ROOM_THREE_FRONT;
 			}

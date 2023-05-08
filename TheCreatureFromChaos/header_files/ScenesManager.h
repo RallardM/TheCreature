@@ -10,6 +10,7 @@ class WeaponManager;
 #include "NarrationManager.h"
 #include "UserInputManager.h"
 #include "PublicConstants.h"
+#include "CombatManager.h"
 
 using namespace PublicConstants;
 
