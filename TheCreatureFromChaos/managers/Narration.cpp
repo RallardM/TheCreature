@@ -12,6 +12,8 @@
 //#include "UserInputManager.h"
 
 Narration::Narration() :
+    m_gameplayManager(nullptr),
+    m_consoleHandler(nullptr),
     m_textFilePath("resouce_files/NarrationText.txt"),
     m_pictureFilePath("resouce_files/ScenesArt.txt"),
     m_menuFilePath("resouce_files/MenuText.txt")//,

@@ -7,11 +7,10 @@
 Combat::Combat() :
 	m_ennemyLifePoints(50),
 	m_enemyHitPoints(10),
-	//m_weaponManager(nullptr),
-	//m_userData(userData),
 	m_isEnemyDefeated(false),
 	m_isFightStarted(false),
-	m_isFightLogCleared(true)
+	m_isFightLogCleared(true),
+	m_userData(nullptr)
 {
 }
 
@@ -145,16 +144,6 @@ void Combat::PrintCausaltyLog(std::string logText, short int hitPoints)
 	SetIsFightLogCleared(true);
 }
 
-//Weapons* Combat::GetWeaponManager()
-//{
-//	return m_weaponManager;
-//}
-//
-//void Combat::SetWeaponManager(Weapons* weaponManager)
-//{
-//	m_weaponManager = weaponManager;
-//}
-
 short int Combat::GetEnnemyLifePoints()
 {
 	return m_ennemyLifePoints;
@@ -164,12 +153,6 @@ void Combat::SetEnnemyLifePoints(short int ennemyLifePoints)
 {
 	m_ennemyLifePoints = ennemyLifePoints;
 }
-
-//UserData* Combat::GetUserData()
-//{
-//	return m_userData;
-//}
-
 
 unsigned short int Combat::GetEnemyHitPoints()
 {

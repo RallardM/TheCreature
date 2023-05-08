@@ -39,20 +39,20 @@
     <ClCompile Include="managers\UserInput.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="player_data\UserData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="managers\Weapons.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="managers\Combat.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="managers\GameplayManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="managers\OutputManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="player_data\UserData.cpp">
+      <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

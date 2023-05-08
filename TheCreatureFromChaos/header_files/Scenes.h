@@ -10,8 +10,10 @@ class UserData;
 #include "PublicConstants.h"
 #include "OutputManager.h"
 class OutputManager;
-#include "GameplayManager.h"
-class GameplayManager;
+#include "Combat.h"
+class Combat;
+//#include "GameplayManager.h"
+//class GameplayManager;
 
 using namespace PublicConstants;
 
@@ -33,12 +35,16 @@ public:
 	OutputManager* GetOutputManager();
 	void SetOutputManager(OutputManager* outputManager);
 
-	GameplayManager* GetGameplayManager();
-	void SetGameplayManager(GameplayManager* gameplayManager);
+	Combat* GetCombat();
+	void SetCombat(Combat* combat);
+
+	//GameplayManager* GetGameplayManager();
+	//void SetGameplayManager(GameplayManager* gameplayManager);
 
 private:
 	E_SceneSequence m_userCurrentScene;
 	OutputManager* m_outputManager;
 	UserData* m_userData;
-	GameplayManager* m_gameplayManager;
+	Combat* m_combat;
+	//GameplayManager* m_gameplayManager;
 };

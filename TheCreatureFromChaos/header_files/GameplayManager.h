@@ -8,11 +8,14 @@ class Combat;
 class GameplayManager
 {
 public:
-	GameplayManager(Scenes* scenes, Combat* combat);
+	GameplayManager(Scenes* scenes);
 	~GameplayManager();
 
 	Scenes* GetScenes();
+	//void SetScenes(Scenes* scenes);
+
 	Combat* GetCombat();
+	void SetCombat(Combat* combat);
 
 private:
 	Scenes* m_scenes;

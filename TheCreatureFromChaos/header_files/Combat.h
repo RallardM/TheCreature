@@ -1,5 +1,4 @@
 #pragma once
-//#include "ScenesManager.h"
 
 #include "PublicConstants.h"
 #include "UserData.h"
@@ -18,14 +17,8 @@ public:
 
 	void PrintCausaltyLog(std::string logText, short int hitPoints);
 
-	//Weapons* GetWeaponManager();
-	//void SetWeaponManager(Weapons* weaponManager);
-
 	short int GetEnnemyLifePoints();
 	void SetEnnemyLifePoints(short int ennemyLifePoints);
-
-	//UserData* GetUserData();
-	//void SetUserData(UserData* userData);
 
 	unsigned short int GetEnemyHitPoints();
 
@@ -46,8 +39,6 @@ private:
 
 	short int m_ennemyLifePoints;
 	unsigned short int m_enemyHitPoints;
-	//Weapons* m_weaponManager;
-	//UserData* m_userData;
 	bool m_isFightLogCleared;
 	bool m_isEnemyDefeated;
 	bool m_isFightStarted;

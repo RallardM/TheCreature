@@ -2,20 +2,13 @@
 //#include <opencv2/opencv.hpp>
 
 #include "Scenes.h"
-//#include "MenuManager.h"
 #include "DebugMessageSystem.h"
-//#include "WeaponManager.h"
-//#include "PublicConstants.h"
 
 Scenes::Scenes() :
 	m_userCurrentScene(E_SceneSequence::INTRO_SCENE),
 	m_outputManager(nullptr),
-	m_userData(nullptr)
-	//m_narrationManager(),
-	//m_menuManager(),
-	//m_weaponManager(),
-	//m_combatManager(),
-	//m_userData(userData)
+	m_userData(nullptr)//,
+	//m_gameplayManager(nullptr)
 {
 }
 
@@ -83,7 +76,7 @@ void Scenes::SetNextScene(E_MenuChoices menuChoice)
 		DEBUG_MSG("Scenes.cpp : SetNextScene() : Set COMBAT_SCENE.");
 		SetPlayerCurrentScene(E_SceneSequence::COMBAT_SCENE);
 		//SetIsFightStarted(true);
-		GetGameplayManager()->GetCombat()->SetIsFightStarted(true);
+		GetCombat()->SetIsFightStarted(true);
 		break;
 
 	case E_MenuChoices::RUN_AWAY:              // From ENNEMY_SCENE
@@ -204,7 +197,7 @@ E_SceneSequence Scenes::GetUserDirectionScene(E_MenuChoices playerInputDirection
 	{
 		if (currectScene == E_SceneSequence::ROOM_ONE_FRONT)
 		{
-			if (GetGameplayManager()->GetCombat()->GetIsEnemyDefeated())
+			if (GetCombat()->GetIsEnemyDefeated())
 			{
 				nextScene = E_SceneSequence::ROOM_THREE_FRONT;
 			}
@@ -246,15 +239,25 @@ void Scenes::SetOutputManager(OutputManager* outputManager)
 	m_outputManager = outputManager;
 }
 
-GameplayManager* Scenes::GetGameplayManager()
+Combat* Scenes::GetCombat()
 {
-	return m_gameplayManager;
+	return m_combat;
 }
 
-void Scenes::SetGameplayManager(GameplayManager* gameplayManager)
+void Scenes::SetCombat(Combat* combat)
 {
-	m_gameplayManager = gameplayManager;
+	m_combat = combat;
 }
+
+//GameplayManager* Scenes::GetGameplayManager()
+//{
+//	return m_gameplayManager;
+//}
+//
+//void Scenes::SetGameplayManager(GameplayManager* gameplayManager)
+//{
+//	m_gameplayManager = gameplayManager;
+//}
 
 //unsigned short int Scenes::GetCurrentConsololeTextHeight()
 //{

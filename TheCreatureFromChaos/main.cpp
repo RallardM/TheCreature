@@ -19,44 +19,50 @@
 int main()
 {
 	//DEBUG_MSG("#B main.cpp : main() : Enters main function.");
-	
-	Scenes* scenes = new Scenes();
-	Narration* narration = new Narration();
-	Menu* menu = new Menu();
-	Combat* combat = new Combat();
 	Weapons* weapon = new Weapons();
+	UserData* userData = new UserData(weapon);
+	Combat* combat = new Combat();
+	Narration* narration = new Narration();
 
 	UserInput* inputManager = new UserInput();
-	E_UserInput userInput = E_UserInput::EMPTY;
-
-	//DEBUG_MSG("main.cpp : main() : Create a Utils object, set the console size and position.");
 	ConsoleHandler* consoleHandler = new ConsoleHandler(inputManager);
 	consoleHandler->SetConsolesize();
 	consoleHandler->SetCenterConsolePosition();
 	//consoleHandler->DisableConsoleCursor();
 	consoleHandler->DisableConsoleScrolling();
 	consoleHandler->ActivateConsoleCursor();
+	narration->SetConsoleHandler(consoleHandler);
+	E_UserInput userInput = E_UserInput::EMPTY;
 
-	menu->SetConsoleHandler(consoleHandler);
+	Scenes* scenes = new Scenes();
 
-	UserData* userData = new UserData(weapon);
-	scenes->SetUserData(userData);
+	OutputManager* outputManager = new OutputManager();
+	GameplayManager* gameplayManager = new GameplayManager(scenes);
+	narration->SetGameplayManager(gameplayManager);
+	
+	gameplayManager->SetCombat(combat);
 	combat->SetUserData(userData);
 
-	GameplayManager* gameplayManager = new GameplayManager(scenes, combat);
-	scenes->SetGameplayManager(gameplayManager);
-	menu->SetGameplayManager(gameplayManager);
+	outputManager->SetNarration(narration);
 
-	OutputManager* outputManager = new OutputManager(narration, menu);
+	Menu* menu = new Menu();
+	menu->SetGameplayManager(gameplayManager);
+	menu->SetOutputManager(outputManager);
+	menu->SetConsoleHandler(consoleHandler);
+
+	//gameplayManager->SetScenes(scenes);
+	//scenes->SetGameplayManager(gameplayManager);
 	scenes->SetOutputManager(outputManager);
-	
+	scenes->SetUserData(userData);
+	scenes->SetCombat(combat);
+
 	// Print Intro scene.
 	narration->PrintLinesFromScene();
 
-	bool gameRunning = true;
+	//bool gameRunning = true;
 
 	//DEBUG_MSG("main.cpp : main() : Enters main loop.");
-	while (gameRunning)
+	while (true)
 	{
 		// Process user input
 		if (_kbhit())
