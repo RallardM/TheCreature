@@ -143,17 +143,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="managers\ClassesManager.cpp" />
-    <ClCompile Include="managers\CombatManager.cpp" />
-    <ClCompile Include="managers\MenuManager.cpp" />
-    <ClCompile Include="managers\NarrationManager.cpp" />
+    <ClCompile Include="managers\Combat.cpp" />
+    <ClCompile Include="managers\GameplayManager.cpp" />
+    <ClCompile Include="managers\Menu.cpp" />
+    <ClCompile Include="managers\Narration.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="managers\OutputManager.cpp" />
     <ClCompile Include="player_data\UserData.cpp" />
     <ClCompile Include="resouce_files\DebugMessageSystem.cpp" />
     <ClCompile Include="resouce_files\ConsoleHandler.cpp" />
-    <ClCompile Include="managers\UserInputManager.cpp" />
-    <ClCompile Include="managers\ScenesManager.cpp" />
-    <ClCompile Include="managers\WeaponManager.cpp" />
+    <ClCompile Include="managers\UserInput.cpp" />
+    <ClCompile Include="managers\Scenes.cpp" />
+    <ClCompile Include="managers\Weapons.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resouce_files\GameArtEnding.jpg" />
@@ -165,15 +166,16 @@
     <Text Include="resouce_files\NarrationText.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="header_files\ClassesManager.h" />
-    <ClInclude Include="header_files\CombatManager.h" />
-    <ClInclude Include="header_files\WeaponManager.h" />
+    <ClInclude Include="header_files\Combat.h" />
+    <ClInclude Include="header_files\GameplayManager.h" />
+    <ClInclude Include="header_files\OutputManager.h" />
+    <ClInclude Include="header_files\Weapons.h" />
     <ClInclude Include="header_files\DebugMessageSystem.h" />
-    <ClInclude Include="header_files\MenuManager.h" />
-    <ClInclude Include="header_files\NarrationManager.h" />
+    <ClInclude Include="header_files\Menu.h" />
+    <ClInclude Include="header_files\Narration.h" />
     <ClInclude Include="header_files\PublicConstants.h" />
-    <ClInclude Include="header_files\ScenesManager.h" />
-    <ClInclude Include="header_files\UserInputManager.h" />
+    <ClInclude Include="header_files\Scenes.h" />
+    <ClInclude Include="header_files\UserInput.h" />
     <ClInclude Include="header_files\ConsoleHandler.h" />
     <ClInclude Include="header_files\UserData.h" />
   </ItemGroup>

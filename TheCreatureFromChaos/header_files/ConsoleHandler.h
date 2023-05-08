@@ -1,8 +1,10 @@
 #pragma once
+#include "UserInput.h"
 //#include <fstream>
 
 class ConsoleHandler {
 public:
+	ConsoleHandler(UserInput* inputManager);
 	void SetConsoleColour(int colour);
 	void SetConsolesize();
 	void SetCenterConsolePosition();
@@ -14,6 +16,9 @@ public:
 	//bool GetIsUserPrompted();
 	//void SetIsUserPrompted(bool userIsPrompted);
 
+	UserInput* GetUserInput();
+
 private:
+	UserInput* m_userInputManager;
 	//bool m_isUserPrompted;
 };

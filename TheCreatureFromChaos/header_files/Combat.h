@@ -1,10 +1,14 @@
 #pragma once
-#include "ScenesManager.h"
+//#include "ScenesManager.h"
 
-class CombatManager
+#include "PublicConstants.h"
+#include "UserData.h"
+class UserData;
+using namespace PublicConstants;
+class Combat
 {
 public:
-	CombatManager(UserData* userData);
+	Combat();
 
 	void SetCombatAction(E_UserInput userInput);
 
@@ -14,14 +18,14 @@ public:
 
 	void PrintCausaltyLog(std::string logText, short int hitPoints);
 
-	WeaponManager* GetWeaponManager();
-	void SetWeaponManager(WeaponManager* weaponManager);
+	//Weapons* GetWeaponManager();
+	//void SetWeaponManager(Weapons* weaponManager);
 
 	short int GetEnnemyLifePoints();
 	void SetEnnemyLifePoints(short int ennemyLifePoints);
 
-	UserData* GetUserData();
-	void SetUserData(UserData* userData);
+	//UserData* GetUserData();
+	//void SetUserData(UserData* userData);
 
 	unsigned short int GetEnemyHitPoints();
 
@@ -34,11 +38,16 @@ public:
 	bool GetIsFightStarted();
 	void SetIsFightStarted(bool isFightStarted);
 
+	UserData* GetUserData();
+	void SetUserData(UserData* userData);
+
 private:
+	UserData* m_userData;
+
 	short int m_ennemyLifePoints;
 	unsigned short int m_enemyHitPoints;
-	WeaponManager* m_weaponManager;
-	UserData* m_userData;
+	//Weapons* m_weaponManager;
+	//UserData* m_userData;
 	bool m_isFightLogCleared;
 	bool m_isEnemyDefeated;
 	bool m_isFightStarted;

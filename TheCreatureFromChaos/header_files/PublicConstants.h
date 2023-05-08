@@ -93,8 +93,8 @@ namespace PublicConstants {
 		INTRO_SCENE            ,   // Image line 2   ; Text line 2  ; Menu line 2
 		MOVING_SCENE           ,   // Image line 37  ; Text line 8  ; Menu line 5
 		KOBOLD_SCENE           ,   // Image line 72  ; Text line 14 ; Menu line 8
-		NAME_SCENE             ,   // Image line 72  ; Text line 20 ; View MenuManager.cpp PrintMenuFromScene()
-		ATTACK_KOBOLD_SCENE    ,   // Image line 282 ; Text line 26 ; View MenuManager.cpp PrintMenuFromScene()
+		NAME_SCENE             ,   // Image line 72  ; Text line 20 ; View Menu.cpp PrintMenuFromScene()
+		ATTACK_KOBOLD_SCENE    ,   // Image line 282 ; Text line 26 ; View Menu.cpp PrintMenuFromScene()
 		WEAPONS_SCENE          ,   // Image line 107 ; Text line 32 ; Menu line 15
 		DEAD_END_SCENE         ,   // Image line 142 ; Text line 38 ; Menu line 18 // TODO return to navigation menu at line 26
 		ENNEMY_SCENE           ,   // Image line 177 ; Text line 44 ; Menu line 21

@@ -1,19 +1,20 @@
 #pragma once
 
 #include <fstream>
-#include "ScenesManager.h"
-class ScenesManager;
+//#include "ScenesManager.h"
+//class Scenes;
 #include "PublicConstants.h"
 #include "UserData.h"
 #include "ConsoleHandler.h"
+#include "GameplayManager.h"
 
 using namespace PublicConstants;
 
-class MenuManager {
+class Menu {
 public:
 	const short int EMPTY_MENU_LINE = -1;
 	const std::string EMPTY_MENU_TEXT = "";
-	MenuManager(ConsoleHandler* consoleHandler, ScenesManager* sceneManager, NarrationManager* narrationManager, UserData* userData);
+	Menu();
 	
 
 	void SelectMenuFromScene(E_UserInput userInput);
@@ -42,15 +43,26 @@ public:
 	bool GetIsMenuCleared();
 	void SetIsMenuCleared(bool isMenuCleared);
 
-	ConsoleHandler* GetConsoleHandler();
-	NarrationManager* GetNarrationManager();
-	ScenesManager* GetScenesManager();
-	UserData* GetUserData();
+	//Narration* GetNarrationManager();
+	//Scenes* GetScenesManager();
+	//UserData* GetUserData();
 
 	void AddDelay();
 
-	WeaponManager* GetWeaponManager();
-	void SetWeaponManager(WeaponManager* weaponManager);
+	//Weapons* GetWeaponManager();
+	//void SetWeaponManager(Weapons* weaponManager);
+
+	GameplayManager* GetGameplayManager();
+	void SetGameplayManager(GameplayManager* gameplayManager);
+
+	UserData* GetUserData();
+	void SetUserData(UserData* userData);
+
+	OutputManager* GetOutputManager();
+	void SetOutputManager(OutputManager* outputManager);
+
+	ConsoleHandler* GetConsoleHandler();
+	void SetConsoleHandler(ConsoleHandler* consoleHandler);
 
 private:
 
@@ -59,12 +71,13 @@ private:
 	std::ifstream m_menuFilePath;
 	bool m_isMenuCleared;
 
-	ConsoleHandler* m_consoleHandler;
-	ScenesManager* m_scenesManager;
-	NarrationManager* m_narrationManager;
+	GameplayManager* m_gameplayManager;
 	UserData* m_userData;
-	WeaponManager* m_weaponManager;
+	OutputManager* m_outputManager;
+
+	ConsoleHandler* m_consoleHandler;
+	//Scenes* m_scenesManager;
+	//Narration* m_narrationManager;
+	//UserData* m_userData;
+	//Weapons* m_weaponManager;
 };
-
-
-	

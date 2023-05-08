@@ -7,23 +7,23 @@
 #include <string>
 #include <array>
 
-#include "NarrationManager.h"
+#include "Narration.h"
 #include "DebugMessageSystem.h"
-#include "UserInputManager.h"
+//#include "UserInputManager.h"
 
-NarrationManager::NarrationManager(ScenesManager* sceneManager) :
+Narration::Narration() :
     m_textFilePath("resouce_files/NarrationText.txt"),
     m_pictureFilePath("resouce_files/ScenesArt.txt"),
-    m_menuFilePath("resouce_files/MenuText.txt"),
-    m_sceneManager(sceneManager),
-    m_userInputManager(nullptr)
+    m_menuFilePath("resouce_files/MenuText.txt")//,
+   // m_sceneManager(sceneManager),
+   // m_userInputManager(nullptr)
 {
 
 }
 
-void NarrationManager::PrintLinesFromScene()
+void Narration::PrintLinesFromScene()
 {
-    E_SceneSequence scene = GetScenesManager()->GetPlayerCurrentScene();
+    E_SceneSequence scene = GetGameplayManager()->GetScenes()->GetPlayerCurrentScene();
     std::string scenePicture = "";
     std::string sceneText = "";
 
@@ -40,7 +40,7 @@ void NarrationManager::PrintLinesFromScene()
         DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
         sceneText = GetPictureTextScene(scene, STORY_TEXT_HEIGHT);
-        GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::DIALOGUES);
+        GetConsoleHandler()->GetUserInput()->SetCurrentInputType(UserInput::E_CurrentInputType::DIALOGUES);
         break;
 
     case E_SceneSequence::ROOM_ONE_FRONT:
@@ -56,11 +56,11 @@ void NarrationManager::PrintLinesFromScene()
     case E_SceneSequence::ROOM_THREE_LEFT:
     case E_SceneSequence::ROOM_THREE_BACK:
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
-        GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::NAVIGATION);
+        GetConsoleHandler()->GetUserInput()->SetCurrentInputType(UserInput::E_CurrentInputType::NAVIGATION);
         break;
     case E_SceneSequence::COMBAT_SCENE:
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
-        GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::COMBAT);
+        GetConsoleHandler()->GetUserInput()->SetCurrentInputType(UserInput::E_CurrentInputType::COMBAT);
         break;
 
     default:
@@ -73,7 +73,7 @@ void NarrationManager::PrintLinesFromScene()
     DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Text printed.");
 }
 
-std::string NarrationManager::GetPictureTextScene(E_SceneSequence scene, const unsigned short int height)
+std::string Narration::GetPictureTextScene(E_SceneSequence scene, const unsigned short int height)
 {
     unsigned short int textFirstLine = 0;
     std::string pathToFile = "";
@@ -90,7 +90,7 @@ std::string NarrationManager::GetPictureTextScene(E_SceneSequence scene, const u
     }
     else
     {
-        DEBUG_MSG("#R NarrationManager.cpp : GetPictureTextScene() : No text height found!");
+        DEBUG_MSG("#R Narration.cpp : GetPictureTextScene() : No text height found!");
     }
 
     //textLastLine = textFirstLine + height;
@@ -99,7 +99,7 @@ std::string NarrationManager::GetPictureTextScene(E_SceneSequence scene, const u
     return sceneTextOrPicture;
 }
 
-std::string NarrationManager::GetTextBetweenLines(std::string& filePathStr, unsigned int firstLine, const unsigned short int height)
+std::string Narration::GetTextBetweenLines(std::string& filePathStr, unsigned int firstLine, const unsigned short int height)
 {
     DEBUG_MSG("NarrationMAnager.cpp : GetTextBetweenLines() : Enters GetTextBetweenLines().");
     //std::ifstream filePath("resouce_files/ScenesAsciiArt.txt");
@@ -147,42 +147,63 @@ std::string NarrationManager::GetTextBetweenLines(std::string& filePathStr, unsi
     return text;
 }
 
-std::string& NarrationManager::GetPictureFilePath()
+std::string& Narration::GetPictureFilePath()
 {
     return m_pictureFilePath;
 }
 
-std::string& NarrationManager::GetTextFilePath()
+std::string& Narration::GetTextFilePath()
 {
     return m_textFilePath;
 }
 
-std::string& NarrationManager::GetMenuFilePath()
+std::string& Narration::GetMenuFilePath()
 {
     return m_menuFilePath;
 }
 
-unsigned short int NarrationManager::GetSceneImageLines(E_SceneSequence fromLine)
+unsigned short int Narration::GetSceneImageLines(E_SceneSequence fromLine)
 {
     return SCENES_IMAGE_LINES[static_cast<int>(fromLine)];
 }
 
-unsigned short int NarrationManager::GetSceneTextLines(E_SceneSequence fromLine)
+unsigned short int Narration::GetSceneTextLines(E_SceneSequence fromLine)
 {
     return SCENES_TEXT_LINES[static_cast<int>(fromLine)];
 }
 
-ScenesManager* NarrationManager::GetScenesManager()
+//Scenes* Narration::GetScenesManager()
+//{
+//    return m_sceneManager;
+//}
+//
+//UserInput* Narration::GetUserInputManager()
+//{
+//	return m_userInputManager;
+//}
+//
+//void Narration::SetUserInputManager(UserInput* userInputManager)
+//{
+//    m_userInputManager = userInputManager;
+//}
+
+
+GameplayManager* Narration::GetGameplayManager()
 {
-    return m_sceneManager;
+    return m_gameplayManager;
 }
 
-UserInputManager* NarrationManager::GetUserInputManager()
+void Narration::SetGameplayManager(GameplayManager* gameplayManager)
 {
-	return m_userInputManager;
+    m_gameplayManager = gameplayManager;
 }
 
-void NarrationManager::SetUserInputManager(UserInputManager* userInputManager)
+ConsoleHandler* Narration::GetConsoleHandler()
 {
-    m_userInputManager = userInputManager;
+    return m_consoleHandler;
+}
+
+void Narration::SetConsoleHandler(ConsoleHandler* consoleHandler)
+{
+    m_consoleHandler = consoleHandler;
 }

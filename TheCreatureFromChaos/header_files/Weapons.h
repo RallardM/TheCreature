@@ -1,20 +1,17 @@
 #pragma once
 
-#include "ScenesManager.h"
+#include "PublicConstants.h"
+#include "OutputManager.h"
+class OutputManager;
+
+//#include "ScenesManager.h"
 
 using namespace PublicConstants;
 
-class WeaponManager
+class Weapons
 {
 public:
-	WeaponManager(MenuManager* menuManager) :
-		m_menuManager(menuManager),
-		m_isMenuCleared(true),
-		m_currentWeaponIndex(0)
-	{
-		m_currentWeapons[0] = S_Weapon("Sword", 5, 15);
-		m_currentWeapons[1] = S_Weapon("Wand", 10, 18);
-	}
+	Weapons();
 
 	void SelectWeapon(E_UserInput userInput);
 	void PrintBeltMenu(unsigned int short selectedWeaponIndex);
@@ -27,14 +24,18 @@ public:
 
 	S_Weapon GetCurrentWeapon(unsigned short int weaponIndex);
 
-	MenuManager* GetMenuManager();
+	//Menu* GetMenuManager();
 
 	void ClearWeaponLogLine();
+
+	OutputManager* GetOutputManager();
+	void SetOutputManager(OutputManager* outputManager);
 
 private:
 	bool m_isMenuCleared;
 	S_Weapon m_currentWeapons[2];
 	unsigned short int m_currentWeaponIndex;
 
-	MenuManager* m_menuManager;
+	OutputManager* m_outputManager;
+	//Menu* m_menuManager;
 };

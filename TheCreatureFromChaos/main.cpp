@@ -5,66 +5,53 @@
 #include <conio.h>
 
 #include "ConsoleHandler.h"
-#include "UserInputManager.h"
-#include "NarrationManager.h"
-#include "MenuManager.h"
+#include "UserInput.h"
+#include "Narration.h"
+#include "Menu.h"
 #include "DebugMessageSystem.h"
-#include "ScenesManager.h"
+#include "Scenes.h"
 #include "UserData.h"
-#include "WeaponManager.h"
-#include "CombatManager.h"
+#include "Weapons.h"
+#include "Combat.h"
+#include "GameplayManager.h"
+#include "OutputManager.h"
 
 int main()
 {
 	//DEBUG_MSG("#B main.cpp : main() : Enters main function.");
+	
+	Scenes* scenes = new Scenes();
+	Narration* narration = new Narration();
+	Menu* menu = new Menu();
+	Combat* combat = new Combat();
+	Weapons* weapon = new Weapons();
 
-	// Create a Utils object, set the console size and position.
+	UserInput* inputManager = new UserInput();
+	E_UserInput userInput = E_UserInput::EMPTY;
+
 	//DEBUG_MSG("main.cpp : main() : Create a Utils object, set the console size and position.");
-	ConsoleHandler* consoleHandler = new ConsoleHandler();
+	ConsoleHandler* consoleHandler = new ConsoleHandler(inputManager);
 	consoleHandler->SetConsolesize();
 	consoleHandler->SetCenterConsolePosition();
 	//consoleHandler->DisableConsoleCursor();
 	consoleHandler->DisableConsoleScrolling();
-
 	consoleHandler->ActivateConsoleCursor();
 
-	UserData* userData = new UserData();
+	menu->SetConsoleHandler(consoleHandler);
 
-	NarrationManager* narrationManager = new NarrationManager(scenesManager);
-	scenesManager->SetNarrationManager(narrationManager);
+	UserData* userData = new UserData(weapon);
+	scenes->SetUserData(userData);
+	combat->SetUserData(userData);
 
-	MenuManager* menuManager = new MenuManager(consoleHandler, scenesManager, narrationManager, userData);
-	scenesManager->SetMenuManager(menuManager);
+	GameplayManager* gameplayManager = new GameplayManager(scenes, combat);
+	scenes->SetGameplayManager(gameplayManager);
+	menu->SetGameplayManager(gameplayManager);
 
-	CombatManager* combatManager = new CombatManager(userData);
-	scenesManager->SetCombatManager(combatManager);
-
-	ScenesManager* scenesManager = new ScenesManager(userData);
-	narrationManager->SetScenesManager(scenesManager);
-
-	UserInputManager* inputManager = new UserInputManager(consoleHandler, scenesManager, menuManager, combatManager);
-	E_UserInput userInput = E_UserInput::EMPTY;
-	narrationManager->SetUserInputManager(inputManager);
-
-	WeaponManager* weaponManager = new WeaponManager(menuManager);
-	scenesManager->SetWeaponManager(weaponManager);
-	inputManager->SetWeaponManager(weaponManager);
-	menuManager->SetWeaponManager(weaponManager);
-	combatManager->SetWeaponManager(weaponManager);
-
-	//ClassesManager* classesManager = new ClassesManager(
-	//	consoleHandler, 
-	//	userData,
-	//	scenesManager,
-	//	narrationManager,
-	//	menuManager,
-	//	combatManager,
-	//	inputManager,
-	//	weaponManager
-	//);
-
+	OutputManager* outputManager = new OutputManager(narration, menu);
+	scenes->SetOutputManager(outputManager);
+	
 	// Print Intro scene.
-	narrationManager->PrintLinesFromScene();
+	narration->PrintLinesFromScene();
 
 	bool gameRunning = true;
 
@@ -78,22 +65,22 @@ int main()
 			inputManager->SetAction(userInput);
 		}
 
-		if (menuManager->GetIsMenuCleared())
+		if (menu->GetIsMenuCleared())
 		{
 			userInput = E_UserInput::EMPTY;
-			menuManager->SelectMenuFromScene(userInput);
+			menu->SelectMenuFromScene(userInput);
 		}
 
-		if (userData->GetAreWeaponsEquiped() && weaponManager->GetIsMenuCleared())
+		if (userData->GetAreWeaponsEquiped() && weapon->GetIsMenuCleared())
 		{
 			userInput = E_UserInput::EMPTY;
-			weaponManager->SelectWeapon(userInput);
+			weapon->SelectWeapon(userInput);
 		}
 
-		if (combatManager->GetIsFightStarted() && combatManager->GetIsFightLogCleared())
+		if (combat->GetIsFightStarted() && combat->GetIsFightLogCleared())
 		{
 			userInput = E_UserInput::EMPTY;
-			combatManager->SetCombatAction(userInput);
+			combat->SetCombatAction(userInput);
 		}
 
 		//std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -101,13 +88,15 @@ int main()
 
 	// Clean up dynamically allocated memory.
 	delete consoleHandler;
-	delete menuManager;
+	delete menu;
 	delete userData;
 	delete inputManager;
-	delete narrationManager;
-	delete scenesManager;
-	delete combatManager;
-	delete weaponManager;
+	delete narration;
+	delete scenes;
+	delete combat;
+	delete weapon;
+	delete gameplayManager;
+	delete outputManager;
 
 	return 0;
 }

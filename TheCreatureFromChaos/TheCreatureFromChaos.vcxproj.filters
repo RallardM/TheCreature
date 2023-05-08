@@ -24,31 +24,34 @@
     <ClCompile Include="resouce_files\ConsoleHandler.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="managers\MenuManager.cpp">
+    <ClCompile Include="managers\Menu.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="managers\NarrationManager.cpp">
+    <ClCompile Include="managers\Narration.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="managers\ScenesManager.cpp">
+    <ClCompile Include="managers\Scenes.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="resouce_files\DebugMessageSystem.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="managers\UserInputManager.cpp">
+    <ClCompile Include="managers\UserInput.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="player_data\UserData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="managers\WeaponManager.cpp">
+    <ClCompile Include="managers\Weapons.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="managers\CombatManager.cpp">
+    <ClCompile Include="managers\Combat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="managers\ClassesManager.cpp">
+    <ClCompile Include="managers\GameplayManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="managers\OutputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -72,37 +75,40 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="header_files\UserInputManager.h">
+    <ClInclude Include="header_files\UserInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header_files\ConsoleHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\ScenesManager.h">
+    <ClInclude Include="header_files\Scenes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header_files\DebugMessageSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\MenuManager.h">
+    <ClInclude Include="header_files\Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\NarrationManager.h">
+    <ClInclude Include="header_files\Narration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header_files\UserData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\WeaponManager.h">
+    <ClInclude Include="header_files\Weapons.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header_files\PublicConstants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\CombatManager.h">
+    <ClInclude Include="header_files\Combat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\ClassesManager.h">
+    <ClInclude Include="header_files\GameplayManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header_files\OutputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

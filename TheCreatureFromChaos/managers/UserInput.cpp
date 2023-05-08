@@ -1,21 +1,21 @@
 #include <conio.h>
 #include <iostream>
-#include "UserInputManager.h"
+#include "UserInput.h"
 #include "DebugMessageSystem.h"
-#include "CombatManager.h"
+//#include "CombatManager.h"
 
-UserInputManager::UserInputManager(ConsoleHandler* m_consoleHandler, ScenesManager* sceneManager, MenuManager* menuManager, CombatManager* combatManager) :
-    m_consoleHandler(),
-    m_weaponManager(),
-    m_combatManager(combatManager),
-    m_sceneManager(sceneManager),
-    m_menuManager(menuManager),
+UserInput::UserInput() :
+    //m_consoleHandler(),
+    //m_weaponManager(),
+    //m_combatManager(combatManager),
+    //m_sceneManager(sceneManager),
+    //m_menuManager(menuManager),
     m_hasInput(false)
 {
     SetCurrentInputType(E_CurrentInputType::DIALOGUES);
 }
 
-E_UserInput UserInputManager::GetInput()
+E_UserInput UserInput::GetInput()
 {
     char key = 0;
     while (true) 
@@ -150,7 +150,7 @@ E_UserInput UserInputManager::GetInput()
      }
 }
 
-void UserInputManager::SetAction(E_UserInput userInput)
+void UserInput::SetAction(E_UserInput userInput)
 {
     bool left = (userInput == E_UserInput::LEFT);
     bool right = (userInput == E_UserInput::RIGHT);
@@ -160,34 +160,34 @@ void UserInputManager::SetAction(E_UserInput userInput)
 
     if (left || right || up || down)
     {
-        DEBUG_MSG("UserInputManager.cpp : SetAction() : User is using LEFT RIGHT.");
+        DEBUG_MSG("UserInput.cpp : SetAction() : User is using LEFT RIGHT.");
         ActivateSelection(userInput);
         SetHasInput(false);
         return;
 	}
     if (userInput == E_UserInput::ENTER)
     {
-        DEBUG_MSG("UserInputManager.cpp : SetAction() : User pressed ENTER.");
+        DEBUG_MSG("UserInput.cpp : SetAction() : User pressed ENTER.");
         EnterSelection();
         SetHasInput(false);
         return;
     }
     if (userInput == E_UserInput::ONE || userInput == E_UserInput::TWO)
     {
-        GetWeaponManager()->SelectWeapon(userInput);
+        GetUserData()->GetWeapons()->SelectWeapon(userInput);
         SetHasInput(false);
         return;
     }
     if (userInput == E_UserInput::ESC)
     {
-        DEBUG_MSG("UserInputManager.cpp : SetAction() : User pressed ESC.");
+        DEBUG_MSG("UserInput.cpp : SetAction() : User pressed ESC.");
         return;
 	}
 }
 
-void UserInputManager::ActivateSelection(E_UserInput userInput)
+void UserInput::ActivateSelection(E_UserInput userInput)
 {
-    E_SceneSequence currentScene = GetScenesManager()->GetPlayerCurrentScene();
+    E_SceneSequence currentScene = GetGameplayManager()->GetScenes()->GetPlayerCurrentScene();
     unsigned short int currentSceneEnumToInt = static_cast<int>(currentScene);
     unsigned short int currentNumberOfChoices = SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt];
     bool bidirectionalMenus = (currentNumberOfChoices == TWO_WAYS_RIGHT || currentNumberOfChoices == TWO_WAYS_LEFT);
@@ -196,130 +196,160 @@ void UserInputManager::ActivateSelection(E_UserInput userInput)
 
     if (currentNumberOfChoices == TWO_CHOICES_MENU)
     {
-        GetMenuManager()->SelectMenuFromScene(userInput);
+        GetOutputManager()->GetMenu()->SelectMenuFromScene(userInput);
         return;
     }
     else if (bidirectionalMenus)
     {
         if (userInput == E_UserInput::LEFT)
         {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::LEFT);
-            GetScenesManager()->SetNextScene(E_MenuChoices::LR_NAVIGATION_LEFT);
+            GetOutputManager()->GetMenu()->SelectMenuFromScene(E_UserInput::LEFT);
+            GetGameplayManager()->GetScenes()->SetNextScene(E_MenuChoices::LR_NAVIGATION_LEFT);
         }
         else if (userInput == E_UserInput::RIGHT)
         {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::RIGHT);
-            GetScenesManager()->SetNextScene(E_MenuChoices::LR_NAVIGATION_RIGHT);
+            GetOutputManager()->GetMenu()->SelectMenuFromScene(E_UserInput::RIGHT);
+            GetGameplayManager()->GetScenes()->SetNextScene(E_MenuChoices::LR_NAVIGATION_RIGHT);
         }
     }
     else if (quadridiractionalMenus)
     {
         if (userInput == E_UserInput::LEFT)
         {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::LEFT);
-            GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_LEFT);
+            GetOutputManager()->GetMenu()->SelectMenuFromScene(E_UserInput::LEFT);
+            GetGameplayManager()->GetScenes()->SetNextScene(E_MenuChoices::NAVIGATION_LEFT);
         }
         else if (userInput == E_UserInput::RIGHT)
         {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::RIGHT);
-            GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_RIGHT);
+            GetOutputManager()->GetMenu()->SelectMenuFromScene(E_UserInput::RIGHT);
+            GetGameplayManager()->GetScenes()->SetNextScene(E_MenuChoices::NAVIGATION_RIGHT);
         }
         else if (userInput == E_UserInput::UP)
         {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::UP);
-            GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_FOWARD);
+            GetOutputManager()->GetMenu()->SelectMenuFromScene(E_UserInput::UP);
+            GetGameplayManager()->GetScenes()->SetNextScene(E_MenuChoices::NAVIGATION_FOWARD);
         }
         else if (userInput == E_UserInput::DOWN)
         {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::DOWN);
-            GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_BACK);
+            GetOutputManager()->GetMenu()->SelectMenuFromScene(E_UserInput::DOWN);
+            GetGameplayManager()->GetScenes()->SetNextScene(E_MenuChoices::NAVIGATION_BACK);
         }
     }
     else if (combatMenu)
     {
         if (userInput == E_UserInput::LEFT) // Khail help
         {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::LEFT);
+            GetOutputManager()->GetMenu()->SelectMenuFromScene(E_UserInput::LEFT);
         }
         else if (userInput == E_UserInput::RIGHT) // Potion
         {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::RIGHT);
+            GetOutputManager()->GetMenu()->SelectMenuFromScene(E_UserInput::RIGHT);
         }
         else if (userInput == E_UserInput::UP) // Attack
         {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::UP);
+            GetOutputManager()->GetMenu()->SelectMenuFromScene(E_UserInput::UP);
         }
         else if (userInput == E_UserInput::DOWN) // Flee
         {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::DOWN);
+            GetOutputManager()->GetMenu()->SelectMenuFromScene(E_UserInput::DOWN);
         }
-        GetCombatManager()->SetCombatAction(userInput);
+        GetGameplayManager()->GetCombat()->SetCombatAction(userInput);
     }
 }
 
-void UserInputManager::EnterSelection()
+void UserInput::EnterSelection()
 {
-    E_SceneSequence currentScene = GetScenesManager()->GetPlayerCurrentScene();
+    E_SceneSequence currentScene = GetGameplayManager()->GetScenes()->GetPlayerCurrentScene();
     unsigned short int currentNumberOfChoices = SCENE_NUMBER_OF_MENU_CHOICES[int(currentScene)];
     if (currentNumberOfChoices == ONE_CHOICE_MENU)
     {
-        GetMenuManager()->SelectMenuFromScene(E_UserInput::ENTER);
-        GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
+        GetOutputManager()->GetMenu()->SelectMenuFromScene(E_UserInput::ENTER);
+        GetGameplayManager()->GetScenes()->SetNextScene(GetOutputManager()->GetMenu()->GetSelectedMenuLine());
         return;
 	}
     else if (currentNumberOfChoices == TWO_CHOICES_MENU)
     {
-        GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
+        GetGameplayManager()->GetScenes()->SetNextScene(GetOutputManager()->GetMenu()->GetSelectedMenuLine());
         return;
     }
 }
 
-UserInputManager::E_CurrentInputType UserInputManager::GetCurrentInputType()
+UserInput::E_CurrentInputType UserInput::GetCurrentInputType()
 {
     return m_currentInputType;
 }
 
-void UserInputManager::SetCurrentInputType(E_CurrentInputType currentInputType)
+void UserInput::SetCurrentInputType(E_CurrentInputType currentInputType)
 {
     m_currentInputType = currentInputType;
 }
 
-bool UserInputManager::HasInput()
+bool UserInput::HasInput()
 {
     return m_hasInput;
 }
 
-void UserInputManager::SetHasInput(bool hasInput)
+void UserInput::SetHasInput(bool hasInput)
 {
     m_hasInput = hasInput;
 }
 
-ConsoleHandler* UserInputManager::GetConsoleHandler()
+//ConsoleHandler* UserInput::GetConsoleHandler()
+//{
+//    return m_consoleHandler;
+//}
+
+//Menu* UserInput::GetMenuManager()
+//{
+//    return m_menuManager;
+//}
+//
+//Scenes* UserInput::GetScenesManager()
+//{
+//    return m_sceneManager;
+//}
+//
+//Weapons* UserInput::GetWeaponManager()
+//{
+//    return m_weaponManager;
+//}
+//
+//void UserInput::SetWeaponManager(Weapons* weaponManager)
+//{
+//    m_weaponManager = weaponManager;
+//}
+
+//Combat* UserInput::GetCombatManager()
+//{
+//    return m_combatManager;
+//}
+
+UserData* UserInput::GetUserData()
 {
-    return m_consoleHandler;
+    return m_userData;
 }
 
-MenuManager* UserInputManager::GetMenuManager()
+void UserInput::SetUserData(UserData* userData)
 {
-    return m_menuManager;
+    m_userData = userData;
 }
 
-ScenesManager* UserInputManager::GetScenesManager()
+OutputManager* UserInput::GetOutputManager()
 {
-    return m_sceneManager;
+    return m_outputManager;
 }
 
-WeaponManager* UserInputManager::GetWeaponManager()
+void UserInput::SetOutputManager(OutputManager* outputManager)
 {
-    return m_weaponManager;
+    this->m_outputManager = outputManager;
 }
 
-void UserInputManager::SetWeaponManager(WeaponManager* weaponManager)
+GameplayManager* UserInput::GetGameplayManager()
 {
-    m_weaponManager = weaponManager;
+    return m_gameplayManager;
 }
 
-CombatManager* UserInputManager::GetCombatManager()
+void UserInput::SetGameplayManager(GameplayManager* gameplayManager)
 {
-    return m_combatManager;
+    m_gameplayManager = gameplayManager;
 }

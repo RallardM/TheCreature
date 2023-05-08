@@ -1,29 +1,31 @@
 #include <iostream>
 //#include <opencv2/opencv.hpp>
 
-#include "ScenesManager.h"
-#include "MenuManager.h"
+#include "Scenes.h"
+//#include "MenuManager.h"
 #include "DebugMessageSystem.h"
-#include "WeaponManager.h"
-#include "PublicConstants.h"
+//#include "WeaponManager.h"
+//#include "PublicConstants.h"
 
-ScenesManager::ScenesManager(UserData* userData) :
+Scenes::Scenes() :
 	m_userCurrentScene(E_SceneSequence::INTRO_SCENE),
-	m_narrationManager(),
-	m_menuManager(),
-	m_weaponManager(),
-	m_combatManager(),
-	m_userData(userData)
+	m_outputManager(nullptr),
+	m_userData(nullptr)
+	//m_narrationManager(),
+	//m_menuManager(),
+	//m_weaponManager(),
+	//m_combatManager(),
+	//m_userData(userData)
 {
 }
 
-void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
+void Scenes::SetNextScene(E_MenuChoices menuChoice)
 {
 	ClearAllConsoleText();
-	GetMenuManager()->SetIsMenuCleared(true);
+	GetOutputManager()->GetMenu()->SetIsMenuCleared(true);
 	if (GetUserData()->GetAreWeaponsEquiped() == true)
 	{
-		GetWeaponManager()->SetIsMenuCleared(true);
+		GetUserData()->GetWeapons()->SetIsMenuCleared(true);
 	}
 
 	E_SceneSequence movingTowardScene = E_SceneSequence::NO_SCENE;
@@ -31,61 +33,61 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 	switch (menuChoice)
 	{
 	case E_MenuChoices::NO_MENU_LINE:
-		DEBUG_MSG("#R ScenesManager.cpp : SetNextScene() : Returned no menu choice.");
+		DEBUG_MSG("#R Scenes.cpp : SetNextScene() : Returned no menu choice.");
 		break;
 
 	case E_MenuChoices::TRY_TO_MOVE:           // From INTRO_SCENE
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set MOVING_SCENE.");
+		DEBUG_MSG("Scenes.cpp : SetNextScene() : Set MOVING_SCENE.");
 		SetPlayerCurrentScene(E_SceneSequence::MOVING_SCENE);
 		break;
 
 	case E_MenuChoices::TRY_TO_REMEBER:        // From INTRO_SCENE
 	case E_MenuChoices::TRY_TO_REMEBER_TWO:    // From MOVING_SCENE
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set KOBOLD_SCENE.");
+		DEBUG_MSG("Scenes.cpp : SetNextScene() : Set KOBOLD_SCENE.");
 		SetPlayerCurrentScene(E_SceneSequence::KOBOLD_SCENE);
 		break;
 
 	case E_MenuChoices::LOOK_AROUND:           // From MOVING_SCENE
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set KOBOLD_SCENE.");
+		DEBUG_MSG("Scenes.cpp : SetNextScene() : Set KOBOLD_SCENE.");
 		SetPlayerCurrentScene(E_SceneSequence::KOBOLD_SCENE);
 		break;
 
 	case E_MenuChoices::WHO_ARE_YOU:           // From KOBOLD_SCENE
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set NAME_SCENE.");
+		DEBUG_MSG("Scenes.cpp : SetNextScene() : Set NAME_SCENE.");
 		SetPlayerCurrentScene(E_SceneSequence::NAME_SCENE);
 		break;
 
 	case E_MenuChoices::ATTACK_KOBOLD:         // From KOBOLD_SCENE
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ATTACK_KOBOLD_SCENE.");
+		DEBUG_MSG("Scenes.cpp : SetNextScene() : Set ATTACK_KOBOLD_SCENE.");
 		SetPlayerCurrentScene(E_SceneSequence::ATTACK_KOBOLD_SCENE);
 		break;
 
 	case E_MenuChoices::ENTER_NAME:            // From NAME_SCENE
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set WEAPONS_SCENE.");
+		DEBUG_MSG("Scenes.cpp : SetNextScene() : Set WEAPONS_SCENE.");
 		SetPlayerCurrentScene(E_SceneSequence::WEAPONS_SCENE);
 		break;
 
 	case E_MenuChoices::TAKE_WEAPONS_SELECTED: // From WEAPONS_SCENE
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ROOM_ONE_RIGHT.");
+		DEBUG_MSG("Scenes.cpp : SetNextScene() : Set ROOM_ONE_RIGHT.");
 		GetUserData()->SetAreWeaponsEquiped(true);
 		GetUserData()->SetNumberOfPotions(1);
 		SetPlayerCurrentScene(E_SceneSequence::ROOM_ONE_LEFT);
 		break;
 
 	case E_MenuChoices::GO_BACK_SELECTED:      // From DEAD_END_SCENE
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ROOM_TWO_FRONT.");
+		DEBUG_MSG("Scenes.cpp : SetNextScene() : Set ROOM_TWO_FRONT.");
 		SetPlayerCurrentScene(E_SceneSequence::ROOM_TWO_FRONT);
 		break;
 
 	case E_MenuChoices::ATTACK_ENEMY:          // From ENNEMY_SCENE
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set COMBAT_SCENE.");
+		DEBUG_MSG("Scenes.cpp : SetNextScene() : Set COMBAT_SCENE.");
 		SetPlayerCurrentScene(E_SceneSequence::COMBAT_SCENE);
 		//SetIsFightStarted(true);
-		GetCombatManager()->SetIsFightStarted(true);
+		GetGameplayManager()->GetCombat()->SetIsFightStarted(true);
 		break;
 
 	case E_MenuChoices::RUN_AWAY:              // From ENNEMY_SCENE
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO."); // TODO
+		DEBUG_MSG("Scenes.cpp : SetNextScene() : TODO."); // TODO
 		//SetPlayerCurrentScene(E_SceneSequence::);
 		break;
 
@@ -95,19 +97,19 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 	case E_MenuChoices::NAVIGATION_BACK:
 	case E_MenuChoices::LR_NAVIGATION_LEFT:
 	case E_MenuChoices::LR_NAVIGATION_RIGHT:
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : movingTowardScene.");
+		DEBUG_MSG("Scenes.cpp : SetNextScene() : movingTowardScene.");
 		movingTowardScene = GetUserDirectionScene(menuChoice);
 		SetPlayerCurrentScene(movingTowardScene);
 		break;
 
 	default:
-		DEBUG_MSG("#R ScenesManager.cpp : SetNextScene() : Switch statement default case reached.");
+		DEBUG_MSG("#R Scenes.cpp : SetNextScene() : Switch statement default case reached.");
 		break;
 	}
-	GetNarrationManager()->PrintLinesFromScene();
+	GetOutputManager()->GetNarration()->PrintLinesFromScene();
 }
 
-E_SceneSequence ScenesManager::GetUserDirectionScene(E_MenuChoices playerInputDirection)
+E_SceneSequence Scenes::GetUserDirectionScene(E_MenuChoices playerInputDirection)
 {
 	E_SceneSequence currectScene = GetPlayerCurrentScene();
 	E_SceneSequence nextScene = E_SceneSequence::NO_SCENE;
@@ -202,7 +204,7 @@ E_SceneSequence ScenesManager::GetUserDirectionScene(E_MenuChoices playerInputDi
 	{
 		if (currectScene == E_SceneSequence::ROOM_ONE_FRONT)
 		{
-			if (GetUserData()->GetIsBossDefeated())
+			if (GetGameplayManager()->GetCombat()->GetIsEnemyDefeated())
 			{
 				nextScene = E_SceneSequence::ROOM_THREE_FRONT;
 			}
@@ -223,9 +225,9 @@ E_SceneSequence ScenesManager::GetUserDirectionScene(E_MenuChoices playerInputDi
 	return nextScene;
 }
 
-void ScenesManager::ClearAllConsoleText()
+void Scenes::ClearAllConsoleText()
 {
-	DEBUG_MSG("#Y ScenesManager.cpp : ClearAllConsoleText() : Clear whole scene debug deactivated.");
+	DEBUG_MSG("#Y Scenes.cpp : ClearAllConsoleText() : Clear whole scene debug deactivated.");
 	system("cls");
 	//unsigned short int numberOflinesToDelete = GetCurrentConsololeTextHeight();
 	//for (size_t i = 0; i < numberOflinesToDelete; i++)
@@ -234,7 +236,27 @@ void ScenesManager::ClearAllConsoleText()
 	//}
 }
 
-//unsigned short int ScenesManager::GetCurrentConsololeTextHeight()
+OutputManager* Scenes::GetOutputManager()
+{
+	return m_outputManager;
+}
+
+void Scenes::SetOutputManager(OutputManager* outputManager)
+{
+	m_outputManager = outputManager;
+}
+
+GameplayManager* Scenes::GetGameplayManager()
+{
+	return m_gameplayManager;
+}
+
+void Scenes::SetGameplayManager(GameplayManager* gameplayManager)
+{
+	m_gameplayManager = gameplayManager;
+}
+
+//unsigned short int Scenes::GetCurrentConsololeTextHeight()
 //{
 //	unsigned short int imageHeight           = GetNarrationManager()->ASCII_IMAGE_HEIGHT;
 //	unsigned short int menuHeight            = GetNarrationManager()->NARRATION_MENU_HEIGHT;
@@ -277,63 +299,64 @@ void ScenesManager::ClearAllConsoleText()
 //	return numberOflinesToDelete;
 //}
 
-NarrationManager* ScenesManager::GetNarrationManager()
-{
-	return m_narrationManager;
-}
-
-void ScenesManager::SetNarrationManager(NarrationManager* narrationManager)
-{
-	m_narrationManager = narrationManager;
-}
-
-MenuManager* ScenesManager::GetMenuManager()
-{
-	return m_menuManager;
-}
-
-void ScenesManager::SetMenuManager(MenuManager* menuManager)
-{
-	m_menuManager = menuManager;
-}
-
-WeaponManager* ScenesManager::GetWeaponManager()
-{
-	return m_weaponManager;
-}
-
-void ScenesManager::SetWeaponManager(WeaponManager* weaponManager)
-{
-	m_weaponManager = weaponManager;
-}
 
 
-E_SceneSequence ScenesManager::GetPlayerCurrentScene()
+//Narration* Scenes::GetNarrationManager()
+//{
+//	return m_narrationManager;
+//}
+//
+//void Scenes::SetNarrationManager(Narration* narrationManager)
+//{
+//	m_narrationManager = narrationManager;
+//}
+//
+//Menu* Scenes::GetMenuManager()
+//{
+//	return m_menuManager;
+//}
+//
+//void Scenes::SetMenuManager(Menu* menuManager)
+//{
+//	m_menuManager = menuManager;
+//}
+//
+//Weapons* Scenes::GetWeaponManager()
+//{
+//	return m_weaponManager;
+//}
+//
+//void Scenes::SetWeaponManager(Weapons* weaponManager)
+//{
+//	m_weaponManager = weaponManager;
+//}
+
+E_SceneSequence Scenes::GetPlayerCurrentScene()
 {
 	return m_userCurrentScene;
 }
 
-void ScenesManager::SetPlayerCurrentScene(E_SceneSequence scene)
+void Scenes::SetPlayerCurrentScene(E_SceneSequence scene)
 {
 	m_userCurrentScene = scene;
 }
 
-UserData* ScenesManager::GetUserData()
+UserData* Scenes::GetUserData()
 {
 	return m_userData;
 }
 
-void ScenesManager::SetUserData(UserData* userData)
+void Scenes::SetUserData(UserData* userData)
 {
 	m_userData = userData;
 }
 
-CombatManager* ScenesManager::GetCombatManager()
-{
-	return m_combatManager;
-}
-
-void ScenesManager::SetCombatManager(CombatManager* combatManager)
-{
-	m_combatManager = combatManager;
-}
+//Combat* Scenes::GetCombatManager()
+//{
+//	return m_combatManager;
+//}
+//
+//void Scenes::SetCombatManager(Combat* combatManager)
+//{
+//	m_combatManager = combatManager;
+//}

@@ -1,23 +1,21 @@
 #include <random>
 #include <string>
 
-#include "CombatManager.h"
+#include "Combat.h"
 #include "DebugMessageSystem.h"
-#include "PublicConstants.h"
 
-
-CombatManager::CombatManager(UserData* userData) :
+Combat::Combat() :
 	m_ennemyLifePoints(50),
 	m_enemyHitPoints(10),
-	m_weaponManager(nullptr),
-	m_userData(userData),
+	//m_weaponManager(nullptr),
+	//m_userData(userData),
 	m_isEnemyDefeated(false),
 	m_isFightStarted(false),
 	m_isFightLogCleared(true)
 {
 }
 
-void CombatManager::SetCombatAction(E_UserInput userInput)
+void Combat::SetCombatAction(E_UserInput userInput)
 {
 	switch (userInput)
 	{		
@@ -46,9 +44,9 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 	}
 }
 
-void CombatManager::PlayerAttack()
+void Combat::PlayerAttack()
 {
-	S_Weapon currentWeapon = GetWeaponManager()->GetCurrentWeapon(GetWeaponManager()->GetCurrentWeaponIndex());
+	S_Weapon currentWeapon = GetUserData()->GetWeapons()->GetCurrentWeapon(GetUserData()->GetWeapons()->GetCurrentWeaponIndex());
 
 	// Random hit point between the current weapon min and max hit points or fail
 	// 
@@ -81,7 +79,7 @@ void CombatManager::PlayerAttack()
 	PrintCausaltyLog(playerHitLog, hitPoints);
 }
 
-void CombatManager::EnnemyAttack()
+void Combat::EnnemyAttack()
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -109,7 +107,7 @@ void CombatManager::EnnemyAttack()
 	PrintCausaltyLog(ennemyHitLog, hitPoints);
 }
 
-void CombatManager::InflictDamage(short int hitPoints)
+void Combat::InflictDamage(short int hitPoints)
 {
 	short int resultingCausalty = GetEnnemyLifePoints() - hitPoints;
 	if (resultingCausalty <= 0)
@@ -123,9 +121,9 @@ void CombatManager::InflictDamage(short int hitPoints)
 	}
 }
 
-void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
+void Combat::PrintCausaltyLog(std::string logText, short int hitPoints)
 {
-	if (GetIsFightLogFull())
+	if (GetIsFightLogCleared())
 	{
 		for (size_t i = 0; i < 40; i++)
 		{
@@ -144,70 +142,76 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 	{
 		std::cout << logText << "-" << hitPoints;
 	}
-	SetIsFightLogFull(true);
+	SetIsFightLogCleared(true);
 }
 
-WeaponManager* CombatManager::GetWeaponManager()
-{
-	return m_weaponManager;
-}
+//Weapons* Combat::GetWeaponManager()
+//{
+//	return m_weaponManager;
+//}
+//
+//void Combat::SetWeaponManager(Weapons* weaponManager)
+//{
+//	m_weaponManager = weaponManager;
+//}
 
-void CombatManager::SetWeaponManager(WeaponManager* weaponManager)
-{
-	m_weaponManager = weaponManager;
-}
-
-short int CombatManager::GetEnnemyLifePoints()
+short int Combat::GetEnnemyLifePoints()
 {
 	return m_ennemyLifePoints;
 }
 
-void CombatManager::SetEnnemyLifePoints(short int ennemyLifePoints)
+void Combat::SetEnnemyLifePoints(short int ennemyLifePoints)
 {
 	m_ennemyLifePoints = ennemyLifePoints;
 }
 
-UserData* CombatManager::GetUserData()
-{
-	return m_userData;
-}
+//UserData* Combat::GetUserData()
+//{
+//	return m_userData;
+//}
 
-void CombatManager::SetUserData(UserData* userData)
-{
-	m_userData = userData;
-}
 
-unsigned short int CombatManager::GetEnemyHitPoints()
+unsigned short int Combat::GetEnemyHitPoints()
 {
 	return m_enemyHitPoints;
 }
 
-bool CombatManager::GetIsFightLogCleared()
+bool Combat::GetIsFightLogCleared()
 {
 	return m_isFightLogCleared;
 }
 
-void CombatManager::SetIsFightLogCleared(bool fightLogState)
+void Combat::SetIsFightLogCleared(bool fightLogState)
 {
 	m_isFightLogCleared = fightLogState;
 }
 
-bool CombatManager::GetIsEnemyDefeated()
+bool Combat::GetIsEnemyDefeated()
 {
 	return m_isEnemyDefeated;
 }
 
-void CombatManager::SetIsEnemyDefeated(bool isEnemyDefeated)
+void Combat::SetIsEnemyDefeated(bool isEnemyDefeated)
 {
 	m_isEnemyDefeated = isEnemyDefeated;
 }
 
-bool CombatManager::GetIsFightStarted()
+bool Combat::GetIsFightStarted()
 {
 	return m_isFightStarted;
 }
 
-void CombatManager::SetIsFightStarted(bool isFightStarted)
+void Combat::SetIsFightStarted(bool isFightStarted)
 {
 	m_isFightStarted = isFightStarted;
+}
+
+UserData* Combat::GetUserData()
+{
+	return m_userData;
+}
+
+void Combat::SetUserData(UserData* userData)
+{
+	m_userData = userData;
 }

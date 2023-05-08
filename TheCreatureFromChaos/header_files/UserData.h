@@ -1,10 +1,11 @@
 #pragma once
 #include <string>
+#include "Weapons.h"
 
 class UserData
 {
 public:
-	UserData();
+	UserData(Weapons* weapon);
 
 	std::string GetPlayerName();
 	void SetPlayerName(std::string playerName);
@@ -18,6 +19,9 @@ public:
 	unsigned short int GetNumberOfPotions();
 	void SetNumberOfPotions(unsigned short int numberOfPotions);
 
+	Weapons* GetWeapons();
+	void SetWeapons(Weapons* weapon);
+
 	/// TODO
 	//bool GetAttackedKobold();
 	//void SetAttackedKobold(bool attackedKobold);
@@ -28,5 +32,7 @@ private:
 	bool m_isPlayerSeenDeadEnd;
 	short int m_playerLifePoints;
 	unsigned short int m_numberOfPotions;
+
+	Weapons* m_weapons;
 	//bool m_attackedKobold; // TODO
 };

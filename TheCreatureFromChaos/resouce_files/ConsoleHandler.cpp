@@ -1,6 +1,11 @@
 #include "ConsoleHandler.h"
 #include <windows.h>
 
+ConsoleHandler::ConsoleHandler(UserInput* inputManager) :
+    m_userInputManager(inputManager)
+{
+}
+
 void ConsoleHandler::SetConsoleColour(int colour)
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -102,6 +107,11 @@ void ConsoleHandler::DisableConsoleScrolling()
     GetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
     cursorInfo.dwSize = 1;
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
+}
+
+UserInput* ConsoleHandler::GetUserInput()
+{
+    return m_userInputManager;
 }
 
 //bool ConsoleHandler::GetIsUserPrompted()

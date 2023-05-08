@@ -1,6 +1,6 @@
 #include "UserData.h"
 
-UserData::UserData() :
+UserData::UserData(Weapons* weapon) :
 	m_playerName(""),
 	m_numberOfPotions(0),
 	m_playerLifePoints(25),
@@ -47,6 +47,16 @@ unsigned short int UserData::GetNumberOfPotions()
 void UserData::SetNumberOfPotions(unsigned short int numberOfPotions)
 {
 	m_numberOfPotions = numberOfPotions;
+}
+
+Weapons* UserData::GetWeapons()
+{
+	return m_weapons;
+}
+
+void UserData::SetWeapons(Weapons* weapon)
+{
+	m_weapons = weapon;
 }
 
 // TODO
