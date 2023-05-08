@@ -6,11 +6,12 @@
 #include "PublicConstants.h"
 
 
-CombatManager::CombatManager(UserData* userData) :
+CombatManager::CombatManager(UserData* userData, MenuManager* menuManager) :
 	m_ennemyLifePoints(50),
 	m_enemyHitPoints(10),
 	m_weaponManager(nullptr),
 	m_userData(userData),
+	m_menuManager(menuManager),
 	m_isEnemyDefeated(false),
 	m_isFightStarted(false),
 	m_isFightLogCleared(true)
@@ -21,19 +22,24 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 {
 	switch (userInput)
 	{		
-	case PublicConstants::E_UserInput::LEFT: // Khail help
+	case PublicConstants::E_UserInput::LEFT: // Attack
+		ClearLastCombatAction();
+		GetMenuManager()->SelectMenuFromScene(E_UserInput::EMPTY);
+		GetWeaponManager()->SelectWeapon(E_UserInput::EMPTY);
 		PlayerAttack();
-		//EnnemyAttack();
+		
 		break;
 
 	case PublicConstants::E_UserInput::RIGHT: // Potion
 
-		EnnemyAttack();
+		ClearLastCombatAction();
+		//EnnemyAttack();
 		break;
 
-	case PublicConstants::E_UserInput::UP: // Attack
+	case PublicConstants::E_UserInput::UP:  // Khail help
 
-		EnnemyAttack();
+		ClearLastCombatAction();
+		//EnnemyAttack();
 		break;
 
 	case PublicConstants::E_UserInput::DOWN: // Flee
@@ -44,6 +50,16 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 		break;
 
 	}
+	//GetWeaponManager()->SelectWeapon(E_UserInput::EMPTY);
+}
+
+void CombatManager::ClearLastCombatAction()
+{
+	GetWeaponManager()->ClearWeaponLogLine();
+	GetMenuManager()->ClearConsoleNavigationMenu();
+	//GetMenuManager()->SetIsMenuCleared(true);
+	//SetIsFightLogCleared(true);
+	//GetWeaponManager()->SetIsMenuCleared(true);
 }
 
 void CombatManager::PlayerAttack()
@@ -210,4 +226,14 @@ bool CombatManager::GetIsFightStarted()
 void CombatManager::SetIsFightStarted(bool isFightStarted)
 {
 	m_isFightStarted = isFightStarted;
+}
+
+void CombatManager::ClearAllConsoleText()
+{
+	system("cls");
+}
+
+MenuManager* CombatManager::GetMenuManager()
+{
+	return m_menuManager;
 }

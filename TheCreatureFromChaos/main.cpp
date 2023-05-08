@@ -38,7 +38,7 @@ int main()
 	MenuManager* menuManager = new MenuManager(consoleHandler, scenesManager, narrationManager, userData);
 	scenesManager->SetMenuManager(menuManager);
 
-	CombatManager* combatManager = new CombatManager(userData);
+	CombatManager* combatManager = new CombatManager(userData, menuManager);
 	scenesManager->SetCombatManager(combatManager);
 	menuManager->SetCombatManager(combatManager);
 

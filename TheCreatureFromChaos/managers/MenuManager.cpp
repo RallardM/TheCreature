@@ -131,13 +131,11 @@ void MenuManager::SelectNavigationElement(E_UserInput userInput, E_MenuChoices m
     {
         PrepareNavigationMenu(menuChoice, CURRENT_MENU_ELEMENT);
         GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_LEFT);
-        //GetScenesManager()->SetNextScene(E_MenuChoices::LR_NAVIGATION_LEFT);
         return;
     }
     else if (userInput == E_UserInput::RIGHT)
     {
         PrepareNavigationMenu(menuChoice, NEXT_TWO_MENU_ELEMENTS);
-        //GetScenesManager()->SetNextScene(E_MenuChoices::LR_NAVIGATION_RIGHT);
         GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_RIGHT);
         return;
     }
@@ -161,7 +159,7 @@ void MenuManager::SelectCombatChoice(E_UserInput userInput, E_MenuChoices menuCh
     if (userInput == E_UserInput::EMPTY)
     {
         DEBUG_MSG("MenuManager.cpp : SelectCombatChoice() : UserInput is EMPTY");
-        ClearConsolePreviousLine();
+        //ClearConsolePreviousLine();
         PrintNavigationMenu(menuChoice);
         return;
     }

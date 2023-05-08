@@ -1,12 +1,15 @@
 #pragma once
 #include "ScenesManager.h"
+#include "MenuManager.h"
 
 class CombatManager
 {
 public:
-	CombatManager(UserData* userData);
+	CombatManager(UserData* userData, MenuManager* menuManager);
 
 	void SetCombatAction(E_UserInput userInput);
+
+	void ClearLastCombatAction();
 
 	void PlayerAttack();
 	void EnnemyAttack();
@@ -34,11 +37,18 @@ public:
 	bool GetIsFightStarted();
 	void SetIsFightStarted(bool isFightStarted);
 
+	void ClearAllConsoleText();
+
+	MenuManager* GetMenuManager();
+
 private:
-	short int m_ennemyLifePoints;
-	unsigned short int m_enemyHitPoints;
 	WeaponManager* m_weaponManager;
 	UserData* m_userData;
+	MenuManager* m_menuManager;
+
+	short int m_ennemyLifePoints;
+	unsigned short int m_enemyHitPoints;
+
 	bool m_isFightLogCleared;
 	bool m_isEnemyDefeated;
 	bool m_isFightStarted;
