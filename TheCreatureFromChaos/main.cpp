@@ -38,11 +38,11 @@ int main()
 	MenuManager* menuManager = new MenuManager(consoleHandler, scenesManager, narrationManager, userData);
 	scenesManager->SetMenuManager(menuManager);
 
-
 	CombatManager* combatManager = new CombatManager(userData);
 	scenesManager->SetCombatManager(combatManager);
+	menuManager->SetCombatManager(combatManager);
 
-	UserInputManager* inputManager = new UserInputManager(consoleHandler, scenesManager, menuManager, combatManager);
+	UserInputManager* inputManager = new UserInputManager(consoleHandler, scenesManager, menuManager);
 	E_UserInput userInput = E_UserInput::EMPTY;
 	narrationManager->SetUserInputManager(inputManager);
 
@@ -51,18 +51,7 @@ int main()
 	inputManager->SetWeaponManager(weaponManager);
 	menuManager->SetWeaponManager(weaponManager);
 	combatManager->SetWeaponManager(weaponManager);
-
-	//ClassesManager* classesManager = new ClassesManager(
-	//	consoleHandler, 
-	//	userData,
-	//	scenesManager,
-	//	narrationManager,
-	//	menuManager,
-	//	combatManager,
-	//	inputManager,
-	//	weaponManager
-	//);
-
+	
 	// Print Intro scene.
 	narrationManager->PrintLinesFromScene();
 

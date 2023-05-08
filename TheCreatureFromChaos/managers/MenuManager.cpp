@@ -13,6 +13,7 @@ MenuManager::MenuManager(ConsoleHandler* consoleHandler, ScenesManager* scenesMa
     m_narrationManager(narrationManager),
     m_scenesManager(scenesManager),
     m_userData(userData),
+    m_combatManager(nullptr),
     m_weaponManager(nullptr),
     m_isMenuCleared(true)
 {
@@ -129,21 +130,27 @@ void MenuManager::SelectNavigationElement(E_UserInput userInput, E_MenuChoices m
     if (userInput == E_UserInput::LEFT)
     {
         PrepareNavigationMenu(menuChoice, CURRENT_MENU_ELEMENT);
+        GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_LEFT);
+        //GetScenesManager()->SetNextScene(E_MenuChoices::LR_NAVIGATION_LEFT);
         return;
     }
     else if (userInput == E_UserInput::RIGHT)
     {
         PrepareNavigationMenu(menuChoice, NEXT_TWO_MENU_ELEMENTS);
+        //GetScenesManager()->SetNextScene(E_MenuChoices::LR_NAVIGATION_RIGHT);
+        GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_RIGHT);
         return;
     }
     else if (userInput == E_UserInput::UP)
     {
         PrepareNavigationMenu(menuChoice, NEXT_THREE_MENU_ELEMENTS);
+        GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_FOWARD);
         return;
     }
     else if (userInput == E_UserInput::DOWN)
     {
         PrepareNavigationMenu(menuChoice, NEXT_FOUR_MENU_ELEMENTS);
+        GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_BACK);
         return;
     }
     return;
@@ -159,24 +166,28 @@ void MenuManager::SelectCombatChoice(E_UserInput userInput, E_MenuChoices menuCh
         return;
     }
 
-    if (userInput == E_UserInput::LEFT) // Khai Help
+    if (userInput == E_UserInput::LEFT) // ATTACK
     {
         PrepareNavigationMenu(menuChoice, CURRENT_MENU_ELEMENT);
+        GetCombatManager()->SetCombatAction(userInput);
         return;
     }
     else if (userInput == E_UserInput::RIGHT) // Potion
     {
         PrepareNavigationMenu(menuChoice, NEXT_TWO_MENU_ELEMENTS);
+        GetCombatManager()->SetCombatAction(userInput);
         return;
     }
-    else if (userInput == E_UserInput::UP) // ATTACK
+    else if (userInput == E_UserInput::UP)  // Khai Help
     {
         PrepareNavigationMenu(menuChoice, NEXT_THREE_MENU_ELEMENTS);
+        GetCombatManager()->SetCombatAction(userInput);
         return;
     }
     else if (userInput == E_UserInput::DOWN) // Flee
     {
         PrepareNavigationMenu(menuChoice, NEXT_FOUR_MENU_ELEMENTS);
+        GetCombatManager()->SetCombatAction(userInput);
         return;
     }
     return;
@@ -394,4 +405,14 @@ WeaponManager* MenuManager::GetWeaponManager()
 void MenuManager::SetWeaponManager(WeaponManager* weaponManager)
 {
     m_weaponManager = weaponManager;
+}
+
+CombatManager* MenuManager::GetCombatManager()
+{
+    return m_combatManager;
+}
+
+void MenuManager::SetCombatManager(CombatManager* combatManager)
+{
+    m_combatManager = combatManager;
 }

@@ -6,6 +6,8 @@ class ScenesManager;
 #include "PublicConstants.h"
 #include "UserData.h"
 #include "ConsoleHandler.h"
+class WeaponManager;
+class CombatManager;
 
 using namespace PublicConstants;
 
@@ -52,6 +54,9 @@ public:
 	WeaponManager* GetWeaponManager();
 	void SetWeaponManager(WeaponManager* weaponManager);
 
+	CombatManager* GetCombatManager();
+	void SetCombatManager(CombatManager* combatManager);
+
 private:
 
 	E_MenuChoices m_selectedMenuLine;
@@ -64,6 +69,7 @@ private:
 	NarrationManager* m_narrationManager;
 	UserData* m_userData;
 	WeaponManager* m_weaponManager;
+	CombatManager* m_combatManager;
 };
 
 

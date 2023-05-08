@@ -4,10 +4,10 @@
 #include "DebugMessageSystem.h"
 #include "CombatManager.h"
 
-UserInputManager::UserInputManager(ConsoleHandler* m_consoleHandler, ScenesManager* sceneManager, MenuManager* menuManager, CombatManager* combatManager) :
+UserInputManager::UserInputManager(ConsoleHandler* m_consoleHandler, ScenesManager* sceneManager, MenuManager* menuManager) :
     m_consoleHandler(),
     m_weaponManager(),
-    m_combatManager(combatManager),
+    //m_combatManager(combatManager),
     m_sceneManager(sceneManager),
     m_menuManager(menuManager),
     m_hasInput(false)
@@ -161,7 +161,8 @@ void UserInputManager::SetAction(E_UserInput userInput)
     if (left || right || up || down)
     {
         DEBUG_MSG("UserInputManager.cpp : SetAction() : User is using LEFT RIGHT.");
-        ActivateSelection(userInput);
+        GetMenuManager()->SelectMenuFromScene(userInput);
+        //ActivateSelection(userInput);
         SetHasInput(false);
         return;
 	}
@@ -183,78 +184,6 @@ void UserInputManager::SetAction(E_UserInput userInput)
         DEBUG_MSG("UserInputManager.cpp : SetAction() : User pressed ESC.");
         return;
 	}
-}
-
-void UserInputManager::ActivateSelection(E_UserInput userInput)
-{
-    E_SceneSequence currentScene = GetScenesManager()->GetPlayerCurrentScene();
-    unsigned short int currentSceneEnumToInt = static_cast<int>(currentScene);
-    unsigned short int currentNumberOfChoices = SCENE_NUMBER_OF_MENU_CHOICES[currentSceneEnumToInt];
-    bool bidirectionalMenus = (currentNumberOfChoices == TWO_WAYS_RIGHT || currentNumberOfChoices == TWO_WAYS_LEFT);
-    bool quadridiractionalMenus = (currentNumberOfChoices == FOUR_WAYS_FRONT || currentNumberOfChoices == FOUR_WAYS_BACK);
-    bool combatMenu = (currentNumberOfChoices == COMBAT_MENU);
-
-    if (currentNumberOfChoices == TWO_CHOICES_MENU)
-    {
-        GetMenuManager()->SelectMenuFromScene(userInput);
-        return;
-    }
-    else if (bidirectionalMenus)
-    {
-        if (userInput == E_UserInput::LEFT)
-        {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::LEFT);
-            GetScenesManager()->SetNextScene(E_MenuChoices::LR_NAVIGATION_LEFT);
-        }
-        else if (userInput == E_UserInput::RIGHT)
-        {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::RIGHT);
-            GetScenesManager()->SetNextScene(E_MenuChoices::LR_NAVIGATION_RIGHT);
-        }
-    }
-    else if (quadridiractionalMenus)
-    {
-        if (userInput == E_UserInput::LEFT)
-        {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::LEFT);
-            GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_LEFT);
-        }
-        else if (userInput == E_UserInput::RIGHT)
-        {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::RIGHT);
-            GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_RIGHT);
-        }
-        else if (userInput == E_UserInput::UP)
-        {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::UP);
-            GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_FOWARD);
-        }
-        else if (userInput == E_UserInput::DOWN)
-        {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::DOWN);
-            GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_BACK);
-        }
-    }
-    else if (combatMenu)
-    {
-        if (userInput == E_UserInput::LEFT) // Khail help
-        {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::LEFT);
-        }
-        else if (userInput == E_UserInput::RIGHT) // Potion
-        {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::RIGHT);
-        }
-        else if (userInput == E_UserInput::UP) // Attack
-        {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::UP);
-        }
-        else if (userInput == E_UserInput::DOWN) // Flee
-        {
-            GetMenuManager()->SelectMenuFromScene(E_UserInput::DOWN);
-        }
-        GetCombatManager()->SetCombatAction(userInput);
-    }
 }
 
 void UserInputManager::EnterSelection()
@@ -319,7 +248,7 @@ void UserInputManager::SetWeaponManager(WeaponManager* weaponManager)
     m_weaponManager = weaponManager;
 }
 
-CombatManager* UserInputManager::GetCombatManager()
-{
-    return m_combatManager;
-}
+//CombatManager* UserInputManager::GetCombatManager()
+//{
+//    return m_combatManager;
+//}

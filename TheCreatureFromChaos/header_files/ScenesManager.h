@@ -11,6 +11,7 @@ class WeaponManager;
 #include "UserInputManager.h"
 #include "PublicConstants.h"
 #include "CombatManager.h"
+class CombatManager;
 
 using namespace PublicConstants;
 
