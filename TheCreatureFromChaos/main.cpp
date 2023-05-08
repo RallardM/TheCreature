@@ -66,6 +66,7 @@ int main()
 			inputManager->SetAction(userInput);
 		}
 
+
 		if (menuManager->GetIsMenuCleared())
 		{
 			userInput = E_UserInput::EMPTY;

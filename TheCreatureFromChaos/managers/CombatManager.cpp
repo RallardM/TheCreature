@@ -59,8 +59,8 @@ void CombatManager::RefreshMenuAndLogFrame()
 {
 	//GetWeaponManager()->ClearWeaponLogLine();
 	GetMenuManager()->ClearConsolePreviousLine();
-	//SetIsFightLogCleared(true);
-	//GetWeaponManager()->SetIsWeaponBeltCleared(true);
+	SetIsFightLogCleared(true);
+	GetWeaponManager()->SetIsWeaponBeltCleared(true);
 	GetMenuManager()->ClearConsoleNavigationMenu();
 	GetMenuManager()->SelectMenuFromScene(E_UserInput::EMPTY);
 	GetWeaponManager()->SelectWeapon(E_UserInput::EMPTY);

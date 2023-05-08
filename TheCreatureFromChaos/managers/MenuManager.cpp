@@ -84,7 +84,7 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
     case E_SceneSequence::COMBAT_SCENE:
         DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : COMBAT_SCENE");
         //SelectCombatElement(userInput);
-        SelectCombatChoice(userInput, E_MenuChoices::NO_MENU_LINE);
+        SelectCombatChoice(userInput);
         break;
 
     default:
@@ -190,20 +190,22 @@ void MenuManager::PrepareNavigationMenu(E_MenuChoices menuChoice, unsigned short
 //    }
 //}
 
-void MenuManager::SelectCombatChoice(E_UserInput userInput, E_MenuChoices menuChoice)
+void MenuManager::SelectCombatChoice(E_UserInput userInput)
 {
-    if (!GetCombatManager()->GetIsPlayerTurn())
-    {
-	    DEBUG_MSG("MenuManager.cpp : SelectCombatChoice() : Not player turn");
-        PrepareCombatMenu(E_MenuChoices::NEXT_TURN);
-        return;
-	}
-
     if (userInput == E_UserInput::EMPTY)
     {
         DEBUG_MSG("MenuManager.cpp : SelectCombatChoice() : UserInput is EMPTY");
-        //ClearConsolePreviousLine();
-        PrintNavigationMenu(E_MenuChoices::COMBAT_PLAIN);
+        if (!GetCombatManager()->GetIsPlayerTurn())
+        {
+            DEBUG_MSG("MenuManager.cpp : SelectCombatChoice() : Not player turn");
+            PrintNavigationMenu(E_MenuChoices::COMBAT_PLAIN);
+            return;
+        }
+        else
+        {
+            PrintNavigationMenu(E_MenuChoices::NEXT_TURN);
+        }
+       
         return;
     }
     else if (userInput == E_UserInput::LEFT) // ATTACK
