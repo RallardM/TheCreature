@@ -28,6 +28,7 @@ int main()
 	consoleHandler->ActivateConsoleCursor();
 
 	UserData* userData = new UserData();
+	bool areWeaponsEquiped = userData->GetAreWeaponsEquiped();
 
 	ScenesManager* scenesManager = new ScenesManager(userData);
 
@@ -36,16 +37,22 @@ int main()
 
 	MenuManager* menuManager = new MenuManager(consoleHandler, scenesManager, narrationManager, userData);
 	scenesManager->SetMenuManager(menuManager);
+	bool isMenuCleared = menuManager->GetIsMenuCleared();
 
 	CombatManager* combatManager = new CombatManager(userData, menuManager);
+	bool isFightStarted = combatManager->GetIsFightStarted();
+	bool isFightLogCleared = combatManager->GetIsFightLogCleared();
 	scenesManager->SetCombatManager(combatManager);
 	menuManager->SetCombatManager(combatManager);
 
 	UserInputManager* inputManager = new UserInputManager(consoleHandler, scenesManager, menuManager);
+	bool isPlayerInNavigationMode = (inputManager->GetCurrentInputType() == UserInputManager::E_CurrentInputType::NAVIGATION);
+	bool isPlayerInCombatMode = (inputManager->GetCurrentInputType() == UserInputManager::E_CurrentInputType::COMBAT);
 	E_UserInput userInput = E_UserInput::EMPTY;
 	narrationManager->SetUserInputManager(inputManager);
 
 	WeaponManager* weaponManager = new WeaponManager(menuManager);
+	bool isWeaponBeltCleared = weaponManager->GetIsWeaponBeltCleared();
 	scenesManager->SetWeaponManager(weaponManager);
 	inputManager->SetWeaponManager(weaponManager);
 	menuManager->SetWeaponManager(weaponManager);
@@ -66,19 +73,26 @@ int main()
 			inputManager->SetAction(userInput);
 		}
 
-		if (menuManager->GetIsMenuCleared())
+		isMenuCleared = menuManager->GetIsMenuCleared();
+		if (isMenuCleared)
 		{
 			userInput = E_UserInput::EMPTY;
 			menuManager->SelectMenuFromScene(userInput);
 		}
 
-		if (userData->GetAreWeaponsEquiped() && weaponManager->GetIsWeaponBeltCleared())
+		areWeaponsEquiped = userData->GetAreWeaponsEquiped();
+		isWeaponBeltCleared = weaponManager->GetIsWeaponBeltCleared();
+		isPlayerInNavigationMode = (inputManager->GetCurrentInputType() == UserInputManager::E_CurrentInputType::NAVIGATION);
+		isPlayerInCombatMode = (inputManager->GetCurrentInputType() == UserInputManager::E_CurrentInputType::COMBAT);
+		if (areWeaponsEquiped && isWeaponBeltCleared && (isPlayerInNavigationMode || isPlayerInCombatMode))
 		{
 			userInput = E_UserInput::EMPTY;
 			weaponManager->SelectWeapon(userInput);
 		}
 
-		if (combatManager->GetIsFightStarted() && combatManager->GetIsFightLogCleared())
+		isFightStarted = combatManager->GetIsFightStarted();
+		isFightLogCleared = combatManager->GetIsFightLogCleared();
+		if (isFightStarted && isFightLogCleared)
 		{
 			userInput = E_UserInput::EMPTY;
 			combatManager->SetCombatAction(userInput);

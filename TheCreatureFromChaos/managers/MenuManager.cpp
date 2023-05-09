@@ -62,8 +62,10 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
         SelectMenuChoice(userInput, E_MenuChoices::ATTACK_ENEMY, E_MenuChoices::RUN_AWAY);
         break;
 
-    case E_SceneSequence::ROOM_THREE_FRONT:
+    case E_SceneSequence::VICTORY_SCENE:
         DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : ROOM_THREE_FRONT");
+        GetUserData()->SetIsPlayerSeenVictory(true);
+        GetScenesManager()->GetCombatManager()->SetIsFightStarted(false);
         PrintSingleMenuChoice(userInput, E_MenuChoices::PLAYER_WON);
 		break;
 
@@ -72,6 +74,7 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
     case E_SceneSequence::ROOM_TWO_FRONT:
     case E_SceneSequence::ROOM_TWO_BACK:
     case E_SceneSequence::ROOM_THREE_BACK:
+    case E_SceneSequence::ROOM_THREE_FRONT:
         DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : Prints 4-ways navigation system");
         SelectNavigationElement(userInput, E_MenuChoices::NAVIGATION_PLAIN);
         break;

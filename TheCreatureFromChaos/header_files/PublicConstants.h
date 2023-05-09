@@ -42,6 +42,7 @@ const unsigned short int SCENE_NUMBER_OF_MENU_CHOICES[23] = {
 	ONE_CHOICE_MENU,      // WEAPONS_SCENE
 	ONE_CHOICE_MENU,      // DEAD_END_SCENE
 	TWO_CHOICES_MENU,     // ENNEMY_SCENE
+	ONE_CHOICE_MENU,	  // VICTORY_SCENE
 
 	TWO_WAYS_LEFT,        // ROOM_ONE_LEFT
 	FOUR_WAYS_FRONT,      // ROOM_ONE_FRONT
@@ -59,8 +60,8 @@ const unsigned short int SCENE_NUMBER_OF_MENU_CHOICES[23] = {
 	FOUR_WAYS_BACK,       // ROOM_THREE_BACK
 
 	COMBAT_MENU,	      // COMBAT_SCENE
-	NO_MENU,              // YOU_DIED_SCENE
-	ONE_CHOICE_MENU	      // VICTORY_SCENE
+	NO_MENU               // YOU_DIED_SCENE
+	
 };
 
 const unsigned short int SCENES_IMAGE_LINES[23] = {
@@ -68,19 +69,20 @@ const unsigned short int SCENES_IMAGE_LINES[23] = {
 	37,   // MOVING_SCENE
 	72,   // KOBOLD_SCENE      ROOM_ONE_BACK
 	72,   // NAME_SCENE
-	282,  // ATTACK_KOBOLD_SCENE
+	317,  // ATTACK_KOBOLD_SCENE
 	107,  // WEAPONS_SCENE
 	142,  // DEAD_END_SCENE    ROOM_TWO_BACK
 	177,  // ENNEMY_SCENE  
+	212,  // VICTORY_SCENE
 
-	212,  // ROOM_ONE_LEFT
+	247,  // ROOM_ONE_LEFT
 	  2,  // ROOM_ONE_FRONT
-	247,  // ROOM_ONE_RIGHT 
-	282,  // ROOM_ONE_BACK     KOBOLD_SCENE
+	282,  // ROOM_ONE_RIGHT 
+	317,  // ROOM_ONE_BACK     KOBOLD_SCENE
 
-	  3,  // ROOM_TWO_FRONT
-	 39,  // ROOM_TWO_RIGHT
-	 74,  // ROOM_TWO_LEFT
+	  3,  // ROOM_TWO_LEFT
+	 39,  // ROOM_TWO_FRONT
+	 74,  // ROOM_TWO_RIGHT
 	110,  // ROOM_TWO_BACK     DEAD_END_SCENE
 
 	145,  // ROOM_THREE_FRONT  VICTORY_SCENE
@@ -89,8 +91,7 @@ const unsigned short int SCENES_IMAGE_LINES[23] = {
 	252,  // ROOM_THREE_BACK
 
 	287,  // COMBAT_SCENE
-	322,  // YOU_DIED_SCENE
-	181   // VICTORY_SCENE
+	322   // YOU_DIED_SCENE
 };
 
 namespace PublicConstants {
@@ -100,15 +101,16 @@ namespace PublicConstants {
 		MOVING_SCENE           ,   // Image line 37  ; Text line 8  ; Menu line 5
 		KOBOLD_SCENE           ,   // Image line 72  ; Text line 14 ; Menu line 8
 		NAME_SCENE             ,   // Image line 72  ; Text line 20 ; View MenuManager.cpp PrintMenuFromScene()
-		ATTACK_KOBOLD_SCENE    ,   // Image line 282 ; Text line 26 ; View MenuManager.cpp PrintMenuFromScene()
+		ATTACK_KOBOLD_SCENE    ,   // Image line 317 ; Text line 26 ; View MenuManager.cpp PrintMenuFromScene()
 		WEAPONS_SCENE          ,   // Image line 107 ; Text line 32 ; Menu line 15
 		DEAD_END_SCENE         ,   // Image line 142 ; Text line 38 ; Menu line 18 // TODO return to navigation menu at line 26
 		ENNEMY_SCENE           ,   // Image line 177 ; Text line 44 ; Menu line 21
+		VICTORY_SCENE		   ,   // Image line 212 ;              ; Menu line 11
 						       	    
-		ROOM_ONE_LEFT          ,   // Image line 212 ;              ; Menu line 23
+		ROOM_ONE_LEFT          ,   // Image line 247 ;              ; Menu line 23
 		ROOM_ONE_FRONT         ,   // Image line   2 ;              ; Menu line 54
-		ROOM_ONE_RIGHT         ,   // Image line 247 ;              ; Menu line 54
-		ROOM_ONE_BACK          ,   // Image line 282 ;              ; Menu line 23
+		ROOM_ONE_RIGHT         ,   // Image line 282 ;              ; Menu line 54
+		ROOM_ONE_BACK          ,   // Image line 317 ;              ; Menu line 23
 							      				                 
 		ROOM_TWO_LEFT          ,   // Image line   3 ;              ; Menu line 23
 		ROOM_TWO_FRONT         ,   // Image line  39 ;              ; Menu line 54
@@ -121,8 +123,8 @@ namespace PublicConstants {
 		ROOM_THREE_BACK        ,   // Image line 252 ;              ; Menu line 23
 								   
 		COMBAT_SCENE           ,   // Image line 287 ;              ; Menu line 90
-        YOU_DIED_SCENE	       ,   // Image line 322 ;              ; 
-		VICTORY_SCENE		       // Image line 181 ;              ; Menu line 50
+        YOU_DIED_SCENE	           // Image line 322 ;              ; 
+		
 	};                              
 	                                
 	//MenuText.txt                  
@@ -139,6 +141,9 @@ namespace PublicConstants {
 
 		WHO_ARE_YOU            =   8,    // KOBOLD_SCENE
 		ATTACK_KOBOLD          =   9,    // KOBOLD_SCENE
+
+		PLAYER_WON             =  11,    // VICTORY_SCENE
+		PLAYER_WON_SELECTED    =  12,    // VICTORY_SCENE
 
 		TAKE_WEAPONS           =  15,    // WEAPONS_SCENE
 		TAKE_WEAPONS_SELECTED  =  16,    // WEAPONS_SCENE
@@ -165,8 +170,8 @@ namespace PublicConstants {
 		COMBAT_HELP            = 114,
 		COMBAT_FLEE            = 122,
 		NEXT_TURN			   = 130,
-		PLAYER_DIED                 ,
-		PLAYER_WON             =  11  
+		PLAYER_DIED                 
+		 
 	};
 	                                
 	enum class E_UserInput : const unsigned short int {

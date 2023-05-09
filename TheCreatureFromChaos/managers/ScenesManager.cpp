@@ -89,6 +89,11 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		//SetPlayerCurrentScene(E_SceneSequence::);
 		break;
 
+	case E_MenuChoices::PLAYER_WON_SELECTED:
+		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set VICTORY_SCENE.");
+		SetPlayerCurrentScene(E_SceneSequence::ROOM_THREE_FRONT);
+		break;
+
 	case E_MenuChoices::NAVIGATION_LEFT:
 	case E_MenuChoices::NAVIGATION_RIGHT:
 	case E_MenuChoices::NAVIGATION_FOWARD:
@@ -105,6 +110,7 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		break;
 	case E_MenuChoices::PLAYER_WON:
 		SetPlayerCurrentScene(E_SceneSequence::VICTORY_SCENE);
+		break;
 	default:
 		DEBUG_MSG("#R ScenesManager.cpp : SetNextScene() : Switch statement default case reached.");
 		break;

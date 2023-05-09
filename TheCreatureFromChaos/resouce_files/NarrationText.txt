@@ -13,13 +13,13 @@ MOVING_SCENE:
 KOBOLD_SCENE:
            As you try to piece together what might have happened to you,          
        a small, scrappy creature scurries up to you and begins spitting at you.   
- Its beady eyes reflect the dim light, you can tell that it's some sort of kobold.
-                                                                                  
+                         Its beady eyes reflect the dim light,                    
+                      you can tell that it's some sort of kobold.                 
                                                                                   
  NAME_SCENE:
                                                                                   
                         "Me name is Khai, me be your guide.                       
-                   Come... Me show you way out. What you name?"                
+                   Come... Me show you way out. What you name?"                   
                                                                                   
                                                                                   
 ATTACK_KOBOLD_SCENE:
