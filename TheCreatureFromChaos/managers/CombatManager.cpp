@@ -194,7 +194,7 @@ void CombatManager::TakePotion()
 
 void CombatManager::TryToFlee()
 {
-	srand(time(nullptr)); // seed the random number generator with the current time
+	srand(static_cast<unsigned int>(time(nullptr))); // seed the random number generator with the current time
 
 	// generate a random number between 0 and 3 (inclusive)
 	int choice = rand() % 4;
