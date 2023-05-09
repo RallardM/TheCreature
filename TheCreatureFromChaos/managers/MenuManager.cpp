@@ -41,6 +41,11 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
         SelectMenuChoice(userInput, E_MenuChoices::WHO_ARE_YOU, E_MenuChoices::ATTACK_KOBOLD);
         break;
 
+    case E_SceneSequence::ENNEMY_SCENE:
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : KOBOLD_SCENE");
+        SelectMenuChoice(userInput, E_MenuChoices::ATTACK_ENEMY, E_MenuChoices::RUN_AWAY);
+        break;
+
     case E_SceneSequence::NAME_SCENE:
     case E_SceneSequence::ATTACK_KOBOLD_SCENE:
         DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : NAME_SCENE, ATTACK_KOBOLD_SCENE");
@@ -55,11 +60,6 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
     case E_SceneSequence::DEAD_END_SCENE:
         DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : KOBOLD_SCENE");
         PrintSingleMenuChoice(userInput, E_MenuChoices::GO_BACK);
-        break;
-
-    case E_SceneSequence::ENNEMY_SCENE:
-        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : KOBOLD_SCENE");
-        SelectMenuChoice(userInput, E_MenuChoices::ATTACK_ENEMY, E_MenuChoices::RUN_AWAY);
         break;
 
     case E_SceneSequence::VICTORY_SCENE:

@@ -40,7 +40,6 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 		RefreshMenuAndLogFrame();
 		TakePotion();
 		SetIsPlayerTurn(false);
-		//EnnemyAttack();
 		break;
 
 	case PublicConstants::E_UserInput::UP:  // Khail help
@@ -50,6 +49,10 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 		break;
 
 	case PublicConstants::E_UserInput::DOWN: // Flee
+		SetIsPlayerTurn(true);
+		RefreshMenuAndLogFrame();
+		TryToFlee();
+		SetIsPlayerTurn(false);
 		break;
 		// TODO:
 	default:
@@ -166,8 +169,8 @@ void CombatManager::TakePotion()
 
 	if (GetUserData()->GetNumberOfPotions() == 0)
 	{
-		//std::string spaces = "      ";
-		std::string spaces = "......"; // Debug TODO : Remove
+		//std::string spaces = "       ";
+		std::string spaces = "......."; // Debug TODO : Remove
 		std::string text = "You don't have any potions left!";
 		std::string nextLine = "\n";
 		playerHealLog = spaces + text + nextLine;
@@ -189,19 +192,48 @@ void CombatManager::TakePotion()
 	SetIsFightLogCleared(false);
 }
 
+void CombatManager::TryToFlee()
+{
+	srand(time(nullptr)); // seed the random number generator with the current time
+
+	// generate a random number between 0 and 3 (inclusive)
+	int choice = rand() % 4;
+
+	switch (choice) 
+	{
+	case 0:
+		// TODO: code to handle fleeing backwards
+		GetMenuManager()->GetScenesManager()->SetPlayerCurrentScene(E_SceneSequence::ROOM_THREE_FRONT);
+		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_BACK);
+		// TODO: Add Narration Scene informing the player that he flee back in the tunnel but the monster is after him
+		// add a count down until the monster catch up with the player
+		break;
+	case 1:
+		// Handle fleeing foward
+		PreparePlayerWonScene();
+		// TODO: Add Narration Scene informing the player that he knock down and passed the monster
+		break;
+	case 2:
+		// Handle dying while fleeing
+		PreparePlayerDiedScene();
+		// Add Narration Scene informing the player that he died while fleeing
+		break;
+	case 3:
+		// TODO: code to handle failing to flee
+		break;
+	default:
+    	// TODO:
+		std::cerr << "Error: invalid choice generated.\n";
+		break;
+	}
+}
+
 void CombatManager::InflictDamage(short int hitPoints)
 {
 	short int resultingCausalty = GetEnnemyLifePoints() - hitPoints;
 	if (resultingCausalty <= 0)
 	{
-		SetEnnemyLifePoints(0);
-		SetIsEnemyDefeated(true);
-		//std::cout << "TODO You won!";
-		// TODO: Add victory message
-		SetIsFightStarted(false);
-		SetIsEnemyDefeated(true);
-		//ClearAllConsoleText();
-		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::PLAYER_WON);
+		PreparePlayerWonScene();
 		return;
 	}
 
@@ -214,13 +246,7 @@ void CombatManager::ReceiveDamage(short int hitPoints)
 	short int resultingCausalty = GetUserData()->GetPlayerLifePoints() - hitPoints;
 	if (resultingCausalty <= 0)
 	{
-		GetUserData()->SetPlayerLifePoints(0);
-		//SetIsPlayerDefeated(true);
-		//std::cout << "TODO You died!";
-		// TODO: Add defeat message
-		//ClearAllConsoleText();
-		//GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::PLAYER_DIED);
-		GetUserData()->SetIsPlayerDead(true);
+		PreparePlayerDiedScene();
 		return;
 	}
 
@@ -280,6 +306,20 @@ void CombatManager::PrepareAndClearBeltLog()
 	}
 }
 
+void CombatManager::PreparePlayerWonScene()
+{
+	SetEnnemyLifePoints(0);
+	SetIsEnemyDefeated(true);
+	SetIsFightStarted(false);
+	SetIsEnemyDefeated(true);
+	GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::PLAYER_WON);
+}
+
+void CombatManager::PreparePlayerDiedScene()
+{
+	GetUserData()->SetPlayerLifePoints(0);
+	GetUserData()->SetIsPlayerDead(true);
+}
 
 void CombatManager::MoveCursorAfterBeltLog()
 {

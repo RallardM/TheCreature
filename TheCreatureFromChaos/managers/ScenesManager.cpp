@@ -80,13 +80,11 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 	case E_MenuChoices::ATTACK_ENEMY:          // From ENNEMY_SCENE
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set COMBAT_SCENE.");
 		SetPlayerCurrentScene(E_SceneSequence::COMBAT_SCENE);
-		//SetIsFightStarted(true);
-		//GetCombatManager()->SetIsFightStarted(true);
 		break;
 
 	case E_MenuChoices::RUN_AWAY:              // From ENNEMY_SCENE
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO."); // TODO
-		//SetPlayerCurrentScene(E_SceneSequence::);
+		GetCombatManager()->TryToFlee();
 		break;
 
 	case E_MenuChoices::PLAYER_WON_SELECTED:
@@ -104,13 +102,16 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		movingTowardScene = GetUserDirectionScene(menuChoice);
 		SetPlayerCurrentScene(movingTowardScene);
 		break;
+
 	case E_MenuChoices::PLAYER_DIED:
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set DEAD_END_SCENE.");
 		SetPlayerCurrentScene(E_SceneSequence::YOU_DIED_SCENE);
 		break;
+
 	case E_MenuChoices::PLAYER_WON:
 		SetPlayerCurrentScene(E_SceneSequence::VICTORY_SCENE);
 		break;
+
 	default:
 		DEBUG_MSG("#R ScenesManager.cpp : SetNextScene() : Switch statement default case reached.");
 		break;

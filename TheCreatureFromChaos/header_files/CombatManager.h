@@ -16,10 +16,15 @@ public:
 
 	void TakePotion();
 
+	void TryToFlee();
+
 	void InflictDamage(short int hitPoints);
 	void ReceiveDamage(short int hitPoints);
 
 	void PrintCausaltyLog(std::string logText, short int hitPoints);
+
+	void PreparePlayerWonScene();
+	void PreparePlayerDiedScene();
 
 	void ReprintCurrentFightLog();
 
