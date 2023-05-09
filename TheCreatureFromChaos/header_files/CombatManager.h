@@ -14,12 +14,16 @@ public:
 	void PlayerAttack();
 	void EnemyCounterAttack();
 
+	void TakePotion();
+
 	void InflictDamage(short int hitPoints);
 	void ReceiveDamage(short int hitPoints);
 
 	void PrintCausaltyLog(std::string logText, short int hitPoints);
 
 	void ReprintCurrentFightLog();
+
+	void PrepareAndClearBeltLog();
 
 	void MoveCursorAfterBeltLog();
 

@@ -31,26 +31,27 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 	case PublicConstants::E_UserInput::LEFT: // Attack
 		SetIsPlayerTurn(true);
 		RefreshMenuAndLogFrame();
-		
 		PlayerAttack();
 		SetIsPlayerTurn(false);
 		break;
 
 	case PublicConstants::E_UserInput::RIGHT: // Potion
-
+		SetIsPlayerTurn(true);
 		RefreshMenuAndLogFrame();
+		TakePotion();
+		SetIsPlayerTurn(false);
 		//EnnemyAttack();
 		break;
 
 	case PublicConstants::E_UserInput::UP:  // Khail help
 
 		RefreshMenuAndLogFrame();
-		//EnnemyAttack();
+		//EnnemyAttack(); // TODO: 
 		break;
 
 	case PublicConstants::E_UserInput::DOWN: // Flee
 		break;
-
+		// TODO:
 	default:
 		// TODO: Add error message
 		break;
@@ -131,8 +132,8 @@ void CombatManager::EnemyCounterAttack()
 
 	if (hitPoints == 0)
 	{
-		//std::string spaces = "                   ";
-		std::string spaces = "..................."; // Debug TODO : Remove
+		//std::string spaces = "                    ";
+		std::string spaces = "...................."; // Debug TODO : Remove
 		std::string text = "The monster missed!";
 		std::string nextLine = "\n";
 		ennemyHitLog = spaces + text + nextLine;
@@ -159,6 +160,35 @@ void CombatManager::EnemyCounterAttack()
 	SetIsPlayerTurn(true);
 }
 
+void CombatManager::TakePotion()
+{
+	std::string playerHealLog = "";
+
+	if (GetUserData()->GetNumberOfPotions() == 0)
+	{
+		//std::string spaces = "      ";
+		std::string spaces = "......"; // Debug TODO : Remove
+		std::string text = "You don't have any potions left!";
+		std::string nextLine = "\n";
+		playerHealLog = spaces + text + nextLine;
+	}
+	else
+	{
+		GetUserData()->SetPlayerLifePoints(25);
+		GetUserData()->SetNumberOfPotions(GetUserData()->GetNumberOfPotions() - 1);
+		//std::string spaces = "                     ";
+		std::string spaces = "....................."; // Debug TODO : Remove
+		std::string text = "You took a potion!";
+		std::string nextLine = "\n";
+		playerHealLog = spaces + text + nextLine;
+	}
+
+	PrepareAndClearBeltLog();
+	std::cout << playerHealLog;
+	SetCurrentFightLog(playerHealLog);
+	SetIsFightLogCleared(false);
+}
+
 void CombatManager::InflictDamage(short int hitPoints)
 {
 	short int resultingCausalty = GetEnnemyLifePoints() - hitPoints;
@@ -172,11 +202,11 @@ void CombatManager::InflictDamage(short int hitPoints)
 		SetIsEnemyDefeated(true);
 		//ClearAllConsoleText();
 		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::PLAYER_WON);
+		return;
 	}
-	else
-	{
-		SetEnnemyLifePoints(resultingCausalty);
-	}
+
+	SetEnnemyLifePoints(resultingCausalty);
+
 }
 
 void CombatManager::ReceiveDamage(short int hitPoints)
@@ -191,11 +221,10 @@ void CombatManager::ReceiveDamage(short int hitPoints)
 		//ClearAllConsoleText();
 		//GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::PLAYER_DIED);
 		GetUserData()->SetIsPlayerDead(true);
+		return;
 	}
-	else
-	{
-		GetUserData()->SetPlayerLifePoints(resultingCausalty);
-	}
+
+	GetUserData()->SetPlayerLifePoints(resultingCausalty);
 }
 
 void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
@@ -209,15 +238,8 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 		return;
 	}
 
-	MoveCursorAfterBeltLog();
+	PrepareAndClearBeltLog();
 
-	if (!GetIsFightLogCleared())
-	{
-		for (size_t i = 0; i < 38; i++)
-		{
-			std::cout << "\b";
-		}
-	}
 	if (hitPoints == 0)
 	{
 		finalOutput= logText;
@@ -243,6 +265,19 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 void CombatManager::ReprintCurrentFightLog()
 {
 	std::string currentFightLog = GetCurrentFightLog();
+}
+
+void CombatManager::PrepareAndClearBeltLog()
+{
+	MoveCursorAfterBeltLog();
+
+	if (!GetIsFightLogCleared())
+	{
+		for (size_t i = 0; i < 38; i++)
+		{
+			std::cout << "\b";
+		}
+	}
 }
 
 
