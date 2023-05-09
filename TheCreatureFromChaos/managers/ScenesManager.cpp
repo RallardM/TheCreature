@@ -99,7 +99,12 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		movingTowardScene = GetUserDirectionScene(menuChoice);
 		SetPlayerCurrentScene(movingTowardScene);
 		break;
-
+	case E_MenuChoices::PLAYER_DIED:
+		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set DEAD_END_SCENE.");
+		SetPlayerCurrentScene(E_SceneSequence::YOU_DIED_SCENE);
+		break;
+	case E_MenuChoices::PLAYER_WON:
+		SetPlayerCurrentScene(E_SceneSequence::VICTORY_SCENE);
 	default:
 		DEBUG_MSG("#R ScenesManager.cpp : SetNextScene() : Switch statement default case reached.");
 		break;
@@ -204,7 +209,14 @@ E_SceneSequence ScenesManager::GetUserDirectionScene(E_MenuChoices playerInputDi
 		{
 			if (GetCombatManager()->GetIsEnemyDefeated())
 			{
-				nextScene = E_SceneSequence::ROOM_THREE_FRONT;
+				if (GetUserData()->GetIsPlayerSeenVictory())
+				{
+					nextScene = E_SceneSequence::ROOM_THREE_FRONT;
+				}
+				else
+				{
+					nextScene = E_SceneSequence::VICTORY_SCENE;
+				}
 			}
 			else
 			{
@@ -218,6 +230,7 @@ E_SceneSequence ScenesManager::GetUserDirectionScene(E_MenuChoices playerInputDi
 		else if (currectScene == E_SceneSequence::ROOM_THREE_FRONT)
 		{
 			// TODO the end
+			
 		}
 	}
 	return nextScene;

@@ -15,11 +15,17 @@ public:
 	bool GetIsPlayerSeenDeadEnd();
 	void SetIsPlayerSeenDeadEnd(bool isPlayerSeenDeadEnd);
 
+	bool GetIsPlayerSeenVictory();
+	void SetIsPlayerSeenVictory(bool isPlayerSeenVictory);
+
 	unsigned short int GetNumberOfPotions();
 	void SetNumberOfPotions(unsigned short int numberOfPotions);
 
 	short int GetPlayerLifePoints();
 	void SetPlayerLifePoints(short int playerLifePoints);
+
+	bool GetIsPlayerDead();
+	void SetIsPlayerDead(bool isPlayerDead);
 
 	/// TODO
 	//bool GetAttackedKobold();
@@ -29,6 +35,8 @@ private:
 	std::string m_playerName;
 	bool m_areWeaponsEquiped;
 	bool m_isPlayerSeenDeadEnd;
+	bool m_isPlayerSeenVictory;
+	bool m_isPlayerDead;
 	short int m_playerLifePoints;
 	unsigned short int m_numberOfPotions;
 	//bool m_attackedKobold; // TODO

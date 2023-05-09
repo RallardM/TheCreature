@@ -13,7 +13,8 @@
 
 NarrationManager::NarrationManager(ScenesManager* sceneManager) :
     m_textFilePath("resouce_files/NarrationText.txt"),
-    m_pictureFilePath("resouce_files/ScenesArt.txt"),
+    m_pictureFilePath001("resouce_files/001_ScenesArt.txt"),
+    m_pictureFilePath002("resouce_files/002_ScenesArt.txt"),
     m_menuFilePath("resouce_files/MenuText.txt"),
     m_sceneManager(sceneManager),
     m_userInputManager(nullptr)
@@ -38,6 +39,7 @@ void NarrationManager::PrintLinesFromScene()
     case E_SceneSequence::WEAPONS_SCENE:
     case E_SceneSequence::DEAD_END_SCENE:
     case E_SceneSequence::ENNEMY_SCENE:
+    case E_SceneSequence::VICTORY_SCENE:
         DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
         jumpLine = "\n";
@@ -60,12 +62,17 @@ void NarrationManager::PrintLinesFromScene()
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
         GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::NAVIGATION);
         break;
+
     case E_SceneSequence::COMBAT_SCENE:
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
         GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::COMBAT);
         break;
 
+    case E_SceneSequence::YOU_DIED_SCENE:
+        scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
+        GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::DIALOGUES);
     default:
+        // TODO : Add an error message
         break;
     }
     DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Print TXT-IMG for choosen scene.");
@@ -83,7 +90,14 @@ std::string NarrationManager::GetPictureTextScene(E_SceneSequence scene, const u
     if (height == ASCII_IMAGE_HEIGHT)
     {
         textFirstLine = GetSceneImageLines(scene);
-        pathToFile = GetPictureFilePath();
+        if (scene <= E_SceneSequence::ROOM_ONE_BACK)
+        {
+			pathToFile = GetPictureFilePath001();
+		}
+        else
+        {
+			pathToFile = GetPictureFilePath002();
+		}
     }
     else if (height == STORY_TEXT_HEIGHT)
     {
@@ -149,10 +163,16 @@ std::string NarrationManager::GetTextBetweenLines(std::string& filePathStr, unsi
     return text;
 }
 
-std::string& NarrationManager::GetPictureFilePath()
+std::string& NarrationManager::GetPictureFilePath001()
 {
-    return m_pictureFilePath;
+    return m_pictureFilePath001;
 }
+
+std::string& NarrationManager::GetPictureFilePath002()
+{
+    return m_pictureFilePath002;
+}
+
 
 std::string& NarrationManager::GetTextFilePath()
 {

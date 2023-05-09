@@ -15,14 +15,19 @@ CombatManager::CombatManager(UserData* userData, MenuManager* menuManager) :
 	m_isEnemyDefeated(false),
 	m_isFightStarted(false),
 	m_isFightLogCleared(true),
-	m_isPLayerTurn(false)
+	m_isPLayerTurn(false),
+	m_currentfightLog("")
 {
 }
 
 void CombatManager::SetCombatAction(E_UserInput userInput)
 {
 	switch (userInput)
-	{		
+	{	
+	case PublicConstants::E_UserInput::EMPTY:
+		ReprintCurrentFightLog();
+
+		break;
 	case PublicConstants::E_UserInput::LEFT: // Attack
 		SetIsPlayerTurn(true);
 		RefreshMenuAndLogFrame();
@@ -93,7 +98,8 @@ void CombatManager::PlayerAttack()
 		//std::string spaces = "                           ";
 		std::string spaces = "..........................."; // Debug TODO : Remove
 		std::string text = "You missed!";
-		playerHitLog = spaces + text;
+		std::string nextLine = "\n";
+		playerHitLog = spaces + text + nextLine;
 	}
 	else
 	{
@@ -128,7 +134,8 @@ void CombatManager::EnemyCounterAttack()
 		//std::string spaces = "                   ";
 		std::string spaces = "..................."; // Debug TODO : Remove
 		std::string text = "The monster missed!";
-		ennemyHitLog = spaces + text;
+		std::string nextLine = "\n";
+		ennemyHitLog = spaces + text + nextLine;
 	}
 	else
 	{
@@ -139,9 +146,17 @@ void CombatManager::EnemyCounterAttack()
 	}
 	
 	ReceiveDamage(hitPoints);
+	if (GetUserData()->GetIsPlayerDead())
+	{
+		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::PLAYER_DIED);
+		GetMenuManager()->SetIsMenuCleared(false);
+		GetUserData()->SetAreWeaponsEquiped(false);
+		return;
+	}
+
 	RefreshMenuAndLogFrame();
 	PrintCausaltyLog(ennemyHitLog, hitPoints);
-	//SetIsPlayerTurn(true);
+	SetIsPlayerTurn(true);
 }
 
 void CombatManager::InflictDamage(short int hitPoints)
@@ -151,8 +166,12 @@ void CombatManager::InflictDamage(short int hitPoints)
 	{
 		SetEnnemyLifePoints(0);
 		SetIsEnemyDefeated(true);
-		std::cout << "TODO You won!";
+		//std::cout << "TODO You won!";
 		// TODO: Add victory message
+		SetIsFightStarted(false);
+		SetIsEnemyDefeated(true);
+		//ClearAllConsoleText();
+		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::PLAYER_WON);
 	}
 	else
 	{
@@ -167,8 +186,11 @@ void CombatManager::ReceiveDamage(short int hitPoints)
 	{
 		GetUserData()->SetPlayerLifePoints(0);
 		//SetIsPlayerDefeated(true);
-		std::cout << "TODO You died!";
+		//std::cout << "TODO You died!";
 		// TODO: Add defeat message
+		//ClearAllConsoleText();
+		//GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::PLAYER_DIED);
+		GetUserData()->SetIsPlayerDead(true);
 	}
 	else
 	{
@@ -176,11 +198,12 @@ void CombatManager::ReceiveDamage(short int hitPoints)
 	}
 }
 
-
 void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 {
 	bool isPlayerInDialogueMode = (GetMenuManager()->GetNarrationManager()->GetUserInputManager()->GetCurrentInputType() == UserInputManager::E_CurrentInputType::DIALOGUES);
 	bool isPlayerInNavigationMode = (GetMenuManager()->GetNarrationManager()->GetUserInputManager()->GetCurrentInputType() == UserInputManager::E_CurrentInputType::NAVIGATION);
+	std::string finalOutput = "";
+
 	if (isPlayerInDialogueMode || isPlayerInNavigationMode)
 	{
 		return;
@@ -197,19 +220,31 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 	}
 	if (hitPoints == 0)
 	{
-		std::cout << logText;
+		finalOutput= logText;
+		//std::cout << logText;
 	}
 	else if (hitPoints > 0 && hitPoints < 10)      // To fit the number of max characters 
 	{											   // to remove in the log
 		//std::cout << logText << " -" << hitPoints; // add a space before the minus sign
-		std::cout << logText << ".-" << hitPoints << std::endl; // Debug TODO : Remove
+		//std::cout << logText << ".-" << hitPoints << std::endl; // Debug TODO : Remove
+		//finalOutput = logText + " -" + std::to_string(hitPoints) + "\n";
+		finalOutput = logText + ".-" + std::to_string(hitPoints) + "\n"; // Debug TODO : Remove
 	}
 	else
 	{
-		std::cout << logText << "-" << hitPoints << std::endl;
+		//std::cout << logText << "-" << hitPoints << std::endl;
+		finalOutput = logText + "-" + std::to_string(hitPoints) + "\n";
 	}
+	std::cout << finalOutput;
+	SetCurrentFightLog(finalOutput);
 	SetIsFightLogCleared(false);
 }
+
+void CombatManager::ReprintCurrentFightLog()
+{
+	std::string currentFightLog = GetCurrentFightLog();
+}
+
 
 void CombatManager::MoveCursorAfterBeltLog()
 {
@@ -290,6 +325,16 @@ bool CombatManager::GetIsPlayerTurn()
 void CombatManager::SetIsPlayerTurn(bool isPlayerTurn)
 {
 	m_isPLayerTurn = isPlayerTurn;
+}
+
+std::string CombatManager::GetCurrentFightLog()
+{
+	return m_currentfightLog;
+}
+
+void CombatManager::SetCurrentFightLog(std::string currentFightLog)
+{
+	m_currentfightLog = currentFightLog;
 }
 
 void CombatManager::ClearAllConsoleText()

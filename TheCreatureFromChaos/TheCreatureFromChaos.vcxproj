@@ -158,7 +158,8 @@
     <Image Include="resouce_files\GameArtEnding.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="resouce_files\ScenesArt.txt" />
+    <Text Include="resouce_files\002_ScenesArt.txt" />
+    <Text Include="resouce_files\001_ScenesArt.txt" />
     <Text Include="resouce_files\MenuText.txt" />
     <Text Include="resouce_files\MainMenu.txt" />
     <Text Include="resouce_files\NarrationText.txt" />

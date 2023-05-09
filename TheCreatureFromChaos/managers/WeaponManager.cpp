@@ -48,6 +48,7 @@ void WeaponManager::PrintBeltMenu(unsigned int short selectedWeaponIndex)
 	{
 		//ClearWeaponLogLine();
 		GetMenuManager()->ClearConsolePreviousLine();
+		GetMenuManager()->GetCombatManager()->SetIsFightLogCleared(true);
 	}
 	if (selectedWeaponIndex == static_cast<unsigned int short>(S_Weapons::WAND))
 	{

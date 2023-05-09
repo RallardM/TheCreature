@@ -35,9 +35,9 @@ WEAPONS_SCENE:
                                                                                   
                                                                                   
 DEAD_END_SCENE:
+                                                                                  
                 You reach a dead end. Iron bars block your path,                  
          you try to break them with all your might, but they won't budge.         
-                                                                                  
                                                                                   
                                                                                   
 ENNEMY_SCENE:
@@ -46,20 +46,10 @@ ENNEMY_SCENE:
       hulking figure standing before you. It's about to attack but you are faster:
                                                                                   
                                                                                   
+VICTORY_SCENE:
+           As you stand in the darkness of the tunnel, you catch your breath,     
+        victorious after defeating the colossal monster that had threatened you.  
+             You notice that the end of the tunnel is not pitch black.            
                                                                                   
-               You are unsure how to react to this sudden intrusion.
-          You can try to communicate with the creature or fight it off.
-                             The choice is yours.
-
-
-You are completely alone, 
-with no memory of who you are or what brought you here.
-
-Will you try to find a way out of this dark tunnel and uncover the truth about your past? 
-Or will you succumb to the darkness and become just another lost soul in this medieval world?
-The choice is yours, adventurer.The fate of your story is in your hands.
-
-                       As you contemplate your next move, 
-         you realize that you find yourself in a dark and dangerous world.
-                The stench of decay and sewage permeates the air,
-           and you can hear the faint sounds of rats scurrying about.
+                                                                                  
+                                                                                   

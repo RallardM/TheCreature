@@ -5,7 +5,9 @@ UserData::UserData() :
 	m_numberOfPotions(0),
 	m_playerLifePoints(25),
 	m_areWeaponsEquiped(false),
-	m_isPlayerSeenDeadEnd(false)
+	m_isPlayerSeenDeadEnd(false),
+	m_isPlayerSeenVictory(false),
+	m_isPlayerDead(false)
 {
 }
 
@@ -39,6 +41,16 @@ void UserData::SetIsPlayerSeenDeadEnd(bool isPlayerSeenDeadEnd)
 	m_isPlayerSeenDeadEnd = isPlayerSeenDeadEnd;
 }
 
+bool UserData::GetIsPlayerSeenVictory()
+{
+	return m_isPlayerSeenVictory;
+}
+
+void UserData::SetIsPlayerSeenVictory(bool isPlayerSeenVictory)
+{
+	m_isPlayerSeenVictory = isPlayerSeenVictory;
+}
+
 unsigned short int UserData::GetNumberOfPotions()
 {
 	return m_numberOfPotions;
@@ -57,6 +69,16 @@ short int UserData::GetPlayerLifePoints()
 void UserData::SetPlayerLifePoints(short int playerLifePoints)
 {
 	m_playerLifePoints = playerLifePoints;
+}
+
+bool UserData::GetIsPlayerDead()
+{
+	return m_isPlayerDead;
+}
+
+void UserData::SetIsPlayerDead(bool isPlayerDead)
+{
+	m_isPlayerDead = isPlayerDead;
 }
 
 // TODO If the player attacked Kobold at the beginning, the help menu in combat mode should not be accessible

@@ -62,15 +62,20 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
         SelectMenuChoice(userInput, E_MenuChoices::ATTACK_ENEMY, E_MenuChoices::RUN_AWAY);
         break;
 
+    case E_SceneSequence::ROOM_THREE_FRONT:
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : ROOM_THREE_FRONT");
+        PrintSingleMenuChoice(userInput, E_MenuChoices::PLAYER_WON);
+		break;
+
     case E_SceneSequence::ROOM_ONE_FRONT:
     case E_SceneSequence::ROOM_ONE_BACK:
     case E_SceneSequence::ROOM_TWO_FRONT:
     case E_SceneSequence::ROOM_TWO_BACK:
-    case E_SceneSequence::ROOM_THREE_FRONT:
     case E_SceneSequence::ROOM_THREE_BACK:
         DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : Prints 4-ways navigation system");
         SelectNavigationElement(userInput, E_MenuChoices::NAVIGATION_PLAIN);
         break;
+
     case E_SceneSequence::ROOM_ONE_RIGHT:
     case E_SceneSequence::ROOM_ONE_LEFT:
     case E_SceneSequence::ROOM_TWO_RIGHT:
@@ -210,33 +215,40 @@ void MenuManager::SelectCombatChoice(E_UserInput userInput)
     }
     else if (userInput == E_UserInput::LEFT) // ATTACK
     {
-        PrepareCombatMenu(E_MenuChoices::COMBAT_ATTACK);
-        GetCombatManager()->SetCombatAction(userInput);
+        PrepareCombatMenu(userInput, E_MenuChoices::COMBAT_ATTACK);
+        //GetCombatManager()->SetCombatAction(userInput);
         return;
     }
     else if (userInput == E_UserInput::RIGHT) // Potion
     {
-        PrepareCombatMenu(E_MenuChoices::COMBAT_POTION);
-        GetCombatManager()->SetCombatAction(userInput);
+        PrepareCombatMenu(userInput, E_MenuChoices::COMBAT_POTION);
+        //GetCombatManager()->SetCombatAction(userInput);
         return;
     }
     else if (userInput == E_UserInput::UP)  // Khai Help
     {
-        PrepareCombatMenu(E_MenuChoices::COMBAT_HELP);
-        GetCombatManager()->SetCombatAction(userInput);
+        PrepareCombatMenu(userInput, E_MenuChoices::COMBAT_HELP);
+        //GetCombatManager()->SetCombatAction(userInput);
         return;
     }
     else if (userInput == E_UserInput::DOWN) // Flee
     {
-        PrepareCombatMenu(E_MenuChoices::COMBAT_FLEE);
-        GetCombatManager()->SetCombatAction(userInput);
+        PrepareCombatMenu(userInput, E_MenuChoices::COMBAT_FLEE);
+        //GetCombatManager()->SetCombatAction(userInput);
         return;
     }
     return;
 }
 
-void MenuManager::PrepareCombatMenu(E_MenuChoices menuChoice)
+void MenuManager::PrepareCombatMenu(E_UserInput userInput, E_MenuChoices menuChoice)
 {
+    bool isFightStarted = GetCombatManager()->GetIsFightStarted();
+    bool isPlayerTurn = GetCombatManager()->GetIsPlayerTurn();
+    if (isFightStarted && !isPlayerTurn)
+    {
+		DEBUG_MSG("MenuManager.cpp : PrepareCombatMenu() : Not player turn");
+		return;
+	}
     //GetWeaponManager()->ClearWeaponLogLine();
     ClearConsolePreviousLine();
     GetWeaponManager()->SetIsWeaponBeltCleared(true);
@@ -248,6 +260,7 @@ void MenuManager::PrepareCombatMenu(E_MenuChoices menuChoice)
     GetWeaponManager()->SelectWeapon(E_UserInput::EMPTY);
 
     AddDelay();
+    GetCombatManager()->SetCombatAction(userInput);
     return;
 }
 

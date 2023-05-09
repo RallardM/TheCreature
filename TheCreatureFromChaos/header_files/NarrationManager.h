@@ -15,7 +15,8 @@ public:
 	NarrationManager(ScenesManager* sceneManager);
 	void PrintLinesFromScene();
 	std::string GetPictureTextScene(E_SceneSequence scene, const unsigned short int height);
-	std::string& GetPictureFilePath();
+	std::string& GetPictureFilePath001();
+	std::string& GetPictureFilePath002();
 	std::string& GetTextFilePath();
 	std::string& GetMenuFilePath();
 	std::string GetTextBetweenLines(std::string& filePathStr, unsigned int firstLine, const unsigned short int height);
@@ -38,6 +39,7 @@ private:
 	UserInputManager* m_userInputManager;
 
 	std::string m_textFilePath;
-	std::string m_pictureFilePath;
+	std::string m_pictureFilePath001;
+	std::string m_pictureFilePath002;
 	std::string m_menuFilePath;
 };

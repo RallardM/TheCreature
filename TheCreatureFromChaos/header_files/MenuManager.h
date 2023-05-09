@@ -26,7 +26,7 @@ public:
 
 	//void SelectCombatElement(E_UserInput userInput);
 	void SelectCombatChoice(E_UserInput userInput);
-	void PrepareCombatMenu(E_MenuChoices menuChoice);
+	void PrepareCombatMenu(E_UserInput userInput, E_MenuChoices menuChoice);
 
 	void PrintSingleMenuChoice(E_UserInput userInput, E_MenuChoices menuChoice);
 	void PrintSelectedMenu(E_MenuChoices currentMenuChoice);

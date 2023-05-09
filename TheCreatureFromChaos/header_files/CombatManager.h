@@ -19,6 +19,8 @@ public:
 
 	void PrintCausaltyLog(std::string logText, short int hitPoints);
 
+	void ReprintCurrentFightLog();
+
 	void MoveCursorAfterBeltLog();
 
 	WeaponManager* GetWeaponManager();
@@ -44,6 +46,9 @@ public:
 	bool GetIsPlayerTurn();
 	void SetIsPlayerTurn(bool isPlayerTurn);
 
+	std::string GetCurrentFightLog();
+	void SetCurrentFightLog(std::string currentFightLog);
+
 	void ClearAllConsoleText();
 
 	MenuManager* GetMenuManager();
@@ -55,6 +60,8 @@ private:
 
 	short int m_ennemyLifePoints;
 	unsigned short int m_enemyHitPoints;
+
+	std::string m_currentfightLog;
 
 	bool m_isFightLogCleared;
 	bool m_isEnemyDefeated;
