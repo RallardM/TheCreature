@@ -58,6 +58,7 @@ void WeaponManager::PrintBeltMenu(unsigned int short selectedWeaponIndex)
 	currentWeapon = GetCurrentWeapon(selectedWeaponIndex).weaponName;
 	std::cout << "   " << currentWeapon << " is equiped" << spaceEquilizer<<" | Number of potions : " << numberOfPotions << std::endl;
 	SetIsWeaponBeltCleared(false);
+	GetMenuManager()->GetScenesManager()->SetIsAllConsoleTextCleared(false);
 }
 
 

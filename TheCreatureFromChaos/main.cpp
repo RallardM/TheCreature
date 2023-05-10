@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-//#include <chrono>
+#include <chrono>
 #include <thread>
 #include <conio.h>
 
@@ -61,6 +61,10 @@ int main()
 	// Print Intro scene.
 	narrationManager->PrintLinesFromScene();
 
+	auto start_time = std::chrono::steady_clock::now();
+	auto next_print_time = start_time + std::chrono::seconds(1);
+
+
 	//DEBUG_MSG("main.cpp : main() : Enters main loop.");
 	while (consoleHandler->GetIsGameRunning())
 	{
@@ -95,7 +99,12 @@ int main()
 			userInput = E_UserInput::EMPTY;
 			combatManager->SetCombatAction(userInput);
 		}
-		//std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+
+		if (combatManager->GetIsCountdownStarted() && !isMenuCleared)
+		{
+			combatManager->Countdown(10, start_time, next_print_time);
+		}
 	}
 
 	// Clean up dynamically allocated memory.
@@ -107,6 +116,6 @@ int main()
 	delete scenesManager;
 	delete combatManager;
 	delete weaponManager;
-
+	exit(EXIT_SUCCESS);
 	return 0;
 }

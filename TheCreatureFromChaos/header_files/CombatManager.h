@@ -1,4 +1,6 @@
 #pragma once
+#include <chrono>
+
 #include "ScenesManager.h"
 #include "MenuManager.h"
 
@@ -32,6 +34,8 @@ public:
 
 	void MoveCursorAfterBeltLog();
 
+	void Countdown(int seconds, std::chrono::steady_clock::time_point& start_time, std::chrono::steady_clock::time_point& next_print_time);
+
 	WeaponManager* GetWeaponManager();
 	void SetWeaponManager(WeaponManager* weaponManager);
 
@@ -58,6 +62,15 @@ public:
 	std::string GetCurrentFightLog();
 	void SetCurrentFightLog(std::string currentFightLog);
 
+	bool GetIsPlayerFleeing();
+	void SetIsPlayerFleeing(bool isPlayerFleeing);
+
+	bool GetIsCountdownStarted();
+	void SetIsCountdownStarted(bool isCountdownStarted);
+
+	bool GetAreCountdownVariablesInitiated();
+	void SetAreCountdownVariablesInitiated(bool areCountdownVariablesInitiated);
+
 	void ClearAllConsoleText();
 
 	MenuManager* GetMenuManager();
@@ -76,4 +89,11 @@ private:
 	bool m_isEnemyDefeated;
 	bool m_isFightStarted;
 	bool m_isPLayerTurn;
+	bool m_isPlayerFleeing;
+
+	bool m_isCountdownStarted;
+	bool m_areCountdownVariablesInitiated;
+	bool m_time_up;
+	int short m_remainingSeconds;
+
 };

@@ -43,6 +43,8 @@ void NarrationManager::PrintLinesFromScene()
     case E_SceneSequence::VICTORY_SCENE:
     case E_SceneSequence::YOU_DIED_SCENE:
     case E_SceneSequence::FLEING_FAILED_DIED_SCENE:
+    case E_SceneSequence::FLEEING_FORWARD_SCENE:
+    case E_SceneSequence::FLEEING_BACKWARD_SCENE:
         DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
         jumpLine = "\n";
@@ -63,15 +65,12 @@ void NarrationManager::PrintLinesFromScene()
     case E_SceneSequence::ROOM_THREE_RIGHT:
     case E_SceneSequence::ROOM_THREE_LEFT:
     case E_SceneSequence::ROOM_THREE_BACK:
-    case E_SceneSequence::FLEEING_BACKWARD_SCENE:
-    case E_SceneSequence::FLEEING_FORWARD_SCENE:
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
         GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::NAVIGATION);
         break;
     
         // Combat scenes
     case E_SceneSequence::COMBAT_SCENE:
-    case E_SceneSequence::FLEING_FAILED_FIGHT_SCENE:
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
         GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::COMBAT);
         break;
@@ -85,6 +84,7 @@ void NarrationManager::PrintLinesFromScene()
     DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Picture printed.");
     std::cout << jumpLine << sceneText;
     DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Text printed.");
+    GetScenesManager()->SetIsAllConsoleTextCleared(false);
 }
 
 std::string NarrationManager::GetPictureTextScene(E_SceneSequence scene, const unsigned short int height)

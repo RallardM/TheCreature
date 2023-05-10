@@ -5,7 +5,6 @@
 #include "DebugMessageSystem.h"
 #include "PublicConstants.h"
 
-
 CombatManager::CombatManager(UserData* userData, MenuManager* menuManager) :
 	m_ennemyLifePoints(50),
 	m_enemyHitPoints(10),
@@ -16,7 +15,12 @@ CombatManager::CombatManager(UserData* userData, MenuManager* menuManager) :
 	m_isFightStarted(false),
 	m_isFightLogCleared(true),
 	m_isPLayerTurn(false),
-	m_currentfightLog("")
+	m_currentfightLog(""),
+	m_isPlayerFleeing(false),
+	m_isCountdownStarted(false),
+	m_areCountdownVariablesInitiated(false),
+	m_time_up(true),
+	m_remainingSeconds(0)
 {
 }
 
@@ -39,9 +43,8 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 		TakePotion();
 		break;
 
-	case PublicConstants::E_UserInput::UP:  // Khail help
+	case PublicConstants::E_UserInput::UP:  // Khail help // TODO: 
 		RefreshMenuAndLogFrame();
-		//EnnemyAttack(); // TODO: 
 		break;
 
 	case PublicConstants::E_UserInput::DOWN: // Flee
@@ -49,15 +52,15 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 		TryToFlee();
 		break;
 
-		// TODO:
 	default:
 		// TODO: Add error message
 		break;
 
 	}
+
 	SetIsPlayerTurn(false);
 	SetIsFightStarted(true);
-	//GetWeaponManager()->SelectWeapon(E_UserInput::EMPTY);
+
 }
 
 void CombatManager::RefreshMenuAndLogFrame()
@@ -75,8 +78,8 @@ void CombatManager::PlayerAttack()
 	S_Weapon currentWeapon = GetWeaponManager()->GetCurrentWeapon(GetWeaponManager()->GetCurrentWeaponIndex());
 
 	// Random hit point between the current weapon min and max hit points or fail
-	// 
 	// Create a random number generator and distribution for hit points
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<> dist(currentWeapon.minHitPoints, currentWeapon.maxHitPoints);
@@ -183,45 +186,49 @@ void CombatManager::TakePotion()
 
 	PrepareAndClearBeltLog();
 	std::cout << playerHealLog;
+	GetMenuManager()->GetScenesManager()->SetIsAllConsoleTextCleared(false);
 	SetCurrentFightLog(playerHealLog);
 	SetIsFightLogCleared(false);
 }
 
 void CombatManager::TryToFlee()
 {
+	
 	srand(static_cast<unsigned int>(time(nullptr))); // seed the random number generator with the current time
 
 	// generate a random number between 0 and 3 (inclusive)
 	int choice = rand() % 4;
 
-	switch (choice) 
+	switch (0) // TODO: put back 'choice' after debug
 	{
 	case 0:
-		// TODO: code to handle fleeing backwards
-		GetMenuManager()->GetScenesManager()->SetPlayerCurrentScene(E_SceneSequence::ROOM_THREE_FRONT);
-		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::NAVIGATION_BACK);
-		// TODO: Add Narration Scene informing the player that he flee back in the tunnel but the monster is after him
-		// add a count down until the monster catch up with the player
+		// Handle fleeing backwards
+		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEEING_BACKWARD);
+		//SetIsCountdownStarted(true);
 		break;
+
 	case 1:
 		// Handle fleeing foward
-		PreparePlayerWonScene();
-		// TODO: Add Narration Scene informing the player that he knock down and passed the monster
+		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEEING_FORWARD);
+		SetIsEnemyDefeated(true);
 		break;
+
 	case 2:
 		// Handle dying while fleeing
-		PreparePlayerDiedScene();
-		// Add Narration Scene informing the player that he died while fleeing
+		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEING_FAILED_DIED);
 		break;
+
 	case 3:
-		// TODO: code to handle failing to flee leading to combat
+		// TODO: code to handle failing to flee leading to combat add a log message 
 		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::ATTACK_ENEMY);
 		break;
+
 	default:
     	// TODO:
 		std::cerr << "Error: invalid choice generated.\n";
 		break;
 	}
+	SetIsPlayerFleeing(true);
 }
 
 void CombatManager::InflictDamage(short int hitPoints)
@@ -279,6 +286,7 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 		finalOutput = logText + "-" + std::to_string(hitPoints) + "\n";
 	}
 	std::cout << finalOutput;
+	GetMenuManager()->GetScenesManager()->SetIsAllConsoleTextCleared(false);
 	SetCurrentFightLog(finalOutput);
 	SetIsFightLogCleared(false);
 }
@@ -298,6 +306,7 @@ void CombatManager::PrepareAndClearBeltLog()
 		{
 			std::cout << "\b";
 		}
+		GetMenuManager()->GetScenesManager()->SetIsAllConsoleTextCleared(false);
 	}
 }
 
@@ -307,7 +316,7 @@ void CombatManager::PreparePlayerWonScene()
 	SetIsEnemyDefeated(true);
 	SetIsFightStarted(false);
 	SetIsEnemyDefeated(true);
-	GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::PLAYER_WON);
+	GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::WON_LEAVE);
 }
 
 void CombatManager::PreparePlayerDiedScene()
@@ -320,6 +329,49 @@ void CombatManager::MoveCursorAfterBeltLog()
 {
 	std::cout << "\033[A";
 	std::cout << "\033[43C";
+}
+
+void CombatManager::Countdown(int seconds, std::chrono::steady_clock::time_point& start_time, std::chrono::steady_clock::time_point& next_print_time)
+{
+	if (!GetAreCountdownVariablesInitiated())
+	{
+		start_time = std::chrono::steady_clock::now();
+		next_print_time = start_time + std::chrono::seconds(1);
+		m_remainingSeconds = seconds;
+		m_time_up = false;
+		SetAreCountdownVariablesInitiated(true);
+	}
+
+	if (!m_time_up)
+	{
+		auto current_time = std::chrono::steady_clock::now();
+		auto time_diff = std::chrono::duration_cast<std::chrono::seconds>(current_time - next_print_time);
+
+		if (time_diff >= std::chrono::seconds(1))
+		{
+			MoveCursorAfterBeltLog();
+			next_print_time += std::chrono::seconds(1);
+			m_remainingSeconds--;
+			std::cout << "               Time remaining: " << m_remainingSeconds << " seconds" << std::endl;
+			GetMenuManager()->GetScenesManager()->SetIsAllConsoleTextCleared(false);
+		}
+
+		// Check if countdown is over
+		if (m_remainingSeconds <= 0)
+		{
+			m_time_up = true;
+		}
+
+		// Sleep for a short period to avoid high CPU usage
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		return;
+	}
+
+	m_remainingSeconds = 0;
+	SetIsCountdownStarted(false);
+	SetAreCountdownVariablesInitiated(false);
+	m_time_up = true;
+	GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::ATTACK_ENEMY);
 }
 
 WeaponManager* CombatManager::GetWeaponManager()
@@ -415,4 +467,34 @@ void CombatManager::ClearAllConsoleText()
 MenuManager* CombatManager::GetMenuManager()
 {
 	return m_menuManager;
+}
+
+bool CombatManager::GetIsPlayerFleeing()
+{
+	return m_isPlayerFleeing;
+}
+
+void CombatManager::SetIsPlayerFleeing(bool isPlayerFleeing)
+{
+	m_isPlayerFleeing = isPlayerFleeing;
+}
+
+bool CombatManager::GetIsCountdownStarted()
+{
+	return m_isCountdownStarted;
+}
+
+void CombatManager::SetIsCountdownStarted(bool isCountdownStarted)
+{
+	m_isCountdownStarted = isCountdownStarted;
+}
+
+bool CombatManager::GetAreCountdownVariablesInitiated()
+{
+	return m_areCountdownVariablesInitiated;
+}
+
+void CombatManager::SetAreCountdownVariablesInitiated(bool areCountdownVariablesInitiated)
+{
+	m_areCountdownVariablesInitiated = areCountdownVariablesInitiated;
 }

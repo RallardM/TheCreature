@@ -66,11 +66,27 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
         DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : VICTORY_SCENE");
         GetUserData()->SetIsPlayerSeenVictory(true);
         GetScenesManager()->GetCombatManager()->SetIsFightStarted(false);
-        PrintSingleMenuChoice(userInput, E_MenuChoices::PLAYER_WON);
+        PrintSingleMenuChoice(userInput, E_MenuChoices::WON_LEAVE);
 		break;
 
     case E_SceneSequence::YOU_DIED_SCENE:
         DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : YOU_DIED_SCENE");
+        PrintSingleMenuChoice(userInput, E_MenuChoices::QUIT_GAME);
+        break;
+
+    case E_SceneSequence::FLEEING_BACKWARD_SCENE:
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : FLEEING_BACKWARD_SCENE");
+        PrintSingleMenuChoice(userInput, E_MenuChoices::RUN);
+        //GetScenesManager()->GetCombatManager()->SetIsCountdownStarted(true);
+        break;
+
+    case E_SceneSequence::FLEEING_FORWARD_SCENE:
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : FLEEING_FORWARD_SCENE");
+        PrintSingleMenuChoice(userInput, E_MenuChoices::WON_LEAVE);
+        break;
+
+    case E_SceneSequence::FLEING_FAILED_DIED_SCENE:
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : FLEEING_FORWARD_SCENE");
         PrintSingleMenuChoice(userInput, E_MenuChoices::QUIT_GAME);
         break;
 
@@ -80,8 +96,6 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
     case E_SceneSequence::ROOM_TWO_BACK:
     case E_SceneSequence::ROOM_THREE_BACK:
     case E_SceneSequence::ROOM_THREE_FRONT:
-    case E_SceneSequence::FLEEING_BACKWARD_SCENE:
-    case E_SceneSequence::FLEEING_FORWARD_SCENE:
         DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : Prints 4-ways navigation system");
         SelectNavigationElement(userInput, E_MenuChoices::NAVIGATION_PLAIN);
         break;
@@ -97,7 +111,6 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
         break;
 
     case E_SceneSequence::COMBAT_SCENE:
-    case E_SceneSequence::FLEING_FAILED_FIGHT_SCENE:
         DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : COMBAT_SCENE");
         //SelectCombatElement(userInput);
         SelectCombatChoice(userInput);
@@ -300,6 +313,7 @@ void MenuManager::PrintSingleMenuChoice(E_UserInput userInput, E_MenuChoices men
 void MenuManager::PrintSelectedMenu(E_MenuChoices currentMenuChoice)
 {
     std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), currentMenuChoice) << std::endl;
+    GetScenesManager()->SetIsAllConsoleTextCleared(false);
     SetIsMenuCleared(false);
     SetSelectedMenuLine(currentMenuChoice);
     return;
@@ -312,6 +326,7 @@ void MenuManager::PrintNavigationMenu(E_MenuChoices currentNavigationChoice)
     std::string& menuFilePath = GetNarrationManager()->GetMenuFilePath();
     std::string navigationMenuText = GetNarrationManager()->GetTextBetweenLines(menuFilePath, enumToInt, NAVIGATION_MENU_HEIGHT);
     std::cout << navigationMenuText;
+    GetScenesManager()->SetIsAllConsoleTextCleared(false);
     SetIsMenuCleared(false);
     SetSelectedMenuLine(currentNavigationChoice);
     return;
@@ -320,6 +335,7 @@ void MenuManager::PrintNavigationMenu(E_MenuChoices currentNavigationChoice)
 void MenuManager::PrintEnterNameMenu()
 {
     std::cout << "            What name do you want Khai to call you? ";
+    GetScenesManager()->SetIsAllConsoleTextCleared(false);
     std::string playerName;
     //GetConsoleHandler()->ActivateConsoleCursor(); // TODO
 

@@ -41,6 +41,9 @@ public:
 	CombatManager* GetCombatManager();
 	void SetCombatManager(CombatManager* combatManager);
 
+	bool GetIsAllConsoleTextCleared();
+	void SetIsAllConsoleTextCleared(bool isAllConsoleTextCleared);
+
 private:
 	E_SceneSequence m_userCurrentScene;
 
@@ -51,4 +54,6 @@ private:
 	UserData* m_userData;
 
 	CombatManager* m_combatManager;
+
+	bool m_isAllConsoleTextCleared;
 };

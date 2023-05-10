@@ -19,9 +19,14 @@ ScenesManager::ScenesManager(UserData* userData) :
 
 void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 {
-	ClearAllConsoleText();
-	GetMenuManager()->SetIsMenuCleared(true);
-	if (GetUserData()->GetAreWeaponsEquiped() == true)
+	if (GetIsAllConsoleTextCleared() == false)
+	{
+		ClearAllConsoleText();
+		SetIsAllConsoleTextCleared(true);
+		GetMenuManager()->SetIsMenuCleared(true);
+	}
+	
+	if (GetUserData()->GetAreWeaponsEquiped() == true && GetWeaponManager()->GetIsWeaponBeltCleared() == false)
 	{
 		GetWeaponManager()->SetIsWeaponBeltCleared(true);
 	}
@@ -83,11 +88,34 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		break;
 
 	case E_MenuChoices::RUN_AWAY:              // From ENNEMY_SCENE
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : calls TryToFlee."); // TODO
+		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : calls TryToFlee."); 
 		GetCombatManager()->TryToFlee();
+		//GetCombatManager()->SetIsPlayerFleeing(true);
 		break;
 
-	case E_MenuChoices::PLAYER_WON_SELECTED:
+	case E_MenuChoices::FLEEING_BACKWARD:       // From ENNEMY_SCENE 1 of 4 chance
+		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : .");
+		SetPlayerCurrentScene(E_SceneSequence::FLEEING_BACKWARD_SCENE);
+		GetCombatManager()->SetIsPlayerFleeing(false);
+		break;
+
+	case E_MenuChoices::FLEEING_FORWARD:       // From ENNEMY_SCENE 1 of 4 chance
+		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : .");
+		SetPlayerCurrentScene(E_SceneSequence::FLEEING_FORWARD_SCENE);
+		GetCombatManager()->SetIsPlayerFleeing(false);
+		break;
+
+	case E_MenuChoices::FLEING_FAILED_DIED:     // From ENNEMY_SCENE 1 of 4 chance
+		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : .");
+		SetPlayerCurrentScene(E_SceneSequence::FLEING_FAILED_DIED_SCENE);
+		GetCombatManager()->SetIsPlayerFleeing(false);
+		break;
+
+	case E_MenuChoices::WON_LEAVE: 		 // From COMBAT_SCENE The player won the fight
+		SetPlayerCurrentScene(E_SceneSequence::VICTORY_SCENE);
+		break;
+
+	case E_MenuChoices::WON_LEAVE_SELECTED:  // From VICTORY_SCENE The player selected leave scene
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ROOM_THREE_FRONT.");
 		SetPlayerCurrentScene(E_SceneSequence::ROOM_THREE_FRONT);
 		break;
@@ -95,6 +123,12 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 	case E_MenuChoices::QUIT_GAME_SELECTED:
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Stops main loop.");
 		GetMenuManager()->GetConsoleHandler()->SetIsGameRunning(false);
+		break;
+
+	case E_MenuChoices::RUN_SELECTED:
+		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : ROOM_THREE_BACK.");
+		SetPlayerCurrentScene(E_SceneSequence::ROOM_THREE_BACK);
+		GetCombatManager()->SetIsCountdownStarted(true);
 		break;
 
 	case E_MenuChoices::NAVIGATION_LEFT:
@@ -108,14 +142,18 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		SetPlayerCurrentScene(movingTowardScene);
 		break;
 
-	case E_MenuChoices::PLAYER_WON:
-		SetPlayerCurrentScene(E_SceneSequence::VICTORY_SCENE);
-		break;
-
 	default:
 		DEBUG_MSG("#R ScenesManager.cpp : SetNextScene() : Switch statement default case reached.");
 		break;
 	}
+
+	bool isPlayerFleeingg = GetCombatManager()->GetIsPlayerFleeing();
+	if (isPlayerFleeingg)
+	{
+		GetCombatManager()->SetIsPlayerFleeing(false);
+		return;
+	}
+
 	GetNarrationManager()->PrintLinesFromScene();
 }
 
@@ -356,4 +394,14 @@ CombatManager* ScenesManager::GetCombatManager()
 void ScenesManager::SetCombatManager(CombatManager* combatManager)
 {
 	m_combatManager = combatManager;
+}
+
+bool ScenesManager::GetIsAllConsoleTextCleared()
+{
+	return m_isAllConsoleTextCleared;
+}
+
+void ScenesManager::SetIsAllConsoleTextCleared(bool isAllConsoleTextCleared)
+{
+	m_isAllConsoleTextCleared = isAllConsoleTextCleared;
 }

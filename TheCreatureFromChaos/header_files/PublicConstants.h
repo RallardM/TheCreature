@@ -3,7 +3,20 @@
 
 // NarrationText.txt
 const unsigned short int SCENES_TEXT_LINES[13] = { 
-	2, 8, 14, 20, 26, 32, 38, 44, 50, 56, 62, 68, 74 };
+	 2, // INTRO_SCENE
+	 8, // MOVING_SCENE
+	14, // KOBOLD_SCENE
+	20, // NAME_SCENE
+	26, // ATTACK_KOBOLD_SCENE
+	32, // WEAPONS_SCENE
+	38, // DEAD_END_SCENE
+	44, // ENNEMY_SCENE
+	50, // VICTORY_SCENE
+	56, // FLEEING_BACKWARD_SCENE
+	62, // FLEEING_FORWARD_SCENE
+	68, // FLEING_FAILED_DIED_SCENE
+	74  // FLEING_FAILED_FIGHT_SCENE
+};
 
 const unsigned short int NEXT_MENU_ELEMENT        =  1;
 const unsigned short int CURRENT_MENU_ELEMENT     =  1;
@@ -45,6 +58,10 @@ const unsigned short int SCENE_NUMBER_OF_MENU_CHOICES[27] = {
 	ONE_CHOICE_MENU,      // DEAD_END_SCENE
 	TWO_CHOICES_MENU,     // ENNEMY_SCENE
 	ONE_CHOICE_MENU,	  // VICTORY_SCENE
+	ONE_CHOICE_MENU,      // FLEEING_BACKWARD_SCENE
+	ONE_CHOICE_MENU,      // FLEEING_FORWARD_SCENE
+	ONE_CHOICE_MENU,      // FLEING_FAILED_DIED_SCENE
+	COMBAT_MENU,          // FLEING_FAILED_FIGHT_SCENE
 
 	TWO_WAYS_LEFT,        // ROOM_ONE_LEFT
 	FOUR_WAYS_FRONT,      // ROOM_ONE_FRONT
@@ -62,11 +79,8 @@ const unsigned short int SCENE_NUMBER_OF_MENU_CHOICES[27] = {
 	FOUR_WAYS_BACK,       // ROOM_THREE_BACK
 
 	COMBAT_MENU,	      // COMBAT_SCENE
-	ONE_CHOICE_MENU,      // YOU_DIED_SCENE
-	FOUR_WAYS_BACK,       // FLEEING_BACKWARD_SCENE
-	FOUR_WAYS_FRONT,      // FLEEING_FORWARD_SCENE
-	ONE_CHOICE_MENU,      // FLEING_FAILED_DIED_SCENE
-	COMBAT_MENU           // FLEING_FAILED_FIGHT_SCENE
+	ONE_CHOICE_MENU       // YOU_DIED_SCENE
+
 };
 
 const unsigned short int SCENES_IMAGE_LINES[27] = {
@@ -80,6 +94,10 @@ const unsigned short int SCENES_IMAGE_LINES[27] = {
 	142,  // DEAD_END_SCENE    ROOM_TWO_BACK
 	177,  // ENNEMY_SCENE  
 	212,  // VICTORY_SCENE
+	352,  // FLEEING_BACKWARD_SCENE
+	212,  // FLEEING_FORWARD_SCENE
+	387,  // FLEING_FAILED_DIED_SCENE
+	177,  // FLEING_FAILED_FIGHT_SCENE
 
 	247,  // ROOM_ONE_LEFT
 	  2,  // ROOM_ONE_FRONT
@@ -98,11 +116,8 @@ const unsigned short int SCENES_IMAGE_LINES[27] = {
 	252,  // ROOM_THREE_BACK
 
 	287,  // COMBAT_SCENE
-	322,  // YOU_DIED_SCENE
-	252,  // FLEEING_BACKWARD_SCENE
-	181,  // FLEEING_FORWARD_SCENE
-	322,  // FLEING_FAILED_DIED_SCENE
-	287   // FLEING_FAILED_FIGHT_SCENE
+	322  // YOU_DIED_SCENE
+
 };
 
 namespace PublicConstants {
@@ -117,7 +132,11 @@ namespace PublicConstants {
 		DEAD_END_SCENE             ,   // Image line 142 ; Text line 38 ; Menu line 18 // TODO return to navigation menu at line 26
 		ENNEMY_SCENE               ,   // Image line 177 ; Text line 44 ; Menu line 21
 		VICTORY_SCENE		       ,   // Image line 212 ; Text line 50 ; Menu line 11
-						           	    
+		FLEEING_BACKWARD_SCENE     ,   // Image line 252 ;              ; Menu line 31
+		FLEEING_FORWARD_SCENE      ,   // Image line 212 ;              ; 
+		FLEING_FAILED_DIED_SCENE   ,   // Image line 322 ;              ; Menu line 24
+		FLEING_FAILED_FIGHT_SCENE  ,
+
 		ROOM_ONE_LEFT              ,   // Image line 247 ;              ; Menu line 23
 		ROOM_ONE_FRONT             ,   // Image line   2 ;              ; Menu line 54
 		ROOM_ONE_RIGHT             ,   // Image line 282 ;              ; Menu line 54
@@ -134,11 +153,7 @@ namespace PublicConstants {
 		ROOM_THREE_BACK            ,   // Image line 252 ;              ; Menu line 23
 								       
 		COMBAT_SCENE               ,   // Image line 287 ;              ; Menu line 95
-        YOU_DIED_SCENE	           ,   // Image line 322 ;              ; Menu line 24
-		FLEEING_BACKWARD_SCENE     ,   // Image line 252 ;              ; Menu line 31
-		FLEEING_FORWARD_SCENE      ,   // Image line 212 ;              ; 
-		FLEING_FAILED_DIED_SCENE   ,   // Image line 322 ;              ; Menu line 24
-		FLEING_FAILED_FIGHT_SCENE      // Image line 177 ;              ; Menu line 95
+        YOU_DIED_SCENE	               // Image line 322 ;              ; Menu line 24
 	};                              
 	                                
 	//MenuText.txt                  
@@ -156,8 +171,8 @@ namespace PublicConstants {
 		WHO_ARE_YOU            =   9,  // KOBOLD_SCENE
 		ATTACK_KOBOLD          =  10,  // KOBOLD_SCENE
 									   
-		PLAYER_WON             =  12,  // VICTORY_SCENE
-		PLAYER_WON_SELECTED    =  13,  // VICTORY_SCENE
+		WON_LEAVE              =  12,  // VICTORY_SCENE
+		WON_LEAVE_SELECTED     =  13,  // VICTORY_SCENE
 									   
 		TAKE_WEAPONS           =  15,  // WEAPONS_SCENE
 		TAKE_WEAPONS_SELECTED  =  16,  // WEAPONS_SCENE
@@ -170,7 +185,10 @@ namespace PublicConstants {
 									   
 		QUIT_GAME              =  24,  // YOU_DIED_SCENE
 		QUIT_GAME_SELECTED     =  25,  // YOU_DIED_SCENE
-									   
+				
+		RUN                    =  27,  // FLEEING_BACKWARD_SCENE
+		RUN_SELECTED           =  28,  // FLEEING_BACKWARD_SCENE
+
 		NAVIGATION_PLAIN       =  31,  // Quadridirectional ROOM_*_FRONT, ROOM_*_BACK
 		NAVIGATION_LEFT        =  39,  // Quadridirectional ROOM_*_FRONT, ROOM_*_BACK
 		NAVIGATION_RIGHT       =  47,  // Quadridirectional ROOM_*_FRONT, ROOM_*_BACK
@@ -186,7 +204,11 @@ namespace PublicConstants {
 		COMBAT_POTION          = 111,
 		COMBAT_HELP            = 119,
 		COMBAT_FLEE            = 127,
-		NEXT_TURN			   = 135
+		NEXT_TURN			   = 135,
+
+		FLEEING_BACKWARD,
+		FLEEING_FORWARD,
+		FLEING_FAILED_DIED
 	};
 	                                
 	enum class E_UserInput : const unsigned short int {
