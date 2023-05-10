@@ -31,6 +31,7 @@ void NarrationManager::PrintLinesFromScene()
 
     switch (scene)
     {
+        // Dialogue scenes
     case E_SceneSequence::INTRO_SCENE:
     case E_SceneSequence::MOVING_SCENE:
     case E_SceneSequence::KOBOLD_SCENE:
@@ -40,6 +41,8 @@ void NarrationManager::PrintLinesFromScene()
     case E_SceneSequence::DEAD_END_SCENE:
     case E_SceneSequence::ENNEMY_SCENE:
     case E_SceneSequence::VICTORY_SCENE:
+    case E_SceneSequence::YOU_DIED_SCENE:
+    case E_SceneSequence::FLEING_FAILED_DIED_SCENE:
         DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
         jumpLine = "\n";
@@ -47,6 +50,7 @@ void NarrationManager::PrintLinesFromScene()
         GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::DIALOGUES);
         break;
 
+        // Navigation scenes
     case E_SceneSequence::ROOM_ONE_FRONT:
     case E_SceneSequence::ROOM_ONE_RIGHT:
     case E_SceneSequence::ROOM_ONE_LEFT:
@@ -59,18 +63,19 @@ void NarrationManager::PrintLinesFromScene()
     case E_SceneSequence::ROOM_THREE_RIGHT:
     case E_SceneSequence::ROOM_THREE_LEFT:
     case E_SceneSequence::ROOM_THREE_BACK:
+    case E_SceneSequence::FLEEING_BACKWARD_SCENE:
+    case E_SceneSequence::FLEEING_FORWARD_SCENE:
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
         GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::NAVIGATION);
         break;
-
+    
+        // Combat scenes
     case E_SceneSequence::COMBAT_SCENE:
+    case E_SceneSequence::FLEING_FAILED_FIGHT_SCENE:
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
         GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::COMBAT);
         break;
 
-    case E_SceneSequence::YOU_DIED_SCENE:
-        scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
-        GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::DIALOGUES);
     default:
         // TODO : Add an error message
         break;

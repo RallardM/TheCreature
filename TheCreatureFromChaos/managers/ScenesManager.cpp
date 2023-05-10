@@ -83,13 +83,18 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		break;
 
 	case E_MenuChoices::RUN_AWAY:              // From ENNEMY_SCENE
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : TODO."); // TODO
+		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : calls TryToFlee."); // TODO
 		GetCombatManager()->TryToFlee();
 		break;
 
 	case E_MenuChoices::PLAYER_WON_SELECTED:
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set VICTORY_SCENE.");
+		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ROOM_THREE_FRONT.");
 		SetPlayerCurrentScene(E_SceneSequence::ROOM_THREE_FRONT);
+		break;
+
+	case E_MenuChoices::QUIT_GAME_SELECTED:
+		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Stops main loop.");
+		GetMenuManager()->GetConsoleHandler()->SetIsGameRunning(false);
 		break;
 
 	case E_MenuChoices::NAVIGATION_LEFT:
@@ -101,11 +106,6 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : movingTowardScene.");
 		movingTowardScene = GetUserDirectionScene(menuChoice);
 		SetPlayerCurrentScene(movingTowardScene);
-		break;
-
-	case E_MenuChoices::PLAYER_DIED:
-		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set DEAD_END_SCENE.");
-		SetPlayerCurrentScene(E_SceneSequence::YOU_DIED_SCENE);
 		break;
 
 	case E_MenuChoices::PLAYER_WON:

@@ -1,6 +1,11 @@
 #include "ConsoleHandler.h"
 #include <windows.h>
 
+ConsoleHandler::ConsoleHandler() :
+	m_isGameRunning(true)
+{
+}
+
 void ConsoleHandler::SetConsoleColour(int colour)
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -102,6 +107,16 @@ void ConsoleHandler::DisableConsoleScrolling()
     GetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
     cursorInfo.dwSize = 1;
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
+}
+
+bool ConsoleHandler::GetIsGameRunning()
+{
+    return m_isGameRunning;
+}
+
+void ConsoleHandler::SetIsGameRunning(bool isGameRunning)
+{
+    m_isGameRunning = isGameRunning;
 }
 
 //bool ConsoleHandler::GetIsUserPrompted()

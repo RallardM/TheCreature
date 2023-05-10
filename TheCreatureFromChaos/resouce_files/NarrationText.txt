@@ -30,20 +30,20 @@ ATTACK_KOBOLD_SCENE:
                                                                                   
 WEAPONS_SCENE:
                                                                                   
-               Khai: "There be weapons here. Take! Seeee? Khai friend!"           
+             Khai: "There be weapons here. Take! Seeee? Khai friend!"             
                                                                                   
                                                                                   
                                                                                   
 DEAD_END_SCENE:
                                                                                   
-                You reach a dead end. Iron bars block your path,                  
-         you try to break them with all your might, but they won't budge.         
+                  You reach a dead end. Iron bars block your path,                
+           you try to break them with all your might, but they won't budge.       
                                                                                   
                                                                                   
 ENNEMY_SCENE:
-                                                                                  
-              You arrive at the end of the tunnel, but you see a large,           
-      hulking figure standing before you. It's about to attack but you are faster:
+               You arrive at the end of the tunnel, but you see a large,          
+                         hulking figure standing before you.                      
+                      It's about to attack but you are faster:                    
                                                                                   
                                                                                   
 VICTORY_SCENE:
@@ -51,5 +51,28 @@ VICTORY_SCENE:
         victorious after defeating the colossal monster that had threatened you.  
              You notice that the end of the tunnel is not pitch black.            
                                                                                   
+                                                                                  
+FLEEING_BACKWARD_SCENE:
+                  You managed to successfully flee from the monster!              
+            But wait, it seems like the monster isn't giving up that easily.      
+              You can hear its footsteps approaching quickly from behind,         
+                    so you know you need to run as fast as you can.               
+                                                                                  
+FLEEING_FORWARD_SCENE:
+                 As you get closer, you try to jump over the monster,             
+                         but your foot catches on something,                      
+                 and you stumble into the creature, knocking it over.             
+        You quickly get up and run towards the light at the end of the tunnel.    
+                                                                                  
+FLEING_FAILED_DIED_SCENE:
+     You try to make a break for it, but your foot catches on a protruding root,  
+             and you stumble towards the monster. You fall at its feet,           
+                       and before you can even try to get up,                     
+                     it lunges forward and delivers a fatal blow.                 
+                                                                                  
+FLEING_FAILED_FIGHT_SCENE:
+                You run as fast as you can, but the monster is faster,            
+                    and soon it's upon you. With no other choice,                 
+                         you prepare to fight for your life.                      
                                                                                   
                                                                                    

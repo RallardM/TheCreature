@@ -61,10 +61,8 @@ int main()
 	// Print Intro scene.
 	narrationManager->PrintLinesFromScene();
 
-	bool gameRunning = true;
-
 	//DEBUG_MSG("main.cpp : main() : Enters main loop.");
-	while (gameRunning)
+	while (consoleHandler->GetIsGameRunning())
 	{
 		// Process user input
 		if (_kbhit())

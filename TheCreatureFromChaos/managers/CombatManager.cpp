@@ -22,51 +22,46 @@ CombatManager::CombatManager(UserData* userData, MenuManager* menuManager) :
 
 void CombatManager::SetCombatAction(E_UserInput userInput)
 {
+	SetIsPlayerTurn(true);
 	switch (userInput)
 	{	
 	case PublicConstants::E_UserInput::EMPTY:
 		ReprintCurrentFightLog();
-
 		break;
+
 	case PublicConstants::E_UserInput::LEFT: // Attack
-		SetIsPlayerTurn(true);
 		RefreshMenuAndLogFrame();
 		PlayerAttack();
-		SetIsPlayerTurn(false);
 		break;
 
 	case PublicConstants::E_UserInput::RIGHT: // Potion
-		SetIsPlayerTurn(true);
 		RefreshMenuAndLogFrame();
 		TakePotion();
-		SetIsPlayerTurn(false);
 		break;
 
 	case PublicConstants::E_UserInput::UP:  // Khail help
-
 		RefreshMenuAndLogFrame();
 		//EnnemyAttack(); // TODO: 
 		break;
 
 	case PublicConstants::E_UserInput::DOWN: // Flee
-		SetIsPlayerTurn(true);
 		RefreshMenuAndLogFrame();
 		TryToFlee();
-		SetIsPlayerTurn(false);
 		break;
+
 		// TODO:
 	default:
 		// TODO: Add error message
 		break;
 
 	}
+	SetIsPlayerTurn(false);
 	SetIsFightStarted(true);
 	//GetWeaponManager()->SelectWeapon(E_UserInput::EMPTY);
 }
 
 void CombatManager::RefreshMenuAndLogFrame()
 {
-	//GetWeaponManager()->ClearWeaponLogLine();
 	GetMenuManager()->ClearConsolePreviousLine();
 	SetIsFightLogCleared(true);
 	GetWeaponManager()->SetIsWeaponBeltCleared(true);
@@ -152,7 +147,7 @@ void CombatManager::EnemyCounterAttack()
 	ReceiveDamage(hitPoints);
 	if (GetUserData()->GetIsPlayerDead())
 	{
-		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::PLAYER_DIED);
+		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::QUIT_GAME);
 		GetMenuManager()->SetIsMenuCleared(false);
 		GetUserData()->SetAreWeaponsEquiped(false);
 		return;
@@ -219,7 +214,8 @@ void CombatManager::TryToFlee()
 		// Add Narration Scene informing the player that he died while fleeing
 		break;
 	case 3:
-		// TODO: code to handle failing to flee
+		// TODO: code to handle failing to flee leading to combat
+		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::ATTACK_ENEMY);
 		break;
 	default:
     	// TODO:
@@ -238,7 +234,6 @@ void CombatManager::InflictDamage(short int hitPoints)
 	}
 
 	SetEnnemyLifePoints(resultingCausalty);
-
 }
 
 void CombatManager::ReceiveDamage(short int hitPoints)

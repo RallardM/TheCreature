@@ -1,4 +1,5 @@
-﻿INTRO_SCENE:
+﻿
+INTRO_SCENE:
                           <Try to move>    Try to remember 
                            Try to move    <Try to remember>
 MOVING_SCENE:
@@ -10,7 +11,6 @@ KOBOLD_SCENE:
 ROOM_THREE_FRONT: Victory
                               Press Enter to leave
                                      <Leave>
-
 WEAPONS_SCENE:
                             Press Enter to take weapons 
                                   <Take weapons>
@@ -20,6 +20,11 @@ DEAD_END_SCENE:
 ENNEMY_SCENE:
                             <Attack>           Run away 
                              Attack           <Run away>
+Quit Game:
+						    Press Enter to quit the game
+							        <Quit Game>
+
+
 
 Navigation menu front back scenes:
 Plain                                                                             
