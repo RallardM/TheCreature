@@ -14,11 +14,14 @@ CombatManager::CombatManager(UserData* userData, MenuManager* menuManager) :
 	m_isEnemyDefeated(false),
 	m_isFightStarted(false),
 	m_isFightLogCleared(true),
+	m_isCurrentFightStartedLog(false),
 	m_isPLayerTurn(false),
 	m_currentfightLog(""),
 	m_isPlayerFleeing(false),
+	m_isSecondEncounter(false),
 	m_isCountdownStarted(false),
 	m_areCountdownVariablesInitiated(false),
+	m_isCountdownLogCleared(true),
 	m_time_up(true),
 	m_remainingSeconds(0)
 {
@@ -26,7 +29,7 @@ CombatManager::CombatManager(UserData* userData, MenuManager* menuManager) :
 
 void CombatManager::SetCombatAction(E_UserInput userInput)
 {
-	SetIsPlayerTurn(true);
+	//SetIsPlayerTurn(true);
 	switch (userInput)
 	{	
 	case PublicConstants::E_UserInput::EMPTY:
@@ -60,7 +63,6 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 
 	SetIsPlayerTurn(false);
 	SetIsFightStarted(true);
-
 }
 
 void CombatManager::RefreshMenuAndLogFrame()
@@ -113,7 +115,6 @@ void CombatManager::PlayerAttack()
 
 	InflictDamage(hitPoints);
 	PrintCausaltyLog(playerHitLog, hitPoints);
-	//SetIsPlayerTurn(false);
 }
 
 void CombatManager::EnemyCounterAttack()
@@ -189,6 +190,7 @@ void CombatManager::TakePotion()
 	GetMenuManager()->GetScenesManager()->SetIsAllConsoleTextCleared(false);
 	SetCurrentFightLog(playerHealLog);
 	SetIsFightLogCleared(false);
+	SetIsCurrentFightStartedLog(true);
 }
 
 void CombatManager::TryToFlee()
@@ -204,23 +206,26 @@ void CombatManager::TryToFlee()
 	case 0:
 		// Handle fleeing backwards
 		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEEING_BACKWARD);
-		//SetIsCountdownStarted(true);
+		SetIsCurrentFightStartedLog(false);
 		break;
 
 	case 1:
 		// Handle fleeing foward
 		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEEING_FORWARD);
 		SetIsEnemyDefeated(true);
+		SetIsCurrentFightStartedLog(false);
 		break;
 
 	case 2:
 		// Handle dying while fleeing
 		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEING_FAILED_DIED);
+		SetIsCurrentFightStartedLog(false);
 		break;
 
 	case 3:
 		// TODO: code to handle failing to flee leading to combat add a log message 
 		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::ATTACK_ENEMY);
+		SetIsSecondEncounter(true);
 		break;
 
 	default:
@@ -289,6 +294,7 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 	GetMenuManager()->GetScenesManager()->SetIsAllConsoleTextCleared(false);
 	SetCurrentFightLog(finalOutput);
 	SetIsFightLogCleared(false);
+	SetIsCurrentFightStartedLog(true);
 }
 
 void CombatManager::ReprintCurrentFightLog()
@@ -366,17 +372,24 @@ void CombatManager::Countdown(int seconds, std::chrono::steady_clock::time_point
 		return;
 	}
 
+	FormatCountdown();
+	GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::ATTACK_ENEMY);
+	SetIsSecondEncounter(true);
+}
+
+void CombatManager::FormatCountdown()
+{
 	m_remainingSeconds = 0;
 	SetIsCountdownStarted(false);
 	SetAreCountdownVariablesInitiated(false);
 	m_time_up = true;
-	GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::ATTACK_ENEMY);
+
 }
 
 void CombatManager::PrintRemaningSeconds()
 {
 	MoveCursorAfterBeltLog();
-	std::cout << "               Time remaining: " << m_remainingSeconds << " seconds" << std::endl;
+	std::cout << "              Time remaining: " << m_remainingSeconds << " seconds" << std::endl;
 }
 
 WeaponManager* CombatManager::GetWeaponManager()
@@ -422,6 +435,16 @@ bool CombatManager::GetIsFightLogCleared()
 void CombatManager::SetIsFightLogCleared(bool fightLogState)
 {
 	m_isFightLogCleared = fightLogState;
+}
+
+bool CombatManager::GetIsCurrentFightStartedLog()
+{
+	return m_isCurrentFightStartedLog;
+}
+
+void CombatManager::SetIsCurrentFightStartedLog(bool isCurrentFightStartedLog)
+{
+	m_isCurrentFightStartedLog = isCurrentFightStartedLog;
 }
 
 bool CombatManager::GetIsEnemyDefeated()
@@ -484,6 +507,16 @@ void CombatManager::SetIsPlayerFleeing(bool isPlayerFleeing)
 	m_isPlayerFleeing = isPlayerFleeing;
 }
 
+bool CombatManager::GetIsSecondEncounter()
+{
+	return m_isSecondEncounter;
+}
+
+void CombatManager::SetIsSecondEncounter(bool isSecondEncounter)
+{
+	m_isSecondEncounter = isSecondEncounter;
+}
+
 bool CombatManager::GetIsCountdownStarted()
 {
 	return m_isCountdownStarted;
@@ -502,4 +535,14 @@ bool CombatManager::GetAreCountdownVariablesInitiated()
 void CombatManager::SetAreCountdownVariablesInitiated(bool areCountdownVariablesInitiated)
 {
 	m_areCountdownVariablesInitiated = areCountdownVariablesInitiated;
+}
+
+bool CombatManager::GetIsCountdownLogCleared()
+{
+	return m_isCountdownLogCleared;
+}
+
+void CombatManager::SetIsCountdownLogCleared(bool isCountdownLogCleared)
+{
+	m_isCountdownLogCleared = isCountdownLogCleared;
 }

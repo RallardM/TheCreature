@@ -112,7 +112,6 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
 
     case E_SceneSequence::COMBAT_SCENE:
         DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : COMBAT_SCENE");
-        //SelectCombatElement(userInput);
         SelectCombatChoice(userInput);
         break;
 
@@ -158,7 +157,6 @@ void MenuManager::SelectNavigationElement(E_UserInput userInput, E_MenuChoices m
     if (userInput == E_UserInput::EMPTY)
     {
         DEBUG_MSG("MenuManager.cpp : SelectNavigationElement() : UserInput is EMPTY");
-        //ClearConsolePreviousLine();
         PrintNavigationMenu(menuChoice);
         return;
     }
@@ -192,11 +190,11 @@ void MenuManager::SelectNavigationElement(E_UserInput userInput, E_MenuChoices m
 
 void MenuManager::PrepareNavigationMenu(E_MenuChoices menuChoice, unsigned short int numberOfUiElementsToJumpOver)
 {
-    //GetWeaponManager()->ClearWeaponLogLine();
+
     ClearConsolePreviousLine();
     GetWeaponManager()->SetIsWeaponBeltCleared(true);
     ClearConsoleNavigationMenu();
-    //SetIsMenuCleared(true);
+
     int enumToInt = static_cast<int>(menuChoice);
     E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(enumToInt + (NB_LINES_NEXT_NAVIG_UI * numberOfUiElementsToJumpOver));
     
@@ -211,27 +209,17 @@ void MenuManager::PrepareNavigationMenu(E_MenuChoices menuChoice, unsigned short
     return;
 }
 
-//void MenuManager::SelectCombatElement(E_UserInput userInput)
-//{
-//    if (GetCombatManager()->GetIsPlayerTurn())
-//    {
-//        SelectCombatChoice(userInput, E_MenuChoices::COMBAT_PLAIN);
-//    }
-//    else
-//    {
-//        SelectCombatChoice(userInput, E_MenuChoices::NEXT_TURN);
-//    }
-//}
-
 void MenuManager::SelectCombatChoice(E_UserInput userInput)
 {
     if (userInput == E_UserInput::EMPTY)
     {
         DEBUG_MSG("MenuManager.cpp : SelectCombatChoice() : UserInput is EMPTY");
-        if (!GetCombatManager()->GetIsPlayerTurn())
+        bool isPlayerTurn = GetCombatManager()->GetIsPlayerTurn();
+        if (!isPlayerTurn)
         {
             DEBUG_MSG("MenuManager.cpp : SelectCombatChoice() : Not player turn");
             PrintNavigationMenu(E_MenuChoices::COMBAT_PLAIN);
+            GetCombatManager()->SetIsPlayerTurn(true);
             return;
         }
         else
@@ -258,8 +246,7 @@ void MenuManager::SelectCombatChoice(E_UserInput userInput)
     }
     else if (userInput == E_UserInput::DOWN) // Flee
     {
-        GetCombatManager()->TryToFlee();
-        //PrepareCombatMenu(userInput, E_MenuChoices::COMBAT_FLEE);
+        PrepareCombatMenu(userInput, E_MenuChoices::COMBAT_FLEE);
         return;
     }
     return;
@@ -416,8 +403,6 @@ std::string MenuManager::GetMenuAtLine(std::string& filePathStr, E_MenuChoices a
 
 E_MenuChoices MenuManager::GetSelectedMenuLine()
 {
-    DEBUG_MSG("#C MenuManager.cpp : GetSelectedMenuLine() : ");
-    //std::cout << int(m_selectedMenuLine) << std::endl; // Debug line
     return m_selectedMenuLine;
 }
 

@@ -42,6 +42,9 @@ int main()
 	CombatManager* combatManager = new CombatManager(userData, menuManager);
 	bool isFightStarted = combatManager->GetIsFightStarted();
 	bool isFightLogCleared = combatManager->GetIsFightLogCleared();
+	bool isCurrentFightStartedLog = combatManager->GetIsCurrentFightStartedLog();
+	bool isCountdownStarted = combatManager->GetIsCountdownStarted();
+	bool isCountdownLogCleared = combatManager->GetIsCountdownLogCleared();
 	scenesManager->SetCombatManager(combatManager);
 	menuManager->SetCombatManager(combatManager);
 
@@ -92,17 +95,19 @@ int main()
 			weaponManager->SelectWeapon(userInput);
 		}
 
-		isFightStarted = combatManager->GetIsFightStarted();
+		isCurrentFightStartedLog = combatManager->GetIsCurrentFightStartedLog();
 		isFightLogCleared = combatManager->GetIsFightLogCleared();
-		if (isFightStarted && isFightLogCleared)
+		if (isCurrentFightStartedLog && isFightLogCleared)
 		{
 			userInput = E_UserInput::EMPTY;
 			combatManager->SetCombatAction(userInput);
 		}
 
-
-		if (combatManager->GetIsCountdownStarted() && !isMenuCleared)
+		isCountdownLogCleared = combatManager->GetIsCountdownLogCleared();
+		isCountdownStarted = combatManager->GetIsCountdownStarted();
+		if (isCountdownStarted && isCountdownLogCleared)
 		{
+			combatManager->PrintRemaningSeconds();
 			combatManager->Countdown(9, start_time, next_print_time);
 		}
 	}

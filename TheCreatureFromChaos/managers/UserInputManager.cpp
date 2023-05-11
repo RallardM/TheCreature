@@ -147,7 +147,6 @@ void UserInputManager::SetAction(E_UserInput userInput)
     {
         DEBUG_MSG("UserInputManager.cpp : SetAction() : User is using LEFT RIGHT.");
         GetMenuManager()->SelectMenuFromScene(userInput);
-        //ActivateSelection(userInput);
         SetHasInput(false);
         return;
 	}
@@ -175,6 +174,7 @@ void UserInputManager::EnterSelection()
 {
     E_SceneSequence currentScene = GetScenesManager()->GetPlayerCurrentScene();
     unsigned short int currentNumberOfChoices = SCENE_NUMBER_OF_MENU_CHOICES[int(currentScene)];
+    bool isPlayerTurn = GetScenesManager()->GetCombatManager()->GetIsPlayerTurn();
     
     if (currentNumberOfChoices == ONE_CHOICE_MENU)
     {
@@ -187,7 +187,7 @@ void UserInputManager::EnterSelection()
         GetScenesManager()->SetNextScene(GetMenuManager()->GetSelectedMenuLine());
         return;
     }
-    else if (currentNumberOfChoices == COMBAT_MENU && !GetScenesManager()->GetCombatManager()->GetIsPlayerTurn())
+    else if (currentNumberOfChoices == COMBAT_MENU && !isPlayerTurn)
     {
         GetScenesManager()->GetCombatManager()->EnemyCounterAttack();
         return;

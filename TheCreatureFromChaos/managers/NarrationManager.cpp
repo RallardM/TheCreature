@@ -25,6 +25,7 @@ NarrationManager::NarrationManager(ScenesManager* sceneManager) :
 void NarrationManager::PrintLinesFromScene()
 {
     E_SceneSequence scene = GetScenesManager()->GetPlayerCurrentScene();
+    E_SceneSequence fleeingLocationScene = E_SceneSequence::NO_SCENE;
     std::string scenePicture = "";
     std::string jumpLine = "";
     std::string sceneText = "";
@@ -52,15 +53,21 @@ void NarrationManager::PrintLinesFromScene()
         break;
 
     case E_SceneSequence::FLEEING_BACKWARD_SCENE:
-        if (GetScenesManager()->GetCombatManager()->GetIsCountdownStarted())
+        if (GetScenesManager()->GetCombatManager()->GetIsSecondEncounter())
         {
-            scene = GetScenesManager()->GetUserOpposingNavigationScene();
+            fleeingLocationScene = GetScenesManager()->GetUserOpposingNavigationScene();
+            scenePicture = GetPictureTextScene(fleeingLocationScene, ASCII_IMAGE_HEIGHT);
+            jumpLine = "\n";
+            sceneText = GetPictureTextScene(scene, STORY_TEXT_HEIGHT);
+            GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::DIALOGUES);
         }
-        DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
-        scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
-        jumpLine = "\n";
-        sceneText = GetPictureTextScene(scene, STORY_TEXT_HEIGHT);
-        GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::DIALOGUES);
+        else
+        {
+            scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
+            jumpLine = "\n";
+            sceneText = GetPictureTextScene(scene, STORY_TEXT_HEIGHT);
+            GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::DIALOGUES);
+        }
         break;
 
         // Navigation scenes

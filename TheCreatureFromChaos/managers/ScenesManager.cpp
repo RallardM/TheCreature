@@ -28,9 +28,17 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		GetMenuManager()->SetIsMenuCleared(true);
 	}
 	
-	if (GetUserData()->GetAreWeaponsEquiped() == true && GetWeaponManager()->GetIsWeaponBeltCleared() == false)
+	bool areWeaponsEquiped = GetUserData()->GetAreWeaponsEquiped();
+	bool isWeaponBeltCleared = GetWeaponManager()->GetIsWeaponBeltCleared();
+	if (areWeaponsEquiped && !isWeaponBeltCleared)
 	{
 		GetWeaponManager()->SetIsWeaponBeltCleared(true);
+	}
+
+	bool isCountdownStarted = GetCombatManager()->GetIsCountdownStarted();
+	if (isCountdownStarted)
+	{
+		GetCombatManager()->SetIsCountdownLogCleared(true);
 	}
 
 	E_SceneSequence movingTowardScene = E_SceneSequence::NO_SCENE;
@@ -86,6 +94,7 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 
 	case E_MenuChoices::ATTACK_ENEMY:          // From ENNEMY_SCENE
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set COMBAT_SCENE.");
+		GetCombatManager()->FormatCountdown();
 		SetPlayerCurrentScene(E_SceneSequence::COMBAT_SCENE);
 		break;
 
@@ -96,7 +105,14 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 
 	case E_MenuChoices::FLEEING_BACKWARD:       // From ENNEMY_SCENE 1 of 4 chance
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : .");
-		SetPlayerCurrentScene(E_SceneSequence::FLEEING_BACKWARD_SCENE);
+		if (GetCombatManager()->GetIsSecondEncounter())
+		{
+			SetPlayerCurrentScene(GetUserOpposingNavigationScene());
+		}
+		else
+		{
+			SetPlayerCurrentScene(E_SceneSequence::FLEEING_BACKWARD_SCENE);
+		}
 		GetCombatManager()->SetIsPlayerFleeing(false);
 		break;
 
@@ -130,6 +146,7 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : ROOM_THREE_BACK.");
 		SetPlayerCurrentScene(E_SceneSequence::ROOM_THREE_BACK);
 		GetCombatManager()->SetIsCountdownStarted(true);
+		GetCombatManager()->SetIsPlayerFleeing(false);
 		break;
 
 	case E_MenuChoices::NAVIGATION_LEFT:

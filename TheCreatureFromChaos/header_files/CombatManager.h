@@ -36,6 +36,8 @@ public:
 
 	void Countdown(int seconds, std::chrono::steady_clock::time_point& start_time, std::chrono::steady_clock::time_point& next_print_time);
 
+	void FormatCountdown();
+
 	void PrintRemaningSeconds();
 
 	WeaponManager* GetWeaponManager();
@@ -52,6 +54,9 @@ public:
 	bool GetIsFightLogCleared();
 	void SetIsFightLogCleared(bool fightLogState);
 
+	bool GetIsCurrentFightStartedLog();
+	void SetIsCurrentFightStartedLog(bool isCurrentFightStartedLog);
+
 	bool GetIsEnemyDefeated();
 	void SetIsEnemyDefeated(bool isEnemyDefeated);
 
@@ -67,11 +72,17 @@ public:
 	bool GetIsPlayerFleeing();
 	void SetIsPlayerFleeing(bool isPlayerFleeing);
 
+	bool GetIsSecondEncounter();
+	void SetIsSecondEncounter(bool isSecondEncounter);
+
 	bool GetIsCountdownStarted();
 	void SetIsCountdownStarted(bool isCountdownStarted);
 
 	bool GetAreCountdownVariablesInitiated();
 	void SetAreCountdownVariablesInitiated(bool areCountdownVariablesInitiated);
+
+	bool GetIsCountdownLogCleared();
+	void SetIsCountdownLogCleared(bool isCountdownLogCleared);
 
 	void ClearAllConsoleText();
 
@@ -86,16 +97,20 @@ private:
 	unsigned short int m_enemyHitPoints;
 
 	std::string m_currentfightLog;
-
 	bool m_isFightLogCleared;
+	bool m_isCurrentFightStartedLog;
+
 	bool m_isEnemyDefeated;
 	bool m_isFightStarted;
 	bool m_isPLayerTurn;
 	bool m_isPlayerFleeing;
+	bool m_isSecondEncounter;
 
 	bool m_isCountdownStarted;
 	bool m_areCountdownVariablesInitiated;
 	bool m_time_up;
+	bool m_isCountdownLogCleared;
 	int short m_remainingSeconds;
+	
 
 };
