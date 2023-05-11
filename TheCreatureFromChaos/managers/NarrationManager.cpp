@@ -44,7 +44,18 @@ void NarrationManager::PrintLinesFromScene()
     case E_SceneSequence::YOU_DIED_SCENE:
     case E_SceneSequence::FLEING_FAILED_DIED_SCENE:
     case E_SceneSequence::FLEEING_FORWARD_SCENE:
+        DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
+        scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
+        jumpLine = "\n";
+        sceneText = GetPictureTextScene(scene, STORY_TEXT_HEIGHT);
+        GetUserInputManager()->SetCurrentInputType(UserInputManager::E_CurrentInputType::DIALOGUES);
+        break;
+
     case E_SceneSequence::FLEEING_BACKWARD_SCENE:
+        if (GetScenesManager()->GetCombatManager()->GetIsCountdownStarted())
+        {
+            scene = GetScenesManager()->GetUserOpposingNavigationScene();
+        }
         DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
         jumpLine = "\n";

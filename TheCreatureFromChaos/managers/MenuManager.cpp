@@ -199,9 +199,13 @@ void MenuManager::PrepareNavigationMenu(E_MenuChoices menuChoice, unsigned short
     //SetIsMenuCleared(true);
     int enumToInt = static_cast<int>(menuChoice);
     E_MenuChoices nextMenuInEnum = static_cast<E_MenuChoices>(enumToInt + (NB_LINES_NEXT_NAVIG_UI * numberOfUiElementsToJumpOver));
+    
     PrintNavigationMenu(nextMenuInEnum);
-
     GetWeaponManager()->SelectWeapon(E_UserInput::EMPTY);
+    if (GetCombatManager()->GetIsCountdownStarted())
+    {
+        GetCombatManager()->PrintRemaningSeconds();
+	}
 
     AddDelay();
     return;
@@ -240,25 +244,22 @@ void MenuManager::SelectCombatChoice(E_UserInput userInput)
     else if (userInput == E_UserInput::LEFT) // ATTACK
     {
         PrepareCombatMenu(userInput, E_MenuChoices::COMBAT_ATTACK);
-        //GetCombatManager()->SetCombatAction(userInput);
         return;
     }
     else if (userInput == E_UserInput::RIGHT) // Potion
     {
         PrepareCombatMenu(userInput, E_MenuChoices::COMBAT_POTION);
-        //GetCombatManager()->SetCombatAction(userInput);
         return;
     }
     else if (userInput == E_UserInput::UP)  // Khai Help
     {
         PrepareCombatMenu(userInput, E_MenuChoices::COMBAT_HELP);
-        //GetCombatManager()->SetCombatAction(userInput);
         return;
     }
     else if (userInput == E_UserInput::DOWN) // Flee
     {
-        PrepareCombatMenu(userInput, E_MenuChoices::COMBAT_FLEE);
-        //GetCombatManager()->SetCombatAction(userInput);
+        GetCombatManager()->TryToFlee();
+        //PrepareCombatMenu(userInput, E_MenuChoices::COMBAT_FLEE);
         return;
     }
     return;

@@ -19,8 +19,6 @@ class ScenesManager {
 public:
 	ScenesManager(UserData* userData);
 
-	E_SceneSequence GetPlayerCurrentScene();
-	void SetPlayerCurrentScene(E_SceneSequence scene);
 	void SetNextScene(E_MenuChoices menuChoice);
 	E_SceneSequence GetUserDirectionScene(E_MenuChoices playerInputDirection);
 
@@ -44,8 +42,14 @@ public:
 	bool GetIsAllConsoleTextCleared();
 	void SetIsAllConsoleTextCleared(bool isAllConsoleTextCleared);
 
+	E_SceneSequence GetPlayerCurrentScene();
+	void SetPlayerCurrentScene(E_SceneSequence scene);
+	E_SceneSequence GetUserOpposingNavigationScene();
+	void SetUserOpposingNavigationScene(E_SceneSequence userLastNavigationScene);
+
 private:
 	E_SceneSequence m_userCurrentScene;
+	E_SceneSequence m_userOpposingNavigationScene;
 
 	NarrationManager* m_narrationManager;
 	MenuManager* m_menuManager;

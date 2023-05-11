@@ -36,6 +36,8 @@ public:
 
 	void Countdown(int seconds, std::chrono::steady_clock::time_point& start_time, std::chrono::steady_clock::time_point& next_print_time);
 
+	void PrintRemaningSeconds();
+
 	WeaponManager* GetWeaponManager();
 	void SetWeaponManager(WeaponManager* weaponManager);
 

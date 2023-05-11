@@ -349,10 +349,9 @@ void CombatManager::Countdown(int seconds, std::chrono::steady_clock::time_point
 
 		if (time_diff >= std::chrono::seconds(1))
 		{
-			MoveCursorAfterBeltLog();
 			next_print_time += std::chrono::seconds(1);
 			m_remainingSeconds--;
-			std::cout << "               Time remaining: " << m_remainingSeconds << " seconds" << std::endl;
+			PrintRemaningSeconds();
 			GetMenuManager()->GetScenesManager()->SetIsAllConsoleTextCleared(false);
 		}
 
@@ -372,6 +371,12 @@ void CombatManager::Countdown(int seconds, std::chrono::steady_clock::time_point
 	SetAreCountdownVariablesInitiated(false);
 	m_time_up = true;
 	GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::ATTACK_ENEMY);
+}
+
+void CombatManager::PrintRemaningSeconds()
+{
+	MoveCursorAfterBeltLog();
+	std::cout << "               Time remaining: " << m_remainingSeconds << " seconds" << std::endl;
 }
 
 WeaponManager* CombatManager::GetWeaponManager()

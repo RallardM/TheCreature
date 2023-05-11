@@ -103,7 +103,7 @@ int main()
 
 		if (combatManager->GetIsCountdownStarted() && !isMenuCleared)
 		{
-			combatManager->Countdown(10, start_time, next_print_time);
+			combatManager->Countdown(9, start_time, next_print_time);
 		}
 	}
 
