@@ -70,17 +70,39 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(VcpkgRoot)\packages\sdl2-image_x64-windows\include\SDL2;$(VcpkgRoot)\packages\sdl2_x64-windows\include\SDL2;$(ProjectDir)\header_files;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VcpkgRoot)\packages\sdl2_x64-windows\lib;$(VcpkgRoot)\packages\sdl2-image_x64-windows\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(VcpkgRoot)\packages\sdl2-image_x64-windows\include\SDL2;$(VcpkgRoot)\packages\sdl2_x64-windows\include\SDL2;$(ProjectDir)\header_files;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VcpkgRoot)\packages\sdl2_x64-windows\lib;$(VcpkgRoot)\packages\sdl2-image_x64-windows\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(VcpkgRoot)\packages\sdl2-image_x64-windows\include\SDL2;$(VcpkgRoot)\packages\sdl2_x64-windows\include\SDL2;$(ProjectDir)\header_files;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VcpkgRoot)\packages\sdl2_x64-windows\lib;$(VcpkgRoot)\packages\sdl2-image_x64-windows\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(VcpkgRoot)\packages\sdl2-image_x64-windows\include\SDL2;$(VcpkgRoot)\packages\sdl2_x64-windows\include\SDL2;$(ProjectDir)\header_files;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VcpkgRoot)\packages\sdl2_x64-windows\lib;$(VcpkgRoot)\packages\sdl2-image_x64-windows\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)thirdparty\SDL2_image\SDL2_image.dll"  "$(TargetDir)" /Y
+xcopy "$(SolutionDir)thirdparty\SDL2\SDL2.dll"  "$(TargetDir)" /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -90,13 +112,19 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)thirdparty\SDL2_image\SDL2_image.dll"  "$(TargetDir)" /Y
+xcopy "$(SolutionDir)thirdparty\SDL2\SDL2.dll"  "$(TargetDir)" /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -104,11 +132,17 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)thirdparty\SDL2_image\SDL2_image.dll"  "$(TargetDir)" /Y
+xcopy "$(SolutionDir)thirdparty\SDL2\SDL2.dll"  "$(TargetDir)" /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -118,13 +152,19 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)thirdparty\SDL2_image\SDL2_image.dll"  "$(TargetDir)" /Y
+xcopy "$(SolutionDir)thirdparty\SDL2\SDL2.dll"  "$(TargetDir)" /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="header_files\ClassesManager.h" />
@@ -148,22 +188,25 @@
     <ClCompile Include="managers\UserInputManager.cpp" />
     <ClCompile Include="managers\WeaponManager.cpp" />
     <ClCompile Include="player_data\UserData.cpp" />
-    <ClCompile Include="resouce_files\ConsoleHandler.cpp" />
-    <ClCompile Include="resouce_files\DebugMessageSystem.cpp" />
+    <ClCompile Include="resource_files\ConsoleHandler.cpp" />
+    <ClCompile Include="resource_files\DebugMessageSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="resouce_files\001_ScenesArt.txt" />
-    <Text Include="resouce_files\002_ScenesArt.txt" />
-    <Text Include="resouce_files\MainMenu.txt" />
-    <Text Include="resouce_files\MenuText.txt" />
-    <Text Include="resouce_files\NarrationText.txt" />
+    <Text Include="resource_files\001_ScenesArt.txt" />
+    <Text Include="resource_files\002_ScenesArt.txt" />
+    <Text Include="resource_files\MainMenu.txt" />
+    <Text Include="resource_files\MenuText.txt" />
+    <Text Include="resource_files\NarrationText.txt" />
     <Text Include="thirdparty\SDL2_image\source_and_usage.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="resouce_files\GameArtEnding.jpg" />
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
+    <None Include="thirdparty\SDL2\SDL2.dll" />
+    <None Include="thirdparty\SDL2_image\SDL2_image.dll" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="thirdparty\SDL2_image\SDL2_image.dll" />
+    <Image Include="resource_files\GameArtEnding.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

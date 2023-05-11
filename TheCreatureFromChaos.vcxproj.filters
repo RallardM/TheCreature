@@ -25,6 +25,9 @@
     <Filter Include="Third Party\SDL2_image">
       <UniqueIdentifier>{e0a086b0-be49-4c24-837e-0d0dd35c696c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Third Party\SDL2">
+      <UniqueIdentifier>{9a28188b-05f3-491f-b4b7-c3b541eead43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_files\ClassesManager.h">
@@ -62,15 +65,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="resouce_files\ConsoleHandler.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="resouce_files\DebugMessageSystem.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
     <ClCompile Include="managers\CombatManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
@@ -92,35 +86,49 @@
     <ClCompile Include="player_data\UserData.cpp">
       <Filter>Player Data</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="resource_files\ConsoleHandler.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="resource_files\DebugMessageSystem.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="resouce_files\001_ScenesArt.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="resouce_files\002_ScenesArt.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="resouce_files\MainMenu.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="resouce_files\MenuText.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="resouce_files\NarrationText.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="thirdparty\SDL2_image\source_and_usage.txt">
       <Filter>Third Party\SDL2_image</Filter>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="resouce_files\GameArtEnding.jpg">
+    <Text Include="resource_files\001_ScenesArt.txt">
       <Filter>Resource Files</Filter>
-    </Image>
+    </Text>
+    <Text Include="resource_files\002_ScenesArt.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="resource_files\MainMenu.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="resource_files\MenuText.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="resource_files\NarrationText.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="thirdparty\SDL2_image\SDL2_image.dll">
       <Filter>Third Party\SDL2_image</Filter>
     </None>
+    <None Include="thirdparty\SDL2\SDL2.dll">
+      <Filter>Third Party\SDL2</Filter>
+    </None>
+    <None Include=".gitignore" />
+    <None Include=".gitattributes" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource_files\GameArtEnding.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

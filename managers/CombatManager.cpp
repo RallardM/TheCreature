@@ -1,9 +1,11 @@
 #include <random>
 #include <string>
+#include <thread>
 
 #include "CombatManager.h"
 #include "DebugMessageSystem.h"
 #include "PublicConstants.h"
+
 
 CombatManager::CombatManager(UserData* userData, MenuManager* menuManager) :
 	m_ennemyLifePoints(50),
