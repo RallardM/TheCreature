@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{098362ad-8c5a-4677-b92f-3f5b42a6b061}</ProjectGuid>
+    <ProjectGuid>{ab835b43-0a82-4ec1-ba2a-9ec00af5b01d}</ProjectGuid>
     <RootNamespace>TheCreatureFromChaos</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -70,38 +70,17 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)\header_files;$(VcpkgRoot)\packages\sdl2_x64-windows\include\SDL2;$(VcpkgRoot)\packages\sdl2-image_x64-windows\include\SDL2;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VcpkgRoot)\packages\sdl2_x64-windows\lib;$(VcpkgRoot)\packages\sdl2-image_x64-windows\lib;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(ProjectDir)\header_files;$(VcpkgRoot)\packages\sdl2_x64-windows\include\SDL2;$(VcpkgRoot)\packages\sdl2-image_x64-windows\include\SDL2;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VcpkgRoot)\packages\sdl2_x64-windows\lib;$(VcpkgRoot)\packages\sdl2-image_x64-windows\lib;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)\header_files;$(VcpkgRoot)\packages\sdl2_x64-windows\include\SDL2;$(VcpkgRoot)\packages\sdl2-image_x64-windows\include\SDL2;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VcpkgRoot)\packages\sdl2_x64-windows\lib;$(VcpkgRoot)\packages\sdl2-image_x64-windows\lib;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)\header_files;$(VcpkgRoot)\packages\sdl2_x64-windows\include\SDL2;$(VcpkgRoot)\packages\sdl2-image_x64-windows\include\SDL2;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VcpkgRoot)\packages\sdl2_x64-windows\lib;$(VcpkgRoot)\packages\sdl2-image_x64-windows\lib;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)TheCreatureFromChaos\thirdparty\SDL2_image\SDL2_image.dll"  "$(TargetDir)" /Y</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -111,18 +90,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)TheCreatureFromChaos\thirdparty\SDL2_image\SDL2_image.dll"  "$(TargetDir)" /Y</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -130,16 +104,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)TheCreatureFromChaos\thirdparty\SDL2_image\SDL2_image.dll"  "$(TargetDir)" /Y</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -149,54 +118,49 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)TheCreatureFromChaos\thirdparty\SDL2_image\SDL2_image.dll"  "$(TargetDir)" /Y</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="managers\CombatManager.cpp" />
-    <ClCompile Include="managers\MenuManager.cpp" />
-    <ClCompile Include="managers\NarrationManager.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="player_data\UserData.cpp" />
-    <ClCompile Include="resouce_files\DebugMessageSystem.cpp" />
-    <ClCompile Include="resouce_files\ConsoleHandler.cpp" />
-    <ClCompile Include="managers\UserInputManager.cpp" />
-    <ClCompile Include="managers\ScenesManager.cpp" />
-    <ClCompile Include="managers\WeaponManager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="resouce_files\GameArtEnding.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="resouce_files\002_ScenesArt.txt" />
-    <Text Include="resouce_files\001_ScenesArt.txt" />
-    <Text Include="resouce_files\MenuText.txt" />
-    <Text Include="resouce_files\MainMenu.txt" />
-    <Text Include="resouce_files\NarrationText.txt" />
-    <Text Include="thirdparty\SDL2_image\source_and_usage.txt" />
-  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_files\ClassesManager.h" />
     <ClInclude Include="header_files\CombatManager.h" />
-    <ClInclude Include="header_files\WeaponManager.h" />
+    <ClInclude Include="header_files\ConsoleHandler.h" />
     <ClInclude Include="header_files\DebugMessageSystem.h" />
     <ClInclude Include="header_files\MenuManager.h" />
     <ClInclude Include="header_files\NarrationManager.h" />
     <ClInclude Include="header_files\PublicConstants.h" />
     <ClInclude Include="header_files\ScenesManager.h" />
-    <ClInclude Include="header_files\UserInputManager.h" />
-    <ClInclude Include="header_files\ConsoleHandler.h" />
     <ClInclude Include="header_files\UserData.h" />
+    <ClInclude Include="header_files\UserInputManager.h" />
+    <ClInclude Include="header_files\WeaponManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="managers\CombatManager.cpp" />
+    <ClCompile Include="managers\MenuManager.cpp" />
+    <ClCompile Include="managers\NarrationManager.cpp" />
+    <ClCompile Include="managers\ScenesManager.cpp" />
+    <ClCompile Include="managers\UserInputManager.cpp" />
+    <ClCompile Include="managers\WeaponManager.cpp" />
+    <ClCompile Include="player_data\UserData.cpp" />
+    <ClCompile Include="resouce_files\ConsoleHandler.cpp" />
+    <ClCompile Include="resouce_files\DebugMessageSystem.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resouce_files\001_ScenesArt.txt" />
+    <Text Include="resouce_files\002_ScenesArt.txt" />
+    <Text Include="resouce_files\MainMenu.txt" />
+    <Text Include="resouce_files\MenuText.txt" />
+    <Text Include="resouce_files\NarrationText.txt" />
+    <Text Include="thirdparty\SDL2_image\source_and_usage.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resouce_files\GameArtEnding.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="thirdparty\SDL2_image\SDL2_image.dll" />
