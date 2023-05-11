@@ -16,16 +16,14 @@
 
 int main()
 {
-	//DEBUG_MSG("#B main.cpp : main() : Enters main function.");
+	DEBUG_MSG("#B main.cpp : main() : Enters main function.");
 
-	// Create a Utils object, set the console size and position.
-	//DEBUG_MSG("main.cpp : main() : Create a Utils object, set the console size and position.");
 	ConsoleHandler* consoleHandler = new ConsoleHandler();
 	consoleHandler->SetConsolesize();
 	consoleHandler->SetCenterConsolePosition();
-	//consoleHandler->DisableConsoleCursor();
-	consoleHandler->DisableConsoleScrolling();
-	consoleHandler->ActivateConsoleCursor();
+	consoleHandler->DisableConsoleCursor();
+	//consoleHandler->DisableConsoleScrolling();
+	//consoleHandler->ActivateConsoleCursor();
 
 	UserData* userData = new UserData();
 	bool areWeaponsEquiped = userData->GetAreWeaponsEquiped();

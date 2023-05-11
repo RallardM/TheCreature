@@ -1,5 +1,6 @@
 #include <iostream>
-//#include <opencv2/opencv.hpp>
+#include <SDL.h>
+#include <SDL_image.h>
 
 #include "ScenesManager.h"
 #include "MenuManager.h"
@@ -320,12 +321,52 @@ E_SceneSequence ScenesManager::GetUserDirectionScene(E_MenuChoices playerInputDi
 		}
 		else if (currectScene == E_SceneSequence::ROOM_THREE_FRONT)
 		{
-			// TODO the end
-			
+			LoadEndingScene();
 		}
 	}
 
 	return nextScene;
+}
+
+void ScenesManager::LoadEndingScene()
+{
+	SDL_Init(SDL_INIT_VIDEO);
+
+	// Load the image using SDL_image
+	SDL_Surface* surface = IMG_Load("resource_files/GameArtEnding.jpg");
+	if (!surface)
+	{
+		std::cout << "Could not read the image" << std::endl;
+		return;
+	}
+
+	// Create a window and renderer
+	SDL_Window* window = SDL_CreateWindow("Window name", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, surface->w, surface->h, SDL_WINDOW_SHOWN);
+	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+	// Create a texture from the image surface
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_FreeSurface(surface);
+
+	// Render the texture to the screen
+	SDL_RenderCopy(renderer, texture, NULL, NULL);
+	SDL_RenderPresent(renderer);
+
+	// Wait for user input
+	SDL_Event event;
+	while (SDL_WaitEvent(&event))
+	{
+		if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE))
+		{
+			break;
+		}
+	}
+
+	// Clean up resources
+	SDL_DestroyTexture(texture);
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 }
 
 void ScenesManager::ClearAllConsoleText()

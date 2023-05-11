@@ -71,16 +71,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)\header_files;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\header_files;$(VcpkgRoot)\packages\sdl2_x64-windows\include\SDL2;$(VcpkgRoot)\packages\sdl2-image_x64-windows\include\SDL2;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VcpkgRoot)\packages\sdl2_x64-windows\lib;$(VcpkgRoot)\packages\sdl2-image_x64-windows\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(ProjectDir)\header_files;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\header_files;$(VcpkgRoot)\packages\sdl2_x64-windows\include\SDL2;$(VcpkgRoot)\packages\sdl2-image_x64-windows\include\SDL2;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VcpkgRoot)\packages\sdl2_x64-windows\lib;$(VcpkgRoot)\packages\sdl2-image_x64-windows\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)\header_files;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\header_files;$(VcpkgRoot)\packages\sdl2_x64-windows\include\SDL2;$(VcpkgRoot)\packages\sdl2-image_x64-windows\include\SDL2;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VcpkgRoot)\packages\sdl2_x64-windows\lib;$(VcpkgRoot)\packages\sdl2-image_x64-windows\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)\header_files;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\header_files;$(VcpkgRoot)\packages\sdl2_x64-windows\include\SDL2;$(VcpkgRoot)\packages\sdl2-image_x64-windows\include\SDL2;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VcpkgRoot)\packages\sdl2_x64-windows\lib;$(VcpkgRoot)\packages\sdl2-image_x64-windows\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -93,7 +97,11 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)TheCreatureFromChaos\thirdparty\SDL2_image\SDL2_image.dll"  "$(TargetDir)" /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -110,7 +118,11 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)TheCreatureFromChaos\thirdparty\SDL2_image\SDL2_image.dll"  "$(TargetDir)" /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -123,7 +135,11 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)TheCreatureFromChaos\thirdparty\SDL2_image\SDL2_image.dll"  "$(TargetDir)" /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -140,7 +156,11 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)TheCreatureFromChaos\thirdparty\SDL2_image\SDL2_image.dll"  "$(TargetDir)" /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="managers\CombatManager.cpp" />
@@ -163,6 +183,7 @@
     <Text Include="resouce_files\MenuText.txt" />
     <Text Include="resouce_files\MainMenu.txt" />
     <Text Include="resouce_files\NarrationText.txt" />
+    <Text Include="thirdparty\SDL2_image\source_and_usage.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_files\ClassesManager.h" />
@@ -176,6 +197,9 @@
     <ClInclude Include="header_files\UserInputManager.h" />
     <ClInclude Include="header_files\ConsoleHandler.h" />
     <ClInclude Include="header_files\UserData.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="thirdparty\SDL2_image\SDL2_image.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

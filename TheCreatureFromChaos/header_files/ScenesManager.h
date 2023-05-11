@@ -22,6 +22,8 @@ public:
 	void SetNextScene(E_MenuChoices menuChoice);
 	E_SceneSequence GetUserDirectionScene(E_MenuChoices playerInputDirection);
 
+	void LoadEndingScene();
+
 	void ClearAllConsoleText();
 
 	NarrationManager* GetNarrationManager();

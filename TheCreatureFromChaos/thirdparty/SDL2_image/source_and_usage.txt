@@ -1,0 +1,18 @@
+https://github.com/libsdl-org/SDL_image
+Put in Debug and Release folders
+
+Right-click on your project in the Solution Explorer window of Visual Studio and select "Properties" from the context menu.
+
+In the Project Properties window, go to the "Build Events" tab.
+xcopy "$(SolutionDir)\thirdparty\SDL_image\SDL2_image.dll"  "$(TargetDir)" /Y
+
+In the "Post-build event command line" section, add a command to copy the SDL_image DLL file to the output directory. For example:
+
+bash
+Copy code
+xcopy "$(SolutionDir)SDL_image\SDL2_image.dll" "$(TargetDir)" /Y
+In this example, the SDL_image DLL file is located in the "SDL_image" folder under the solution directory. The "$(SolutionDir)" and "$(TargetDir)" variables are placeholders that Visual Studio will replace with the actual paths at build time.
+
+Save the project properties and rebuild your project. The SDL_image DLL should now be copied to the output directory whenever you build your project.
+
+Note that you may need to adjust the command line depending on the actual location of the SDL_image DLL file in your project directory structure. Also, make sure that the target directory (e.g. "Debug" or "Release") exists before you run the build.
