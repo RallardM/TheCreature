@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <array>
 #include <chrono>
+#include <cstring>
 
 #include "MenuManager.h"
 #include "DebugMessageSystem.h"
@@ -324,7 +325,8 @@ void MenuManager::PrintNavigationMenu(E_MenuChoices currentNavigationChoice)
     //ClearConsolePreviousLine();
     unsigned int enumToInt = static_cast<unsigned int>(currentNavigationChoice);
     std::string& menuFilePath = GetNarrationManager()->GetMenuFilePath();
-    std::string navigationMenuText = GetNarrationManager()->GetTextBetweenLines(menuFilePath, enumToInt, NAVIGATION_MENU_HEIGHT);
+    E_SceneSequence noSceneSequence = E_SceneSequence::NO_SCENE;
+    std::string navigationMenuText = GetNarrationManager()->GetTextBetweenLines(noSceneSequence, menuFilePath, enumToInt, NAVIGATION_MENU_HEIGHT);
     std::cout << navigationMenuText;
     PrintToLogAnyTypeOfMenu(navigationMenuText);
     GetScenesManager()->SetIsAllConsoleTextCleared(false);
@@ -338,15 +340,61 @@ void MenuManager::PrintEnterNameMenu()
     std::cout << "            What name do you want Khai to call you? ";
     GetScenesManager()->SetIsAllConsoleTextCleared(false);
     std::string playerName;
-    //GetConsoleHandler()->ActivateConsoleCursor(); // TODO
 
+    GetConsoleHandler()->ActivateConsoleCursor(); 
     std::cin >> playerName;
+    GetConsoleHandler()->DisableConsoleCursor();
+    
+    while (!isValidName(playerName) || hasMoreThan15Letters(playerName) || isEmpty(playerName))
+    {
+        ClearConsolePreviousLine();
+        ClearConsolePreviousLine();
+        std::cout << "                    Me not hearing, can you repeat? ";
+        GetConsoleHandler()->ActivateConsoleCursor();
+        std::cin >> playerName;
+
+
+        GetConsoleHandler()->DisableConsoleCursor();
+
+        if (isValidName(playerName) && !hasMoreThan15Letters(playerName) && !isEmpty(playerName))
+        {
+            break;
+		}
+    }
+
     PrintToLogAnyTypeOfMenu(playerName);
-    //GetConsoleHandler()->DisableConsoleCursor(); // TODO: readd
     GetUserData()->SetPlayerName(playerName);
     SetIsMenuCleared(false);
     GetScenesManager()->SetNextScene(E_MenuChoices::ENTER_NAME);
     return;
+}
+
+bool MenuManager::isValidName(std::string& name)
+{
+    bool empty_name = true;
+    for (char c : name) 
+    {
+        if (!isspace(c)) 
+        {
+            empty_name = false;
+            break;
+        }
+    }
+    return !empty_name;
+}
+
+bool MenuManager::isEmpty(std::string& name)
+{
+    if (name == "")
+    {
+		return true;
+	}
+	return false;
+}
+
+bool MenuManager::hasMoreThan15Letters(std::string& str)
+{
+    return str.length() > 15;
 }
 
 void MenuManager::PrintToLogAnyTypeOfMenu(std::string text)

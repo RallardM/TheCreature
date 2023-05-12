@@ -33,6 +33,12 @@ public:
 	void PrintNavigationMenu(E_MenuChoices currentMenuChoice);
 	void PrintEnterNameMenu();
 
+	bool isValidName(std::string& name);
+
+	bool isEmpty(std::string& name);
+
+	bool hasMoreThan15Letters(std::string& str);
+
 	void PrintToLogAnyTypeOfMenu(std::string text);
 
 	std::string GetLastLineInConsole();

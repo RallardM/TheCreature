@@ -18,21 +18,27 @@ int main()
 {
 	DEBUG_MSG("#B main.cpp : main() : Enters main function.");
 
+	// Initialize the console object and set its properties
+	// that hadles the console window and its attributes
 	ConsoleHandler* consoleHandler = new ConsoleHandler();
 	consoleHandler->SetConsolesize();
 	consoleHandler->SetCenterConsolePosition();
 	consoleHandler->DisableConsoleCursor();
-	//consoleHandler->DisableConsoleScrolling();
+	consoleHandler->DisableConsoleScrolling();
 	//consoleHandler->ActivateConsoleCursor();
 
+	// Initialize the user data object that handles the user data
 	UserData* userData = new UserData();
 	bool areWeaponsEquiped = userData->GetAreWeaponsEquiped();
 
+	// Initialize the scenes manager object that manage the scenes successions
 	ScenesManager* scenesManager = new ScenesManager(userData);
 
+	// Initialize the narration manager object that manage and print the narration texts according to the current scene
 	NarrationManager* narrationManager = new NarrationManager(scenesManager);
 	scenesManager->SetNarrationManager(narrationManager);
 
+	// Initialize the menu manager object that manage and print the action menus according to the current scene
 	MenuManager* menuManager = new MenuManager(consoleHandler, scenesManager, narrationManager, userData);
 	scenesManager->SetMenuManager(menuManager);
 	bool isMenuCleared = menuManager->GetIsMenuCleared();

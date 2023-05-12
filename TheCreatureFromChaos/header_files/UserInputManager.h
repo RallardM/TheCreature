@@ -39,9 +39,6 @@ public:
 	WeaponManager* GetWeaponManager();
 	void SetWeaponManager(WeaponManager* weaponManager);
 
-	//CombatManager* GetCombatManager();
-
-	
 private:
 	bool m_hasInput;
 	E_CurrentInputType m_currentInputType;

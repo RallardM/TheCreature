@@ -208,7 +208,7 @@ void CombatManager::TryToFlee()
 	// generate a random number between 0 and 3 (inclusive)
 	int choice = rand() % 4;
 
-	switch (choice) // TODO: put back 'choice' after debug
+	switch (0) // TODO: put back 'choice' after debug
 	{
 	case 0:
 		// Handle fleeing backwards

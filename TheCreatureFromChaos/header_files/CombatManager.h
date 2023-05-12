@@ -69,8 +69,8 @@ public:
 	std::string GetCurrentFightLog();
 	void SetCurrentFightLog(std::string currentFightLog);
 
-	bool GetIsPlayerFleeing();
-	void SetIsPlayerFleeing(bool isPlayerFleeing);
+	bool GetIsPlayerSuccessFlee();
+	void SetIsPlayerSuccessFlee(bool isPlayerFleeing);
 
 	bool GetIsSecondEncounter();
 	void SetIsSecondEncounter(bool isSecondEncounter);
@@ -103,7 +103,7 @@ private:
 	bool m_isEnemyDefeated;
 	bool m_isFightStarted;
 	bool m_isPLayerTurn;
-	bool m_isPlayerFleeing;
+	bool m_isPlayerSuccessFlee;
 	bool m_isSecondEncounter;
 
 	bool m_isCountdownStarted;

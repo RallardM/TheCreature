@@ -11,6 +11,10 @@ using namespace PublicConstants;
 
 class NarrationManager{
 public:
+	const unsigned short int ASCII_IMAGE_HEIGHT = 33;
+	const unsigned short int NAVIGATION_MENU_HEIGHT = 7;
+	const unsigned short int STORY_TEXT_HEIGHT = 5;
+	const unsigned short int NARRATION_MENU_HEIGHT = 1;
 
 	NarrationManager(ScenesManager* sceneManager);
 	void PrintLinesFromScene();
@@ -19,17 +23,12 @@ public:
 	std::string& GetPictureFilePath002();
 	std::string& GetTextFilePath();
 	std::string& GetMenuFilePath();
-	std::string GetTextBetweenLines(std::string& filePathStr, unsigned int firstLine, const unsigned short int height);
+	std::string GetTextBetweenLines(E_SceneSequence scene, std::string& filePathStr, unsigned int firstLine, const unsigned short int height);
 
 	ScenesManager* GetScenesManager();
 
 	UserInputManager* GetUserInputManager();
 	void SetUserInputManager(UserInputManager* userInputManager);
-
-	const unsigned short int ASCII_IMAGE_HEIGHT     = 33;
-	const unsigned short int NAVIGATION_MENU_HEIGHT =  7;
-	const unsigned short int STORY_TEXT_HEIGHT      =  5;
-	const unsigned short int NARRATION_MENU_HEIGHT  =  1;
 
 private:
 	unsigned short int GetSceneTextLines(E_SceneSequence fromLine);

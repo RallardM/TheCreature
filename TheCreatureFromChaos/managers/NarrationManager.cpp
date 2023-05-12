@@ -11,6 +11,8 @@
 #include "DebugMessageSystem.h"
 #include "UserInputManager.h"
 
+
+
 NarrationManager::NarrationManager(ScenesManager* sceneManager) :
     m_textFilePath("resouce_files/NarrationText.txt"),
     m_pictureFilePath001("resouce_files/001_ScenesArt.txt"),
@@ -129,18 +131,14 @@ std::string NarrationManager::GetPictureTextScene(E_SceneSequence scene, const u
         textFirstLine = GetSceneTextLines(scene);
         pathToFile = GetTextFilePath();
     }
-    else
-    {
-        DEBUG_MSG("#R NarrationManager.cpp : GetPictureTextScene() : No text height found!");
-    }
 
     //textLastLine = textFirstLine + height;
-    std::string sceneTextOrPicture = GetTextBetweenLines(pathToFile, textFirstLine, height);
+    std::string sceneTextOrPicture = GetTextBetweenLines(scene, pathToFile, textFirstLine, height);
 
     return sceneTextOrPicture;
 }
 
-std::string NarrationManager::GetTextBetweenLines(std::string& filePathStr, unsigned int firstLine, const unsigned short int height)
+std::string NarrationManager::GetTextBetweenLines(E_SceneSequence scene, std::string& filePathStr, unsigned int firstLine, const unsigned short int height)
 {
     DEBUG_MSG("NarrationMAnager.cpp : GetTextBetweenLines() : Enters GetTextBetweenLines().");
     //std::ifstream filePath("resouce_files/ScenesAsciiArt.txt");
@@ -175,6 +173,14 @@ std::string NarrationManager::GetTextBetweenLines(std::string& filePathStr, unsi
                      // If the current line is within the desired range, add it to the output string.
             if (currentLine >= firstLine)
             {
+                if (scene == E_SceneSequence::WEAPONS_SCENE && currentLine == 33)
+                {
+                    std::string khai = "            Khai: \"";
+                    std::string playerName = GetScenesManager()->GetUserData()->GetPlayerName();
+                    std::string weaponThere = "! There be weapons here. Take! Seeee? Khai friend!\"";
+                    line = khai + playerName + weaponThere;
+				}
+
                 text += line + "\n";
             }
             currentLine++;
