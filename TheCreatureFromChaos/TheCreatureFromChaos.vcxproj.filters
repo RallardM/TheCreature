@@ -100,5 +100,8 @@
     <ClInclude Include="header_files\ClassesManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MainClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

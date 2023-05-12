@@ -193,6 +193,7 @@
     <ClInclude Include="header_files\UserInputManager.h" />
     <ClInclude Include="header_files\ConsoleHandler.h" />
     <ClInclude Include="header_files\UserData.h" />
+    <ClInclude Include="MainClass.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
