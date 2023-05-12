@@ -27,16 +27,19 @@ CombatManager::CombatManager(UserData* userData, MenuManager* menuManager) :
 {
 }
 
+// Assign a combat action according to what the player has pressed in the comabat menu
 void CombatManager::SetCombatAction(E_UserInput userInput)
 {
 	//SetIsPlayerTurn(true);
 	switch (userInput)
 	{	
+	// Is used when an external process needs to reprint the current fight log that has been cleared by previous actions
 	case PublicConstants::E_UserInput::EMPTY:
 		ReprintCurrentFightLog();
 		break;
 
 	case PublicConstants::E_UserInput::LEFT: // Attack
+		// Erases the menu to put the new choice inputed by the player
 		RefreshMenuAndLogFrame();
 		PlayerAttack();
 		SetIsPlayerTurn(false);
@@ -58,6 +61,7 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 
 	case PublicConstants::E_UserInput::DOWN: // Flee
 		RefreshMenuAndLogFrame();
+
 		TryToFlee();
 		SetIsPlayerTurn(false);
 		SetIsFightStarted(true);
@@ -87,34 +91,38 @@ void CombatManager::PlayerAttack()
 
 	// Random hit point between the current weapon min and max hit points or fail
 	// Create a random number generator and distribution for hit points
-
 	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dist(currentWeapon.minHitPoints, currentWeapon.maxHitPoints);
 
+	// Seed the generator
+	std::mt19937 gen(rd());
+
+	// Create a distribution for hit points
+	std::uniform_int_distribution<> dist(currentWeapon.minHitPoints, currentWeapon.maxHitPoints);
 	std::string playerHitLog = "";
 
 	// Generate a random hit point value between the current weapon min and max hit points
 	unsigned short int hitPoints = dist(gen);
 
-	std::bernoulli_distribution zeroDist(0.2); // Probability of zero/fail
+	// Probability of zero hit points of 20%
+	std::bernoulli_distribution zeroDist(0.2); 
 	if (zeroDist(gen)) 
 	{
 		hitPoints = 0;
 	}
 
+	// The log if the player missed
 	if (hitPoints == 0)
 	{
-		//std::string spaces = "                           ";
-		std::string spaces = "..........................."; // Debug TODO : Remove
+		std::string spaces = "                           ";
+		//std::string spaces = "..........................."; // Debug TODO : Comment out when no debug
 		std::string text = "You missed!";
 		std::string nextLine = "\n";
 		playerHitLog = spaces + text + nextLine;
 	}
-	else
+	else // The log if the player hits
 	{
-		//std::string spaces = "             ";
-		std::string spaces = "............."; // Debug TODO : Remove
+		std::string spaces = "             ";
+		//std::string spaces = "............."; // Debug TODO : Comment out when no debug
 		std::string text = "You hit the monster : ";
 		playerHitLog = spaces + text;
 	}
@@ -123,7 +131,7 @@ void CombatManager::PlayerAttack()
 	PrintCausaltyLog(playerHitLog, hitPoints);
 }
 
-void CombatManager::EnemyCounterAttack()
+void CombatManager::EnemyCounterAttack() // TODO: Refactor so that the enemy and player uses the same attack function
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -140,16 +148,16 @@ void CombatManager::EnemyCounterAttack()
 
 	if (hitPoints == 0)
 	{
-		//std::string spaces = "                    ";
-		std::string spaces = "...................."; // Debug TODO : Remove
+		std::string spaces = "                    ";
+		//std::string spaces = "...................."; // Debug TODO : Remove
 		std::string text = "The monster missed!";
 		std::string nextLine = "\n";
 		ennemyHitLog = spaces + text + nextLine;
 	}
 	else
 	{
-		//std::string spaces = "             ";
-		std::string spaces = "............."; // Debug TODO : Remove
+		std::string spaces = "             ";
+		//std::string spaces = "............."; // Debug TODO : Comment out when no debug
 		std::string text = "The monster hit you : ";
 		ennemyHitLog = spaces + text;
 	}
@@ -174,8 +182,8 @@ void CombatManager::TakePotion()
 
 	if (GetUserData()->GetNumberOfPotions() == 0)
 	{
-		//std::string spaces = "       ";
-		std::string spaces = "......."; // Debug TODO : Remove
+		std::string spaces = "       ";
+		//std::string spaces = "......."; // Debug TODO : Comment out when no debug
 		std::string text = "You don't have any potions left!";
 		std::string nextLine = "\n";
 		playerHealLog = spaces + text + nextLine;
@@ -184,8 +192,8 @@ void CombatManager::TakePotion()
 	{
 		GetUserData()->SetPlayerLifePoints(25);
 		GetUserData()->SetNumberOfPotions(GetUserData()->GetNumberOfPotions() - 1);
-		//std::string spaces = "                     ";
-		std::string spaces = "....................."; // Debug TODO : Remove
+		std::string spaces = "                     ";
+		//std::string spaces = "....................."; // Debug TODO : Comment out when no debug
 		std::string text = "You took a potion!";
 		std::string nextLine = "\n";
 		playerHealLog = spaces + text + nextLine;
@@ -289,16 +297,13 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 		finalOutput= logText;
 		//std::cout << logText;
 	}
-	else if (hitPoints > 0 && hitPoints < 10)      // To fit the number of max characters 
-	{											   // to remove in the log
-		//std::cout << logText << " -" << hitPoints; // add a space before the minus sign
-		//std::cout << logText << ".-" << hitPoints << std::endl; // Debug TODO : Remove
-		//finalOutput = logText + " -" + std::to_string(hitPoints) + "\n";
-		finalOutput = logText + ".-" + std::to_string(hitPoints) + "\n"; // Debug TODO : Remove
+	else if (hitPoints > 0 && hitPoints < 10)  // To fit the number of max characters adds a space before the minus sign
+	{											 
+		finalOutput = logText + " -" + std::to_string(hitPoints) + "\n";
+		//finalOutput = logText + ".-" + std::to_string(hitPoints) + "\n"; // Debug TODO : comment out when no debug
 	}
 	else
 	{
-		//std::cout << logText << "-" << hitPoints << std::endl;
 		finalOutput = logText + "-" + std::to_string(hitPoints) + "\n";
 	}
 	std::cout << finalOutput;
