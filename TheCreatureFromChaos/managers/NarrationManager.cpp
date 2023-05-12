@@ -45,6 +45,7 @@ void NarrationManager::PrintLinesFromScene()
     case E_SceneSequence::YOU_DIED_SCENE:
     case E_SceneSequence::FLEING_FAILED_DIED_SCENE:
     case E_SceneSequence::FLEEING_FORWARD_SCENE:
+    case E_SceneSequence::ENDING_SCENE:
         DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Prepare TXT-IMG.");
         scenePicture = GetPictureTextScene(scene, ASCII_IMAGE_HEIGHT);
         jumpLine = "\n";

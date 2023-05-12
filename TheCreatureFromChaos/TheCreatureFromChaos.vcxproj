@@ -175,15 +175,11 @@
     <ClCompile Include="managers\WeaponManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="resouce_files\GameArtEnding.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="resouce_files\002_ScenesArt.txt" />
     <Text Include="resouce_files\001_ScenesArt.txt" />
     <Text Include="resouce_files\MenuText.txt" />
     <Text Include="resouce_files\MainMenu.txt" />
     <Text Include="resouce_files\NarrationText.txt" />
-    <Text Include="thirdparty\SDL2_image\source_and_usage.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_files\ClassesManager.h" />
@@ -197,9 +193,6 @@
     <ClInclude Include="header_files\UserInputManager.h" />
     <ClInclude Include="header_files\ConsoleHandler.h" />
     <ClInclude Include="header_files\UserData.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="thirdparty\SDL2_image\SDL2_image.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

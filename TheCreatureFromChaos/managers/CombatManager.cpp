@@ -39,20 +39,28 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 	case PublicConstants::E_UserInput::LEFT: // Attack
 		RefreshMenuAndLogFrame();
 		PlayerAttack();
+		SetIsPlayerTurn(false);
+		SetIsFightStarted(true);
 		break;
 
 	case PublicConstants::E_UserInput::RIGHT: // Potion
 		RefreshMenuAndLogFrame();
 		TakePotion();
+		SetIsPlayerTurn(false);
+		SetIsFightStarted(true);
 		break;
 
 	case PublicConstants::E_UserInput::UP:  // Khail help // TODO: 
 		RefreshMenuAndLogFrame();
+		SetIsPlayerTurn(false);
+		SetIsFightStarted(true);
 		break;
 
 	case PublicConstants::E_UserInput::DOWN: // Flee
 		RefreshMenuAndLogFrame();
 		TryToFlee();
+		SetIsPlayerTurn(false);
+		SetIsFightStarted(true);
 		break;
 
 	default:
@@ -61,8 +69,6 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 
 	}
 
-	SetIsPlayerTurn(false);
-	SetIsFightStarted(true);
 }
 
 void CombatManager::RefreshMenuAndLogFrame()
@@ -151,9 +157,9 @@ void CombatManager::EnemyCounterAttack()
 	ReceiveDamage(hitPoints);
 	if (GetUserData()->GetIsPlayerDead())
 	{
-		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::QUIT_GAME);
 		GetMenuManager()->SetIsMenuCleared(false);
 		GetUserData()->SetAreWeaponsEquiped(false);
+		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::QUIT_GAME);
 		return;
 	}
 

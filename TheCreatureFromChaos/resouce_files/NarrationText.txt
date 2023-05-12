@@ -75,4 +75,11 @@ FLEING_FAILED_FIGHT_SCENE:
                     and soon it's upon you. With no other choice,                 
                          you prepare to fight for your life.                      
                                                                                   
+                                                                                  
+ENDING_SCENE:
+           You walk step by step, the darkness of the tunnel slowly receding      
+              as a small light at the end grows larger. With each stride,         
+                     the light beckons you closer, until finally,                 
+                           you step out into the open air.                        
+                                                                                  
                                                                                    

@@ -90,6 +90,12 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
         PrintSingleMenuChoice(userInput, E_MenuChoices::QUIT_GAME);
         break;
 
+    case E_SceneSequence::ENDING_SCENE:
+        DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : ENDING_SCENE");
+		PrintSingleMenuChoice(userInput, E_MenuChoices::QUIT_GAME);
+		break;
+
+    // 4 ways navigation menu
     case E_SceneSequence::ROOM_ONE_FRONT:
     case E_SceneSequence::ROOM_ONE_BACK:
     case E_SceneSequence::ROOM_TWO_FRONT:
@@ -100,6 +106,7 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
         SelectNavigationElement(userInput, E_MenuChoices::NAVIGATION_PLAIN);
         break;
 
+    // 2 ways navigation menu
     case E_SceneSequence::ROOM_ONE_RIGHT:
     case E_SceneSequence::ROOM_ONE_LEFT:
     case E_SceneSequence::ROOM_TWO_RIGHT:
@@ -110,6 +117,7 @@ void MenuManager::SelectMenuFromScene(E_UserInput userInput)
         SelectNavigationElement(userInput, E_MenuChoices::LR_NAVIGATION_PLAIN);
         break;
 
+    // Combat menu
     case E_SceneSequence::COMBAT_SCENE:
         DEBUG_MSG("MenuManager.cpp : SelectMenuFromScene() : COMBAT_SCENE");
         SelectCombatChoice(userInput);

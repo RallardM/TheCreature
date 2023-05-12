@@ -2,7 +2,7 @@
 #include <string>
 
 // NarrationText.txt
-const unsigned short int SCENES_TEXT_LINES[13] = { 
+const unsigned short int SCENES_TEXT_LINES[14] = { 
 	 2, // INTRO_SCENE
 	 8, // MOVING_SCENE
 	14, // KOBOLD_SCENE
@@ -15,7 +15,8 @@ const unsigned short int SCENES_TEXT_LINES[13] = {
 	56, // FLEEING_BACKWARD_SCENE
 	62, // FLEEING_FORWARD_SCENE
 	68, // FLEING_FAILED_DIED_SCENE
-	74  // FLEING_FAILED_FIGHT_SCENE
+	74, // FLEING_FAILED_FIGHT_SCENE
+	80  // ENDING_SCENE
 };
 
 const unsigned short int NEXT_MENU_ELEMENT        =  1;
@@ -48,7 +49,7 @@ const short int          BACK_TO_LEFT             = -3;
 const short int          BACK_TO_FRONT            = -2;
 const short int          BACK_TO_RIGHT            = -1;
 
-const unsigned short int SCENE_NUMBER_OF_MENU_CHOICES[27] = {
+const unsigned short int SCENE_NUMBER_OF_MENU_CHOICES[28] = {
 	TWO_CHOICES_MENU,     // INTRO_SCENE
 	TWO_CHOICES_MENU,     // MOVING_SCENE
 	TWO_CHOICES_MENU,     // KOBOLD_SCENE
@@ -62,6 +63,7 @@ const unsigned short int SCENE_NUMBER_OF_MENU_CHOICES[27] = {
 	ONE_CHOICE_MENU,      // FLEEING_FORWARD_SCENE
 	ONE_CHOICE_MENU,      // FLEING_FAILED_DIED_SCENE
 	COMBAT_MENU,          // FLEING_FAILED_FIGHT_SCENE
+	ONE_CHOICE_MENU,      // ENDING_SCENE
 
 	TWO_WAYS_LEFT,        // ROOM_ONE_LEFT
 	FOUR_WAYS_FRONT,      // ROOM_ONE_FRONT
@@ -79,11 +81,12 @@ const unsigned short int SCENE_NUMBER_OF_MENU_CHOICES[27] = {
 	FOUR_WAYS_BACK,       // ROOM_THREE_BACK
 
 	COMBAT_MENU,	      // COMBAT_SCENE
-	ONE_CHOICE_MENU       // YOU_DIED_SCENE
+	ONE_CHOICE_MENU      // YOU_DIED_SCENE
+
 
 };
 
-const unsigned short int SCENES_IMAGE_LINES[27] = {
+const unsigned short int SCENES_IMAGE_LINES[29] = {
 	// 001_ScenesArt.txt to ROOM_ONE_BACK
 	2,    // INTRO_SCENE 
 	37,   // MOVING_SCENE
@@ -98,6 +101,7 @@ const unsigned short int SCENES_IMAGE_LINES[27] = {
 	212,  // FLEEING_FORWARD_SCENE
 	387,  // FLEING_FAILED_DIED_SCENE
 	177,  // FLEING_FAILED_FIGHT_SCENE
+	421,  // ENDING_SCENE
 
 	247,  // ROOM_ONE_LEFT
 	  2,  // ROOM_ONE_FRONT
@@ -116,7 +120,8 @@ const unsigned short int SCENES_IMAGE_LINES[27] = {
 	252,  // ROOM_THREE_BACK
 
 	287,  // COMBAT_SCENE
-	322  // YOU_DIED_SCENE
+	322,  // YOU_DIED_SCENE
+	181   // ENDING_SCENE
 
 };
 
@@ -136,6 +141,7 @@ namespace PublicConstants {
 		FLEEING_FORWARD_SCENE      ,   // Image line 212 ;              ; 
 		FLEING_FAILED_DIED_SCENE   ,   // Image line 322 ;              ; Menu line 24
 		FLEING_FAILED_FIGHT_SCENE  ,
+		ENDING_SCENE			   ,   // Image line 181 ;              ; Menu line 24
 
 		ROOM_ONE_LEFT              ,   // Image line 247 ;              ; Menu line 23
 		ROOM_ONE_FRONT             ,   // Image line   2 ;              ; Menu line 54
@@ -153,7 +159,8 @@ namespace PublicConstants {
 		ROOM_THREE_BACK            ,   // Image line 252 ;              ; Menu line 23
 								       
 		COMBAT_SCENE               ,   // Image line 287 ;              ; Menu line 95
-        YOU_DIED_SCENE	               // Image line 322 ;              ; Menu line 24
+        YOU_DIED_SCENE 	               // Image line 322 ;              ; Menu line 24
+
 	};                              
 	                                
 	//MenuText.txt                  
@@ -208,7 +215,7 @@ namespace PublicConstants {
 
 		FLEEING_BACKWARD,
 		FLEEING_FORWARD,
-		FLEING_FAILED_DIED
+		FLEING_FAILED_DIED,
 	};
 	                                
 	enum class E_UserInput : const unsigned short int {

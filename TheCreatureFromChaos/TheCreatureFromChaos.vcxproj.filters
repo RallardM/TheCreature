@@ -40,22 +40,14 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="player_data\UserData.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="managers\WeaponManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="managers\CombatManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="managers\ClassesManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="resouce_files\GameArtEnding.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="resouce_files\NarrationText.txt">
@@ -64,10 +56,13 @@
     <Text Include="resouce_files\MainMenu.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="resouce_files\ScenesArt.txt">
+    <Text Include="resouce_files\MenuText.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="resouce_files\MenuText.txt">
+    <Text Include="resouce_files\001_ScenesArt.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="resouce_files\002_ScenesArt.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

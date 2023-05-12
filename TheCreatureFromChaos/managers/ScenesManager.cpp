@@ -129,13 +129,18 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		GetCombatManager()->SetIsPlayerFleeing(false);
 		break;
 
-	case E_MenuChoices::WON_LEAVE: 		 // From COMBAT_SCENE The player won the fight
+	case E_MenuChoices::WON_LEAVE: 		        // From COMBAT_SCENE The player won the fight
 		SetPlayerCurrentScene(E_SceneSequence::VICTORY_SCENE);
 		break;
 
-	case E_MenuChoices::WON_LEAVE_SELECTED:  // From VICTORY_SCENE The player selected leave scene
+	case E_MenuChoices::WON_LEAVE_SELECTED:     // From VICTORY_SCENE The player selected leave scene
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ROOM_THREE_FRONT.");
 		SetPlayerCurrentScene(E_SceneSequence::ROOM_THREE_FRONT);
+		break;
+
+	case E_MenuChoices::QUIT_GAME: 		        // From YOU_DIED_SCENE scene
+		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Stops main loop.");
+		SetPlayerCurrentScene(E_SceneSequence::YOU_DIED_SCENE);
 		break;
 
 	case E_MenuChoices::QUIT_GAME_SELECTED:
@@ -321,52 +326,11 @@ E_SceneSequence ScenesManager::GetUserDirectionScene(E_MenuChoices playerInputDi
 		}
 		else if (currectScene == E_SceneSequence::ROOM_THREE_FRONT)
 		{
-			LoadEndingScene();
+			nextScene = E_SceneSequence::ENDING_SCENE;
 		}
 	}
 
 	return nextScene;
-}
-
-void ScenesManager::LoadEndingScene()
-{
-	SDL_Init(SDL_INIT_VIDEO);
-
-	// Load the image using SDL_image
-	SDL_Surface* surface = IMG_Load("resource_files/GameArtEnding.jpg");
-	if (!surface)
-	{
-		std::cout << "Could not read the image" << std::endl;
-		return;
-	}
-
-	// Create a window and renderer
-	SDL_Window* window = SDL_CreateWindow("Window name", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, surface->w, surface->h, SDL_WINDOW_SHOWN);
-	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
-	// Create a texture from the image surface
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-	SDL_FreeSurface(surface);
-
-	// Render the texture to the screen
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
-	SDL_RenderPresent(renderer);
-
-	// Wait for user input
-	SDL_Event event;
-	while (SDL_WaitEvent(&event))
-	{
-		if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE))
-		{
-			break;
-		}
-	}
-
-	// Clean up resources
-	SDL_DestroyTexture(texture);
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
 }
 
 void ScenesManager::ClearAllConsoleText()
