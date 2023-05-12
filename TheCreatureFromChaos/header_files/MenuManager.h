@@ -33,6 +33,8 @@ public:
 	void PrintNavigationMenu(E_MenuChoices currentMenuChoice);
 	void PrintEnterNameMenu();
 
+	void PrintToLogAnyTypeOfMenu(std::string text);
+
 	std::string GetLastLineInConsole();
 
 	E_MenuChoices GetSelectedMenuLine();

@@ -56,7 +56,14 @@ void WeaponManager::PrintBeltMenu(unsigned int short selectedWeaponIndex)
 	}
 	numberOfPotions = GetMenuManager()->GetUserData()->GetNumberOfPotions();
 	currentWeapon = GetCurrentWeapon(selectedWeaponIndex).weaponName;
-	std::cout << "   " << currentWeapon << " is equiped" << spaceEquilizer<<" | Number of potions : " << numberOfPotions << std::endl;
+	std::string spacesFrame = "   ";
+	std::string isEquiped = " is equiped";
+	std::string postionLog = " | Number of potions : ";
+	std::string jumpLine = "\n";
+	std::string resultOutput = spacesFrame + currentWeapon + isEquiped + spaceEquilizer + postionLog + std::to_string(numberOfPotions) + jumpLine;
+	//std::cout << "   " << currentWeapon << " is equiped" << spaceEquilizer<<" | Number of potions : " << numberOfPotions << std::endl;
+	std::cout << resultOutput;
+	GetMenuManager()->GetScenesManager()->GetUserData()->SetGameOutputLog(resultOutput);
 	SetIsWeaponBeltCleared(false);
 	GetMenuManager()->GetScenesManager()->SetIsAllConsoleTextCleared(false);
 }

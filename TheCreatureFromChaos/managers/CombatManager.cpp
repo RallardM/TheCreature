@@ -193,6 +193,7 @@ void CombatManager::TakePotion()
 
 	PrepareAndClearBeltLog();
 	std::cout << playerHealLog;
+	GetUserData()->SetGameOutputLog(playerHealLog);
 	GetMenuManager()->GetScenesManager()->SetIsAllConsoleTextCleared(false);
 	SetCurrentFightLog(playerHealLog);
 	SetIsFightLogCleared(false);
@@ -297,6 +298,7 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 		finalOutput = logText + "-" + std::to_string(hitPoints) + "\n";
 	}
 	std::cout << finalOutput;
+	GetUserData()->SetGameOutputLog(finalOutput);
 	GetMenuManager()->GetScenesManager()->SetIsAllConsoleTextCleared(false);
 	SetCurrentFightLog(finalOutput);
 	SetIsFightLogCleared(false);
@@ -395,7 +397,12 @@ void CombatManager::FormatCountdown()
 void CombatManager::PrintRemaningSeconds()
 {
 	MoveCursorAfterBeltLog();
-	std::cout << "              Time remaining: " << m_remainingSeconds << " seconds" << std::endl;
+	std::string timeRemaining = "              Time remaining: ";
+	std::string seconds = " seconds";
+	std::string jumpLine = "\n";
+	std::string outputResult = timeRemaining + std::to_string(m_remainingSeconds) + seconds + jumpLine;
+	std::cout << outputResult;
+	GetUserData()->SetGameOutputLog(outputResult);
 }
 
 WeaponManager* CombatManager::GetWeaponManager()

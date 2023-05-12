@@ -308,7 +308,11 @@ void MenuManager::PrintSingleMenuChoice(E_UserInput userInput, E_MenuChoices men
 
 void MenuManager::PrintSelectedMenu(E_MenuChoices currentMenuChoice)
 {
-    std::cout << GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), currentMenuChoice) << std::endl;
+    std::string menuText = GetMenuAtLine(GetNarrationManager()->GetMenuFilePath(), currentMenuChoice);
+    std::string jumpLine = "\n";
+    std::string outputText = menuText + jumpLine;
+    std::cout << outputText;
+    PrintToLogAnyTypeOfMenu(outputText);
     GetScenesManager()->SetIsAllConsoleTextCleared(false);
     SetIsMenuCleared(false);
     SetSelectedMenuLine(currentMenuChoice);
@@ -322,6 +326,7 @@ void MenuManager::PrintNavigationMenu(E_MenuChoices currentNavigationChoice)
     std::string& menuFilePath = GetNarrationManager()->GetMenuFilePath();
     std::string navigationMenuText = GetNarrationManager()->GetTextBetweenLines(menuFilePath, enumToInt, NAVIGATION_MENU_HEIGHT);
     std::cout << navigationMenuText;
+    PrintToLogAnyTypeOfMenu(navigationMenuText);
     GetScenesManager()->SetIsAllConsoleTextCleared(false);
     SetIsMenuCleared(false);
     SetSelectedMenuLine(currentNavigationChoice);
@@ -336,12 +341,18 @@ void MenuManager::PrintEnterNameMenu()
     //GetConsoleHandler()->ActivateConsoleCursor(); // TODO
 
     std::cin >> playerName;
-
+    PrintToLogAnyTypeOfMenu(playerName);
     //GetConsoleHandler()->DisableConsoleCursor(); // TODO: readd
     GetUserData()->SetPlayerName(playerName);
     SetIsMenuCleared(false);
     GetScenesManager()->SetNextScene(E_MenuChoices::ENTER_NAME);
     return;
+}
+
+void MenuManager::PrintToLogAnyTypeOfMenu(std::string text)
+{
+    GetUserData()->SetGameOutputLog(text);
+    GetUserData()->LogOutputstream();
 }
 
 std::string MenuManager::GetLastLineInConsole()

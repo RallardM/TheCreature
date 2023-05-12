@@ -49,5 +49,4 @@ private:
 	MenuManager* m_menuManager;
 	ScenesManager* m_sceneManager;
 	WeaponManager* m_weaponManager;
-	//CombatManager* m_combatManager;
 };

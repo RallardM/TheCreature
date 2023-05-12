@@ -103,6 +103,7 @@ void NarrationManager::PrintLinesFromScene()
     DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Picture printed.");
     std::cout << jumpLine << sceneText;
     DEBUG_MSG("NarrationMAnager.cpp : PrintLinesFromScene() : Text printed.");
+    GetScenesManager()->GetUserData()->SetGameOutputLog(scenePicture + jumpLine + sceneText);
     GetScenesManager()->SetIsAllConsoleTextCleared(false);
 }
 

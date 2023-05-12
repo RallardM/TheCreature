@@ -27,6 +27,11 @@ public:
 	bool GetIsPlayerDead();
 	void SetIsPlayerDead(bool isPlayerDead);
 
+	std::string GetGameOutputLog();
+	void SetGameOutputLog(std::string gameOutputLog);
+
+	void LogOutputstream();
+
 	/// TODO
 	//bool GetAttackedKobold();
 	//void SetAttackedKobold(bool attackedKobold);
@@ -39,5 +44,6 @@ private:
 	bool m_isPlayerDead;
 	short int m_playerLifePoints;
 	unsigned short int m_numberOfPotions;
+	std::string m_gameOutputLog;
 	//bool m_attackedKobold; // TODO
 };

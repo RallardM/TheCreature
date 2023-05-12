@@ -1,4 +1,9 @@
+#include <iostream>
+#include <fstream>
+
 #include "UserData.h"
+
+const unsigned short int MAX_NUMBER_OF_CONSOLE_LINE = 41;
 
 UserData::UserData() :
 	m_playerName(""),
@@ -79,6 +84,32 @@ bool UserData::GetIsPlayerDead()
 void UserData::SetIsPlayerDead(bool isPlayerDead)
 {
 	m_isPlayerDead = isPlayerDead;
+}
+
+std::string UserData::GetGameOutputLog()
+{
+	return m_gameOutputLog;
+}
+
+void UserData::SetGameOutputLog(std::string gameOutputLog)
+{
+	m_gameOutputLog += gameOutputLog;
+}
+
+void UserData::LogOutputstream()
+{
+	std::ofstream fileOutputStream("Game_Output_Log.txt", std::ios_base::trunc);
+	if (fileOutputStream.is_open())
+	{
+
+		fileOutputStream << GetGameOutputLog() << "\n";
+	
+	}
+	else
+	{
+		std::cout << "Unable to open or create file.";
+	}
+	fileOutputStream.close();
 }
 
 // TODO If the player attacked Kobold at the beginning, the help menu in combat mode should not be accessible
