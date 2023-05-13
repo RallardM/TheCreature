@@ -64,7 +64,8 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::RUN_AWAY);
 		SetIsCountdownStarted(true);
 		SetIsPlayerTurn(false);
-		SetIsFightStarted(true);
+		SetIsFightStarted(false);
+		SetIsCountdownStarted(false);
 		break;
 
 	default:
@@ -216,7 +217,7 @@ void CombatManager::TryToFlee()
 	// generate a random number between 0 and 3 (inclusive)
 	int choice = rand() % 4;
 
-	switch (0) // TODO: put back 'choice' after debug
+	switch (1) // TODO: put back 'choice' after debug
 	{
 	case 0:
 		// Handle fleeing backwards
@@ -228,7 +229,7 @@ void CombatManager::TryToFlee()
 
 	case 1:
 		// Handle fleeing foward
-		SetIsPlayerSuccessFlee(false); // False because the player is not fleeing anymore
+		SetIsPlayerSuccessFlee(true);
 		SetIsEnemyDefeated(true);
 		SetIsCurrentFightStartedLog(false);
 		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEEING_FORWARD);
