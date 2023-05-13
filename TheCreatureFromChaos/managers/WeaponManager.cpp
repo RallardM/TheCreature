@@ -23,13 +23,18 @@ void WeaponManager::SelectWeapon(E_UserInput userInput)
 	case E_UserInput::ONE:
 		SetCurrentWeaponIndex(0); // Sword
 		PrintBeltMenu(static_cast<unsigned int short>(S_Weapons::SWORD));
+		CheckAndPrintIfFightingLog();
 		break;
+
 	case E_UserInput::TWO:
 		SetCurrentWeaponIndex(1); // Wand
 		PrintBeltMenu(static_cast<unsigned int short>(S_Weapons::WAND));
+		CheckAndPrintIfFightingLog();
 		break;
+
 	default:
 		PrintBeltMenu(GetCurrentWeaponIndex());
+		CheckAndPrintIfFleeingLog();
 		break;
 	}
 }
@@ -68,6 +73,22 @@ void WeaponManager::PrintBeltMenu(unsigned int short selectedWeaponIndex)
 	GetMenuManager()->GetScenesManager()->SetIsAllConsoleTextCleared(false);
 }
 
+void WeaponManager::CheckAndPrintIfFightingLog()
+{
+	if (GetMenuManager()->GetCombatManager()->GetIsCurrentFightStartedLog())
+	{
+		GetMenuManager()->GetCombatManager()->ReprintCurrentFightLog();
+	}
+}
+
+void WeaponManager::CheckAndPrintIfFleeingLog()
+{
+	if (GetMenuManager()->GetCombatManager()->GetHasFleeingLog())
+	{
+		GetMenuManager()->GetCombatManager()->PrintFailedFleeLog();
+		GetMenuManager()->GetCombatManager()->SetHasFleeingLog(false);
+	}
+}
 
 bool WeaponManager::GetIsWeaponBeltCleared()
 {

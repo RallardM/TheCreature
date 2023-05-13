@@ -114,19 +114,19 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		{
 			SetPlayerCurrentScene(E_SceneSequence::FLEEING_BACKWARD_SCENE);
 		}
-		//GetCombatManager()->SetIsPlayerSuccessFlee(false);
+		//GetCombatManager()->SetIsPlayerFleeing(false);
 		break;
 
 	case E_MenuChoices::FLEEING_FORWARD:       // From ENNEMY_SCENE 1 of 4 chance
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : .");
 		SetPlayerCurrentScene(E_SceneSequence::FLEEING_FORWARD_SCENE);
-		//GetCombatManager()->SetIsPlayerSuccessFlee(false);
+		//GetCombatManager()->SetIsPlayerFleeing(false);
 		break;
 
 	case E_MenuChoices::FLEING_FAILED_DIED:     // From ENNEMY_SCENE 1 of 4 chance
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : .");
 		SetPlayerCurrentScene(E_SceneSequence::FLEING_FAILED_DIED_SCENE);
-		//GetCombatManager()->SetIsPlayerSuccessFlee(false);
+		//GetCombatManager()->SetIsPlayerFleeing(false);
 		break;
 
 	case E_MenuChoices::WON_LEAVE: 		        // From COMBAT_SCENE The player won the fight
@@ -152,7 +152,7 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : ROOM_THREE_BACK.");
 		SetPlayerCurrentScene(E_SceneSequence::ROOM_THREE_BACK);
 		GetCombatManager()->SetIsCountdownStarted(true);
-		//GetCombatManager()->SetIsPlayerSuccessFlee(false);
+		//GetCombatManager()->SetIsPlayerFleeing(false);
 		break;
 
 	case E_MenuChoices::NAVIGATION_LEFT:
@@ -171,10 +171,10 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 		break;
 	}
 
-	bool isPlayerSuccessFlee = GetCombatManager()->GetIsPlayerSuccessFlee();
+	bool isPlayerSuccessFlee = GetCombatManager()->GetIsPlayerFleeing();
 	if (isPlayerSuccessFlee)
 	{
-		GetCombatManager()->SetIsPlayerSuccessFlee(false);
+		GetCombatManager()->SetIsPlayerFleeing(false);
 		return;
 	}
 

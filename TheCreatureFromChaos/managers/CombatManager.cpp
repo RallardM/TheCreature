@@ -17,7 +17,7 @@ CombatManager::CombatManager(UserData* userData, MenuManager* menuManager) :
 	m_isCurrentFightStartedLog(false),
 	m_isPLayerTurn(false),
 	m_currentfightLog(""),
-	m_isPlayerSuccessFlee(false),
+	m_isPlayerFleeing(false),
 	m_isSecondEncounter(false),
 	m_isCountdownStarted(false),
 	m_areCountdownVariablesInitiated(false),
@@ -73,7 +73,6 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 		break;
 
 	}
-
 }
 
 void CombatManager::RefreshMenuAndLogFrame()
@@ -217,19 +216,19 @@ void CombatManager::TryToFlee()
 	// generate a random number between 0 and 3 (inclusive)
 	int choice = rand() % 4;
 
-	switch (1) // TODO: put back 'choice' after debug
+	switch (3) // TODO: put back 'choice' after debug
 	{
 	case 0:
 		// Handle fleeing backwards
-		SetIsPlayerSuccessFlee(true); 
+		SetIsPlayerFleeing(true); 
 		SetIsCurrentFightStartedLog(false);
 		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEEING_BACKWARD);
-		//SetIsPlayerSuccessFlee(true);
+		//SetIsPlayerFleeing(true);
 		break;
 
 	case 1:
 		// Handle fleeing foward
-		SetIsPlayerSuccessFlee(true);
+		SetIsPlayerFleeing(true);
 		SetIsEnemyDefeated(true);
 		SetIsCurrentFightStartedLog(false);
 		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEEING_FORWARD);
@@ -237,15 +236,16 @@ void CombatManager::TryToFlee()
 
 	case 2:
 		// Handle dying while fleeing
-		SetIsPlayerSuccessFlee(false); // False because the player is not fleeing anymore
+		SetIsPlayerFleeing(true);
 		SetIsCurrentFightStartedLog(false);
 		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEING_FAILED_DIED);		
 		break;
 
 	case 3:
 		// Handle failing to flee leading to combat
-		SetIsPlayerSuccessFlee(false); // False because the player is not fleeing anymore
+		SetIsPlayerFleeing(true);
 		SetIsSecondEncounter(true);
+		SetHasFleeingLog(true);
 		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::ATTACK_ENEMY);
 		break;
 
@@ -279,6 +279,16 @@ void CombatManager::ReceiveDamage(short int hitPoints)
 	}
 
 	GetUserData()->SetPlayerLifePoints(resultingCausalty);
+}
+
+void CombatManager::PrintFailedFleeLog()
+{
+	std::string spaces = "                    ";
+	//std::string spaces = "...................."; // Debug TODO : Comment out when no debug
+	std::string text = "You failed to flee!";
+	std::string nextLine = "\n";
+	std::string failedFleeLog = spaces + text + nextLine;
+	PrintCausaltyLog(failedFleeLog, 0);
 }
 
 void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
@@ -319,6 +329,9 @@ void CombatManager::PrintCausaltyLog(std::string logText, short int hitPoints)
 void CombatManager::ReprintCurrentFightLog()
 {
 	std::string currentFightLog = GetCurrentFightLog();
+	MoveCursorAfterBeltLog();
+	std::cout << currentFightLog;
+	SetIsFightLogCleared(false);
 }
 
 void CombatManager::PrepareAndClearBeltLog()
@@ -521,14 +534,14 @@ MenuManager* CombatManager::GetMenuManager()
 	return m_menuManager;
 }
 
-bool CombatManager::GetIsPlayerSuccessFlee()
+bool CombatManager::GetIsPlayerFleeing()
 {
-	return m_isPlayerSuccessFlee;
+	return m_isPlayerFleeing;
 }
 
-void CombatManager::SetIsPlayerSuccessFlee(bool isPlayerSuccessFlee)
+void CombatManager::SetIsPlayerFleeing(bool isPlayerFleeing)
 {
-	m_isPlayerSuccessFlee = isPlayerSuccessFlee;
+	m_isPlayerFleeing = isPlayerFleeing;
 }
 
 bool CombatManager::GetIsSecondEncounter()
@@ -569,4 +582,14 @@ bool CombatManager::GetIsCountdownLogCleared()
 void CombatManager::SetIsCountdownLogCleared(bool isCountdownLogCleared)
 {
 	m_isCountdownLogCleared = isCountdownLogCleared;
+}
+
+bool CombatManager::GetHasFleeingLog()
+{
+	return m_hasFleeingLog;
+}
+
+void CombatManager::SetHasFleeingLog(bool hasFleeingLog)
+{
+	m_hasFleeingLog = hasFleeingLog;
 }

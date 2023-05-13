@@ -23,6 +23,8 @@ public:
 	void InflictDamage(short int hitPoints);
 	void ReceiveDamage(short int hitPoints);
 
+	void PrintFailedFleeLog();
+
 	void PrintCausaltyLog(std::string logText, short int hitPoints);
 
 	void PreparePlayerWonScene();
@@ -69,8 +71,8 @@ public:
 	std::string GetCurrentFightLog();
 	void SetCurrentFightLog(std::string currentFightLog);
 
-	bool GetIsPlayerSuccessFlee();
-	void SetIsPlayerSuccessFlee(bool isPlayerFleeing);
+	bool GetIsPlayerFleeing();
+	void SetIsPlayerFleeing(bool isPlayerFleeing);
 
 	bool GetIsSecondEncounter();
 	void SetIsSecondEncounter(bool isSecondEncounter);
@@ -83,6 +85,9 @@ public:
 
 	bool GetIsCountdownLogCleared();
 	void SetIsCountdownLogCleared(bool isCountdownLogCleared);
+
+	bool GetHasFleeingLog();
+	void SetHasFleeingLog(bool hasFleeingLog);
 
 	void ClearAllConsoleText();
 
@@ -103,7 +108,7 @@ private:
 	bool m_isEnemyDefeated;
 	bool m_isFightStarted;
 	bool m_isPLayerTurn;
-	bool m_isPlayerSuccessFlee;
+	bool m_isPlayerFleeing;
 	bool m_isSecondEncounter;
 
 	bool m_isCountdownStarted;
@@ -111,6 +116,5 @@ private:
 	bool m_time_up;
 	bool m_isCountdownLogCleared;
 	int short m_remainingSeconds;
-	
-
+	bool m_hasFleeingLog;
 };

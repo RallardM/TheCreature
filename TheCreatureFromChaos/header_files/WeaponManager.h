@@ -13,6 +13,10 @@ public:
 	void SelectWeapon(E_UserInput userInput);
 	void PrintBeltMenu(unsigned int short selectedWeaponIndex);
 
+	void CheckAndPrintIfFightingLog();
+
+	void CheckAndPrintIfFleeingLog();
+
 	bool GetIsWeaponBeltCleared();
 	void SetIsWeaponBeltCleared(bool isWeaponBeltCleared);
 
