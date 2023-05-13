@@ -12,7 +12,8 @@ UserData::UserData() :
 	m_areWeaponsEquiped(false),
 	m_isPlayerSeenDeadEnd(false),
 	m_isPlayerSeenVictory(false),
-	m_isPlayerDead(false)
+	m_isPlayerDead(false),
+	m_attackedKobold(false)
 {
 }
 
@@ -112,13 +113,12 @@ void UserData::LogOutputstream()
 	fileOutputStream.close();
 }
 
-// TODO If the player attacked Kobold at the beginning, the help menu in combat mode should not be accessible
-//bool UserData::GetAttackedKobold()
-//{
-//	return m_attackedKobold;
-//}
-//
-//void UserData::SetAttackedKobold(bool attackedKobold)
-//{
-//	m_attackedKobold = attackedKobold;
-//}
+bool UserData::GetAttackedKobold()
+{
+	return m_attackedKobold;
+}
+
+void UserData::SetAttackedKobold(bool attackedKobold)
+{
+	m_attackedKobold = attackedKobold;
+}

@@ -23,7 +23,8 @@ CombatManager::CombatManager(UserData* userData, MenuManager* menuManager) :
 	m_areCountdownVariablesInitiated(false),
 	m_isCountdownLogCleared(true),
 	m_time_up(true),
-	m_remainingSeconds(0)
+	m_remainingSeconds(0),
+	m_hasFleeingLog(false)
 {
 }
 
@@ -53,10 +54,11 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 		SetIsFightStarted(true);
 		break;
 
-	case PublicConstants::E_UserInput::UP:  // Khail help // TODO: 
+	case PublicConstants::E_UserInput::UP:  // Khail help
 		RefreshMenuAndLogFrame();
 		SetIsPlayerTurn(false);
 		SetIsFightStarted(true);
+		KhaiAttack();
 		break;
 
 	case PublicConstants::E_UserInput::DOWN: // Flee
@@ -87,8 +89,6 @@ void CombatManager::RefreshMenuAndLogFrame()
 
 void CombatManager::PlayerAttack()
 {
-	S_Weapon currentWeapon = GetWeaponManager()->GetCurrentWeapon(GetWeaponManager()->GetCurrentWeaponIndex());
-
 	// Random hit point between the current weapon min and max hit points or fail
 	// Create a random number generator and distribution for hit points
 	std::random_device rd;
@@ -97,7 +97,7 @@ void CombatManager::PlayerAttack()
 	std::mt19937 gen(rd());
 
 	// Create a distribution for hit points
-	std::uniform_int_distribution<> dist(currentWeapon.minHitPoints, currentWeapon.maxHitPoints);
+	std::uniform_int_distribution<> dist(5, 40);
 	std::string playerHitLog = "";
 
 	// Generate a random hit point value between the current weapon min and max hit points
@@ -124,6 +124,64 @@ void CombatManager::PlayerAttack()
 		std::string spaces = "             ";
 		//std::string spaces = "............."; // Debug TODO : Comment out when no debug
 		std::string text = "You hit the monster : ";
+		playerHitLog = spaces + text;
+	}
+
+	InflictDamage(hitPoints);
+	PrintCausaltyLog(playerHitLog, hitPoints);
+}
+
+void CombatManager::KhaiAttack()
+{
+	if (GetUserData()->GetAttackedKobold())
+	{
+		MoveCursorAfterBeltLog();
+		std::string spaces = "      ";
+		//std::string spaces = "......"; // Debug TODO : Comment out when no debug
+		std::string text = "Khai left you with your troubles.";
+		std::string nextLine = "\n";
+		std::string outputLine = spaces + text + nextLine;
+		std::cout << outputLine;
+		return;
+	}
+
+	S_Weapon currentWeapon = GetWeaponManager()->GetCurrentWeapon(GetWeaponManager()->GetCurrentWeaponIndex());
+
+	// Random hit point between the current weapon min and max hit points or fail
+	// Create a random number generator and distribution for hit points
+	std::random_device rd;
+
+	// Seed the generator
+	std::mt19937 gen(rd());
+
+	// Create a distribution for hit points
+	std::uniform_int_distribution<> dist(currentWeapon.minHitPoints, currentWeapon.maxHitPoints);
+	std::string playerHitLog = "";
+
+	// Generate a random hit point value between the current weapon min and max hit points
+	unsigned short int hitPoints = dist(gen);
+
+	// Probability of zero hit points of 20%
+	std::bernoulli_distribution zeroDist(0.2);
+	if (zeroDist(gen))
+	{
+		hitPoints = 0;
+	}
+
+	// The log if the player missed
+	if (hitPoints == 0)
+	{
+		std::string spaces = "                           ";
+		//std::string spaces = "..........................."; // Debug TODO : Comment out when no debug
+		std::string text = "Khai missed!";
+		std::string nextLine = "\n";
+		playerHitLog = spaces + text + nextLine;
+	}
+	else // The log if the player hits
+	{
+		std::string spaces = "             ";
+		//std::string spaces = "............."; // Debug TODO : Comment out when no debug
+		std::string text = "Khai hit the monster : ";
 		playerHitLog = spaces + text;
 	}
 
@@ -216,7 +274,7 @@ void CombatManager::TryToFlee()
 	// generate a random number between 0 and 3 (inclusive)
 	int choice = rand() % 4;
 
-	switch (3) // TODO: put back 'choice' after debug
+	switch (choice) // TODO: put back 'choice' after debug
 	{
 	case 0:
 		// Handle fleeing backwards

@@ -73,6 +73,7 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 
 	case E_MenuChoices::ATTACK_KOBOLD:         // From KOBOLD_SCENE
 		DEBUG_MSG("ScenesManager.cpp : SetNextScene() : Set ATTACK_KOBOLD_SCENE.");
+		GetUserData()->SetAttackedKobold(true);
 		SetPlayerCurrentScene(E_SceneSequence::ATTACK_KOBOLD_SCENE);
 		break;
 
@@ -181,6 +182,8 @@ void ScenesManager::SetNextScene(E_MenuChoices menuChoice)
 	GetNarrationManager()->PrintLinesFromScene();
 }
 
+// Set the next scene based on the user input and current scene. 
+// TODO: Refactor so that it is less repetitive, maybe use a switch ans extract if conditions into functions.
 E_SceneSequence ScenesManager::GetUserDirectionScene(E_MenuChoices playerInputDirection)
 {
 	E_SceneSequence currectScene = GetPlayerCurrentScene();

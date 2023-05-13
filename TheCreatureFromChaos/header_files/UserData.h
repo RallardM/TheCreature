@@ -32,9 +32,8 @@ public:
 
 	void LogOutputstream();
 
-	/// TODO
-	//bool GetAttackedKobold();
-	//void SetAttackedKobold(bool attackedKobold);
+	bool GetAttackedKobold();
+	void SetAttackedKobold(bool attackedKobold);
 
 private:
 	std::string m_playerName;
@@ -45,5 +44,5 @@ private:
 	short int m_playerLifePoints;
 	unsigned short int m_numberOfPotions;
 	std::string m_gameOutputLog;
-	//bool m_attackedKobold; // TODO
+	bool m_attackedKobold; 
 };

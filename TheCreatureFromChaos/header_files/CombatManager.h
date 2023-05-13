@@ -14,6 +14,7 @@ public:
 	void RefreshMenuAndLogFrame();
 
 	void PlayerAttack();
+	void KhaiAttack();
 	void EnemyCounterAttack();
 
 	void TakePotion();
