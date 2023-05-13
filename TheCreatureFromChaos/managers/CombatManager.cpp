@@ -61,8 +61,8 @@ void CombatManager::SetCombatAction(E_UserInput userInput)
 
 	case PublicConstants::E_UserInput::DOWN: // Flee
 		RefreshMenuAndLogFrame();
-
-		TryToFlee();
+		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::RUN_AWAY);
+		SetIsCountdownStarted(true);
 		SetIsPlayerTurn(false);
 		SetIsFightStarted(true);
 		break;
@@ -216,35 +216,36 @@ void CombatManager::TryToFlee()
 	// generate a random number between 0 and 3 (inclusive)
 	int choice = rand() % 4;
 
-	switch (choice) // TODO: put back 'choice' after debug
+	switch (0) // TODO: put back 'choice' after debug
 	{
 	case 0:
 		// Handle fleeing backwards
-		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEEING_BACKWARD);
+		SetIsPlayerSuccessFlee(true); 
 		SetIsCurrentFightStartedLog(false);
-		SetIsPlayerSuccessFlee(true);
+		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEEING_BACKWARD);
+		//SetIsPlayerSuccessFlee(true);
 		break;
 
 	case 1:
 		// Handle fleeing foward
-		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEEING_FORWARD);
+		SetIsPlayerSuccessFlee(false); // False because the player is not fleeing anymore
 		SetIsEnemyDefeated(true);
 		SetIsCurrentFightStartedLog(false);
-		SetIsPlayerSuccessFlee(false); // False because the player is not fleeing anymore
+		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEEING_FORWARD);
 		break;
 
 	case 2:
 		// Handle dying while fleeing
-		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEING_FAILED_DIED);
-		SetIsCurrentFightStartedLog(false);
 		SetIsPlayerSuccessFlee(false); // False because the player is not fleeing anymore
+		SetIsCurrentFightStartedLog(false);
+		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::FLEING_FAILED_DIED);		
 		break;
 
 	case 3:
 		// Handle failing to flee leading to combat
-		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::ATTACK_ENEMY);
-		SetIsSecondEncounter(true);
 		SetIsPlayerSuccessFlee(false); // False because the player is not fleeing anymore
+		SetIsSecondEncounter(true);
+		GetMenuManager()->GetScenesManager()->SetNextScene(E_MenuChoices::ATTACK_ENEMY);
 		break;
 
 	default:
